@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Livros</title>
+    <link rel="stylesheet" href="CadastroLivro.css">
+</head>
+<body>
+
+<h2 class="titulo">Cadastro de Livros</h2>
+
+<div class="container">
+
+    <!-- IMAGENS -->
+    <div class="imagens">
+        <div class="img-box">
+            <img src="img/capa.jpg" alt="Livro">
+            <button class="btn-img">Trocar</button>
+        </div>
+        <div class="img-box">
+            <img src="img/capa.jpg" alt="Livro">
+            <button class="btn-img">Trocar</button>
+        </div>
+        <div class="img-box">
+            <img src="img/capa.jpg" alt="Livro">
+            <button class="btn-img">Trocar</button>
+        </div>
+    </div>
+
+    <!-- FORMULÁRIO -->
+    <form class="formulario">
+
+        <div class="linha">
+            <div>
+                <label for="titulo">Título</label>
+                <input type="text" id="titulo">
+            </div>
+            <div>
+                <label for="autor">Autor</label>
+                <input type="text" id="autor">
+            </div>
+        </div>
+
+        <fieldset>
+            <legend>Livro Nacional?</legend>
+            <label><input type="radio" name="nacional" id="sim"> Sim</label>
+            <label><input type="radio" name="nacional" id="nao"> Não</label>
+
+            <div class="tradutor">
+                <label for="tradutor">Nome do Tradutor</label>
+                <input type="text" id="tradutor">
+            </div>
+        </fieldset>
+
+        <div class="linha">
+            <div>
+                <label>Idioma</label>
+                <input type="text">
+            </div>
+            <div>
+                <label>Editora</label>
+                <input type="text">
+            </div>
+        </div>
+
+        <div class="linha">
+            <div>
+                <label>Classificação</label>
+                <input type="text">
+            </div>
+            <div>
+                <label>Nº de Páginas</label>
+                <input type="number">
+            </div>
+        </div>
+
+        <div class="linha">
+            <div>
+                <label>Dimensões</label>
+                <input type="text">
+            </div>
+            <div>
+                <label>Data de Publicação</label>
+                <input type="date">
+            </div>
+        </div>
+
+        <div class="linha">
+            <div>
+                <label>Valor</label>
+                <input type="text">
+            </div>
+            <div>
+                <label>Estoque</label>
+                <input type="number">
+            </div>
+        </div>
+
+        <label>Sinopse</label>
+        <textarea rows="6"></textarea>
+
+        <div class="linha">
+            <div>
+                <label>ISBN-10</label>
+                <input type="text">
+            </div>
+            <div>
+                <label>ISBN-13</label>
+                <input type="text">
+            </div>
+        </div>
+
+        <button class="btn">Salvar</button>
+
+    </form>
+
+</div>
+
+
+<script>
+// Mostrar/ocultar campo tradutor
+const sim = document.getElementById("sim");
+const nao = document.getElementById("nao");
+const tradutor = document.querySelector(".tradutor");
+
+// começa escondido
+tradutor.style.display = "none";
+
+sim.addEventListener("change", () => {
+    tradutor.style.display = "none";
+});
+
+nao.addEventListener("change", () => {
+    tradutor.style.display = "block";
+});
+</script>
+
+</body>
+</html>
+

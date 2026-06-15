@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout — HamStore Books</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --vermelho-escuro: #8C031C;
+            --rosa-medio: #BF6980;
+            --cinza-claro: #F0F0F2;
+            --dourado-principal: #D9B607;
+            --dourado-escuro: #8C5C03;
+            --branco: #ffffff;
+            --sombra-suave: rgba(140, 3, 28, 0.1);
+            --sombra-dourado: rgba(217, 182, 7, 0.3);
+            --cotton-candy: #E38792;
+            --garnet: #4E0A0B;
+            --dusty-white: #F2EEE8;
+            --khaki: #9DAD71;
+        }
+
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--cinza-claro); min-height: 100vh; color: var(--garnet); }
+
+        /* ═══ BARRA SUPERIOR ═══ */
+        .shopee-top { background-color: var(--cotton-candy); color: var(--dusty-white); font-size: 14px; position: sticky; top: 0; z-index: 1001; box-shadow: 0 2px 8px rgba(78,10,11,0.15); }
+        .container { max-width: 1280px; margin: 0 auto; padding: 0 20px; }
+        .navbar { display: flex; justify-content: space-between; align-items: center; height: 40px; }
+        .flex { display: flex; align-items: center; gap: 20px; }
+        .navbar a { color: var(--dusty-white); text-decoration: none; font-size: 13px; transition: opacity 0.2s; }
+        .navbar a:hover { opacity: 0.8; }
+        .navbar_links { display: flex; align-items: center; list-style: none; gap: 16px; margin: 0; padding: 0; }
+        .navbar__link-text { color: var(--dusty-white); font-size: 13px; }
+        .navbar__link--signup { font-weight: 500; background-color: var(--garnet); padding: 4px 12px; border-radius: 15px; }
+        .navbar__link-separator { width: 1px; height: 16px; background-color: rgba(242,238,232,0.4); margin: 0 4px; }
+        .shopee-logo-area { display: flex; align-items: center; gap: 8px; }
+        .shopee-logo-icon { font-size: 18px; }
+        .shopee-store-name { font-weight: 700; font-size: 15px; color: var(--garnet); cursor: pointer; }
+        .shopee-store-name small { font-size: 10px; font-weight: 400; color: var(--dusty-white); }
+        .shopee-social-icons { display: flex; gap: 8px; align-items: center; }
+        .social-icon { display: inline-block; width: 20px; height: 20px; background-size: contain; background-repeat: no-repeat; background-position: center; }
+        .instagram { background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23F2EEE8"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>'); }
+        .whatsapp { background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23F2EEE8"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.126.556 4.118 1.523 5.847L.057 23.882l6.204-1.448A11.934 11.934 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.782 9.782 0 01-5.004-1.373l-.36-.214-3.713.868.922-3.596-.234-.37A9.789 9.789 0 012.182 12C2.182 6.57 6.57 2.182 12 2.182c5.43 0 9.818 4.388 9.818 9.818 0 5.43-4.388 9.818-9.818 9.818z"/></svg>'); }
+        .tiktok { background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23F2EEE8"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.87-4.53v-3.47a6.33 6.33 0 0 0-5.34 6.2 6.33 6.33 0 0 0 10.92 4.3 6.34 6.34 0 0 0 1.77-4.3V8.92a8.26 8.26 0 0 0 4.79 1.52V6.95a4.82 4.82 0 0 1-3.77-2.26z"/></svg>'); }
+
+        /* ═══ HEADER PRINCIPAL ═══ */
+        .header { display: flex; align-items: center; justify-content: space-between; background: rgba(255,255,255,0.97); backdrop-filter: blur(20px); padding: 14px 30px; box-shadow: 0 4px 20px var(--sombra-suave); position: sticky; top: 40px; z-index: 100; border-radius: 0 0 20px 20px; }
+        .logo { font-size: 26px; font-weight: bold; color: var(--garnet); cursor: pointer; letter-spacing: 1px; }
+        .search-bar { flex: 1; margin: 0 30px; max-width: 480px; }
+        .search-bar input { width: 100%; padding: 13px 22px; border-radius: 30px; border: 2px solid var(--dusty-white); font-size: 15px; background: var(--dusty-white); outline: none; transition: all 0.3s; }
+        .search-bar input:focus { border-color: var(--cotton-candy); box-shadow: 0 0 20px rgba(227,135,146,0.3); }
+        .icons { display: flex; gap: 16px; }
+        .btn-sem-borda { background: none; border: none; color: var(--garnet); font-size: 22px; cursor: pointer; transition: all 0.3s; padding: 6px; border-radius: 10px; }
+        .btn-sem-borda:hover { color: var(--cotton-candy); transform: translateY(-2px); }
+
+        /* ═══ BARRA DE PROGRESSO ═══ */
+        .progresso-wrap { background: var(--branco); border-bottom: 2px solid var(--cinza-claro); padding: 0 32px; box-shadow: 0 2px 8px var(--sombra-suave); }
+        .progresso-inner { max-width: 860px; margin: 0 auto; display: flex; align-items: center; height: 60px; }
+        .etapa { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+        .etapa-linha { flex: 1; height: 3px; background: var(--cinza-claro); border-radius: 2px; margin: 0 10px; transition: background 0.5s; }
+        .etapa-linha.ativa { background: linear-gradient(90deg, var(--dourado-principal), var(--dourado-escuro)); }
+        .etapa-num { width: 32px; height: 32px; border-radius: 50%; border: 2px solid var(--cinza-claro); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 800; color: #bbb; background: var(--branco); transition: all 0.4s; flex-shrink: 0; }
+        .etapa.ativa .etapa-num { border-color: var(--dourado-principal); color: var(--dourado-escuro); background: rgba(217,182,7,0.12); box-shadow: 0 0 0 4px rgba(217,182,7,0.15); }
+        .etapa.feita .etapa-num { background: linear-gradient(135deg, var(--dourado-principal), var(--dourado-escuro)); border-color: var(--dourado-escuro); color: var(--branco); }
+        .etapa-label { font-size: 13px; font-weight: 700; color: #bbb; white-space: nowrap; }
+        .etapa.ativa .etapa-label { color: var(--vermelho-escuro); }
+        .etapa.feita .etapa-label { color: var(--dourado-escuro); }
+
+        /* ═══ LAYOUT ═══ */
+        .checkout-layout { max-width: 1000px; margin: 32px auto; padding: 0 20px; display: grid; grid-template-columns: 1fr 320px; gap: 24px; align-items: start; }
+
+        /* ═══ CARD BASE ═══ */
+        .card { background: var(--branco); border-radius: 20px; overflow: hidden; box-shadow: 0 4px 20px var(--sombra-suave); margin-bottom: 20px; transition: box-shadow 0.3s; }
+        .card:hover { box-shadow: 0 8px 32px rgba(140,3,28,0.12); }
+        .card-header { padding: 18px 24px; display: flex; align-items: center; gap: 12px; border-bottom: 2px solid var(--cinza-claro); background: linear-gradient(135deg, #fefefe, var(--cinza-claro)); }
+        .card-header h3 { font-size: 15px; font-weight: 700; color: var(--vermelho-escuro); flex: 1; }
+        .card-header .icon-badge { width: 34px; height: 34px; border-radius: 10px; background: linear-gradient(135deg, var(--dourado-principal), var(--dourado-escuro)); display: flex; align-items: center; justify-content: center; color: var(--branco); font-size: 15px; }
+        .card-body { padding: 22px 24px; }
+
+        /* ═══ ENDEREÇO ═══ */
+        .endereco-box { display: flex; align-items: flex-start; gap: 16px; padding: 18px; border-radius: 14px; border: 2px solid var(--dourado-principal); background: linear-gradient(135deg, rgba(217,182,7,0.05), rgba(217,182,7,0.02)); }
+        .end-icone { width: 44px; height: 44px; background: linear-gradient(135deg, var(--vermelho-escuro), var(--rosa-medio)); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: var(--branco); font-size: 18px; flex-shrink: 0; }
+        .end-dados { flex: 1; }
+        .end-nome { font-weight: 700; color: var(--vermelho-escuro); font-size: 15px; margin-bottom: 4px; }
+        .end-texto { font-size: 13px; color: #666; line-height: 1.7; }
+        .end-tel { font-size: 12px; color: #999; margin-top: 4px; }
+        .btn-trocar-end { font-size: 12px; font-weight: 700; color: var(--rosa-medio); background: none; border: none; cursor: pointer; padding: 0; margin-top: 6px; display: flex; align-items: center; gap: 4px; transition: color 0.2s; }
+        .btn-trocar-end:hover { color: var(--vermelho-escuro); }
+        .end-ok { color: #4caf50; font-size: 20px; margin-top: 2px; }
+
+        /* ═══ ITENS DO PEDIDO ═══ */
+        .item-linha { display: flex; gap: 14px; padding: 14px 0; border-bottom: 1px solid var(--cinza-claro); }
+        .item-linha:last-child { border-bottom: none; }
+        .item-capa { width: 58px; height: 74px; background: linear-gradient(135deg, var(--cinza-claro), #e4e4e6); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: var(--rosa-medio); font-size: 26px; flex-shrink: 0; box-shadow: 2px 2px 8px var(--sombra-suave); }
+        .item-dados { flex: 1; }
+        .item-titulo { font-weight: 700; font-size: 14px; color: var(--garnet); line-height: 1.4; }
+        .item-autor { font-size: 12px; color: #888; margin-top: 2px; }
+        .item-tags { display: flex; gap: 6px; margin-top: 6px; flex-wrap: wrap; }
+        .tag { font-size: 11px; padding: 2px 8px; border-radius: 20px; background: var(--cinza-claro); color: #666; font-weight: 500; }
+        .item-preco-wrap { text-align: right; flex-shrink: 0; }
+        .item-preco { font-weight: 800; color: var(--vermelho-escuro); font-size: 15px; }
+        .item-qtd { font-size: 12px; color: #aaa; margin-top: 3px; }
+
+        /* ═══ PAGAMENTO ═══ */
+        .metodo-card { border: 2px solid var(--cinza-claro); border-radius: 16px; padding: 18px 20px; margin-bottom: 12px; cursor: pointer; transition: all 0.3s; position: relative; }
+        .metodo-card:hover { border-color: var(--rosa-medio); background: rgba(191,105,128,0.03); transform: translateY(-1px); }
+        .metodo-card.sel { border-color: var(--dourado-principal); background: rgba(217,182,7,0.04); box-shadow: 0 4px 16px var(--sombra-dourado); }
+        .metodo-row { display: flex; align-items: center; gap: 14px; }
+        .radio-dot { width: 20px; height: 20px; border: 2px solid var(--cinza-claro); border-radius: 50%; flex-shrink: 0; transition: all 0.2s; display: flex; align-items: center; justify-content: center; }
+        .metodo-card.sel .radio-dot { border-color: var(--dourado-principal); }
+        .metodo-card.sel .radio-dot::after { content: ''; width: 10px; height: 10px; background: var(--dourado-principal); border-radius: 50%; }
+        .metodo-emoji { width: 48px; height: 38px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
+        .em-pix { background: linear-gradient(135deg, #e0f7f4, #b2ede7); }
+        .em-boleto { background: linear-gradient(135deg, var(--cinza-claro), #e4e4e6); }
+        .metodo-info { flex: 1; }
+        .metodo-nome { font-weight: 700; font-size: 14px; color: var(--garnet); }
+        .metodo-sub { font-size: 12px; color: #888; margin-top: 3px; }
+        .metodo-pill { position: absolute; top: 14px; right: 16px; font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 20px; }
+        .pill-pix { background: rgba(0,137,123,0.1); color: #00695c; }
+        .pill-boleto { background: var(--cinza-claro); color: #777; }
+
+        /* Expansão interna */
+        .metodo-detalhe { display: none; margin-top: 14px; padding-top: 14px; border-top: 1px dashed var(--cinza-claro); }
+        .metodo-card.sel .metodo-detalhe { display: block; }
+
+        .chaves-pix { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+        .chave-btn { padding: 8px 14px; border-radius: 30px; border: 2px solid rgba(0,137,123,0.25); background: var(--branco); color: #00695c; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+        .chave-btn:hover { border-color: #00897b; }
+        .chave-btn.on { background: #00897b; color: var(--branco); border-color: #00897b; }
+        .aviso-box { display: flex; gap: 10px; padding: 12px 14px; border-radius: 12px; font-size: 13px; line-height: 1.6; align-items: flex-start; margin-top: 8px; }
+        .aviso-box.laranja { background: rgba(230,126,34,0.07); color: #b7560c; border: 1px solid rgba(230,126,34,0.2); }
+        .aviso-box i { margin-top: 2px; flex-shrink: 0; }
+
+        /* ═══ CUPOM ═══ */
+        .cupom-row { display: flex; gap: 10px; }
+        .inp-cupom { flex: 1; padding: 12px 16px; border: 2px solid var(--cinza-claro); border-radius: 12px; font-size: 14px; color: var(--garnet); outline: none; transition: all 0.3s; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; }
+        .inp-cupom:focus { border-color: var(--dourado-principal); box-shadow: 0 0 0 3px rgba(217,182,7,0.12); }
+        .btn-cupom { padding: 12px 20px; background: var(--cinza-claro); border: none; border-radius: 12px; font-weight: 700; font-size: 13px; color: var(--vermelho-escuro); cursor: pointer; transition: all 0.2s; white-space: nowrap; }
+        .btn-cupom:hover { background: linear-gradient(135deg, var(--dourado-principal), var(--dourado-escuro)); color: var(--branco); }
+        .cupom-feedback { margin-top: 10px; font-size: 13px; padding: 10px 14px; border-radius: 10px; display: none; }
+        .cupom-feedback.ok { background: rgba(76,175,80,0.1); color: #2e7d32; border: 1px solid rgba(76,175,80,0.2); }
+        .cupom-feedback.erro { background: rgba(231,76,60,0.08); color: #c0392b; border: 1px solid rgba(231,76,60,0.2); }
+
+        /* ═══ RESUMO LATERAL ═══ */
+        .resumo-sticky { position: sticky; top: 115px; }
+        .resumo-card { background: var(--branco); border-radius: 20px; overflow: hidden; box-shadow: 0 4px 20px var(--sombra-suave); }
+        .resumo-topo { background: linear-gradient(135deg, var(--vermelho-escuro), var(--rosa-medio)); padding: 20px 22px; }
+        .resumo-topo h3 { color: var(--branco); font-size: 16px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+        .resumo-topo p { color: rgba(255,255,255,0.75); font-size: 12px; margin-top: 4px; }
+        .resumo-body { padding: 20px 22px; }
+        .r-linha { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--cinza-claro); font-size: 14px; }
+        .r-linha:last-of-type { border-bottom: none; }
+        .r-linha .rl { color: #777; }
+        .r-linha .rv { font-weight: 700; color: var(--garnet); }
+        .r-linha .rv.verde { color: #27ae60; }
+        .r-linha .rv.desc { color: #27ae60; }
+        .r-total { display: flex; justify-content: space-between; align-items: flex-end; margin-top: 14px; padding-top: 14px; border-top: 2px solid var(--cinza-claro); }
+        .r-total .rl { font-weight: 800; color: var(--garnet); font-size: 15px; }
+        .r-total .rv { font-size: 26px; font-weight: 900; color: var(--vermelho-escuro); }
+
+        /* BTN CONTINUAR */
+        .btn-continuar { width: 100%; margin-top: 18px; padding: 16px; background: linear-gradient(135deg, var(--dourado-principal), var(--dourado-escuro)); border: none; border-radius: 14px; font-size: 16px; font-weight: 800; color: var(--branco); cursor: pointer; transition: all 0.3s; display: flex; align-items: center; justify-content: center; gap: 10px; box-shadow: 0 6px 20px var(--sombra-dourado); letter-spacing: 0.5px; }
+        .btn-continuar:hover { transform: translateY(-3px); box-shadow: 0 12px 30px var(--sombra-dourado); }
+        .btn-continuar:active { transform: translateY(0); }
+
+        /* SELOS */
+        .selos { display: flex; flex-direction: column; gap: 8px; margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--cinza-claro); }
+        .selo { display: flex; align-items: center; gap: 8px; font-size: 12px; color: #888; }
+        .selo-ico { width: 24px; height: 24px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 12px; flex-shrink: 0; }
+        .selo-ico.verde { background: rgba(76,175,80,0.12); color: #2e7d32; }
+        .selo-ico.azul { background: rgba(33,150,243,0.1); color: #1565c0; }
+        .selo-ico.ouro { background: rgba(217,182,7,0.12); color: var(--dourado-escuro); }
+
+        /* BTN VOLTAR */
+        .btn-voltar { display: flex; align-items: center; gap: 8px; background: none; border: none; color: #999; font-size: 13px; font-weight: 600; cursor: pointer; padding: 0; margin-bottom: 18px; transition: color 0.2s; }
+        .btn-voltar:hover { color: var(--vermelho-escuro); }
+
+        @media (max-width: 760px) {
+            .checkout-layout { grid-template-columns: 1fr; }
+            .resumo-sticky { position: static; }
+            .etapa-label { display: none; }
+            .shopee-social-icons span { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- BARRA SUPERIOR -->
+<header class="shopee-top">
+    <div class="container">
+        <nav class="navbar">
+            <div class="flex">
+                <div class="shopee-logo-area">
+                    <span class="shopee-logo-icon">📚</span>
+                    <span class="shopee-store-name" onclick="window.location.href='Entrar.html'">HAMSTORE <small>books</small></span>
+                </div>
+                <a href="#" onclick="window.location.href='dashbord.html'">Central do Vendedor</a>
+                <a href="#" onclick="window.location.href='CadastroVendedor.html'">Vender na HamStore</a>
+            </div>
+            <div class="flex">
+                <div class="shopee-social-icons">
+                    <span style="font-size:13px;color:var(--dusty-white);">Siga-nos</span>
+                    <a href="#" class="social-icon instagram"></a>
+                    <a href="#" class="social-icon whatsapp"></a>
+                    <a href="#" class="social-icon tiktok"></a>
+                </div>
+            </div>
+            <ul class="navbar_links">
+                <li><a href="#" class="navbar__link-text">Ajuda</a></li>
+                <li><a href="#" onclick="window.location.href='Cadastro1.html'" class="navbar__link-text navbar__link--signup">Cadastrar</a></li>
+                <li><div class="navbar__link-separator"></div></li>
+                <li><a href="#" onclick="window.location.href='login.html'" class="navbar__link-text">Entrar</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<!-- HEADER -->
+<header class="header">
+    <h1 onclick="window.location.href='Entrar.html'" class="logo">📚 Livraria</h1>
+    <div class="search-bar"><input type="text" placeholder="Buscar livros..."></div>
+    <div class="icons">
+        <button class="btn-sem-borda" onclick="window.location.href='Carrinho.html'">🛒</button>
+        <button class="btn-sem-borda">⚙️</button>
+        <button class="btn-sem-borda" onclick="window.location.href='MinhasCompras.html'">👤</button>
+    </div>
+</header>
+
+<!-- PROGRESSO -->
+<div class="progresso-wrap">
+    <div class="progresso-inner">
+        <div class="etapa feita">
+            <div class="etapa-num"><i class="fas fa-check" style="font-size:11px;"></i></div>
+            <span class="etapa-label">Carrinho</span>
+        </div>
+        <div class="etapa-linha ativa"></div>
+        <div class="etapa ativa">
+            <div class="etapa-num">2</div>
+            <span class="etapa-label">Pagamento</span>
+        </div>
+        <div class="etapa-linha"></div>
+        <div class="etapa">
+            <div class="etapa-num">3</div>
+            <span class="etapa-label">Confirmação</span>
+        </div>
+    </div>
+</div>
+
+<!-- CONTEÚDO -->
+<div class="checkout-layout">
+    <div>
+        <button class="btn-voltar" onclick="history.back()">
+            <i class="fas fa-arrow-left"></i> Voltar ao carrinho
+        </button>
+
+        <!-- ENDEREÇO -->
+        <div class="card">
+            <div class="card-header">
+                <div class="icon-badge"><i class="fas fa-map-marker-alt"></i></div>
+                <h3>Endereço de entrega</h3>
+                <i class="fas fa-check-circle" style="color:#4caf50;font-size:18px;"></i>
+            </div>
+            <div class="card-body">
+                <div class="endereco-box">
+                    <div class="end-icone"><i class="fas fa-home"></i></div>
+                    <div class="end-dados">
+                        <div class="end-nome">Maria Beatriz Oliveira</div>
+                        <div class="end-texto">Rua das Flores, 123 – Ap. 45<br>Vila Mariana · São Paulo – SP · CEP 04020-000</div>
+                        <div class="end-tel"><i class="fas fa-phone-alt" style="font-size:10px;margin-right:4px;"></i>(11) 99876-5432</div>
+                        <button class="btn-trocar-end" onclick="window.location.href='Enderecos.html'">
+                            <i class="fas fa-pen" style="font-size:10px;"></i> Trocar endereço
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ITENS -->
+        <div class="card">
+            <div class="card-header">
+                <div class="icon-badge"><i class="fas fa-shopping-bag"></i></div>
+                <h3>Itens do pedido</h3>
+                <span style="font-size:13px;color:#aaa;font-weight:500;">3 itens</span>
+            </div>
+            <div class="card-body" style="padding-top:8px;padding-bottom:8px;">
+                <div class="item-linha">
+                    <div class="item-capa"><i class="fas fa-book"></i></div>
+                    <div class="item-dados">
+                        <div class="item-titulo">O Pequeno Príncipe — Edição Especial</div>
+                        <div class="item-autor">Antoine de Saint-Exupéry · MOBY LUX</div>
+                        <div class="item-tags"><span class="tag">Capa dura</span><span class="tag">Novo</span></div>
+                    </div>
+                    <div class="item-preco-wrap">
+                        <div class="item-preco">R$ 39,90</div>
+                        <div class="item-qtd">Qtd: 1</div>
+                    </div>
+                </div>
+                <div class="item-linha">
+                    <div class="item-capa"><i class="fas fa-book"></i></div>
+                    <div class="item-dados">
+                        <div class="item-titulo">1984</div>
+                        <div class="item-autor">George Orwell · Leitura Livraria</div>
+                        <div class="item-tags"><span class="tag">Capa comum</span><span class="tag">Novo</span></div>
+                    </div>
+                    <div class="item-preco-wrap">
+                        <div class="item-preco">R$ 90,00</div>
+                        <div class="item-qtd">Qtd: 2</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PAGAMENTO -->
+        <div class="card">
+            <div class="card-header">
+                <div class="icon-badge"><i class="fas fa-wallet"></i></div>
+                <h3>Forma de pagamento</h3>
+            </div>
+            <div class="card-body">
+
+                <!-- PIX -->
+                <div class="metodo-card sel" onclick="selMetodo(this,'pix')">
+                    <div class="metodo-row">
+                        <div class="radio-dot"></div>
+                        <div class="metodo-emoji em-pix">⚡</div>
+                        <div class="metodo-info">
+                            <div class="metodo-nome">Pix</div>
+                            <div class="metodo-sub">Aprovação imediata · 24h por dia, 7 dias</div>
+                        </div>
+                    </div>
+                    <span class="metodo-pill pill-pix">Instantâneo</span>
+                    <div class="metodo-detalhe">
+                        <div style="font-size:12px;font-weight:700;color:#00695c;margin-bottom:6px;">Pagar com a chave:</div>
+                        <div class="chaves-pix">
+                            <div class="chave-btn on" onclick="selChave(event,this)"><i class="fas fa-envelope" style="font-size:10px;margin-right:4px;"></i>E-mail cadastrado</div>
+                            <div class="chave-btn" onclick="selChave(event,this)"><i class="fas fa-qrcode" style="font-size:10px;margin-right:4px;"></i>QR Code na próxima tela</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- BOLETO -->
+                <div class="metodo-card" onclick="selMetodo(this,'boleto')">
+                    <div class="metodo-row">
+                        <div class="radio-dot"></div>
+                        <div class="metodo-emoji em-boleto">🧾</div>
+                        <div class="metodo-info">
+                            <div class="metodo-nome">Boleto bancário</div>
+                            <div class="metodo-sub">Vence em 3 dias úteis após geração</div>
+                        </div>
+                    </div>
+                    <span class="metodo-pill pill-boleto">Até 3 dias</span>
+                    <div class="metodo-detalhe">
+                        <div class="aviso-box laranja">
+                            <i class="fas fa-exclamation-circle"></i>
+                            <span>O pedido será processado somente após confirmação bancária, em até <strong>1 dia útil</strong> após o pagamento.</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- CUPOM -->
+        <div class="card">
+            <div class="card-header">
+                <div class="icon-badge"><i class="fas fa-ticket-alt"></i></div>
+                <h3>Cupom de desconto</h3>
+            </div>
+            <div class="card-body">
+                <div class="cupom-row">
+                    <input class="inp-cupom" id="inp-cupom" type="text" placeholder="SEUCUPOM" oninput="this.value=this.value.toUpperCase()">
+                    <button class="btn-cupom" onclick="aplicarCupom()"><i class="fas fa-tag"></i> Aplicar</button>
+                </div>
+                <div class="cupom-feedback" id="cupom-feedback"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- RESUMO LATERAL -->
+    <div class="resumo-sticky">
+        <div class="resumo-card">
+            <div class="resumo-topo">
+                <h3><i class="fas fa-receipt"></i> Resumo do pedido</h3>
+                <p>Confira os valores antes de continuar</p>
+            </div>
+            <div class="resumo-body">
+                <div class="r-linha"><span class="rl">Subtotal (3 itens)</span><span class="rv">R$ 129,90</span></div>
+                <div class="r-linha"><span class="rl">Frete</span><span class="rv verde"><i class="fas fa-truck" style="font-size:11px;"></i> Grátis</span></div>
+                <div class="r-linha" id="linha-desc" style="display:none;"><span class="rl">Desconto</span><span class="rv desc" id="val-desc">−R$ 0,00</span></div>
+                <div class="r-total">
+                    <span class="rl">Total</span>
+                    <span class="rv" id="val-total">R$ 129,90</span>
+                </div>
+
+                <button class="btn-continuar" onclick="window.location.href='Pagamento3.html'">
+                    <i class="fas fa-lock" ></i> Confirmar pagamento
+                </button>
+
+                <div class="selos">
+                    <div class="selo">
+                        <div class="selo-ico verde"><i class="fas fa-shield-alt"></i></div>
+                        <span>Compra 100% protegida</span>
+                    </div>
+                    <div class="selo">
+                        <div class="selo-ico azul"><i class="fas fa-lock"></i></div>
+                        <span>Criptografia SSL 256-bit</span>
+                    </div>
+                    <div class="selo">
+                        <div class="selo-ico ouro"><i class="fas fa-undo"></i></div>
+                        <span>7 dias para troca ou devolução</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let metodo = 'pix';
+    let desconto = 0;
+    const BASE = 129.90;
+    const CUPONS = { 'HAMSTORE10': { txt: '10%', val: BASE*0.10 }, 'LIVRO5': { txt: 'R$ 5,00', val: 5.00 }, 'BEMVINDO': { txt: '15%', val: BASE*0.15 } };
+
+    function selMetodo(el, m) {
+        document.querySelectorAll('.metodo-card').forEach(c => c.classList.remove('sel'));
+        el.classList.add('sel');
+        metodo = m;
+    }
+
+    function selChave(e, el) {
+        e.stopPropagation();
+        document.querySelectorAll('.chave-btn').forEach(c => c.classList.remove('on'));
+        el.classList.add('on');
+    }
+
+    function fmt(n) { return 'R$ ' + n.toFixed(2).replace('.', ','); }
+
+    function aplicarCupom() {
+        const cod = document.getElementById('inp-cupom').value.trim();
+        const fb = document.getElementById('cupom-feedback');
+        fb.className = 'cupom-feedback';
+        if (CUPONS[cod]) {
+            desconto = CUPONS[cod].val;
+            fb.className = 'cupom-feedback ok';
+            fb.innerHTML = `<i class="fas fa-check-circle"></i> Cupom <strong>${cod}</strong> aplicado — ${CUPONS[cod].txt} de desconto!`;
+            document.getElementById('linha-desc').style.display = 'flex';
+            document.getElementById('val-desc').textContent = '−' + fmt(desconto);
+        } else {
+            desconto = 0;
+            fb.className = 'cupom-feedback erro';
+            fb.innerHTML = `<i class="fas fa-times-circle"></i> Cupom inválido ou expirado.`;
+            document.getElementById('linha-desc').style.display = 'none';
+        }
+        fb.style.display = 'flex';
+        fb.style.alignItems = 'center';
+        fb.style.gap = '8px';
+        document.getElementById('val-total').textContent = fmt(BASE - desconto);
+    }
+
+    function irProximo() {
+        const total = (BASE - desconto).toFixed(2);
+        window.location.href = `Pagamento2.html?metodo=${metodo}&total=${total}&desconto=${desconto.toFixed(2)}`;
+    }
+</script>
+</body>
+</html>

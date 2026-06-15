@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avaliar Produto - Livraria</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --vermelho-escuro: #8C031C;
+            --rosa-medio: #BF6980;
+            --cinza-claro: #F0F0F2;
+            --dourado-principal: #D9B607;
+            --dourado-escuro: #8C5C03;
+            --branco: #ffffff;
+            --sombra-suave: rgba(140, 3, 28, 0.1);
+            --sombra-dourado: rgba(217, 182, 7, 0.3);
+        }
+        
+
+/* ===== BARRA SUPERIOR SHOPEE ===== */
+:root {
+    --cotton-candy: #E38792;
+    --garnet: #4E0A0B;
+    --dusty-white: #F2EEE8;
+    --khaki: #9DAD71;
+}
+.shopee-top {
+    background-color: var(--cotton-candy);
+    color: var(--dusty-white);
+    font-size: 14px;
+    position: sticky;
+    top: 0;
+    z-index: 1001;
+    box-shadow: 0 2px 8px rgba(78, 10, 11, 0.15);
+}
+
+.container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 40px;
+}
+
+.flex {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.v-center {
+    align-items: center;
+}
+
+.navbar a {
+    color: var(--dusty-white);
+    text-decoration: none;
+    font-size: 13px;
+    transition: opacity 0.2s;
+}
+
+.navbar a:hover {
+    opacity: 0.8;
+    color: var(--dusty-white);
+}
+
+.navbar_links {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    gap: 16px;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar__link-text {
+    color: var(--dusty-white);
+    font-size: 13px;
+}
+
+.navbar__link--signup {
+    font-weight: 500;
+    background-color: var(--garnet);
+    padding: 4px 12px;
+    border-radius: 15px;
+}
+
+.navbar__link-separator {
+    width: 1px;
+    height: 16px;
+    background-color: rgba(242, 238, 232, 0.4);
+    margin: 0 4px;
+}
+
+.shopee-logo-area {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.shopee-logo-icon {
+    font-size: 18px;
+}
+
+.shopee-store-name {
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--garnet);
+}
+
+.shopee-store-name small {
+    font-size: 10px;
+    font-weight: 400;
+    color: var(--dusty-white);
+}
+
+.shopee-social-icons {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.social-icon {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.instagram {
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23F2EEE8"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>');
+}
+
+.whatsapp {
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23F2EEE8"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.562 1.103 3.642l-.717 2.615 2.681-.699c1.039.603 2.227.92 3.44.919 3.181 0 5.768-2.587 5.768-5.768-.001-3.18-2.587-5.767-5.767-5.767zm3.298 8.245c-.176.496-.892.905-1.461 1.026-.387.082-.815.07-1.193-.018-.38-.089-.73-.249-1.062-.45-.332-.2-.66-.44-.951-.713-.29-.273-.534-.578-.727-.907-.193-.329-.336-.678-.426-1.042-.09-.364-.122-.735-.095-1.104.027-.369.106-.724.236-1.06.13-.336.306-.648.522-.931.216-.283.466-.529.744-.733.278-.204.579-.361.893-.466.314-.105.637-.157.96-.154.226.002.451.029.672.081.221.052.434.131.634.237.2.106.386.239.553.395.167.156.312.335.433.533.242.398.366.855.358 1.318-.008.463-.148.915-.397 1.305-.249.39-.592.7-.995.898-.404.198-.856.284-1.304.25-.128-.01-.254-.034-.376-.072-.122-.038-.237-.091-.343-.158-.106-.067-.202-.147-.286-.239-.084-.092-.155-.195-.212-.306-.057-.111-.099-.229-.125-.351-.026-.122-.036-.246-.03-.369.006-.123.027-.244.062-.361.035-.117.084-.229.145-.333.061-.104.133-.199.215-.283.082-.084.173-.156.27-.215.098-.059.202-.104.31-.133.108-.029.22-.042.331-.039.111.003.221.022.327.057.106.035.206.085.296.149.09.064.168.141.233.229.065.088.116.186.15.29.034.104.051.213.051.322 0 .071-.008.142-.023.211-.015.069-.037.136-.066.2-.029.064-.065.124-.107.18-.042.056-.09.107-.143.152-.053.045-.111.084-.173.117-.062.033-.128.058-.196.075-.068.017-.138.026-.208.026-.07 0-.14-.009-.208-.026-.068-.017-.134-.042-.196-.075-.062-.033-.12-.072-.173-.117-.053-.045-.101-.096-.143-.152-.042-.056-.078-.116-.107-.18-.029-.064-.051-.131-.066-.2-.015-.069-.023-.14-.023-.211z"/></svg>');
+}
+
+.tiktok {
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23F2EEE8"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.87-4.53 2.89 2.89 0 0 1 1.09.27v-3.47a6.33 6.33 0 0 0-5.34 6.2 6.33 6.33 0 0 0 10.92 4.3 6.34 6.34 0 0 0 1.77-4.3V8.92a8.26 8.26 0 0 0 4.79 1.52V6.95a4.82 4.82 0 0 1-3.77-2.26z"/></svg>');
+}
+
+/* RESPONSIVO BARRA */
+@media (max-width: 768px) {
+    .flex .shopee-logo-area ~ a {
+        display: none;
+    }
+    
+    .navbar_links .navbar__link-text {
+        font-size: 12px;
+    }
+}
+
+/* ===== RESTANTE DO SEU CSS COM AS CORES ATUALIZADAS ===== */
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, var(--cotton-candy), var(--khaki));
+    min-height: 100vh;
+    color: var(--dusty-white);
+}
+
+/* HEADER */
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(20px);
+    padding: 15px 30px;
+    box-shadow: 0 4px 20px rgba(78, 10, 11, 0.1);
+    position: sticky;
+    top: 40px;
+    z-index: 100;
+    border-radius: 0 0 25px 25px;
+}
+
+.logo {
+    font-size: 28px;
+    font-weight: bold;
+    color: var(--garnet);
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    letter-spacing: 1px;
+}
+
+.menu-icon {
+    font-size: 28px;
+    cursor: pointer;
+    color: var(--garnet);
+    padding: 10px;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
+
+.menu-icon:hover {
+    background: var(--dusty-white);
+    transform: scale(1.1);
+}
+
+.btn-sem-borda {
+    background: none;                    
+    border: none;                        
+    border-radius: 25px;                 
+    color: var(--garnet);               
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    text-shadow: none;
+}
+
+.btn-sem-borda::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--khaki), var(--cotton-candy));
+    border-radius: 2px;
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+}
+
+.btn-sem-borda:hover::after {
+    width: 80%;
+}
+
+.btn-sem-borda:hover {
+    color: var(--cotton-candy);
+    transform: translateY(-2px);
+    text-shadow: 0 2px 8px rgba(78, 10, 11, 0.3);
+}
+
+.search-bar {
+    flex: 1;
+    margin: 0 30px;
+    max-width: 500px;
+}
+
+.search-bar input {
+    width: 100%;
+    padding: 15px 25px;
+    border-radius: 30px;
+    border: 2px solid var(--dusty-white);
+    font-size: 16px;
+    transition: all 0.3s ease;
+    background: var(--dusty-white);
+    box-shadow: 0 4px 15px rgba(78, 10, 11, 0.1);
+}
+
+.search-bar input:focus {
+    border-color: var(--cotton-candy);
+    box-shadow: 0 0 25px rgba(227, 135, 146, 0.4);
+    outline: none;
+}
+
+.icons {
+    font-size: 24px;
+    display: flex;
+    gap: 20px;
+    cursor: pointer;
+    color: var(--garnet);
+}
+
+.icons span {
+    padding: 12px;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.icons span:hover {
+    background: var(--dusty-white);
+    transform: scale(1.15) rotate(5deg);
+    filter: drop-shadow(0 4px 12px rgba(227, 135, 146, 0.3));
+}
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--cinza-claro); min-height: 100vh; }
+        .layout { display: flex; max-width: 1400px; margin: 0 auto; padding: 30px 20px; gap: 30px; }
+
+        /* MENU LATERAL */
+        .sidebar { width: 280px; background: var(--branco); border-radius: 20px; padding: 25px; box-shadow: 0 5px 20px var(--sombra-suave); height: fit-content; position: sticky; top: 30px; }
+        .perfil { text-align: center; padding-bottom: 20px; border-bottom: 2px solid var(--cinza-claro); margin-bottom: 20px; }
+        .avatar { width: 80px; height: 80px; background: linear-gradient(135deg, var(--rosa-medio), var(--vermelho-escuro)); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; font-size: 40px; color: var(--branco); }
+        .perfil h3 { color: var(--vermelho-escuro); font-size: 16px; margin-bottom: 5px; }
+        .btn-editar-perfil { background: transparent; border: 2px solid var(--rosa-medio); padding: 8px 20px; border-radius: 30px; color: var(--rosa-medio); font-weight: 600; cursor: pointer; transition: all 0.3s ease; margin-top: 10px; font-size: 13px; }
+        .btn-editar-perfil:hover { background: var(--rosa-medio); color: var(--branco); }
+        .menu-lateral { list-style: none; }
+        .menu-lateral li { padding: 12px 15px; display: flex; align-items: center; gap: 15px; color: var(--vermelho-escuro); cursor: pointer; transition: all 0.3s ease; border-radius: 12px; }
+        .menu-lateral li:hover { background: var(--cinza-claro); transform: translateX(5px); }
+        .menu-lateral li i { width: 25px; color: var(--dourado-principal); font-size: 18px; }
+        .menu-lateral li span { font-weight: 500; }
+
+        /* CONTEÚDO AVALIAÇÃO */
+        .conteudo { flex: 1; }
+        .avaliacao-card { background: var(--branco); border-radius: 20px; padding: 35px; box-shadow: 0 5px 20px var(--sombra-suave); }
+        .avaliacao-card h1 { color: var(--vermelho-escuro); font-size: 24px; margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
+        .moedas { background: linear-gradient(135deg, var(--dourado-principal), var(--dourado-escuro)); display: inline-block; padding: 6px 16px; border-radius: 30px; color: var(--vermelho-escuro); font-weight: bold; font-size: 13px; margin-bottom: 25px; }
+        .produto-info { display: flex; gap: 20px; padding: 20px; background: var(--cinza-claro); border-radius: 20px; margin-bottom: 30px; align-items: center; }
+        .produto-img { width: 70px; height: 90px; background: linear-gradient(135deg, var(--rosa-medio), var(--vermelho-escuro)); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 35px; color: var(--branco); }
+        .produto-detalhes h3 { color: var(--vermelho-escuro); font-size: 18px; }
+        .produto-detalhes p { color: var(--dourado-escuro); font-size: 13px; }
+        .estrelas-area { text-align: center; margin-bottom: 30px; }
+        .estrelas-area label { display: block; color: var(--vermelho-escuro); font-weight: bold; margin-bottom: 15px; }
+        .estrelas { display: flex; justify-content: center; gap: 12px; font-size: 35px; cursor: pointer; }
+        .estrelas i { color: #ccc; transition: all 0.2s ease; cursor: pointer; }
+        .estrelas i:hover, .estrelas i.ativa { color: var(--dourado-principal); }
+        .campo { margin-bottom: 20px; }
+        .campo label { display: block; color: var(--vermelho-escuro); font-weight: 600; margin-bottom: 8px; }
+        .campo textarea { width: 100%; padding: 14px; border: 2px solid var(--cinza-claro); border-radius: 15px; font-family: inherit; resize: vertical; }
+        .campo textarea:focus { outline: none; border-color: var(--rosa-medio); }
+        .upload-area { display: flex; gap: 20px; margin-bottom: 25px; flex-wrap: wrap; }
+        .upload-btn { flex: 1; background: var(--cinza-claro); border: 2px dashed var(--rosa-medio); border-radius: 20px; padding: 20px; text-align: center; cursor: pointer; transition: all 0.3s ease; }
+        .upload-btn:hover { border-color: var(--dourado-principal); background: rgba(217,182,7,0.1); }
+        .upload-btn i { font-size: 28px; color: var(--rosa-medio); margin-bottom: 8px; }
+        .upload-btn p { font-size: 13px; color: var(--vermelho-escuro); }
+        .bonus { background: rgba(217,182,7,0.1); padding: 15px; border-radius: 15px; margin-bottom: 25px; border-left: 4px solid var(--dourado-principal); }
+        .bonus p { font-size: 13px; color: var(--dourado-escuro); }
+        .checkbox-area { display: flex; align-items: center; gap: 12px; margin-bottom: 30px; }
+        .checkbox-area input { width: 18px; height: 18px; accent-color: var(--dourado-principal); }
+        .botoes { display: flex; gap: 15px; justify-content: flex-end; }
+        .btn { padding: 12px 28px; border-radius: 30px; font-weight: bold; cursor: pointer; transition: all 0.3s ease; border: none; }
+        .btn-cancelar { background: var(--cinza-claro); color: var(--vermelho-escuro); }
+        .btn-cancelar:hover { background: var(--rosa-medio); color: var(--branco); }
+        .btn-enviar { background: linear-gradient(135deg, var(--dourado-principal), var(--dourado-escuro)); color: var(--vermelho-escuro); }
+        .btn-enviar:hover { background: linear-gradient(135deg, var(--rosa-medio), var(--vermelho-escuro)); color: var(--branco); transform: translateY(-2px); }
+        @media (max-width: 900px) { .layout { flex-direction: column; } .sidebar { width: 100%; position: static; } .botoes { flex-direction: column; } .btn { width: 100%; text-align: center; } }
+    </style>
+</head>
+<body>
+    
+<!-- ===== BARRA SUPERIOR ===== -->
+<header class="shopee-top">
+    <div class="container">
+        <nav class="navbar">
+            <div class="flex v-center">
+                <div class="shopee-logo-area">
+                    <span class="shopee-logo-icon">📚</span>
+                    <span class="shopee-store-name" onclick="window.location.href='Entrar.html'">HAMSTORE <small>books</small></span>
+                </div>
+                <a href="#" onclick="window.location.href='GerenciamentoVendedor.html'">Central do Vendedor</a>
+                <a href="#" onclick="window.location.href='CadastroVendedor.html'">Vender na HamStore</a>
+                
+            </div>
+            <div class="flex">
+                <div class="shopee-social-icons">
+                    <span>Siga-nos</span>
+                    <a href="#" class="social-icon instagram"></a>
+                    <a href="#" class="social-icon whatsapp"></a>
+                    <a href="#" class="social-icon tiktok"></a>
+                </div>
+            </div>
+            <ul class="navbar_links">
+                <li><a href="#" class="navbar__link-text">Ajuda</a></li>
+                <li><a href="#"  onclick="window.location.href='Cadastro1.html'" class="navbar__link-text navbar__link--signup">Cadastrar</a></li>
+                <li><div class="navbar__link-separator"></div></li>
+                <li><a href="#" onclick="window.location.href='login.html'"class="navbar__link-text" >Entrar</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+<!-- HEADER -->
+<header class="header">
+<h1 class="logo" onclick="window.location.href='Entrar.html'">📚 Livraria</h1>
+
+<div class="search-bar">
+<input type="text" placeholder="Buscar livros...">
+</div>
+
+<div class="icons">
+<button class="btn-sem-borda" onclick="window.location.href='Carrinho.html'">🛒</button>
+<button class="btn-sem-borda">⚙️</button>
+<button class="btn-sem-borda" onclick="window.location.href='MinhasCompras.html'">👤</button> 
+</div>
+</header>
+    <div class="layout">
+        <aside class="sidebar">
+            <div class="perfil">
+                <div class="avatar"><i class="fas fa-user"></i></div>
+                <h3>mariabaeatrizoliveira...</h3>
+                <button class="btn-editar-perfil" onclick="window.location.href='Editar_perfil.html'"><i class="fas fa-pen"></i> Editar Perfil</button>
+            </div>
+            <ul class="menu-lateral">
+                <li onclick="window.location.href='MinhasCompras.html'"><i class="fas fa-shopping-bag"></i> <span>Minhas Compras</span></li>
+                <li onclick="window.location.href='Notificaçoes.html'"><i class="fas fa-bell"></i> <span>Notificações</span></li>
+                <li onclick="window.location.href='MeusCupons.html'"><i class="fas fa-ticket-alt"></i> <span>Meus Cupons</span></li>
+                <li onclick="window.location.href='Endereços.html'"><i class="fas fa-map-marker-alt"></i><span>Endereços</span></li>
+                <li onclick="window.location.href='OpçoesPagamento.html'" class="ativo"><i class="fas fa-credit-card"></i> <span>Pagamentos</span></li>
+                <li onclick="window.location.href='Favoritos.html'"><i class="fas fa-heart"></i> <span>Favoritos</span></li>
+                <li onclick="window.location.href='Configuraçoes.html'"><i class="fas fa-cog"></i> <span>Configurações</span></li>
+                <li onclick="window.location.href='Carrinho.html'"><i class="fas fa-shopping-cart"></i> <span>Meu Carrinho</span></li>
+            </ul>
+        </aside>
+
+        <main class="conteudo">
+            <div class="avaliacao-card">
+                <h1><i class="fas fa-star"></i> Avaliação De Produto</h1>
+                <div class="moedas"><i class="fas fa-coins"></i> Ganhe até 10 moedas pela sua avaliação</div>
+
+                <div class="produto-info">
+                    <div class="produto-img"><i class="fas fa-book"></i></div>
+                    <div class="produto-detalhes">
+                        <h3>O Pequeno Príncipe</h3>
+                        <p>Antoine de Saint-Exupéry | Capa dura</p>
+                    </div>
+                </div>
+
+                <div class="estrelas-area">
+                    <label>Qualidade do produto</label>
+                    <div class="estrelas" id="estrelas">
+                        <i class="far fa-star" data-nota="1"></i><i class="far fa-star" data-nota="2"></i>
+                        <i class="far fa-star" data-nota="3"></i><i class="far fa-star" data-nota="4"></i>
+                        <i class="far fa-star" data-nota="5"></i>
+                    </div>
+                    <div class="nota-texto" id="notaTexto" style="margin-top: 8px; color: var(--rosa-medio);">Clique nas estrelas para avaliar</div>
+                </div>
+
+                <div class="campo"><label>Qualidade:</label><textarea rows="2" placeholder="Achei o livro muito bom, com ótima qualidade..."></textarea></div>
+                <div class="campo"><label>Conteúdo / Escrita:</label><textarea rows="2" placeholder="A escrita é fluida e envolvente..."></textarea></div>
+                <div class="campo"><label>Experiência de leitura:</label><textarea rows="2" placeholder="A experiência de leitura foi confortável..."></textarea></div>
+
+                <div class="upload-area">
+                    <div class="upload-btn" onclick="document.getElementById('inputFoto').click()"><i class="fas fa-camera"></i><p>Adicionar Foto</p><input type="file" id="inputFoto" accept="image/*" style="display:none"></div>
+                    <div class="upload-btn" onclick="document.getElementById('inputVideo').click()"><i class="fas fa-video"></i><p>Adicionar Vídeo</p><input type="file" id="inputVideo" accept="video/*" style="display:none"></div>
+                </div>
+
+                <div class="bonus"><p><i class="fas fa-gem"></i> Avalie com pelo menos 20 caracteres, 1 foto e 1 vídeo para ganhar 10 moedas</p></div>
+
+                <div class="checkbox-area"><input type="checkbox" id="mostrarNome" checked><label for="mostrarNome">Mostrar nome de usuário na avaliação</label></div>
+
+                <div class="botoes">
+                    <button class="btn btn-cancelar" onclick="history.back()">CANCELAR</button>
+                    <button class="btn btn-enviar" onclick="enviarAvaliacao()">ENVIAR</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        const estrelas = document.querySelectorAll('#estrelas i');
+        let notaSelecionada = 0;
+        estrelas.forEach(estrela => {
+            estrela.addEventListener('click', () => {
+                notaSelecionada = parseInt(estrela.getAttribute('data-nota'));
+                estrelas.forEach((e, idx) => {
+                    if (idx < notaSelecionada) { e.classList.remove('far'); e.classList.add('fas'); e.classList.add('ativa'); }
+                    else { e.classList.remove('fas'); e.classList.add('far'); e.classList.remove('ativa'); }
+                });
+                const textos = ['', 'Péssimo', 'Ruim', 'Regular', 'Bom', 'Incrível'];
+                document.getElementById('notaTexto').textContent = `${notaSelecionada} ★ - ${textos[notaSelecionada] || 'Incrível'}`;
+            });
+        });
+        function enviarAvaliacao() {
+            if (notaSelecionada === 0) { alert('Por favor, selecione uma nota!'); return; }
+            alert('Avaliação enviada com sucesso! Você ganhou moedas.');
+            window.location.href = 'MinhasCompras.html';
+        }
+    </script>
+</body>
+</html>

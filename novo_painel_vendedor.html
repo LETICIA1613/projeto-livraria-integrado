@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel do Vendedor - Livraria</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+   <style>
+    
+* { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+    --vermelho-escuro: #8C031C;
+    --rosa-medio: #BF6980;
+    --cinza-claro: #F0F0F2;
+    --dourado-principal: #D9B607;
+    --dourado-escuro: #8C5C03;
+    --branco: #ffffff;
+    --sombra: 0 10px 30px rgba(0,0,0,0.08);
+    --sombra-dourada: 0 10px 30px rgba(217,182,7,0.2);
+}
+
+body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--cinza-claro); min-height: 100vh; }
+.layout { display: flex; min-height: 100vh; }
+.sidebar { width: 280px; background: linear-gradient(180deg, var(--vermelho-escuro) 0%, var(--rosa-medio) 100%); color: var(--branco); position: fixed; height: 100vh; overflow-y: auto; transition: all 0.3s ease; z-index: 100; }
+.sidebar-header { padding: 30px 20px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.2); }
+.sidebar-header .logo { font-size: 26px; font-weight: bold; color: var(--dourado-principal); }
+.logo i { margin-right: 10px; }
+.loja-nome { font-size: 13px; opacity: 0.8; margin-top: 8px; }
+.menu { list-style: none; padding: 20px 0; }
+.menu-item { padding: 14px 25px; display: flex; align-items: center; gap: 15px; cursor: pointer; transition: all 0.3s ease; color: rgba(255,255,255,0.85); border-left: 3px solid transparent; }
+.menu-item:hover, .menu-item.ativo { background: rgba(255,255,255,0.1); color: var(--dourado-principal); border-left-color: var(--dourado-principal); }
+.menu-item i { width: 24px; font-size: 18px; }
+.main-content { flex: 1; margin-left: 280px; padding: 25px 30px; }
+.top-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; flex-wrap: wrap; gap: 15px; }
+.page-title h1 { color: var(--vermelho-escuro); font-size: 28px; display: flex; align-items: center; gap: 12px; }
+.page-title h1 i { color: var(--dourado-principal); }
+.user-info { display: flex; align-items: center; gap: 15px; background: var(--branco); padding: 8px 20px; border-radius: 40px; box-shadow: var(--sombra); cursor: pointer; transition: all 0.3s ease; }
+.user-info:hover { background: var(--cinza-claro); transform: translateY(-2px); }
+.user-avatar { width: 45px; height: 45px; background: linear-gradient(135deg, var(--dourado-principal), var(--dourado-escuro)); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--vermelho-escuro); font-weight: bold; font-size: 18px; }
+.stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin-bottom: 30px; }
+.stat-card { background: var(--branco); border-radius: 20px; padding: 22px; box-shadow: var(--sombra); transition: all 0.3s ease; position: relative; overflow: hidden; }
+.stat-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--dourado-principal), var(--dourado-escuro)); }
+.stat-card:hover { transform: translateY(-5px); box-shadow: var(--sombra-dourada); }
+.stat-icon { font-size: 32px; color: var(--dourado-principal); margin-bottom: 12px; }
+.stat-card h3 { color: var(--vermelho-escuro); font-size: 13px; font-weight: 600; margin-bottom: 5px; }
+.stat-value { font-size: 28px; font-weight: 800; color: var(--dourado-escuro); }
+.stat-change { font-size: 12px; color: #4caf50; margin-top: 5px; }
+.stat-change.negativo { color: #f44336; }
+.alert-card { background: linear-gradient(135deg, #fff3e0, #ffe0b2); border-left: 4px solid #ff9800; }
+.periodo-filtro { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; align-items: center; background: var(--branco); padding: 12px 20px; border-radius: 50px; box-shadow: var(--sombra); }
+.periodo-btn { background: var(--cinza-claro); border: none; padding: 8px 20px; border-radius: 25px; cursor: pointer; transition: all 0.3s ease; font-weight: 500; }
+.periodo-btn.ativo { background: var(--dourado-principal); color: var(--vermelho-escuro); font-weight: bold; }
+.data-range { display: flex; gap: 10px; align-items: center; margin-left: auto; }
+.data-range input { padding: 8px 12px; border: 2px solid var(--cinza-claro); border-radius: 20px; outline: none; }
+.section-card { background: var(--branco); border-radius: 20px; padding: 25px; margin-bottom: 25px; box-shadow: var(--sombra); }
+.section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 15px; }
+.section-header h2 { color: var(--vermelho-escuro); font-size: 20px; display: flex; align-items: center; gap: 10px; }
+table { width: 100%; border-collapse: collapse; }
+th { text-align: left; padding: 14px 12px; background: var(--cinza-claro); color: var(--vermelho-escuro); font-weight: 600; }
+td { padding: 12px; border-bottom: 1px solid var(--cinza-claro); color: #444; }
+tr:hover { background: rgba(217, 182, 7, 0.05); }
+.tooltip-icon { cursor: help; margin-left: 5px; color: var(--dourado-escuro); font-size: 12px; }
+.status-badge { display: inline-block; padding: 5px 14px; border-radius: 20px; font-size: 11px; font-weight: 600; }
+.status-pago { background: #ff9800; color: #fff; }
+.status-processando { background: #2196f3; color: #fff; }
+.status-enviado { background: #2196f3; color: #fff; }
+.status-entregue { background: #4caf50; color: #fff; }
+.status-finalizado { background: #1b5e20; color: #fff; }
+.status-cancelado { background: #9e9e9e; color: #fff; }
+.status-bloqueado { background: var(--vermelho-escuro); color: #fff; }
+.btn-primary { background: linear-gradient(135deg, var(--dourado-principal), var(--dourado-escuro)); border: none; padding: 10px 24px; border-radius: 30px; color: var(--vermelho-escuro); font-weight: 600; cursor: pointer; transition: all 0.3s ease; }
+.btn-primary:hover { background: linear-gradient(135deg, var(--rosa-medio), var(--vermelho-escuro)); color: var(--branco); transform: translateY(-2px); }
+.btn-outline { background: transparent; border: 2px solid var(--rosa-medio); padding: 8px 20px; border-radius: 30px; color: var(--rosa-medio); font-weight: 600; cursor: pointer; transition: all 0.3s ease; }
+.btn-outline:hover { background: var(--rosa-medio); color: var(--branco); }
+.btn-danger { background: var(--vermelho-escuro); color: #fff; border: none; padding: 6px 14px; border-radius: 20px; cursor: pointer; }
+.btn-warning { background: #ff9800; color: #fff; border: none; padding: 6px 14px; border-radius: 20px; cursor: pointer; }
+.search-bar { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+.search-bar input { flex: 1; padding: 12px 18px; border: 2px solid var(--cinza-claro); border-radius: 30px; outline: none; }
+.charts-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 25px; margin-bottom: 30px; }
+.chart-card { background: var(--branco); border-radius: 20px; padding: 20px; box-shadow: var(--sombra); }
+.chart-card h3 { color: var(--vermelho-escuro); margin-bottom: 15px; display: flex; align-items: center; gap: 10px; }
+.modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: center; }
+.modal-content { background: var(--branco); border-radius: 25px; width: 90%; max-width: 500px; animation: modalFadeIn 0.3s ease; }
+@keyframes modalFadeIn { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
+.modal-header { padding: 20px 25px; background: var(--cinza-claro); border-radius: 25px 25px 0 0; display: flex; justify-content: space-between; align-items: center; }
+.modal-header h3 { color: var(--vermelho-escuro); }
+.modal-close { background: none; border: none; font-size: 28px; cursor: pointer; color: var(--rosa-medio); }
+.modal-body { padding: 25px; }
+.modal-body input, .modal-body textarea, .modal-body select { width: 100%; padding: 12px; margin-bottom: 15px; border: 2px solid var(--cinza-claro); border-radius: 15px; outline: none; font-family: inherit; }
+.modal-footer { padding: 20px 25px; border-top: 1px solid var(--cinza-claro); display: flex; justify-content: flex-end; gap: 12px; }
+.toast { position: fixed; bottom: 30px; right: 30px; background: linear-gradient(135deg, var(--dourado-principal), var(--dourado-escuro)); color: var(--vermelho-escuro); padding: 12px 24px; border-radius: 30px; font-weight: bold; z-index: 1100; animation: fadeInOut 3s ease; }
+@keyframes fadeInOut { 0% { opacity: 0; transform: translateY(20px); } 15% { opacity: 1; transform: translateY(0); } 85% { opacity: 1; } 100% { opacity: 0; transform: translateY(-20px); } }
+@media (max-width: 1000px) { .sidebar { transform: translateX(-100%); } .sidebar.open { transform: translateX(0); } .main-content { margin-left: 0; } .menu-toggle { display: block; position: fixed; top: 20px; left: 20px; background: var(--vermelho-escuro); color: #fff; border: none; padding: 12px; border-radius: 12px; z-index: 101; cursor: pointer; } .data-range { margin-left: 0; width: 100%; flex-wrap: wrap; } .charts-row { grid-template-columns: 1fr; } }
+
+/* Estilos específicos do perfil */
+.info-row { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--cinza-claro); }
+.info-label { font-weight: 600; color: var(--vermelho-escuro); }
+.info-value { color: #444; }
+.edit-icon { cursor: pointer; color: var(--dourado-escuro); margin-left: 8px; font-size: 13px; opacity: 0.6; transition: 0.2s; }
+.edit-icon:hover { opacity: 1; color: var(--vermelho-escuro); }
+.destaque-item { display: flex; align-items: center; gap: 15px; padding: 12px; background: var(--cinza-claro); border-radius: 15px; margin-bottom: 10px; }
+.destaque-icone { font-size: 28px; }
+.avaliacao-item { border-bottom: 1px solid var(--cinza-claro); padding: 12px 0; }
+.estrelas { color: #f5b042; letter-spacing: 2px; }
+.categoria-bar { margin: 12px 0; }
+.cat-bar-bg { height: 8px; background: var(--cinza-claro); border-radius: 10px; overflow: hidden; }
+.cat-fill { height: 100%; background: var(--dourado-principal); border-radius: 10px; }
+.two-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; }
+@media (max-width: 900px) { .two-columns { grid-template-columns: 1fr; } }
+
+   </style>
+</head>
+<body>
+
+    <div class="layout">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="logo" id="sidebarLogo"><i class="fas fa-store"></i> Livraria da Mari</div>
+                <div class="loja-nome"><i class="fas fa-star-of-life"></i> Há 2 anos vendendo</div>
+            </div>
+            <ul class="menu">
+                <li class="menu-item ativo" data-tab="dashboard"><i class="fas fa-chart-line"></i> Dashboard</li>
+                <li class="menu-item" data-tab="produtos"><i class="fas fa-book"></i> Produtos</li>
+                <li class="menu-item" data-tab="pedidos"><i class="fas fa-shopping-cart"></i> Pedidos</li>
+                <li class="menu-item" data-tab="clientes"><i class="fas fa-users"></i> Clientes</li>
+                <li class="menu-item" data-tab="vendas"><i class="fas fa-chart-simple"></i> Vendas</li>
+                <li class="menu-item" data-tab="relatorios"><i class="fas fa-chart-bar"></i> Relatórios</li>
+                <li class="menu-item" data-tab="financeiro"><i class="fas fa-dollar-sign"></i> Financeiro</li>
+                <li class="menu-item" data-tab="config"><i class="fas fa-cog"></i> Configurações</li>
+                <li class="menu-item" data-tab="meuperfil"><i class="fas fa-user-circle"></i> Meu Perfil</li>
+            </ul>
+        </aside>
+
+        <main class="main-content">
+            <div class="top-bar">
+                <div class="page-title"><h1 id="pageTitle"><i class="fas fa-chart-line"></i> Dashboard</h1></div>
+                <div class="user-info" id="userInfoTop">
+                    <div class="user-avatar" id="avatarTop">MB</div>
+                    <div><strong id="nomeTop">Maria Beatriz</strong><br><small style="color: var(--dourado-escuro);">Ver perfil →</small></div>
+                </div>
+            </div>
+
+            <!-- DASHBOARD -->
+            <div id="dashboardTab" class="tab-content">
+                <div class="periodo-filtro">
+                    <button class="periodo-btn" data-periodo="hoje">Hoje</button>
+                    <button class="periodo-btn" data-periodo="semana">Esta semana</button>
+                    <button class="periodo-btn ativo" data-periodo="mes">Este mês</button>
+                    <button class="periodo-btn" data-periodo="mesPassado">Mês passado</button>
+                    <button class="periodo-btn" data-periodo="ano">Este ano</button>
+                    <div class="data-range">
+                        <span>De:</span><input type="date" id="dataInicio" value="2025-04-01">
+                        <span>Até:</span><input type="date" id="dataFim" value="2025-04-30">
+                        <button class="btn-outline" onclick="filtrarDashboardPorData()" style="padding:6px 16px;">Aplicar</button>
+                    </div>
+                </div>
+                <div class="stats-grid" id="statsGrid"></div>
+                <div id="alertasDashboard" class="stats-grid" style="margin-bottom:20px;"></div>
+                <div class="charts-row">
+                    <div class="chart-card"><h3><i class="fas fa-chart-line"></i> Vendas Mensais</h3><canvas id="vendasChart"></canvas></div>
+                    <div class="chart-card"><h3><i class="fas fa-chart-pie"></i> Livros Mais Vendidos</h3><canvas id="topProdutosChart"></canvas></div>
+                </div>
+                <div class="section-card"><div class="section-header"><h2><i class="fas fa-clock"></i> Últimos Pedidos</h2><button class="btn-outline" onclick="abrirTab('pedidos')">Ver todos →</button></div>
+                    <div style="overflow-x: auto;"><table id="ultimosPedidosTable"><thead><tr><th>Pedido</th><th>Cliente</th><th>Total</th><th>Status</th><th>Data</th></tr></thead><tbody></tbody></table></div>
+                </div>
+            </div>
+
+            <!-- PRODUTOS -->
+            <div id="produtosTab" class="tab-content" style="display:none;">
+                <div class="section-card"><div class="section-header"><h2><i class="fas fa-book"></i> Meus Livros</h2><button class="btn-primary" onclick="openAddProdutoModal()"><i class="fas fa-plus"></i> Novo Livro</button></div>
+                    <div class="search-bar"><input type="text" id="searchProduto" placeholder="Buscar por título, autor ou ID..." onkeyup="filtrarProdutos()"></div>
+                    <div style="overflow-x: auto;"><table id="produtosTable"><thead><tr><th>ID</th><th>Imagem</th><th>Título</th><th>Autor</th><th>Preço</th><th>Estoque</th><th>Status</th><th>Ações</th></tr></thead><tbody></tbody></table></div>
+                </div>
+            </div>
+
+            <!-- PEDIDOS -->
+            <div id="pedidosTab" class="tab-content" style="display:none;">
+                <div class="section-card"><div class="section-header"><h2><i class="fas fa-shopping-cart"></i> Gerenciar Pedidos</h2><button class="btn-primary" onclick="exportarPedidosCSV()"><i class="fas fa-download"></i> Exportar CSV</button></div>
+                    <div class="search-bar"><input type="text" id="searchPedido" placeholder="Buscar por pedido ou cliente..." onkeyup="filtrarPedidos()"></div>
+                    <div style="overflow-x: auto;"><table id="pedidosTable"><thead><tr><th>Pedido</th><th>Cliente</th><th>Livros</th><th>Total</th><th>Status</th><th>Data</th><th>Ações</th></tr></thead><tbody></tbody></table></div>
+                </div>
+            </div>
+
+            <!-- CLIENTES -->
+            <div id="clientesTab" class="tab-content" style="display:none;">
+                <div class="section-card"><div class="section-header"><h2><i class="fas fa-users"></i> Gerenciar Clientes</h2><button class="btn-primary" onclick="exportarClientesCSV()"><i class="fas fa-download"></i> Exportar CSV</button></div>
+                    <div class="search-bar"><input type="text" id="searchCliente" placeholder="Buscar por nome ou email..." onkeyup="filtrarClientes()"></div>
+                    <div style="overflow-x: auto;"><table id="clientesTable"><thead><tr><th>Cliente</th><th>Email</th><th>Pedidos</th><th>Cancelados/Reemb.</th><th>% Problemas</th><th>Status</th><th>Ações</th></tr></thead><tbody></tbody></table></div>
+                </div>
+            </div>
+
+            <!-- VENDAS -->
+            <div id="vendasTab" class="tab-content" style="display:none;">
+                <div class="section-card"><div class="section-header"><h2><i class="fas fa-chart-simple"></i> Histórico de Vendas</h2><button class="btn-outline" onclick="exportarVendasCSV()"><i class="fas fa-file-csv"></i> Exportar CSV</button></div>
+                    <div class="search-bar"><input type="text" id="searchVenda" placeholder="Buscar por pedido ou cliente..." onkeyup="filtrarVendas()"></div>
+                    <div style="overflow-x: auto;"><table id="vendasTable"><thead><tr><th>Pedido <i class="fas fa-info-circle tooltip-icon" title="Número do pedido"></i></th><th>Cliente</th><th>Qtd</th><th>Total <i class="fas fa-info-circle tooltip-icon" title="Valor total"></i></th><th>Comissão <i class="fas fa-info-circle tooltip-icon" title="10% do total"></i></th><th>Líquido <i class="fas fa-info-circle tooltip-icon" title="Total - Comissão"></i></th><th>Status</th><th>Data</th><th>Recibo</th></tr></thead><tbody></tbody></table></div>
+                </div>
+            </div>
+
+            <!-- RELATÓRIOS -->
+            <div id="relatoriosTab" class="tab-content" style="display:none;">
+                <div class="section-card">
+                    <div class="section-header"><h2><i class="fas fa-chart-line"></i> Relatório Financeiro</h2><button class="btn-primary" onclick="gerarPDFRelatorio()"><i class="fas fa-file-pdf"></i> Gerar PDF</button></div>
+                    <div class="periodo-filtro">
+                        <button class="periodo-btn-rel" data-periodo="mes">Este mês</button>
+                        <button class="periodo-btn-rel" data-periodo="mesPassado">Mês passado</button>
+                        <button class="periodo-btn-rel ativo" data-periodo="ano">Este ano</button>
+                        <div class="data-range"><span>De:</span><input type="date" id="relDataInicio" value="2025-01-01"><span>Até:</span><input type="date" id="relDataFim" value="2025-12-31"><button class="btn-outline" onclick="filtrarRelatorioPorData()" style="padding:6px 16px;">Aplicar</button></div>
+                    </div>
+                    <div id="relatorioPDFContent">
+                        <div class="stats-grid" id="relatorioStats"></div>
+                        <div class="section-card"><h3>📊 Balanço Financeiro</h3><table id="balancoTable"><thead><tr><th>Descrição</th><th>Valor (R$)</th></tr></thead><tbody></tbody></table></div>
+                        <div class="section-card"><h3>📈 Análise de Sensibilidade</h3><table id="sensibilidadeTable"><thead><tr><th>Variação</th><th>-10%</th><th>-5%</th><th>0%</th><th>+5%</th><th>+10%</th></tr></thead><tbody></tbody></table></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FINANCEIRO -->
+            <div id="financeiroTab" class="tab-content" style="display:none;">
+                <div class="section-card"><div class="section-header"><h2><i class="fas fa-lock"></i> Dados Bancários</h2><button class="btn-primary" onclick="solicitarSenhaFinanceiro()"><i class="fas fa-lock"></i> Acessar com senha</button></div>
+                    <div id="dadosBancariosContent" style="display:none; margin-top:20px;">
+                        <div class="stats-grid" id="financeiroStats"></div>
+                        <div class="section-card"><h3>💰 Conta Bancária</h3> <table> <tr><th>Banco</th><td>Banco do Brasil</td></tr><tr><th>Agência</th><td>1234-5</td></tr><tr><th>Conta</th><td>12345-6</td></tr><tr><th>PIX</th><td>maria@livraria.com</td></tr> </table></div>
+                        <div class="section-card"><h3>📋 Histórico de Transações</h3><div style="overflow-x:auto;"><table id="transacoesTable"><thead><tr><th>Data</th><th>Descrição</th><th>Tipo</th><th>Valor</th><th>Saldo</th></tr></thead><tbody></tbody></table></div></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CONFIGURAÇÕES -->
+            <div id="configTab" class="tab-content" style="display:none;">
+                <div class="section-card"><div class="section-header"><h2><i class="fas fa-store"></i> Configurações da Loja</h2></div>
+                    <div style="max-width:600px;"><div class="form-group"><label>Nome da Loja</label><input type="text" id="configLojaNome" style="width:100%; padding:12px; border-radius:15px; border:2px solid var(--cinza-claro);"></div>
+                    <div class="form-group"><label>Descrição</label><textarea id="configLojaDesc" rows="3" style="width:100%; padding:12px; border-radius:15px;"></textarea></div>
+                    <div class="form-group"><label>Telefone</label><input type="text" id="configLojaTel" style="width:100%; padding:12px; border-radius:15px;"></div>
+                    <div class="form-group"><label>E-mail</label><input type="email" id="configLojaEmail" style="width:100%; padding:12px; border-radius:15px;"></div>
+                    <div class="form-group"><label>CNPJ</label><input type="text" id="configLojaCnpj" style="width:100%; padding:12px; border-radius:15px;"></div>
+                    <button class="btn-primary" onclick="salvarConfiguracoesLoja()"><i class="fas fa-save"></i> Salvar</button></div>
+                </div>
+            </div>
+
+            <!-- MEU PERFIL -->
+            <div id="meuperfilTab" class="tab-content" style="display:none;">
+                <!-- Stats resumo -->
+                <div class="stats-grid" id="statsPerfil"></div>
+
+                <!-- Colunas lado a lado -->
+                <div class="two-columns">
+                    <!-- Coluna ESQUERDA: Dados Pessoais + Loja -->
+                    <div>
+                        <div class="section-card">
+                            <div class="section-header"><h2><i class="fas fa-user"></i> Dados Pessoais</h2></div>
+                            <div class="info-row"><span class="info-label">Nome completo:</span><span class="info-value" id="nomeCompleto">Maria Beatriz Oliveira</span><i class="fas fa-pen edit-icon" onclick="abrirModalEditar('nome')"></i></div>
+                            <div class="info-row"><span class="info-label">E-mail:</span><span class="info-value" id="emailVendedor">maria@livrariadamari.com</span><i class="fas fa-pen edit-icon" onclick="abrirModalEditar('email')"></i></div>
+                            <div class="info-row"><span class="info-label">Telefone:</span><span class="info-value" id="telefoneVendedor">(11) 98765-4321</span><i class="fas fa-pen edit-icon" onclick="abrirModalEditar('telefone')"></i></div>
+                            <div class="info-row"><span class="info-label">CPF:</span><span class="info-value" id="documentoVendedor">123.456.789-00</span><i class="fas fa-pen edit-icon" onclick="abrirModalEditar('documento')"></i></div>
+                            <div class="info-row"><span class="info-label">Data de cadastro:</span><span class="info-value">15/03/2023</span></div>
+                        </div>
+
+                        <div class="section-card">
+                            <div class="section-header"><h2><i class="fas fa-store"></i> Minha Loja</h2></div>
+                            <div class="info-row"><span class="info-label">Nome da loja:</span><span class="info-value" id="lojaNomePerfil">Livraria da Mari</span><i class="fas fa-pen edit-icon" onclick="abrirModalEditar('lojaNome')"></i></div>
+                            <div class="info-row"><span class="info-label">CNPJ:</span><span class="info-value" id="lojaCnpjPerfil">12.345.678/0001-90</span><i class="fas fa-pen edit-icon" onclick="abrirModalEditar('lojaCnpj')"></i></div>
+                            <div class="info-row"><span class="info-label">Instagram:</span><span class="info-value" id="instagramLoja">@livrariadamari</span><i class="fas fa-pen edit-icon" onclick="abrirModalEditar('instagram')"></i></div>
+                        </div>
+
+                        <div class="section-card">
+                            <div class="section-header"><h2><i class="fas fa-book-open"></i> Sobre a Livraria</h2></div>
+                            <div class="info-row"><span class="info-label">Descrição:</span></div>
+                            <div id="sobreLojaTexto" style="margin-top: 10px; line-height: 1.6; color: #444;">📚 Livraria especializada em literatura brasileira e clássicos mundiais. Paixão por livros e atendimento de qualidade.</div>
+                            <button class="btn-outline" onclick="abrirModalEditar('sobre')" style="margin-top: 15px;"><i class="fas fa-edit"></i> Editar descrição</button>
+                        </div>
+                    </div>
+
+                    <!-- Coluna DIREITA: Destaques + Avaliações + Categorias -->
+                    <div>
+                        <div class="section-card">
+                            <div class="section-header"><h2><i class="fas fa-fire"></i> 🔥 Destaques da Semana</h2></div>
+                            <div id="destaquesContainer"></div>
+                        </div>
+
+                        <div class="section-card">
+                            <div class="section-header"><h2><i class="fas fa-star"></i> Avaliações dos Leitores</h2><button class="btn-outline" onclick="verTodasAvaliacoes()" style="padding:5px 15px;">Ver todas</button></div>
+                            <div id="avaliacoesContainer"></div>
+                            <div style="margin-top: 12px; text-align: center; font-size: 13px; color: var(--dourado-escuro);"><i class="fas fa-medal"></i> Média 4.8 ★ - 37 avaliações</div>
+                        </div>
+
+                        <div class="section-card">
+                            <div class="section-header"><h2><i class="fas fa-chart-pie"></i> Categorias Mais Procuradas</h2></div>
+                            <div id="categoriasContainer"></div>
+                            <canvas id="categoriasChart" style="max-height: 180px; margin-top: 15px;"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ações -->
+                <div class="section-card">
+                    <div class="section-header"><h2><i class="fas fa-shield-alt"></i> Segurança</h2></div>
+                    <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                        <button class="btn-primary" onclick="abrirModalSenhaPerfil()"><i class="fas fa-lock"></i> Alterar senha</button>
+                        <button class="btn-outline" onclick="exportarDadosPerfil()"><i class="fas fa-download"></i> Exportar meus dados</button>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- MODAL BLOQUEAR CLIENTE -->
+    <div id="modalBloquearCliente" class="modal"><div class="modal-content"><div class="modal-header"><h3><i class="fas fa-ban"></i> Bloquear Cliente</h3><button class="modal-close" onclick="closeModal('modalBloquearCliente')">&times;</button></div>
+        <div class="modal-body"><label>Motivo do bloqueio</label><textarea id="motivoBloqueio" rows="3" placeholder="Descreva o motivo do bloqueio..."></textarea><label>Tipo de bloqueio</label><select id="tipoBloqueio"><option>Bloqueio manual</option><option>Bloqueio automático - alto índice de problemas</option></select></div>
+        <div class="modal-footer"><button class="btn-outline" onclick="closeModal('modalBloquearCliente')">Cancelar</button><button class="btn-primary" onclick="confirmarBloqueio()">Bloquear</button></div>
+    </div></div>
+
+    <!-- MODAL SENHA FINANCEIRO -->
+    <div id="modalSenha" class="modal"><div class="modal-content"><div class="modal-header"><h3><i class="fas fa-lock"></i> Acesso Financeiro</h3><button class="modal-close" onclick="closeModal('modalSenha')">&times;</button></div>
+        <div class="modal-body"><label>Digite a senha de acesso</label><input type="password" id="senhaFinanceiro" placeholder="Senha"></div>
+        <div class="modal-footer"><button class="btn-outline" onclick="closeModal('modalSenha')">Cancelar</button><button class="btn-primary" onclick="verificarSenhaFinanceiro()">Acessar</button></div>
+    </div></div>
+
+    <!-- MODAL EDITAR PERFIL -->
+    <div id="modalEditarPerfil" class="modal"><div class="modal-content"><div class="modal-header"><h3 id="modalTituloPerfil">Editar</h3><button class="modal-close" onclick="fecharModalPerfil('modalEditarPerfil')">&times;</button></div><div class="modal-body"><input type="text" id="campoValorPerfil" placeholder="Novo valor"><textarea id="campoTextareaPerfil" rows="4" style="display:none;"></textarea></div><div class="modal-footer"><button class="btn-outline" onclick="fecharModalPerfil('modalEditarPerfil')">Cancelar</button><button class="btn-primary" id="salvarEdicaoPerfil">Salvar</button></div></div></div>
+
+    <!-- MODAL SENHA PERFIL -->
+    <div id="modalSenhaPerfil" class="modal"><div class="modal-content"><div class="modal-header"><h3><i class="fas fa-key"></i> Alterar senha</h3><button class="modal-close" onclick="fecharModalPerfil('modalSenhaPerfil')">&times;</button></div><div class="modal-body"><input type="password" id="senhaAtualPerfil" placeholder="Senha atual"><input type="password" id="novaSenhaPerfil" placeholder="Nova senha"><input type="password" id="confirmaSenhaPerfil" placeholder="Confirmar senha"></div><div class="modal-footer"><button class="btn-outline" onclick="fecharModalPerfil('modalSenhaPerfil')">Cancelar</button><button class="btn-primary" onclick="alterarSenhaPerfil()">Atualizar</button></div></div></div>
+
+    <script>
+        // ========== DADOS PRINCIPAIS ==========
+        let produtos = JSON.parse(localStorage.getItem('vendedor_produtos')) || [
+            { id: 101, titulo: "O Pequeno Príncipe", autor: "Antoine de Saint-Exupéry", preco: 39.90, estoque: 25, status: "ativo", imagem: "📖" },
+            { id: 102, titulo: "1984", autor: "George Orwell", preco: 45.00, estoque: 12, status: "ativo", imagem: "📚" },
+            { id: 103, titulo: "Dom Casmurro", autor: "Machado de Assis", preco: 42.50, estoque: 8, status: "ativo", imagem: "📕" }
+        ];
+
+        let clientes = JSON.parse(localStorage.getItem('vendedor_clientes')) || [
+            { id: 1, nome: "João Silva", email: "joao@email.com", totalPedidos: 8, problemas: 1, status: "ativo", motivoBloqueio: null, dataBloqueio: null },
+            { id: 2, nome: "Maria Santos", email: "maria@email.com", totalPedidos: 6, problemas: 4, status: "bloqueado_auto", motivoBloqueio: "Mais de 50% dos pedidos com problemas", dataBloqueio: "2025-04-20" },
+            { id: 3, nome: "Pedro Lima", email: "pedro@email.com", totalPedidos: 3, problemas: 0, status: "ativo", motivoBloqueio: null, dataBloqueio: null },
+            { id: 4, nome: "Ana Costa", email: "ana@email.com", totalPedidos: 2, problemas: 0, status: "ativo", motivoBloqueio: null, dataBloqueio: null }
+        ];
+
+        let pedidos = JSON.parse(localStorage.getItem('vendedor_pedidos')) || [
+            { id: 1234, cliente: "João Silva", clienteId: 1, produtos: [{ nome: "O Pequeno Príncipe", qtd: 1, preco: 39.90 }], total: 39.90, status: "finalizado", data: "2025-03-20", dataEntrega: "2025-03-25", problema: false },
+            { id: 1235, cliente: "Maria Santos", clienteId: 2, produtos: [{ nome: "1984", qtd: 2, preco: 45.00 }], total: 90.00, status: "cancelado", data: "2025-04-26", problema: true },
+            { id: 1236, cliente: "Maria Santos", clienteId: 2, produtos: [{ nome: "Dom Casmurro", qtd: 1, preco: 42.50 }], total: 42.50, status: "cancelado", data: "2025-04-20", problema: true },
+            { id: 1237, cliente: "Maria Santos", clienteId: 2, produtos: [{ nome: "1984", qtd: 1, preco: 45.00 }], total: 45.00, status: "cancelado", data: "2025-04-15", problema: true },
+            { id: 1238, cliente: "Maria Santos", clienteId: 2, produtos: [{ nome: "O Pequeno Príncipe", qtd: 1, preco: 39.90 }], total: 39.90, status: "cancelado", data: "2025-04-10", problema: true },
+            { id: 1239, cliente: "João Silva", clienteId: 1, produtos: [{ nome: "1984", qtd: 1, preco: 45.00 }], total: 45.00, status: "entregue", data: "2025-04-25", dataEntrega: "2025-04-28", problema: false },
+            { id: 1240, cliente: "Pedro Lima", clienteId: 3, produtos: [{ nome: "Dom Casmurro", qtd: 1, preco: 42.50 }], total: 42.50, status: "entregue", data: "2025-04-22", dataEntrega: "2025-04-25", problema: false }
+        ];
+
+        let transacoes = JSON.parse(localStorage.getItem('vendedor_transacoes')) || [
+            { data: "2025-03-20", descricao: "Venda #1234", tipo: "receita", valor: 39.90, saldo: 39.90 },
+            { data: "2025-04-25", descricao: "Venda #1239", tipo: "receita", valor: 45.00, saldo: 84.90 },
+            { data: "2025-04-22", descricao: "Venda #1240", tipo: "receita", valor: 42.50, saldo: 127.40 }
+        ];
+
+        // ========== DADOS DO PERFIL ==========
+        let perfil = {
+            nomeCompleto: "Maria Beatriz Oliveira",
+            email: "maria@livrariadamari.com",
+            telefone: "(11) 98765-4321",
+            documento: "123.456.789-00",
+            lojaNome: "Livraria da Mari",
+            lojaCnpj: "12.345.678/0001-90",
+            instagram: "@livrariadamari",
+            sobre: "📚 Livraria especializada em literatura brasileira e clássicos mundiais. Paixão por livros e atendimento de qualidade.",
+            senhaHash: btoa("livraria123")
+        };
+
+        const destaques = [
+            { icone: "📘", nome: "O Pequeno Príncipe", vendas: 23 },
+            { icone: "📖", nome: "1984 - George Orwell", vendas: 18 },
+            { icone: "📚", nome: "Box Harry Potter", vendas: 12 }
+        ];
+
+        let avaliacoes = [
+            { cliente: "Ana Carolina", estrelas: 5, comentario: "Livro chegou super rápido e bem embalado!", data: "2 dias atrás" },
+            { cliente: "Ricardo Alves", estrelas: 5, comentario: "Atendimento excelente, adorei a livraria!", data: "5 dias atrás" },
+            { cliente: "Fernanda Lima", estrelas: 4, comentario: "Produto de qualidade, entrega dentro do prazo.", data: "1 semana atrás" }
+        ];
+
+        let categorias = [
+            { nome: "Romance", buscas: 245 },
+            { nome: "Ficção Científica", buscas: 189 },
+            { nome: "Autoajuda", buscas: 132 },
+            { nome: "Infantojuvenil", buscas: 98 }
+        ];
+
+        let categoriasChart = null;
+
+        // Funções auxiliares
+        function mostrarToast(msg) { const toast = document.createElement('div'); toast.className = 'toast'; toast.innerHTML = '<i class="fas fa-check-circle"></i> ' + msg; document.body.appendChild(toast); setTimeout(() => toast.remove(), 3000); }
+        function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+        function fecharModalPerfil(id) { document.getElementById(id).style.display = 'none'; }
+
+        function abrirTab(tab) { 
+            document.querySelectorAll('.tab-content').forEach(t => t.style.display = 'none'); 
+            document.getElementById(tab + 'Tab').style.display = 'block'; 
+            document.querySelectorAll('.menu-item').forEach(m => m.classList.remove('ativo')); 
+            document.querySelector(`.menu-item[data-tab="${tab}"]`).classList.add('ativo'); 
+            document.getElementById('pageTitle').innerHTML = document.querySelector(`.menu-item[data-tab="${tab}"]`).innerHTML; 
+        }
+
+        document.querySelectorAll('.menu-item').forEach(item => { 
+            item.addEventListener('click', () => { 
+                abrirTab(item.getAttribute('data-tab')); 
+                if (item.getAttribute('data-tab') === 'meuperfil') atualizarPerfilUI();
+                if (window.innerWidth <= 1000) document.getElementById('sidebar').classList.remove('open'); 
+            }); 
+        });
+
+        document.getElementById('userInfoTop').addEventListener('click', () => abrirTab('meuperfil'));
+
+        function salvarDados() {
+            localStorage.setItem('vendedor_produtos', JSON.stringify(produtos));
+            localStorage.setItem('vendedor_pedidos', JSON.stringify(pedidos));
+            localStorage.setItem('vendedor_clientes', JSON.stringify(clientes));
+            localStorage.setItem('vendedor_transacoes', JSON.stringify(transacoes));
+            localStorage.setItem('perfil_vendedor', JSON.stringify(perfil));
+        }
+
+        // ========== FUNÇÕES DO PERFIL ==========
+        function atualizarPerfilUI() {
+            document.getElementById('nomeCompleto').innerText = perfil.nomeCompleto;
+            document.getElementById('emailVendedor').innerText = perfil.email;
+            document.getElementById('telefoneVendedor').innerText = perfil.telefone;
+            document.getElementById('documentoVendedor').innerText = perfil.documento;
+            document.getElementById('lojaNomePerfil').innerText = perfil.lojaNome;
+            document.getElementById('lojaCnpjPerfil').innerText = perfil.lojaCnpj;
+            document.getElementById('instagramLoja').innerText = perfil.instagram;
+            document.getElementById('sobreLojaTexto').innerHTML = perfil.sobre;
+            document.getElementById('nomeTop').innerHTML = perfil.nomeCompleto.split(' ')[0];
+            document.getElementById('avatarTop').innerHTML = perfil.nomeCompleto.split(' ')[0].substring(0,2).toUpperCase();
+            document.getElementById('sidebarLogo').innerHTML = `<i class="fas fa-store"></i> ${perfil.lojaNome}`;
+            
+            let totalVendas = pedidos.reduce((s,p) => s + p.total, 0);
+            let pedidosTotal = pedidos.length;
+            let clientesAtivos = clientes.filter(c => c.status === 'ativo').length;
+            
+            document.getElementById('statsPerfil').innerHTML = `
+                <div class="stat-card"><div class="stat-icon"><i class="fas fa-dollar-sign"></i></div><h3>Total em Vendas</h3><div class="stat-value">R$ ${totalVendas.toFixed(2)}</div></div>
+                <div class="stat-card"><div class="stat-icon"><i class="fas fa-shopping-cart"></i></div><h3>Pedidos Realizados</h3><div class="stat-value">${pedidosTotal}</div></div>
+                <div class="stat-card"><div class="stat-icon"><i class="fas fa-users"></i></div><h3>Clientes Atendidos</h3><div class="stat-value">${clientesAtivos}</div></div>
+                <div class="stat-card"><div class="stat-icon"><i class="fas fa-star"></i></div><h3>Avaliação Média</h3><div class="stat-value">4.8 ★</div></div>
+            `;
+
+            const containerDestaques = document.getElementById('destaquesContainer');
+            containerDestaques.innerHTML = destaques.map(d => `
+                <div class="destaque-item">
+                    <div class="destaque-icone">${d.icone}</div>
+                    <div style="flex:1"><strong>${d.nome}</strong><br><small style="color: var(--dourado-escuro);"><i class="fas fa-chart-line"></i> ${d.vendas} vendas esta semana</small></div>
+                </div>
+            `).join('');
+
+            const containerAvaliacoes = document.getElementById('avaliacoesContainer');
+            containerAvaliacoes.innerHTML = avaliacoes.map(a => `
+                <div class="avaliacao-item">
+                    <div style="display:flex; justify-content:space-between;"><strong><i class="fas fa-user"></i> ${a.cliente}</strong><span style="font-size:12px;">${a.data}</span></div>
+                    <div class="estrelas">${'★'.repeat(a.estrelas)}${'☆'.repeat(5-a.estrelas)}</div>
+                    <div style="font-size:13px; margin-top:5px;">“${a.comentario}”</div>
+                </div>
+            `).join('');
+
+            const total = categorias.reduce((s,c) => s + c.buscas, 0);
+            const containerCategorias = document.getElementById('categoriasContainer');
+            containerCategorias.innerHTML = categorias.map(c => {
+                let percent = ((c.buscas / total) * 100).toFixed(1);
+                return `
+                    <div class="categoria-bar">
+                        <div style="display:flex; justify-content:space-between; margin-bottom:5px;"><span><i class="fas fa-tag"></i> ${c.nome}</span><span>${percent}%</span></div>
+                        <div class="cat-bar-bg"><div class="cat-fill" style="width: ${percent}%;"></div></div>
+                    </div>
+                `;
+            }).join('');
+            
+            if (categoriasChart) categoriasChart.destroy();
+            const ctx = document.getElementById('categoriasChart').getContext('2d');
+            categoriasChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: { labels: categorias.map(c => c.nome), datasets: [{ data: categorias.map(c => c.buscas), backgroundColor: ['#D9B607', '#BF6980', '#8C031C', '#F0A3B0'], borderWidth: 0 }] },
+                options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { position: 'bottom', labels: { font: { size: 10 } } } } }
+            });
+        }
+
+        let campoEditando = null;
+        function abrirModalEditar(campo) {
+            campoEditando = campo;
+            const modal = document.getElementById('modalEditarPerfil');
+            const titulo = document.getElementById('modalTituloPerfil');
+            const inputNormal = document.getElementById('campoValorPerfil');
+            const textarea = document.getElementById('campoTextareaPerfil');
+            
+            inputNormal.style.display = 'block';
+            textarea.style.display = 'none';
+            
+            let valorAtual = "";
+            if (campo === 'nome') { titulo.innerText = "Editar nome"; valorAtual = perfil.nomeCompleto; }
+            else if (campo === 'email') { titulo.innerText = "Editar e-mail"; valorAtual = perfil.email; }
+            else if (campo === 'telefone') { titulo.innerText = "Editar telefone"; valorAtual = perfil.telefone; }
+            else if (campo === 'documento') { titulo.innerText = "Editar CPF"; valorAtual = perfil.documento; }
+            else if (campo === 'lojaNome') { titulo.innerText = "Nome da loja"; valorAtual = perfil.lojaNome; }
+            else if (campo === 'lojaCnpj') { titulo.innerText = "Editar CNPJ"; valorAtual = perfil.lojaCnpj; }
+            else if (campo === 'instagram') { titulo.innerText = "Editar Instagram"; valorAtual = perfil.instagram; }
+            else if (campo === 'sobre') {
+                titulo.innerText = "Editar descrição da loja";
+                inputNormal.style.display = 'none';
+                textarea.style.display = 'block';
+                textarea.value = perfil.sobre;
+                modal.style.display = 'flex';
+                return;
+            }
+            inputNormal.value = valorAtual;
+            modal.style.display = 'flex';
+        }
+
+        function confirmarEdicaoPerfil() {
+            if (!campoEditando) return;
+            const inputNormal = document.getElementById('campoValorPerfil');
+            const textarea = document.getElementById('campoTextareaPerfil');
+            let novoValor = campoEditando === 'sobre' ? textarea.value : inputNormal.value;
+            if (!novoValor.trim()) { mostrarToast("Valor não pode ficar vazio!"); return; }
+            
+            switch(campoEditando) {
+                case 'nome': perfil.nomeCompleto = novoValor; break;
+                case 'email': perfil.email = novoValor; break;
+                case 'telefone': perfil.telefone = novoValor; break;
+                case 'documento': perfil.documento = novoValor; break;
+                case 'lojaNome': perfil.lojaNome = novoValor; break;
+                case 'lojaCnpj': perfil.lojaCnpj = novoValor; break;
+                case 'instagram': perfil.instagram = novoValor; break;
+                case 'sobre': perfil.sobre = novoValor; break;
+            }
+            salvarDados();
+            atualizarPerfilUI();
+            fecharModalPerfil('modalEditarPerfil');
+            mostrarToast("Perfil atualizado!");
+        }
+
+        function abrirModalSenhaPerfil() { document.getElementById('modalSenhaPerfil').style.display = 'flex'; }
+        
+        function alterarSenhaPerfil() {
+            const atual = document.getElementById('senhaAtualPerfil').value;
+            const nova = document.getElementById('novaSenhaPerfil').value;
+            const confirma = document.getElementById('confirmaSenhaPerfil').value;
+            if (btoa(atual) !== perfil.senhaHash) { mostrarToast("Senha atual incorreta!"); return; }
+            if (nova.length < 6) { mostrarToast("Nova senha deve ter pelo menos 6 caracteres"); return; }
+            if (nova !== confirma) { mostrarToast("As senhas não coincidem"); return; }
+            perfil.senhaHash = btoa(nova);
+            salvarDados();
+            fecharModalPerfil('modalSenhaPerfil');
+            document.getElementById('senhaAtualPerfil').value = '';
+            document.getElementById('novaSenhaPerfil').value = '';
+            document.getElementById('confirmaSenhaPerfil').value = '';
+            mostrarToast("Senha alterada com sucesso!");
+        }
+        
+        function exportarDadosPerfil() {
+            const dados = { perfil, destaques, avaliacoes, categorias, dataExportacao: new Date().toISOString() };
+            const blob = new Blob([JSON.stringify(dados, null, 2)], { type: 'application/json' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `perfil_${perfil.lojaNome.replace(/\s/g, '_')}.json`;
+            link.click();
+            mostrarToast("Dados exportados com sucesso!");
+        }
+
+        function verTodasAvaliacoes() { alert("📋 Todas as avaliações:\n\n" + avaliacoes.map(a => `${a.cliente}: ${a.estrelas}★ - "${a.comentario}"`).join('\n\n')); }
+
+        document.getElementById('salvarEdicaoPerfil').onclick = confirmarEdicaoPerfil;
+
+        // ========== DASHBOARD ==========
+        let periodoDashboard = 'mes';
+        function calcularDadosPeriodo(periodo, dataInicio, dataFim) {
+            let inicio, fim;
+            const agora = new Date();
+            if (periodo === 'hoje') { inicio = new Date(agora.setHours(0,0,0,0)); fim = new Date(); }
+            else if (periodo === 'semana') { inicio = new Date(agora.setDate(agora.getDate()-7)); fim = new Date(); }
+            else if (periodo === 'mes') { inicio = new Date(agora.getFullYear(), agora.getMonth(), 1); fim = new Date(); }
+            else if (periodo === 'mesPassado') { inicio = new Date(agora.getFullYear(), agora.getMonth()-1, 1); fim = new Date(agora.getFullYear(), agora.getMonth(), 0); }
+            else if (periodo === 'ano') { inicio = new Date(agora.getFullYear(), 0, 1); fim = new Date(); }
+            else { inicio = new Date(dataInicio); fim = new Date(dataFim); fim.setHours(23,59,59,999); }
+            const pedidosFiltrados = pedidos.filter(p => new Date(p.data) >= inicio && new Date(p.data) <= fim);
+            const totalVendas = pedidosFiltrados.reduce((a,b)=>a+b.total,0);
+            const totalPedidos = pedidosFiltrados.length;
+            const totalItens = pedidosFiltrados.reduce((a,b)=>a+b.produtos.reduce((c,d)=>c+d.qtd,0),0);
+            return { totalVendas, totalPedidos, totalItens, pedidosFiltrados };
+        }
+
+        function atualizarDashboard() {
+            function atualizarEstatisticasClientes() {
+                clientes.forEach(cliente => {
+                    const pedidosCliente = pedidos.filter(p => p.clienteId === cliente.id);
+                    cliente.totalPedidos = pedidosCliente.length;
+                    cliente.problemas = pedidosCliente.filter(p => p.problema === true || p.status === 'cancelado').length;
+                });
+            }
+            atualizarEstatisticasClientes();
+            const dados = calcularDadosPeriodo(periodoDashboard);
+            const dadosMesAnterior = calcularDadosPeriodo('mesPassado');
+            const variacao = dadosMesAnterior.totalVendas > 0 ? ((dados.totalVendas - dadosMesAnterior.totalVendas) / dadosMesAnterior.totalVendas * 100) : 0;
+            document.getElementById('statsGrid').innerHTML = `
+                <div class="stat-card"><div class="stat-icon"><i class="fas fa-chart-simple"></i></div><h3>Vendas</h3><div class="stat-value">R$ ${dados.totalVendas.toFixed(2)}</div><div class="stat-change ${variacao>=0?'':'negativo'}">${variacao>=0?'+':''}${variacao.toFixed(1)}%</div></div>
+                <div class="stat-card"><div class="stat-icon"><i class="fas fa-shopping-cart"></i></div><h3>Pedidos</h3><div class="stat-value">${dados.totalPedidos}</div></div>
+                <div class="stat-card"><div class="stat-icon"><i class="fas fa-box"></i></div><h3>Livros Vendidos</h3><div class="stat-value">${dados.totalItens}</div></div>
+                <div class="stat-card"><div class="stat-icon"><i class="fas fa-users"></i></div><h3>Clientes Ativos</h3><div class="stat-value">${clientes.filter(c=>c.status==='ativo').length}</div></div>`;
+            
+            const ultimos = [...pedidos].sort((a,b)=>new Date(b.data)-new Date(a.data)).slice(0,5);
+            document.getElementById('ultimosPedidosTable').innerHTML = `<tbody>${ultimos.map(p => `<tr><td>#${p.id}</td><td>${p.cliente}</td><td>R$ ${p.total.toFixed(2)}</td><td><span class="status-badge status-${p.status}">${p.status}</span></td><td>${p.data}</td>`).join('')}</tbody>`;
+        }
+
+        document.querySelectorAll('.periodo-btn').forEach(btn => { btn.addEventListener('click', () => { document.querySelectorAll('.periodo-btn').forEach(b => b.classList.remove('ativo')); btn.classList.add('ativo'); periodoDashboard = btn.getAttribute('data-periodo'); atualizarDashboard(); }); });
+        function filtrarDashboardPorData() { periodoDashboard = 'custom'; atualizarDashboard(); }
+
+        // ========== PRODUTOS ==========
+        function renderizarProdutos() { const tbody = produtos.map(p => `<tr><td>${p.id}</td><td><div style="font-size:28px;">${p.imagem}</div></td><td><strong>${p.titulo}</strong></td><td>${p.autor}</td><td>R$ ${p.preco.toFixed(2)}</td><td>${p.estoque}</td><td><span class="status-badge status-pago">${p.status}</span></td><td><button class="btn-outline" onclick="editarProduto(${p.id})" style="padding:4px 12px;"><i class="fas fa-edit"></i></button> <button class="btn-danger" onclick="excluirProduto(${p.id})" style="padding:4px 12px;"><i class="fas fa-trash"></i></button></td></tr>`).join(''); document.getElementById('produtosTable').innerHTML = `<tbody>${tbody}</tbody>`; }
+        function filtrarProdutos() { const termo = document.getElementById('searchProduto').value.toLowerCase(); const filtrados = produtos.filter(p => p.id.toString().includes(termo) || p.titulo.toLowerCase().includes(termo) || p.autor.toLowerCase().includes(termo)); document.getElementById('produtosTable').innerHTML = `<tbody>${filtrados.map(p => `<tr><td>${p.id}</td><td><div style="font-size:28px;">${p.imagem}</div></td><td><strong>${p.titulo}</strong></td><td>${p.autor}</td><td>R$ ${p.preco.toFixed(2)}</td><td>${p.estoque}</td><td><span class="status-badge status-pago">${p.status}</span></td><td><button class="btn-outline" onclick="editarProduto(${p.id})"><i class="fas fa-edit"></i></button></td></tr>`).join('')}</tbody>`; }
+        function openAddProdutoModal() { const id = Date.now(); produtos.push({ id, titulo: "Novo Livro", autor: "Autor", preco: 29.90, estoque: 10, status: "ativo", imagem: "📖" }); salvarDados(); renderizarProdutos(); mostrarToast('Novo produto adicionado!'); }
+        function editarProduto(id) { const p = produtos.find(p => p.id === id); if(p){ const novoTitulo = prompt('Novo título:', p.titulo); if(novoTitulo) p.titulo = novoTitulo; const novoPreco = prompt('Novo preço:', p.preco); if(novoPreco) p.preco = parseFloat(novoPreco); salvarDados(); renderizarProdutos(); mostrarToast('Produto atualizado!'); } }
+        function excluirProduto(id) { if(confirm('Excluir produto?')){ produtos = produtos.filter(p => p.id !== id); salvarDados(); renderizarProdutos(); mostrarToast('Produto removido!'); } }
+
+        // ========== PEDIDOS ==========
+        function podeFinalizar(pedido) { if(pedido.status !== 'entregue') return false; const dataEntrega = new Date(pedido.dataEntrega || pedido.data); const hoje = new Date(); const diffDias = (hoje - dataEntrega) / (1000*60*60*24); return diffDias >= 30; }
+        function atualizarStatusPedido(id, novoStatus) { const p = pedidos.find(p => p.id === id); if(p){ if(novoStatus === 'finalizado' && !podeFinalizar(p)){ alert('Só é possível finalizar um pedido 30 dias após a entrega!'); return; } if(p.status === 'finalizado'){ alert('Pedido finalizado não pode mais ser alterado!'); return; } p.status = novoStatus; if(novoStatus === 'cancelado') p.problema = true; salvarDados(); renderizarPedidos(); atualizarDashboard(); renderizarClientes(); mostrarToast(`Pedido #${id} atualizado para ${novoStatus}`); } }
+        function renderizarPedidos() { const tbody = pedidos.map(p => `<tr><td>#${p.id}</td><td>${p.cliente}</td><td>${p.produtos.length} livros</td><td>R$ ${p.total.toFixed(2)}</td><td><select onchange="atualizarStatusPedido(${p.id}, this.value)" ${p.status === 'finalizado' ? 'disabled' : ''}><option ${p.status==='pago'?'selected':''}>pago</option><option ${p.status==='processando'?'selected':''}>processando</option><option ${p.status==='enviado'?'selected':''}>enviado</option><option ${p.status==='entregue'?'selected':''}>entregue</option><option ${p.status==='finalizado'?'selected':''}>finalizado</option><option ${p.status==='cancelado'?'selected':''}>cancelado</option></select></td><td>${p.data}</td><td><button class="btn-outline" onclick="verDetalhesPedido(${p.id})" style="padding:4px 12px;"><i class="fas fa-eye"></i></button> ${p.status==='entregue' && podeFinalizar(p) ? '<button class="btn-primary" onclick="atualizarStatusPedido('+p.id+',\'finalizado\')" style="padding:4px 12px;">Finalizar</button>' : ''}</td></tr>`).join(''); document.getElementById('pedidosTable').innerHTML = `<tbody>${tbody}</tbody>`; }
+        function verDetalhesPedido(id) { const p = pedidos.find(p => p.id === id); if(p){ alert(`Pedido #${p.id}\nCliente: ${p.cliente}\nProdutos: ${p.produtos.map(i=>`${i.nome} (${i.qtd}x)`).join('\n')}\nTotal: R$ ${p.total}\nStatus: ${p.status}\nData: ${p.data}`); } }
+        function filtrarPedidos() { const termo = document.getElementById('searchPedido').value.toLowerCase(); const filtrados = pedidos.filter(p => p.id.toString().includes(termo) || p.cliente.toLowerCase().includes(termo)); document.getElementById('pedidosTable').innerHTML = `<tbody>${filtrados.map(p => `<tr><td>#${p.id}</td><td>${p.cliente}</td><td>${p.produtos.length} livros</td><td>R$ ${p.total}</td><td><select onchange="atualizarStatusPedido(${p.id}, this.value)"><option ${p.status==='pago'?'selected':''}>pago</option><option ${p.status==='processando'?'selected':''}>processando</option><option ${p.status==='enviado'?'selected':''}>enviado</option><option ${p.status==='entregue'?'selected':''}>entregue</option><option ${p.status==='finalizado'?'selected':''}>finalizado</option><option ${p.status==='cancelado'?'selected':''}>cancelado</option></select></td><td>${p.data}</td><td><button class="btn-outline" onclick="verDetalhesPedido(${p.id})"><i class="fas fa-eye"></i></button></td></tr>`).join('')}</tbody>`; }
+        function exportarPedidosCSV() { let csv = "Pedido,Cliente,Total,Status,Data\n"; pedidos.forEach(p => { csv += `#${p.id},${p.cliente},${p.total},${p.status},${p.data}\n`; }); const blob = new Blob([csv], { type: 'text/csv' }); const link = document.createElement('a'); link.href = URL.createObjectURL(blob); link.download = 'pedidos.csv'; link.click(); mostrarToast('CSV exportado!'); }
+
+        // ========== CLIENTES ==========
+        let clienteParaBloquear = null;
+        function renderizarClientes() { const tbody = clientes.map(c => { const percentual = c.totalPedidos > 0 ? ((c.problemas / c.totalPedidos) * 100).toFixed(1) : 0; return `<tr><td><strong>${c.nome}</strong></td><td>${c.email}</td><td>${c.totalPedidos}</td><td>${c.problemas}</td><td style="color:${percentual>=50?'#f44336':'#4caf50'}">${percentual}%</td><td><span class="status-badge ${c.status==='ativo'?'status-pago':'status-bloqueado'}">${c.status==='ativo'?'Ativo':'Bloqueado'}</span></td><td>${c.status==='ativo' ? `<button class="btn-warning" onclick="abrirModalBloqueio(${c.id})" style="padding:4px 12px;"><i class="fas fa-ban"></i> Bloquear</button>` : `<span class="tooltip-icon" title="${c.motivoBloqueio}">🔒 Bloqueado em ${c.dataBloqueio}</span>`}</td></tr>`; }).join(''); document.getElementById('clientesTable').innerHTML = `<tbody>${tbody}</tbody>`; }
+        function filtrarClientes() { const termo = document.getElementById('searchCliente').value.toLowerCase(); const filtrados = clientes.filter(c => c.nome.toLowerCase().includes(termo) || c.email.toLowerCase().includes(termo)); document.getElementById('clientesTable').innerHTML = `<tbody>${filtrados.map(c => `<tr><td><strong>${c.nome}</strong></td><td>${c.email}</td><td>${c.totalPedidos}</td><td>${c.problemas}</td><td>${c.totalPedidos>0?((c.problemas/c.totalPedidos)*100).toFixed(1):0}%</td><td>${c.status}</td><td><button class="btn-warning" onclick="abrirModalBloqueio(${c.id})">Bloquear</button></td></tr>`).join('')}</tbody>`; }
+        function abrirModalBloqueio(id) { clienteParaBloquear = clientes.find(c => c.id === id); if(clienteParaBloquear){ document.getElementById('motivoBloqueio').value = ''; document.getElementById('modalBloquearCliente').style.display = 'flex'; } }
+        function confirmarBloqueio() { if(clienteParaBloquear){ clienteParaBloquear.status = 'bloqueado_manual'; clienteParaBloquear.motivoBloqueio = document.getElementById('motivoBloqueio').value || 'Bloqueio manual pelo vendedor'; clienteParaBloquear.dataBloqueio = new Date().toISOString().split('T')[0]; salvarDados(); renderizarClientes(); closeModal('modalBloquearCliente'); mostrarToast(`Cliente ${clienteParaBloquear.nome} bloqueado!`); } }
+        function exportarClientesCSV() { let csv = "Nome,Email,Total Pedidos,Problemas,% Problemas,Status\n"; clientes.forEach(c => { const percentual = c.totalPedidos > 0 ? ((c.problemas / c.totalPedidos) * 100).toFixed(1) : 0; csv += `${c.nome},${c.email},${c.totalPedidos},${c.problemas},${percentual}%,${c.status}\n`; }); const blob = new Blob([csv], { type: 'text/csv' }); const link = document.createElement('a'); link.href = URL.createObjectURL(blob); link.download = 'clientes.csv'; link.click(); mostrarToast('CSV exportado!'); }
+
+        // ========== VENDAS ==========
+        function renderizarVendas() { const tbody = pedidos.map(p => { const comissao = p.total * 0.1; const liquido = p.total - comissao; return `<tr><td>#${p.id}</td><td>${p.cliente}</td><td>${p.produtos.reduce((a,b)=>a+b.qtd,0)}</td><td>R$ ${p.total.toFixed(2)}</td><td>R$ ${comissao.toFixed(2)}</td><td>R$ ${liquido.toFixed(2)}</td><td><span class="status-badge status-${p.status}">${p.status}</span></td><td>${p.data}</td><td>${p.status === 'entregue' || p.status === 'finalizado' ? '<i class="fas fa-check-circle" style="color:#4caf50;"></i>' : '<i class="fas fa-clock" style="color:#ff9800;"></i>'}</td>`; }).join(''); document.getElementById('vendasTable').innerHTML = `<tbody>${tbody}</tbody>`; }
+        function filtrarVendas() { const termo = document.getElementById('searchVenda').value.toLowerCase(); const filtrados = pedidos.filter(p => p.id.toString().includes(termo) || p.cliente.toLowerCase().includes(termo)); const tbody = filtrados.map(p => { const comissao = p.total * 0.1; return `<tr><td>#${p.id}</td><td>${p.cliente}</td><td>${p.produtos.reduce((a,b)=>a+b.qtd,0)}</td><td>R$ ${p.total}</td><td>R$ ${comissao}</td><td>R$ ${p.total-comissao}</td><td>${p.status}</td><td>${p.data}</td><td>✓</td>`; }).join(''); document.getElementById('vendasTable').innerHTML = `<tbody>${tbody}</tbody>`; }
+        function exportarVendasCSV() { let csv = "Pedido,Cliente,Total,Comissão,Líquido,Status,Data\n"; pedidos.forEach(p => { const comissao = p.total * 0.1; csv += `#${p.id},${p.cliente},${p.total},${comissao},${p.total-comissao},${p.status},${p.data}\n`; }); const blob = new Blob([csv], { type: 'text/csv' }); const link = document.createElement('a'); link.href = URL.createObjectURL(blob); link.download = 'vendas.csv'; link.click(); mostrarToast('CSV exportado!'); }
+
+        // ========== RELATÓRIOS PDF ==========
+        function calcularDadosRelatorio() { const pedidosFiltrados = pedidos.filter(p => new Date(p.data) >= new Date('2025-01-01') && new Date(p.data) <= new Date('2025-12-31')); const totalReceitas = pedidosFiltrados.reduce((a,b)=>a+b.total,0); const despesas = totalReceitas * 0.1; const lucroLiquido = totalReceitas - despesas; document.getElementById('relatorioStats').innerHTML = `<div class="stat-card"><div class="stat-icon"><i class="fas fa-dollar-sign"></i></div><h3>Receita Total</h3><div class="stat-value">R$ ${totalReceitas.toFixed(2)}</div></div><div class="stat-card"><div class="stat-icon"><i class="fas fa-chart-line"></i></div><h3>Despesas (Comissão)</h3><div class="stat-value">R$ ${despesas.toFixed(2)}</div></div><div class="stat-card"><div class="stat-icon"><i class="fas fa-chart-simple"></i></div><h3>Lucro Líquido</h3><div class="stat-value">R$ ${lucroLiquido.toFixed(2)}</div></div>`; document.getElementById('balancoTable').innerHTML = `<tbody><tr><td>Receita Bruta</td><td>R$ ${totalReceitas.toFixed(2)}</td></tr><tr><td>(-) Comissão da Plataforma</td><td>R$ ${despesas.toFixed(2)}</td></tr><tr><td>(-) Taxas de Pagamento</td><td>R$ ${(totalReceitas * 0.03).toFixed(2)}</td></tr><tr><td><strong>Lucro Líquido</strong></td><td><strong>R$ ${lucroLiquido.toFixed(2)}</strong></td></tr></tbody>`; document.getElementById('sensibilidadeTable').innerHTML = `<tbody><tr><td>Variação de Vendas</td><td>${(totalReceitas * 0.9).toFixed(2)}</td><td>${(totalReceitas * 0.95).toFixed(2)}</td><td>${totalReceitas.toFixed(2)}</td><td>${(totalReceitas * 1.05).toFixed(2)}</td><td>${(totalReceitas * 1.1).toFixed(2)}</td></tr><tr><td>Lucro</td><td>${(totalReceitas * 0.9 * 0.87).toFixed(2)}</td><td>${(totalReceitas * 0.95 * 0.87).toFixed(2)}</td><td>${(totalReceitas * 0.87).toFixed(2)}</td><td>${(totalReceitas * 1.05 * 0.87).toFixed(2)}</td><td>${(totalReceitas * 1.1 * 0.87).toFixed(2)}</td></tr></tbody>`; return { totalReceitas, despesas, lucroLiquido }; }
+        function gerarPDFRelatorio() { calcularDadosRelatorio(); const element = document.getElementById('relatorioPDFContent'); html2pdf().set({ margin: [10,10,10,10], filename: `relatorio_${new Date().toISOString().split('T')[0]}.pdf`, image: { type: 'jpeg', quality: 0.98 }, html2canvas: { scale: 2 }, jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' } }).from(element).save(); mostrarToast('PDF gerado!'); }
+        function filtrarRelatorioPorData() { calcularDadosRelatorio(); }
+
+        // ========== FINANCEIRO ==========
+        function solicitarSenhaFinanceiro() { document.getElementById('modalSenha').style.display = 'flex'; }
+        function verificarSenhaFinanceiro() { const senha = document.getElementById('senhaFinanceiro').value; if(senha === 'admin123'){ document.getElementById('dadosBancariosContent').style.display = 'block'; closeModal('modalSenha'); mostrarToast('Acesso concedido!'); } else { alert('Senha incorreta! Tente: admin123'); } }
+        function atualizarFinanceiro() { const saldo = transacoes.reduce((a,b)=>a+(b.tipo==='receita'?b.valor:-b.valor),0); document.getElementById('financeiroStats').innerHTML = `<div class="stat-card"><div class="stat-icon"><i class="fas fa-dollar-sign"></i></div><h3>Saldo Disponível</h3><div class="stat-value">R$ ${saldo.toFixed(2)}</div></div>`; document.getElementById('transacoesTable').innerHTML = `<tbody>${transacoes.map(t => `<tr><td>${t.data}</td><td>${t.descricao}</td><td style="color:#4caf50">${t.tipo}</td><td style="color:#4caf50">+ R$ ${t.valor.toFixed(2)}</td><td>R$ ${t.saldo.toFixed(2)}</td>`).join('')}</tbody>`; }
+
+        // ========== CONFIGURAÇÕES ==========
+        function carregarConfiguracoes() { const config = JSON.parse(localStorage.getItem('vendedor_config')) || { nome: "Livraria da Mari", desc: "Livraria especializada", tel: "(11) 99999-1234", email: "contato@livraria.com", cnpj: "12.345.678/0001-90" }; document.getElementById('configLojaNome').value = config.nome; document.getElementById('configLojaDesc').value = config.desc; document.getElementById('configLojaTel').value = config.tel; document.getElementById('configLojaEmail').value = config.email; document.getElementById('configLojaCnpj').value = config.cnpj; }
+        function salvarConfiguracoesLoja() { const config = { nome: document.getElementById('configLojaNome').value, desc: document.getElementById('configLojaDesc').value, tel: document.getElementById('configLojaTel').value, email: document.getElementById('configLojaEmail').value, cnpj: document.getElementById('configLojaCnpj').value }; localStorage.setItem('vendedor_config', JSON.stringify(config)); mostrarToast('Configurações salvas!'); }
+
+        // ========== GRÁFICOS ==========
+        function initCharts() { new Chart(document.getElementById('vendasChart'), { type: 'line', data: { labels: ['Jan','Fev','Mar','Abr','Mai','Jun'], datasets: [{ label: 'Vendas (R$)', data: [1200,1900,3000,4500,5200,6800], borderColor: '#D9B607', backgroundColor: 'rgba(217,182,7,0.1)', tension: 0.4, fill: true }] }, options: { responsive: true } }); new Chart(document.getElementById('topProdutosChart'), { type: 'doughnut', data: { labels: produtos.map(p=>p.titulo), datasets: [{ data: produtos.map(p=>p.estoque), backgroundColor: ['#8C031C','#D9B607','#BF6980'] }] }, options: { responsive: true } }); }
+
+        // ========== INICIALIZAÇÃO ==========
+        function carregarPerfilStorage() {
+            const saved = localStorage.getItem('perfil_vendedor');
+            if (saved) { Object.assign(perfil, JSON.parse(saved)); }
+        }
+
+        function init() { 
+            carregarPerfilStorage();
+            carregarConfiguracoes(); 
+            atualizarDashboard(); 
+            renderizarProdutos(); 
+            renderizarPedidos(); 
+            renderizarClientes(); 
+            renderizarVendas(); 
+            calcularDadosRelatorio(); 
+            atualizarFinanceiro(); 
+            initCharts(); 
+            atualizarPerfilUI();
+        }
+        init();
+    </script>
+</body>
+</html>

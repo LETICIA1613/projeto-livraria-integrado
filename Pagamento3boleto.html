@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aguardando Pagamento — HamStore Books</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <!-- jsPDF para geração real de PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box;}
+        :root{
+            --vermelho-escuro:#8C031C; --rosa-medio:#BF6980;
+            --cinza-claro:#F0F0F2;    --dourado-principal:#D9B607;
+            --dourado-escuro:#8C5C03; --branco:#ffffff;
+            --sombra-suave:rgba(140,3,28,0.10); --sombra-dourado:rgba(217,182,7,0.30);
+            --cotton-candy:#E38792;   --garnet:#4E0A0B;
+            --dusty-white:#F2EEE8;    --khaki:#9DAD71;
+        }
+        body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:var(--cinza-claro);min-height:100vh;color:var(--garnet);}
+
+        /* ── BARRA SUPERIOR ── */
+        .shopee-top{background-color:var(--cotton-candy);color:var(--dusty-white);font-size:14px;position:sticky;top:0;z-index:1001;box-shadow:0 2px 8px rgba(78,10,11,.15);}
+        .container{max-width:1280px;margin:0 auto;padding:0 20px;}
+        .navbar{display:flex;justify-content:space-between;align-items:center;height:40px;}
+        .flex{display:flex;align-items:center;gap:20px;}
+        .navbar a{color:var(--dusty-white);text-decoration:none;font-size:13px;transition:opacity .2s;}
+        .navbar a:hover{opacity:.8;}
+        .navbar_links{display:flex;align-items:center;list-style:none;gap:16px;margin:0;padding:0;}
+        .navbar__link-text{color:var(--dusty-white);font-size:13px;}
+        .navbar__link--signup{font-weight:500;background-color:var(--garnet);padding:4px 12px;border-radius:15px;}
+        .navbar__link-separator{width:1px;height:16px;background-color:rgba(242,238,232,.4);margin:0 4px;}
+        .shopee-logo-area{display:flex;align-items:center;gap:8px;}
+        .shopee-store-name{font-weight:700;font-size:15px;color:var(--garnet);cursor:pointer;}
+        .shopee-store-name small{font-size:10px;font-weight:400;color:var(--dusty-white);}
+        .shopee-social-icons{display:flex;gap:8px;align-items:center;}
+        .social-icon{display:inline-block;width:20px;height:20px;background-size:contain;background-repeat:no-repeat;background-position:center;}
+        .instagram{background-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23F2EEE8"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>');}
+        .whatsapp{background-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23F2EEE8"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.126.556 4.118 1.523 5.847L.057 23.882l6.204-1.448A11.934 11.934 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.782 9.782 0 01-5.004-1.373l-.36-.214-3.713.868.922-3.596-.234-.37A9.789 9.789 0 012.182 12C2.182 6.57 6.57 2.182 12 2.182c5.43 0 9.818 4.388 9.818 9.818 0 5.43-4.388 9.818-9.818 9.818z"/></svg>');}
+        .tiktok{background-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23F2EEE8"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.87-4.53v-3.47a6.33 6.33 0 0 0-5.34 6.2 6.33 6.33 0 0 0 10.92 4.3 6.34 6.34 0 0 0 1.77-4.3V8.92a8.26 8.26 0 0 0 4.79 1.52V6.95a4.82 4.82 0 0 1-3.77-2.26z"/></svg>');}
+
+        /* ── HEADER ── */
+        .header{display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.97);backdrop-filter:blur(20px);padding:14px 30px;box-shadow:0 4px 20px var(--sombra-suave);position:sticky;top:40px;z-index:100;border-radius:0 0 20px 20px;}
+        .logo{font-size:26px;font-weight:bold;color:var(--garnet);cursor:pointer;letter-spacing:1px;}
+        .search-bar{flex:1;margin:0 30px;max-width:480px;}
+        .search-bar input{width:100%;padding:13px 22px;border-radius:30px;border:2px solid var(--dusty-white);font-size:15px;background:var(--dusty-white);outline:none;transition:all .3s;}
+        .search-bar input:focus{border-color:var(--cotton-candy);}
+        .icons{display:flex;gap:16px;}
+        .btn-sem-borda{background:none;border:none;color:var(--garnet);font-size:22px;cursor:pointer;transition:all .3s;padding:6px;border-radius:10px;}
+        .btn-sem-borda:hover{color:var(--cotton-candy);transform:translateY(-2px);}
+
+        /* ── PROGRESSO ── */
+        .progresso-wrap{background:var(--branco);border-bottom:2px solid var(--cinza-claro);padding:0 32px;box-shadow:0 2px 8px var(--sombra-suave);}
+        .progresso-inner{max-width:860px;margin:0 auto;display:flex;align-items:center;height:60px;}
+        .etapa{display:flex;align-items:center;gap:10px;flex-shrink:0;}
+        .etapa-linha{flex:1;height:3px;border-radius:2px;margin:0 10px;}
+        .etapa-linha.ativa{background:linear-gradient(90deg,var(--dourado-principal),var(--dourado-escuro));}
+        .etapa-num{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;flex-shrink:0;transition:all .4s;}
+        .etapa-num.feito{background:linear-gradient(135deg,var(--dourado-principal),var(--dourado-escuro));color:var(--branco);border:2px solid var(--dourado-escuro);}
+        .etapa-num.atual{background:linear-gradient(135deg,var(--vermelho-escuro),var(--rosa-medio));color:var(--branco);border:2px solid var(--vermelho-escuro);box-shadow:0 0 0 4px rgba(140,3,28,.15);}
+        .etapa-num.pend{background:var(--cinza-claro);color:#bbb;border:2px solid #ddd;}
+        .etapa-label{font-size:13px;font-weight:700;white-space:nowrap;}
+        .etapa-label.feito{color:var(--dourado-escuro);}
+        .etapa-label.atual{color:var(--vermelho-escuro);}
+        .etapa-label.pend{color:#bbb;}
+
+        /* ── LAYOUT ── */
+        .layout{max-width:720px;margin:36px auto 60px;padding:0 20px;}
+
+        /* ═══ HERO ═══ */
+        .hero-boleto{border-radius:24px;padding:40px 32px 34px;text-align:center;margin-bottom:24px;position:relative;overflow:hidden;background:linear-gradient(135deg,var(--garnet) 0%,var(--vermelho-escuro) 45%,var(--rosa-medio) 100%);box-shadow:0 12px 44px rgba(78,10,11,.28);}
+        .hero-boleto::before{content:'';position:absolute;inset:0;background-image:repeating-linear-gradient(45deg,transparent,transparent 18px,rgba(255,255,255,.04) 18px,rgba(255,255,255,.04) 19px),repeating-linear-gradient(-45deg,transparent,transparent 18px,rgba(255,255,255,.04) 18px,rgba(255,255,255,.04) 19px);pointer-events:none;}
+        .hero-boleto::after{content:'';position:absolute;top:-80px;right:-80px;width:260px;height:260px;border-radius:50%;background:rgba(255,255,255,.05);pointer-events:none;}
+        .hero-glow{position:absolute;bottom:-60px;left:-60px;width:200px;height:200px;border-radius:50%;background:rgba(217,182,7,.12);pointer-events:none;}
+        .hero-icon-wrap{position:relative;z-index:1;width:88px;height:88px;border-radius:50%;background:rgba(255,255,255,.14);border:3px solid rgba(255,255,255,.25);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:38px;animation:popIn .65s cubic-bezier(.34,1.56,.64,1);backdrop-filter:blur(6px);}
+        @keyframes popIn{from{transform:scale(.2);opacity:0}to{transform:scale(1);opacity:1}}
+        .hero-boleto h1{position:relative;z-index:1;font-size:28px;font-weight:900;color:var(--branco);margin-bottom:10px;letter-spacing:-.3px;}
+        .hero-boleto p{position:relative;z-index:1;font-size:14px;color:rgba(255,255,255,.82);line-height:1.7;max-width:420px;margin:0 auto 18px;}
+        .num-pedido{position:relative;z-index:1;display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);border-radius:30px;padding:8px 20px;font-size:13px;font-weight:700;color:var(--branco);letter-spacing:1px;}
+        .hero-pills{position:relative;z-index:1;display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:18px;}
+        .hero-pill{display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:30px;padding:5px 14px;font-size:12px;color:rgba(255,255,255,.75);}
+        .hero-pill i{font-size:11px;color:var(--dourado-principal);}
+
+        /* ─ LGPD BANNER ─ */
+        .lgpd-banner{
+            background:rgba(33,150,243,.07);
+            border:1.5px solid rgba(33,150,243,.22);
+            border-radius:16px;
+            padding:14px 18px;
+            margin-bottom:22px;
+            display:flex;gap:12px;align-items:flex-start;
+        }
+        .lgpd-ico{width:38px;height:38px;border-radius:11px;background:linear-gradient(135deg,#1565c0,#1976d2);display:flex;align-items:center;justify-content:center;color:var(--branco);font-size:15px;flex-shrink:0;}
+        .lgpd-txt{flex:1;}
+        .lgpd-txt .t{font-weight:700;font-size:13px;color:#1565c0;margin-bottom:3px;}
+        .lgpd-txt .s{font-size:12px;color:#555;line-height:1.6;}
+        .lgpd-txt a{color:#1565c0;font-weight:600;text-decoration:underline;cursor:pointer;}
+
+        /* ─ ALERTA PRINCIPAL ─ */
+        .alerta-principal{background:rgba(217,182,7,.08);border:2px solid rgba(217,182,7,.28);border-radius:16px;padding:16px 20px;display:flex;gap:14px;align-items:flex-start;margin-bottom:20px;}
+        .ap-ico{width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,var(--dourado-principal),var(--dourado-escuro));display:flex;align-items:center;justify-content:center;color:var(--branco);font-size:16px;flex-shrink:0;}
+        .ap-txt .t{font-weight:700;font-size:14px;color:var(--dourado-escuro);margin-bottom:4px;}
+        .ap-txt .s{font-size:13px;color:var(--garnet);line-height:1.6;}
+
+        /* ─ CARD ─ */
+        .card{background:var(--branco);border-radius:20px;overflow:hidden;box-shadow:0 4px 20px var(--sombra-suave);margin-bottom:20px;transition:box-shadow .25s;}
+        .card:hover{box-shadow:0 8px 32px rgba(140,3,28,.12);}
+        .card-header{padding:16px 22px;display:flex;align-items:center;gap:12px;border-bottom:2px solid var(--cinza-claro);background:linear-gradient(135deg,#fefefe,var(--cinza-claro));}
+        .card-header h3{font-size:15px;font-weight:700;color:var(--vermelho-escuro);flex:1;}
+        .icon-badge{width:32px;height:32px;border-radius:10px;background:linear-gradient(135deg,var(--dourado-principal),var(--dourado-escuro));display:flex;align-items:center;justify-content:center;color:var(--branco);font-size:13px;flex-shrink:0;}
+        .card-body{padding:20px 22px;}
+
+        /* ─ VENCIMENTO ─ */
+        .venc-box{background:linear-gradient(135deg,rgba(217,182,7,.08),rgba(140,92,3,.04));border:2px solid rgba(217,182,7,.22);border-radius:16px;padding:18px 20px;display:flex;align-items:center;gap:16px;margin-bottom:14px;}
+        .venc-ico{width:46px;height:46px;border-radius:14px;background:linear-gradient(135deg,var(--dourado-principal),var(--dourado-escuro));display:flex;align-items:center;justify-content:center;color:var(--branco);font-size:20px;flex-shrink:0;}
+        .venc-dados{flex:1;}
+        .venc-dados .vl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--rosa-medio);margin-bottom:4px;}
+        .venc-dados .vd{font-size:16px;font-weight:800;color:var(--dourado-escuro);}
+        .venc-dados .vs{font-size:12px;color:#888;margin-top:2px;}
+        .venc-contador{font-family:'Courier New',monospace;font-size:20px;font-weight:900;color:var(--vermelho-escuro);background:rgba(140,3,28,.07);border-radius:10px;padding:8px 16px;letter-spacing:2px;min-width:90px;text-align:center;flex-shrink:0;}
+
+        /* ─ LINHA DIGITÁVEL ─ */
+        .linha-box{background:var(--cinza-claro);border:2px solid #e0dbd5;border-radius:14px;padding:14px 18px;margin-bottom:14px;}
+        .linha-box .lb-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--rosa-medio);margin-bottom:6px;}
+        .linha-box .lb-code{font-family:'Courier New',monospace;font-size:13px;font-weight:700;color:var(--garnet);letter-spacing:1.5px;word-break:break-all;line-height:1.8;user-select:all;}
+        .btn-copiar-linha{width:100%;margin-top:10px;padding:11px;background:linear-gradient(135deg,var(--vermelho-escuro),var(--rosa-medio));border:none;border-radius:12px;color:var(--branco);font-size:14px;font-weight:700;cursor:pointer;transition:all .25s;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 4px 14px var(--sombra-suave);}
+        .btn-copiar-linha:hover{transform:translateY(-2px);}
+        .btn-copiar-linha.copiado{background:linear-gradient(135deg,#1b8a50,#145c35);}
+
+        /* ─ BTN PDF ─ */
+        .btn-pdf{width:100%;padding:12px;background:var(--cinza-claro);border:2px solid #d8d0c8;border-radius:12px;color:var(--garnet);font-size:14px;font-weight:700;cursor:pointer;transition:all .25s;display:flex;align-items:center;justify-content:center;gap:9px;position:relative;overflow:hidden;}
+        .btn-pdf:hover{background:var(--dusty-white);border-color:var(--rosa-medio);}
+        .btn-pdf .loading-bar{display:none;position:absolute;bottom:0;left:0;height:3px;background:linear-gradient(90deg,var(--dourado-principal),var(--dourado-escuro));border-radius:0 0 12px 12px;animation:loadBar 1.8s ease-in-out forwards;}
+        @keyframes loadBar{from{width:0}to{width:100%}}
+
+        /* ─ PASSOS ─ */
+        .passos{display:flex;flex-direction:column;gap:0;}
+        .passo{display:flex;gap:14px;padding-bottom:20px;position:relative;}
+        .passo:last-child{padding-bottom:0;}
+        .passo::before{content:'';position:absolute;left:17px;top:36px;bottom:0;width:2px;background:var(--cinza-claro);border-radius:2px;}
+        .passo:last-child::before{display:none;}
+        .p-num{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--vermelho-escuro),var(--rosa-medio));display:flex;align-items:center;justify-content:center;color:var(--branco);font-size:14px;font-weight:800;flex-shrink:0;box-shadow:0 3px 10px var(--sombra-suave);}
+        .p-texto{flex:1;padding-top:6px;}
+        .p-texto .t{font-weight:700;font-size:14px;color:var(--garnet);margin-bottom:3px;}
+        .p-texto .s{font-size:12px;color:#888;line-height:1.6;}
+
+        /* ─ TIMELINE ─ */
+        .tl{padding-left:38px;position:relative;}
+        .tl::before{content:'';position:absolute;left:13px;top:10px;bottom:10px;width:2px;background:var(--cinza-claro);border-radius:2px;}
+        .tl-item{position:relative;padding-bottom:20px;}
+        .tl-item:last-child{padding-bottom:0;}
+        .tl-dot{position:absolute;left:-33px;top:2px;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;z-index:1;}
+        .tl-dot.ok{background:linear-gradient(135deg,#1b8a50,#145c35);color:var(--branco);}
+        .tl-dot.curr{background:linear-gradient(135deg,var(--dourado-principal),var(--dourado-escuro));color:var(--branco);animation:pulseDot 1.6s infinite;}
+        .tl-dot.pend{background:var(--cinza-claro);color:#bbb;border:2px solid #ddd;}
+        @keyframes pulseDot{0%,100%{box-shadow:0 0 0 0 rgba(217,182,7,.5)}50%{box-shadow:0 0 0 7px rgba(217,182,7,0)}}
+        .tl-title{font-weight:700;font-size:14px;color:var(--garnet);}
+        .tl-title.pend{color:#ccc;}
+        .tl-desc{font-size:12px;color:#888;margin-top:3px;line-height:1.5;}
+        .tl-hora{font-size:11px;color:#ccc;margin-top:3px;}
+
+        /* ─ ITENS ─ */
+        .item-mini{display:flex;gap:12px;padding:11px 0;border-bottom:1px solid var(--cinza-claro);align-items:center;}
+        .item-mini:last-child{border-bottom:none;}
+        .item-img{width:44px;height:56px;background:linear-gradient(135deg,var(--cinza-claro),#e4e4e6);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:22px;color:var(--rosa-medio);flex-shrink:0;}
+        .item-dados{flex:1;}
+        .item-nome{font-size:13px;font-weight:700;color:var(--garnet);}
+        .item-meta{font-size:12px;color:#888;margin-top:2px;}
+        .item-preco{font-weight:800;font-size:14px;color:var(--vermelho-escuro);}
+
+        /* ─ FINANCEIRO ─ */
+        .fin-linha{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--cinza-claro);font-size:14px;}
+        .fin-linha:last-of-type{border-bottom:none;}
+        .fl{color:#777;}
+        .fv{font-weight:700;color:var(--garnet);}
+        .fv.verde{color:#27ae60;}
+        .fv.pend{color:var(--dourado-escuro);background:rgba(217,182,7,.1);padding:2px 9px;border-radius:20px;font-size:12px;}
+        .fin-total{display:flex;justify-content:space-between;align-items:center;margin-top:14px;padding-top:14px;border-top:2px solid var(--cinza-claro);}
+        .fin-total .fl{font-weight:800;font-size:15px;color:var(--garnet);}
+        .fin-total .fv-big{font-size:26px;font-weight:900;color:var(--vermelho-escuro);}
+        .email-conf{display:flex;align-items:center;gap:12px;background:rgba(33,150,243,.07);border:1px solid rgba(33,150,243,.2);border-radius:12px;padding:12px 16px;font-size:13px;color:#1565c0;margin-top:14px;}
+        .email-conf i{font-size:18px;flex-shrink:0;}
+
+        /* ─ AVISOS ─ */
+        .aviso-strip{display:flex;align-items:flex-start;gap:11px;padding:12px 14px;border-radius:12px;margin-bottom:10px;font-size:13px;line-height:1.6;}
+        .aviso-strip:last-child{margin-bottom:0;}
+        .aviso-strip.info{background:rgba(33,150,243,.06);color:#1565c0;border:1px solid rgba(33,150,243,.18);}
+        .aviso-strip.warn{background:rgba(217,182,7,.08);color:var(--dourado-escuro);border:1px solid rgba(217,182,7,.22);}
+        .aviso-strip.danger{background:rgba(231,76,60,.06);color:#c0392b;border:1px solid rgba(231,76,60,.18);}
+        .aviso-strip i{margin-top:1px;font-size:14px;flex-shrink:0;}
+
+        /* ─ AÇÕES ─ */
+        .acoes{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+        .btn-ac{padding:14px;border-radius:14px;font-size:14px;font-weight:700;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:8px;border:2px solid transparent;}
+        .btn-ac.prim{background:linear-gradient(135deg,var(--dourado-principal),var(--dourado-escuro));color:var(--branco);box-shadow:0 4px 14px var(--sombra-dourado);}
+        .btn-ac.prim:hover{transform:translateY(-2px);box-shadow:0 8px 24px var(--sombra-dourado);}
+        .btn-ac.sec{background:var(--branco);border-color:var(--rosa-medio);color:var(--vermelho-escuro);}
+        .btn-ac.sec:hover{background:var(--cinza-claro);}
+        .btn-ac.full{grid-column:1/-1;background:var(--cinza-claro);color:var(--garnet);}
+        .btn-ac.full:hover{background:linear-gradient(135deg,var(--vermelho-escuro),var(--rosa-medio));color:var(--branco);}
+        .btn-ac.danger-btn{grid-column:1/-1;background:none;border-color:rgba(231,76,60,.3);color:#c0392b;font-size:13px;}
+        .btn-ac.danger-btn:hover{background:rgba(231,76,60,.06);}
+
+        /* ─ LGPD FOOTER ─ */
+        .lgpd-footer{background:rgba(0,0,0,.03);border-top:1px solid rgba(0,0,0,.07);padding:16px 22px;}
+        .lgpd-footer p{font-size:11px;color:#999;line-height:1.7;text-align:center;}
+        .lgpd-footer a{color:var(--rosa-medio);font-weight:600;cursor:pointer;text-decoration:underline;}
+
+        /* TOAST */
+        .toast{position:fixed;bottom:26px;right:26px;background:var(--garnet);color:var(--branco);padding:13px 18px;border-radius:13px;font-size:13px;font-weight:600;z-index:3000;display:flex;align-items:center;gap:9px;transform:translateY(80px);opacity:0;transition:all .4s cubic-bezier(.34,1.56,.64,1);box-shadow:0 8px 26px rgba(0,0,0,.2);}
+        .toast.show{transform:translateY(0);opacity:1;}
+        .toast i{color:var(--dourado-principal);}
+
+        /* MODAL LGPD */
+        .modal-lgpd{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:2000;align-items:center;justify-content:center;padding:20px;}
+        .modal-lgpd.open{display:flex;}
+        .modal-box{background:var(--branco);border-radius:20px;max-width:520px;width:100%;max-height:88vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.25);}
+        .modal-head{background:linear-gradient(135deg,#1565c0,#1976d2);padding:20px 24px;display:flex;align-items:center;justify-content:space-between;}
+        .modal-head h3{color:var(--branco);font-size:16px;font-weight:700;}
+        .modal-close{background:rgba(255,255,255,.18);border:none;color:var(--branco);width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center;}
+        .modal-close:hover{background:rgba(255,255,255,.3);}
+        .modal-body{padding:24px;}
+        .modal-body h4{font-size:14px;font-weight:700;color:#1565c0;margin:16px 0 6px;}
+        .modal-body h4:first-child{margin-top:0;}
+        .modal-body p,.modal-body li{font-size:13px;color:#555;line-height:1.75;}
+        .modal-body ul{padding-left:18px;margin-top:4px;}
+        .modal-body li{margin-bottom:4px;}
+        .modal-btn-fechar{width:100%;padding:12px;background:linear-gradient(135deg,#1565c0,#1976d2);border:none;border-radius:12px;color:var(--branco);font-size:14px;font-weight:700;cursor:pointer;margin-top:18px;}
+
+        @media(max-width:600px){.acoes{grid-template-columns:1fr}.hero-boleto h1{font-size:22px}.etapa-label{display:none}.venc-box{flex-wrap:wrap}.venc-contador{width:100%;text-align:center;}}
+    </style>
+</head>
+<body>
+
+<!-- BARRA SUPERIOR -->
+<header class="shopee-top">
+  <div class="container">
+    <nav class="navbar">
+      <div class="flex">
+        <div class="shopee-logo-area">
+          <span style="font-size:18px;">📚</span>
+          <span class="shopee-store-name" onclick="window.location.href='Entrar.html'">HAMSTORE <small>books</small></span>
+        </div>
+        <a href="#" onclick="window.location.href='dashbord.html'">Central do Vendedor</a>
+        <a href="#" onclick="window.location.href='CadastroVendedor.html'">Vender na HamStore</a>
+      </div>
+      <div class="flex">
+        <div class="shopee-social-icons">
+          <span style="font-size:13px;color:var(--dusty-white);">Siga-nos</span>
+          <a href="#" class="social-icon instagram"></a>
+          <a href="#" class="social-icon whatsapp"></a>
+          <a href="#" class="social-icon tiktok"></a>
+        </div>
+      </div>
+      <ul class="navbar_links">
+        <li><a href="#" class="navbar__link-text">Ajuda</a></li>
+        <li><a href="#" onclick="window.location.href='Cadastro1.html'" class="navbar__link-text navbar__link--signup">Cadastrar</a></li>
+        <li><div class="navbar__link-separator"></div></li>
+        <li><a href="#" onclick="window.location.href='login.html'" class="navbar__link-text">Entrar</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<!-- HEADER -->
+<header class="header">
+  <h1 onclick="window.location.href='Entrar.html'" class="logo">📚 Livraria</h1>
+  <div class="search-bar"><input type="text" placeholder="Buscar livros..."></div>
+  <div class="icons">
+    <button class="btn-sem-borda" onclick="window.location.href='Carrinho.html'">🛒</button>
+    <button class="btn-sem-borda">⚙️</button>
+    <button class="btn-sem-borda" onclick="window.location.href='MinhasCompras.html'">👤</button>
+  </div>
+</header>
+
+<!-- PROGRESSO -->
+<div class="progresso-wrap">
+  <div class="progresso-inner">
+    <div class="etapa"><div class="etapa-num feito"><i class="fas fa-check" style="font-size:11px;"></i></div><span class="etapa-label feito">Carrinho</span></div>
+    <div class="etapa-linha ativa"></div>
+    <div class="etapa"><div class="etapa-num feito"><i class="fas fa-check" style="font-size:11px;"></i></div><span class="etapa-label feito">Pagamento</span></div>
+    <div class="etapa-linha ativa"></div>
+    <div class="etapa"><div class="etapa-num atual">3</div><span class="etapa-label atual">Confirmação</span></div>
+  </div>
+</div>
+
+<div class="layout">
+
+  <!-- HERO -->
+  <div class="hero-boleto">
+    <div class="hero-glow"></div>
+    <div class="hero-icon-wrap">📄</div>
+    <h1>Boleto gerado com sucesso!</h1>
+    <p>Pague até <strong id="venc-data" style="color:rgba(255,255,255,.95);"></strong> para confirmar e processar seu pedido. Confirmação em até <strong style="color:rgba(255,255,255,.95);">1 dia útil</strong> após o pagamento.</p>
+    <div class="num-pedido"><i class="fas fa-receipt"></i> <span id="num-pedido-hero"></span></div>
+    <div class="hero-pills">
+      <div class="hero-pill"><i class="fas fa-shield-alt"></i> Compra protegida</div>
+      <div class="hero-pill"><i class="fas fa-lock"></i> Pedido reservado por 3 dias</div>
+      <div class="hero-pill"><i class="fas fa-user-shield"></i> Dados protegidos pela LGPD</div>
+    </div>
+  </div>
+
+  <!-- LGPD BANNER -->
+  <div class="lgpd-banner">
+    <div class="lgpd-ico"><i class="fas fa-user-shield"></i></div>
+    <div class="lgpd-txt">
+      <div class="t">Proteção de dados — Lei nº 13.709/2018 (LGPD)</div>
+      <div class="s">
+        Seus dados pessoais (nome, CPF e e-mail) foram usados exclusivamente para emitir este boleto e processar seu pedido,
+        com base legal no <strong>Art. 7º, V — execução de contrato</strong>. Nenhum dado financeiro é armazenado pela HamStore.
+        <a onclick="abrirLgpd()">Ver política de privacidade completa →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ALERTA PRINCIPAL -->
+  <div class="alerta-principal">
+    <div class="ap-ico"><i class="fas fa-exclamation-triangle"></i></div>
+    <div class="ap-txt">
+      <div class="t">Seu pedido ainda não foi confirmado</div>
+      <div class="s">O processamento começa somente após a <strong>compensação bancária do boleto</strong>. Bancos podem levar até 2 dias úteis para confirmar o pagamento.</div>
+    </div>
+  </div>
+
+  <!-- VENCIMENTO + CONTADOR -->
+  <div class="card">
+    <div class="card-header"><div class="icon-badge"><i class="fas fa-calendar-times"></i></div><h3>Prazo de pagamento</h3></div>
+    <div class="card-body">
+      <div class="venc-box">
+        <div class="venc-ico"><i class="fas fa-hourglass-half"></i></div>
+        <div class="venc-dados">
+          <div class="vl">Vencimento do boleto</div>
+          <div class="vd" id="venc-data-box"></div>
+          <div class="vs">Boletos vencidos não são aceitos — emita um novo se necessário</div>
+        </div>
+        <div class="venc-contador" id="contador-venc">--:--:--</div>
+      </div>
+      <div class="aviso-strip warn">
+        <i class="fas fa-info-circle"></i>
+        <span>Após o vencimento, seu pedido será <strong>automaticamente cancelado</strong> e os itens retornarão ao estoque.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- LINHA DIGITÁVEL + PDF -->
+  <div class="card">
+    <div class="card-header"><div class="icon-badge"><i class="fas fa-barcode"></i></div><h3>Linha digitável do boleto</h3></div>
+    <div class="card-body">
+      <div class="linha-box">
+        <div class="lb-label">Código para pagamento</div>
+        <div class="lb-code" id="linha-digitavel">34191.75008 00001.156922 57455.640006 1 00000012990</div>
+      </div>
+      <button class="btn-copiar-linha" id="btn-copia-linha" onclick="copiarLinha()">
+        <i class="fas fa-copy" id="copia-ico"></i>
+        <span id="copia-txt">Copiar linha digitável</span>
+      </button>
+      <div style="margin-top:12px;">
+        <button class="btn-pdf" id="btn-pdf" onclick="baixarPDF()">
+          <i class="fas fa-file-pdf" style="color:var(--vermelho-escuro);font-size:16px;"></i>
+          <span id="pdf-txt">Baixar boleto em PDF</span>
+          <div class="loading-bar" id="pdf-bar"></div>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- COMO PAGAR -->
+  <div class="card">
+    <div class="card-header"><div class="icon-badge"><i class="fas fa-mobile-alt"></i></div><h3>Como pagar o boleto</h3></div>
+    <div class="card-body">
+      <div class="passos">
+        <div class="passo"><div class="p-num">1</div><div class="p-texto"><div class="t">Acesse o app do seu banco</div><div class="s">Abra o aplicativo bancário ou internet banking no celular ou computador.</div></div></div>
+        <div class="passo"><div class="p-num">2</div><div class="p-texto"><div class="t">Vá em "Pagar boleto" ou "Pagar conta"</div><div class="s">Procure a opção de pagamento de boleto, conta ou código de barras no menu.</div></div></div>
+        <div class="passo"><div class="p-num">3</div><div class="p-texto"><div class="t">Cole ou escaneie a linha digitável</div><div class="s">Cole o código copiado acima ou escaneie o código de barras do PDF do boleto.</div></div></div>
+        <div class="passo"><div class="p-num">4</div><div class="p-texto"><div class="t">Confirme os dados e pague</div><div class="s">Verifique o valor de <strong id="valor-passo"></strong> e o beneficiário <strong>HamStore Books LTDA</strong> antes de confirmar.</div></div></div>
+        <div class="passo"><div class="p-num">5</div><div class="p-texto"><div class="t">Aguarde a confirmação por e-mail</div><div class="s">Você receberá um e-mail em até 1 dia útil confirmando que seu pedido entrou em preparo.</div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TIMELINE -->
+  <div class="card">
+    <div class="card-header"><div class="icon-badge"><i class="fas fa-route"></i></div><h3>Status do pedido</h3></div>
+    <div class="card-body">
+      <div class="tl">
+        <div class="tl-item"><div class="tl-dot ok"><i class="fas fa-check"></i></div><div class="tl-title">Pedido recebido</div><div class="tl-desc">Seus itens foram reservados com sucesso.</div><div class="tl-hora" id="hora-pedido"></div></div>
+        <div class="tl-item"><div class="tl-dot ok"><i class="fas fa-check"></i></div><div class="tl-title">Boleto emitido</div><div class="tl-desc">Boleto gerado e enviado para <strong id="email-tl"></strong></div><div class="tl-hora" id="hora-boleto"></div></div>
+        <div class="tl-item"><div class="tl-dot curr"><i class="fas fa-clock"></i></div><div class="tl-title">Aguardando pagamento</div><div class="tl-desc">Pague até <span id="venc-tl"></span> para não perder o pedido.</div></div>
+        <div class="tl-item"><div class="tl-dot pend"><i class="fas fa-check-double"></i></div><div class="tl-title pend">Pagamento confirmado</div><div class="tl-desc">Confirmado em até 1 dia útil após o pagamento bancário.</div></div>
+        <div class="tl-item"><div class="tl-dot pend"><i class="fas fa-box-open"></i></div><div class="tl-title pend">Preparando envio</div><div class="tl-desc">Embalagem e despacho após confirmação do pagamento.</div></div>
+        <div class="tl-item"><div class="tl-dot pend"><i class="fas fa-truck"></i></div><div class="tl-title pend">Enviado</div><div class="tl-desc">Previsão: <span id="prev-entrega"></span></div></div>
+        <div class="tl-item"><div class="tl-dot pend"><i class="fas fa-home"></i></div><div class="tl-title pend">Entregue</div><div class="tl-desc">Vila Mariana · São Paulo – SP</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ITENS DO PEDIDO -->
+  <div class="card">
+    <div class="card-header"><div class="icon-badge"><i class="fas fa-shopping-bag"></i></div><h3>Itens do pedido</h3></div>
+    <div class="card-body" style="padding-top:8px;padding-bottom:8px;">
+      <div class="item-mini"><div class="item-img"><i class="fas fa-book"></i></div><div class="item-dados"><div class="item-nome">O Pequeno Príncipe — Edição Especial</div><div class="item-meta">Capa dura · Qtd: 1 · MOBY LUX</div></div><div class="item-preco">R$ 39,90</div></div>
+      <div class="item-mini"><div class="item-img"><i class="fas fa-book"></i></div><div class="item-dados"><div class="item-nome">1984 — George Orwell</div><div class="item-meta">Capa comum · Qtd: 2 · Leitura Livraria</div></div><div class="item-preco">R$ 90,00</div></div>
+    </div>
+  </div>
+
+  <!-- RESUMO FINANCEIRO -->
+  <div class="card">
+    <div class="card-header"><div class="icon-badge"><i class="fas fa-receipt"></i></div><h3>Resumo financeiro</h3></div>
+    <div class="card-body">
+      <div class="fin-linha"><span class="fl">Subtotal</span><span class="fv">R$ 129,90</span></div>
+      <div class="fin-linha"><span class="fl">Desconto</span><span class="fv" style="color:#27ae60;">−R$ 0,00</span></div>
+      <div class="fin-linha"><span class="fl">Frete</span><span class="fv verde"><i class="fas fa-truck" style="font-size:11px;"></i> Grátis</span></div>
+      <div class="fin-linha"><span class="fl">Método</span><span class="fv">Boleto bancário</span></div>
+      <div class="fin-linha"><span class="fl">Status do pagamento</span><span class="fv pend"><i class="fas fa-clock" style="margin-right:4px;"></i>Aguardando</span></div>
+      <div class="fin-total"><span class="fl">Total do pedido</span><span class="fv-big" id="total-fmt">R$ 129,90</span></div>
+      <div class="email-conf"><i class="fas fa-envelope"></i><span>Boleto enviado para <strong id="email-conf-txt"></strong> · Verifique sua caixa de spam</span></div>
+    </div>
+  </div>
+
+  <!-- INFORMAÇÕES IMPORTANTES -->
+  <div class="card">
+    <div class="card-header"><div class="icon-badge"><i class="fas fa-info-circle"></i></div><h3>Informações importantes</h3></div>
+    <div class="card-body">
+      <div class="aviso-strip info"><i class="fas fa-clock"></i><span>A compensação bancária pode levar até <strong>2 dias úteis</strong>. Seu pedido entrará em preparo automaticamente após a confirmação.</span></div>
+      <div class="aviso-strip warn"><i class="fas fa-calendar-times"></i><span>Boletos vencidos <strong>não são reprocessados</strong>. Se o boleto vencer sem pagamento, acesse "Meus pedidos" para emitir um novo.</span></div>
+      <div class="aviso-strip info"><i class="fas fa-university"></i><span>O boleto pode ser pago em qualquer banco, lotérica, internet banking ou aplicativo financeiro antes do vencimento.</span></div>
+      <div class="aviso-strip danger"><i class="fas fa-exclamation-circle"></i><span>Não pague boletos com valor diferente do exibido acima. Em caso de dúvida, entre em contato com nosso suporte.</span></div>
+    </div>
+  </div>
+
+  <!-- AÇÕES -->
+  <div class="card">
+    <div class="card-body">
+      <div class="acoes">
+        <button class="btn-ac prim" onclick="window.location.href='MinhasCompras.html'"><i class="fas fa-shopping-bag"></i> Meus pedidos</button>
+        <button class="btn-ac sec" onclick="window.location.href='Entrar.html'"><i class="fas fa-book"></i> Continuar comprando</button>
+        <button class="btn-ac full" onclick="copiarLinha()"><i class="fas fa-copy"></i> Copiar linha digitável</button>
+        <button class="btn-ac danger-btn" onclick="confirmarCancelamento()"><i class="fas fa-times-circle"></i> Cancelar pedido e escolher outro pagamento</button>
+      </div>
+    </div>
+    <!-- LGPD FOOTER -->
+    <div class="lgpd-footer">
+      <p>
+        <i class="fas fa-user-shield" style="color:#1976d2;margin-right:4px;"></i>
+        Seus dados são tratados com base na <strong>LGPD — Lei nº 13.709/2018</strong>, Art. 7º, V (execução de contrato).
+        CPF e e-mail são usados exclusivamente para emissão do boleto e comunicações transacionais deste pedido.
+        Você pode solicitar acesso, correção ou exclusão dos seus dados em
+        <a onclick="abrirLgpd()" style="color:#1976d2;cursor:pointer;font-weight:600;">privacidade@hamstore.com.br</a> ·
+        <a onclick="abrirLgpd()" style="color:var(--rosa-medio);cursor:pointer;font-weight:600;">Política de Privacidade</a>
+      </p>
+    </div>
+  </div>
+
+</div>
+
+<!-- MODAL LGPD -->
+<div class="modal-lgpd" id="modal-lgpd">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h3><i class="fas fa-user-shield" style="margin-right:8px;"></i>Política de Privacidade &amp; LGPD</h3>
+      <button class="modal-close" onclick="document.getElementById('modal-lgpd').classList.remove('open')"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="modal-body">
+      <h4>1. Controlador dos dados</h4>
+      <p>HamStore Books LTDA · CNPJ 12.345.678/0001-90 · São Paulo, SP<br>Encarregada de Dados (DPO): <strong>privacidade@hamstore.com.br</strong></p>
+
+      <h4>2. Quais dados coletamos nesta transação</h4>
+      <ul>
+        <li>Nome completo e CPF — necessários para emissão do boleto bancário</li>
+        <li>Endereço de entrega — necessário para o envio dos produtos</li>
+        <li>E-mail — para envio do boleto e notificações de status do pedido</li>
+      </ul>
+      <p style="margin-top:6px;"><strong>Não armazenamos</strong> dados de cartão de crédito ou informações bancárias.</p>
+
+      <h4>3. Base legal (LGPD — Art. 7º)</h4>
+      <ul>
+        <li><strong>Inciso V — Execução de contrato:</strong> tratamento necessário para processar e entregar seu pedido</li>
+        <li><strong>Inciso II — Cumprimento de obrigação legal:</strong> emissão de nota fiscal e obrigações tributárias</li>
+      </ul>
+
+      <h4>4. Finalidade e uso dos dados</h4>
+      <ul>
+        <li>Emissão do boleto bancário e processamento do pagamento</li>
+        <li>Comunicações transacionais sobre o status do pedido</li>
+        <li>Cumprimento de obrigações fiscais e legais</li>
+        <li>Prevenção a fraudes e segurança da transação</li>
+      </ul>
+
+      <h4>5. Compartilhamento</h4>
+      <p>Seus dados poderão ser compartilhados com:</p>
+      <ul>
+        <li><strong>Banco emissor:</strong> para processar o boleto bancário</li>
+        <li><strong>Transportadora:</strong> nome e endereço para entrega</li>
+        <li><strong>Receita Federal:</strong> quando exigido por lei (NF-e)</li>
+      </ul>
+      <p style="margin-top:6px;">Não vendemos nem cedemos seus dados para terceiros para fins publicitários.</p>
+
+      <h4>6. Retenção dos dados</h4>
+      <p>Seus dados serão mantidos pelo prazo necessário para cumprir as finalidades acima e obrigações legais. Dados fiscais são retidos por <strong>5 anos</strong> conforme legislação tributária.</p>
+
+      <h4>7. Seus direitos (Art. 18 da LGPD)</h4>
+      <ul>
+        <li>Confirmação e acesso aos seus dados pessoais</li>
+        <li>Correção de dados incompletos ou incorretos</li>
+        <li>Anonimização, bloqueio ou eliminação de dados desnecessários</li>
+        <li>Portabilidade dos dados a outro fornecedor</li>
+        <li>Revogação do consentimento (quando aplicável)</li>
+        <li>Petição à Autoridade Nacional de Proteção de Dados (ANPD)</li>
+      </ul>
+
+      <h4>8. Como exercer seus direitos</h4>
+      <p>Envie sua solicitação para <strong>privacidade@hamstore.com.br</strong> com o assunto "Direitos LGPD". Responderemos em até <strong>15 dias úteis</strong>.</p>
+
+      <button class="modal-btn-fechar" onclick="document.getElementById('modal-lgpd').classList.remove('open')">
+        <i class="fas fa-check" style="margin-right:6px;"></i>Entendi
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"><i class="fas fa-check-circle"></i><span id="toast-msg">Copiado!</span></div>
+
+<script>
+    /* ── DADOS ── */
+    const p = new URLSearchParams(location.search);
+    const totalNum = parseFloat(p.get('total') || 129.90);
+    const totalFmt = 'R$ ' + totalNum.toFixed(2).replace('.', ',');
+    const LINHA = '34191.75008 00001.156922 57455.640006 1 00000012990';
+    /* Em produção real o e-mail viria do backend/sessão.
+       Aqui exibimos mascarado conforme LGPD: m*****z@email.com */
+    const EMAIL_REAL  = 'mariabeatriz@email.com';
+    const EMAIL_MASK  = EMAIL_REAL.replace(/^(.{2})(.*)(@.*)$/, (_, a, b, c) => a + '*'.repeat(b.length) + c);
+
+    const agora      = new Date();
+    const vencimento = new Date(); vencimento.setDate(vencimento.getDate() + 3);
+    const prevEnt    = new Date(); prevEnt.setDate(prevEnt.getDate() + 8);
+
+    const fmtData  = d => d.toLocaleDateString('pt-BR', {weekday:'long', day:'numeric', month:'long', year:'numeric'});
+    const fmtHora  = d => d.toLocaleTimeString('pt-BR', {hour:'2-digit', minute:'2-digit'});
+    const fmtCurta = d => d.toLocaleDateString('pt-BR');
+    const numPed   = '#HMS' + Math.floor(Math.random()*90000+10000);
+
+    /* ── PREENCHER ── */
+    document.getElementById('num-pedido-hero').textContent = numPed;
+    document.getElementById('venc-data').textContent       = fmtCurta(vencimento);
+    document.getElementById('venc-data-box').textContent   = fmtData(vencimento);
+    document.getElementById('venc-tl').textContent         = fmtCurta(vencimento);
+    document.getElementById('prev-entrega').textContent    = fmtData(prevEnt);
+    document.getElementById('hora-pedido').textContent     = fmtHora(agora);
+    document.getElementById('hora-boleto').textContent     = fmtHora(agora);
+    document.getElementById('total-fmt').textContent       = totalFmt;
+    document.getElementById('valor-passo').textContent     = totalFmt;
+    /* E-mail mascarado (LGPD: minimização de dados exibidos) */
+    document.getElementById('email-tl').textContent        = EMAIL_MASK;
+    document.getElementById('email-conf-txt').textContent  = EMAIL_MASK;
+
+    /* ── CONTADOR REGRESSIVO ── */
+    function atualizarContador() {
+        const diff = vencimento - new Date();
+        const el = document.getElementById('contador-venc');
+        if (diff <= 0) { el.textContent = 'Vencido'; el.style.color = '#c0392b'; return; }
+        const h  = Math.floor(diff / 3600000);
+        const m  = Math.floor((diff % 3600000) / 60000);
+        const s  = Math.floor((diff % 60000) / 1000);
+        const pad = n => String(n).padStart(2,'0');
+        el.textContent = h >= 24
+            ? `${Math.floor(h/24)}d ${pad(h%24)}:${pad(m)}:${pad(s)}`
+            : `${pad(h)}:${pad(m)}:${pad(s)}`;
+    }
+    atualizarContador();
+    setInterval(atualizarContador, 1000);
+
+    /* ── COPIAR LINHA ── */
+    function copiarLinha() {
+        navigator.clipboard.writeText(LINHA).catch(() => {});
+        const btn = document.getElementById('btn-copia-linha');
+        const ico = document.getElementById('copia-ico');
+        const txt = document.getElementById('copia-txt');
+        btn.classList.add('copiado');
+        ico.className = 'fas fa-check';
+        txt.textContent = 'Linha digitável copiada!';
+        mostrarToast('Linha digitável copiada ✓');
+        setTimeout(() => {
+            btn.classList.remove('copiado');
+            ico.className = 'fas fa-copy';
+            txt.textContent = 'Copiar linha digitável';
+        }, 3500);
+    }
+
+    /* ══════════════════════════════════════════════
+       GERAR PDF REAL COM jsPDF
+       — Boleto bancário simulado com todos os campos
+       — LGPD: CPF mascarado no PDF, somente para uso
+         pelo destinatário identificado
+    ══════════════════════════════════════════════ */
+    function baixarPDF() {
+        const btn = document.getElementById('btn-pdf');
+        const bar = document.getElementById('pdf-bar');
+        const txt = document.getElementById('pdf-txt');
+
+        txt.textContent = 'Gerando PDF…';
+        bar.style.display = 'block';
+        btn.style.pointerEvents = 'none';
+
+        /* Aguarda a barra de loading para dar feedback visual */
+        setTimeout(() => {
+            try {
+                gerarBoletoPDF();
+                bar.style.display = 'none';
+                txt.textContent = '✓ Boleto PDF baixado!';
+                btn.style.color = '#1e7e34';
+                btn.style.borderColor = '#27ae60';
+                mostrarToast('Boleto gerado e baixado! 📄');
+            } catch(e) {
+                bar.style.display = 'none';
+                txt.textContent = 'Erro ao gerar PDF — tente novamente';
+                btn.style.color = '#c0392b';
+                console.error('Erro jsPDF:', e);
+            }
+            setTimeout(() => {
+                txt.textContent = 'Baixar boleto em PDF';
+                btn.style.color = '';
+                btn.style.borderColor = '';
+                btn.style.pointerEvents = '';
+            }, 4000);
+        }, 1800);
+    }
+
+    function gerarBoletoPDF() {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+
+        const W = 210; // largura A4
+
+        /* ── PALETA ── */
+        const C_VERM   = [140, 3, 28];
+        const C_ROSA   = [191, 105, 128];
+        const C_OURO   = [217, 182, 7];
+        const C_GARNET = [78, 10, 11];
+        const C_CINZA  = [240, 240, 242];
+        const C_BRANCO = [255, 255, 255];
+        const C_PRETO  = [34, 34, 34];
+        const C_AZUL   = [21, 101, 192];
+
+        /* ── HEADER COLORIDO ── */
+        doc.setFillColor(...C_GARNET);
+        doc.rect(0, 0, W, 28, 'F');
+        doc.setFillColor(...C_VERM);
+        doc.rect(0, 18, W, 10, 'F');
+
+        doc.setTextColor(...C_OURO);
+        doc.setFontSize(18);
+        doc.setFont('helvetica', 'bold');
+        doc.text('📚 HamStore Books', 15, 12);
+
+        doc.setTextColor(...C_BRANCO);
+        doc.setFontSize(9);
+        doc.setFont('helvetica', 'normal');
+        doc.text('BOLETO BANCÁRIO — DOCUMENTO DE COBRANÇA', 15, 24);
+        doc.text(`Emitido em: ${fmtCurta(agora)} às ${fmtHora(agora)}`, W - 15, 24, {align: 'right'});
+
+        /* ── DIVISA BOLETO (linha preta) ── */
+        doc.setFillColor(...C_PRETO);
+        doc.rect(0, 29, W, 0.6, 'F');
+
+        /* ── CABEÇALHO DO BOLETO ── */
+        let y = 36;
+
+        /* Banco | Linha digitável | Vencimento */
+        doc.setDrawColor(...C_PRETO);
+        doc.setLineWidth(0.4);
+
+        doc.setFillColor(...C_CINZA);
+        doc.rect(10, y, W-20, 12, 'FD');
+
+        /* Nome banco */
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(11);
+        doc.setTextColor(...C_PRETO);
+        doc.text('Hambank  |  001-9', 13, y+8);
+
+        /* Linha separadora vertical */
+        doc.setDrawColor(...C_PRETO);
+        doc.line(58, y, 58, y+12);
+
+        /* Linha digitável */
+        doc.setFont('courier', 'bold');
+        doc.setFontSize(9);
+        doc.text(LINHA, 61, y+8);
+
+        /* Linha separadora vertical */
+        doc.line(W-40, y, W-40, y+12);
+
+        /* Vencimento */
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(8);
+        doc.setTextColor(100,100,100);
+        doc.text('Vencimento', W-37, y+5);
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(11);
+        doc.setTextColor(...C_PRETO);
+        doc.text(fmtCurta(vencimento), W-37, y+10);
+
+        y += 18;
+
+        /* ── CAMPOS ESTRUTURADOS ── */
+        function campo(label, value, x, cy, w, h=10) {
+            doc.setFillColor(250,250,250);
+            doc.setDrawColor(200,200,200);
+            doc.setLineWidth(0.3);
+            doc.rect(x, cy, w, h, 'FD');
+            doc.setFont('helvetica', 'normal');
+            doc.setFontSize(7);
+            doc.setTextColor(120,120,120);
+            doc.text(label.toUpperCase(), x+2, cy+4);
+            doc.setFont('helvetica', 'bold');
+            doc.setFontSize(9);
+            doc.setTextColor(...C_PRETO);
+            doc.text(String(value), x+2, cy+9);
+        }
+
+        /* Linha 1: Beneficiário | CNPJ */
+        campo('Beneficiário', 'HamStore Books LTDA', 10, y, 130);
+        campo('CNPJ', '12.345.678/0001-90', 140, y, 60);
+        y += 12;
+
+        /* Linha 2: Endereço */
+        campo('Endereço do beneficiário', 'Av. Paulista, 1000 — São Paulo, SP — CEP 01310-100', 10, y, 190);
+        y += 12;
+
+        /* Linha 3: Pagador | CPF (mascarado LGPD) | Data emissão */
+        campo('Pagador', 'Maria Beatriz Oliveira', 10, y, 110);
+        /* CPF mascarado conforme LGPD — minimização de dados no documento */
+        campo('CPF (protegido LGPD)', '•••.456.789-••', 120, y, 50);
+        campo('Data de emissão', fmtCurta(agora), 170, y, 30);
+        y += 12;
+
+        /* Linha 4: Nº documento | Valor */
+        campo('Número do documento', numPed.replace('#',''), 10, y, 100);
+        campo('Nosso número', '000' + Math.floor(Math.random()*99999), 110, y, 50);
+        campo('(=) Valor do documento  R$', totalFmt, 160, y, 40, 12);
+        y += 16;
+
+        /* ── INSTRUCOES ── */
+        doc.setFillColor(253, 248, 225);
+        doc.setDrawColor(...C_OURO);
+        doc.setLineWidth(0.6);
+        doc.rect(10, y, 190, 18, 'FD');
+        /* Borda esquerda dourada grossa */
+        doc.setFillColor(...C_OURO);
+        doc.rect(10, y, 2, 18, 'F');
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(7.5);
+        doc.setTextColor(...C_GARNET);
+        doc.text('INSTRUÇÕES AO CAIXA:', 15, y+6);
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(7.5);
+        doc.text('Não receber após o vencimento. Cobrar multa de 2% e juros de 1% ao mês após vencimento.', 15, y+11);
+        doc.text('Em caso de dúvidas: (11) 3000-9999 ou suporte@hamstore.com.br', 15, y+16);
+        y += 24;
+
+        /* ── CÓDIGO DE BARRAS (simulado com retângulos) ── */
+        doc.setFillColor(...C_PRETO);
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(8);
+        doc.setTextColor(...C_PRETO);
+        doc.text('CÓDIGO DE BARRAS', 10, y);
+        y += 4;
+
+        /* Gera padrão de barras alternadas */
+        const barsData = [3,1,2,1,1,2,3,1,2,1,1,3,2,1,1,2,3,1,1,2,2,1,3,1,1,2,2,3,1,1,2,1,3,2,1,1,2,1,3,1,2,1,1,2,3,1,1,2,1,3];
+        let bx = 10;
+        let isBar = true;
+        const bH = 15;
+        barsData.forEach(w => {
+            if (isBar) {
+                doc.setFillColor(...C_PRETO);
+                doc.rect(bx, y, w * 0.8, bH, 'F');
+            }
+            bx += w * 0.8 + 0.4;
+            isBar = !isBar;
+        });
+
+        /* Número abaixo das barras */
+        doc.setFont('courier', 'normal');
+        doc.setFontSize(8);
+        doc.setTextColor(...C_PRETO);
+        doc.text(LINHA, W/2, y + bH + 5, {align: 'center'});
+        y += bH + 14;
+
+        /* ── DIVISA PICOTE ── */
+        doc.setDrawColor(150,150,150);
+        doc.setLineWidth(0.3);
+        doc.setLineDash([2, 2]);
+        doc.line(10, y, W-10, y);
+        doc.setLineDash([]);
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(7);
+        doc.setTextColor(150,150,150);
+        doc.text('✂  Corte aqui — comprovante do pagador', W/2, y+4, {align:'center'});
+        y += 10;
+
+        /* ── COMPROVANTE DO PAGADOR ── */
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(10);
+        doc.setTextColor(...C_GARNET);
+        doc.text('COMPROVANTE DO PAGADOR', 10, y+5);
+        y += 10;
+
+        campo('Beneficiário', 'HamStore Books LTDA', 10, y, 130);
+        campo('Vencimento', fmtCurta(vencimento), 140, y, 60);
+        y += 12;
+        campo('Pagador', 'Maria Beatriz Oliveira', 10, y, 130);
+        /* LGPD: CPF mascarado também no comprovante */
+        campo('CPF', '•••.456.789-••', 140, y, 60);
+        y += 12;
+        campo('Número do pedido', numPed.replace('#',''), 10, y, 90);
+        campo('Data de emissão', fmtCurta(agora), 100, y, 60);
+        campo('(=) Valor  R$', totalFmt, 160, y, 40);
+        y += 16;
+
+        /* ── AVISO LGPD NO PDF ── */
+        doc.setFillColor(240, 248, 255);
+        doc.setDrawColor(...C_AZUL);
+        doc.setLineWidth(0.5);
+        doc.rect(10, y, 190, 22, 'FD');
+        doc.setFillColor(...C_AZUL);
+        doc.rect(10, y, 2, 22, 'F');
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(7.5);
+        doc.setTextColor(...C_AZUL);
+        doc.text('LGPD — LEI Nº 13.709/2018 — PROTEÇÃO DE DADOS:', 15, y+6);
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(7);
+        doc.setTextColor(50,50,50);
+        doc.text('Seus dados pessoais foram tratados com base no Art. 7º, V (execução de contrato) para emissão deste boleto.', 15, y+11);
+        doc.text('CPF exibido de forma parcial (minimização de dados). Dados não compartilhados para fins comerciais.', 15, y+15);
+        doc.text('Dúvidas ou solicitações: privacidade@hamstore.com.br | DPO: privacidade@hamstore.com.br', 15, y+19);
+        y += 28;
+
+        /* ── RODAPÉ ── */
+        doc.setFillColor(...C_GARNET);
+        doc.rect(0, 282, W, 15, 'F');
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(7);
+        doc.setTextColor(...C_BRANCO);
+        doc.text('HamStore Books LTDA · CNPJ 12.345.678/0001-90 · Av. Paulista, 1000 · São Paulo, SP', W/2, 287, {align:'center'});
+        doc.text('suporte@hamstore.com.br · (11) 3000-9999 · www.hamstore.com.br', W/2, 292, {align:'center'});
+
+        /* ── SALVAR ── */
+        const nomeArquivo = `boleto-hamstore-${numPed.replace('#','')}-${fmtCurta(agora).replace(/\//g,'-')}.pdf`;
+        doc.save(nomeArquivo);
+    }
+
+    /* ── CANCELAMENTO ── */
+    function confirmarCancelamento() {
+        if (confirm('Tem certeza que deseja cancelar o pedido e escolher outra forma de pagamento?\n\nO boleto será invalidado e você precisará fazer um novo pedido.')) {
+            window.location.href = 'Carrinho.html';
+        }
+    }
+
+    /* ── TOAST ── */
+    function mostrarToast(msg) {
+        const t = document.getElementById('toast');
+        document.getElementById('toast-msg').textContent = msg;
+        t.classList.add('show');
+        setTimeout(() => t.classList.remove('show'), 3200);
+    }
+
+    /* ── MODAL LGPD ── */
+    function abrirLgpd() {
+        document.getElementById('modal-lgpd').classList.add('open');
+    }
+    document.getElementById('modal-lgpd').addEventListener('click', function(e) {
+        if (e.target === this) this.classList.remove('open');
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MOBY LUX — Loja Oficial | HamStore Books</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --cotton-candy:#E38792;--garnet:#4E0A0B;--dusty-white:#F2EEE8;--khaki:#9DAD71;
+  --vermelho-escuro:#8C031C;--rosa-medio:#BF6980;--cinza-claro:#F0F0F2;
+  --dourado-principal:#D9B607;--dourado-escuro:#8C5C03;--branco:#ffffff;
+  --sombra-suave:rgba(140,3,28,0.1);--sombra-dourado:rgba(217,182,7,0.3);
+  --ink:var(--garnet);--ink-muted:#7A3A2A;--ink-faint:#A07060;
+  --gold:var(--dourado-principal);--gold-light:#F5DC60;--gold-pale:#FDF8E1;
+  --crimson:var(--vermelho-escuro);--crimson-mid:var(--cotton-candy);--crimson-pale:#FBF0F0;
+  --cream:var(--dusty-white);--cream-dark:#EAE4DC;--white:var(--branco);
+  --border:#E0D8CC;--border-strong:#C8B89A;
+  --shadow:var(--sombra-suave);--shadow-md:rgba(140,3,28,0.16);
+  --radius-sm:8px;--radius:14px;--radius-lg:20px;
+}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);min-height:100vh;font-size:15px}
+
+/* ── BARRA SUPERIOR ── */
+.shopee-top{background-color:var(--cotton-candy);color:var(--dusty-white);font-size:14px;position:sticky;top:0;z-index:1001;box-shadow:0 2px 8px rgba(78,10,11,0.15);}
+.container{max-width:1280px;margin:0 auto;padding:0 20px;}
+.navbar{display:flex;justify-content:space-between;align-items:center;height:40px;}
+.flex{display:flex;align-items:center;gap:20px;}
+.v-center{align-items:center;}
+.navbar a{color:var(--dusty-white);text-decoration:none;font-size:13px;transition:opacity 0.2s;}
+.navbar a:hover{opacity:0.8;}
+.navbar_links{display:flex;align-items:center;list-style:none;gap:16px;margin:0;padding:0;}
+.navbar__link-text{color:var(--dusty-white);font-size:13px;}
+.navbar__link--signup{font-weight:500;background-color:var(--garnet);padding:4px 12px;border-radius:15px;}
+.navbar__link-separator{width:1px;height:16px;background-color:rgba(242,238,232,0.4);margin:0 4px;}
+.shopee-logo-area{display:flex;align-items:center;gap:8px;}
+.shopee-logo-icon{font-size:18px;}
+.shopee-store-name{font-weight:700;font-size:15px;color:var(--garnet);}
+.shopee-store-name small{font-size:10px;font-weight:400;color:var(--dusty-white);}
+.shopee-social-icons{display:flex;gap:8px;align-items:center;}
+.social-icon{display:inline-block;width:20px;height:20px;background-size:contain;background-repeat:no-repeat;background-position:center;}
+.instagram{background-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23F2EEE8"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>');}
+.whatsapp{background-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23F2EEE8"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.126.556 4.118 1.523 5.847L.057 23.882l6.204-1.448A11.934 11.934 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.782 9.782 0 01-5.004-1.373l-.36-.214-3.713.868.922-3.596-.234-.37A9.789 9.789 0 012.182 12C2.182 6.57 6.57 2.182 12 2.182c5.43 0 9.818 4.388 9.818 9.818 0 5.43-4.388 9.818-9.818 9.818z"/></svg>');}
+.tiktok{background-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23F2EEE8"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.87-4.53v-3.47a6.33 6.33 0 0 0-5.34 6.2 6.33 6.33 0 0 0 10.92 4.3 6.34 6.34 0 0 0 1.77-4.3V8.92a8.26 8.26 0 0 0 4.79 1.52V6.95a4.82 4.82 0 0 1-3.77-2.26z"/></svg>');}
+@media(max-width:768px){.flex .shopee-logo-area ~ a{display:none;}.navbar_links .navbar__link-text{font-size:12px;}}
+
+/* ── HEADER PRINCIPAL ── */
+.header{display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,0.95);backdrop-filter:blur(20px);padding:15px 30px;box-shadow:0 4px 20px rgba(78,10,11,0.1);position:sticky;top:40px;z-index:100;border-radius:0 0 25px 25px;}
+.logo{font-size:28px;font-weight:bold;color:var(--garnet);letter-spacing:1px;cursor:pointer;}
+.search-bar{flex:1;margin:0 30px;max-width:500px;}
+.search-bar input{width:100%;padding:15px 25px;border-radius:30px;border:2px solid var(--dusty-white);font-size:16px;background:var(--dusty-white);outline:none;transition:all .3s;}
+.search-bar input:focus{border-color:var(--cotton-candy);box-shadow:0 0 25px rgba(227,135,146,0.4);}
+.icons{font-size:24px;display:flex;gap:20px;cursor:pointer;color:var(--garnet);}
+.btn-sem-borda{background:none;border:none;border-radius:25px;color:var(--garnet);font-size:16px;cursor:pointer;transition:all .3s;}
+.btn-sem-borda:hover{color:var(--cotton-candy);transform:translateY(-2px);}
+
+/* ── HERO ── */
+.hero{background:linear-gradient(135deg,var(--garnet) 0%,#8C031C 40%,var(--rosa-medio) 100%);position:relative;overflow:hidden;}
+.hero-texture{position:absolute;inset:0;opacity:.07;background-image:repeating-linear-gradient(45deg,transparent,transparent 20px,rgba(217,182,7,0.8) 20px,rgba(217,182,7,0.8) 21px),repeating-linear-gradient(-45deg,transparent,transparent 20px,rgba(217,182,7,0.8) 20px,rgba(217,182,7,0.8) 21px);}
+.hero-glow{position:absolute;top:-100px;right:-100px;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(217,182,7,.18) 0%,transparent 70%);pointer-events:none;}
+.hero-content{position:relative;z-index:1;max-width:1240px;margin:0 auto;padding:52px 30px 44px;display:flex;gap:40px;align-items:flex-end;flex-wrap:wrap;}
+.hero-avatar-area{flex-shrink:0;}
+.hero-avatar{width:110px;height:110px;border-radius:18px;background:linear-gradient(135deg,var(--dourado-principal),var(--dourado-escuro));display:flex;align-items:center;justify-content:center;font-size:48px;border:4px solid rgba(255,255,255,0.2);position:relative;box-shadow:0 12px 40px rgba(0,0,0,.35);}
+.hero-verified{position:absolute;bottom:-10px;right:-10px;background:linear-gradient(135deg,var(--dourado-principal),var(--dourado-escuro));color:#fff;font-size:10px;font-weight:700;padding:4px 10px;border-radius:20px;white-space:nowrap;display:flex;align-items:center;gap:4px;box-shadow:0 4px 12px rgba(0,0,0,.2);}
+.hero-info{flex:1;min-width:240px;}
+.hero-rating-row{display:flex;align-items:center;gap:6px;margin-bottom:10px;}
+.star-i{color:var(--dourado-principal);font-size:14px;}
+.hero-rating-text{color:rgba(242,238,232,0.75);font-size:13px;}
+.hero-name{font-family:'Cormorant Garamond',serif;font-size:44px;font-weight:700;color:#fff;line-height:1;letter-spacing:-.01em;margin-bottom:6px;}
+.hero-tagline{color:rgba(242,238,232,0.65);font-size:14px;font-weight:300;margin-bottom:24px;letter-spacing:.01em;}
+.hero-stats{display:flex;gap:0;flex-wrap:wrap;}
+.hstat{padding:0 24px 0 0;text-align:left;border-right:1px solid rgba(255,255,255,.12);margin-right:24px;margin-bottom:10px;}
+.hstat:last-child{border-right:none;}
+.hstat-val{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:700;color:var(--dourado-principal);display:block;line-height:1.1;}
+.hstat-lbl{font-size:11px;color:rgba(242,238,232,0.5);display:block;margin-top:2px;text-transform:uppercase;letter-spacing:.06em;}
+.hero-actions{display:flex;flex-direction:column;gap:10px;align-self:center;flex-shrink:0;}
+.btn-follow{padding:12px 30px;border-radius:30px;border:none;background:linear-gradient(135deg,var(--dourado-principal),var(--dourado-escuro));color:#fff;font-weight:700;font-size:14px;cursor:pointer;font-family:'DM Sans',sans-serif;display:flex;align-items:center;gap:8px;transition:all .25s;letter-spacing:.01em;box-shadow:0 6px 20px var(--sombra-dourado);}
+.btn-follow:hover{transform:translateY(-2px);box-shadow:0 10px 28px var(--sombra-dourado);}
+.btn-follow.active{background:transparent;border:1.5px solid rgba(242,238,232,.4);color:var(--dusty-white);box-shadow:none;}
+.btn-chat{padding:11px 26px;border-radius:30px;border:1.5px solid rgba(242,238,232,.25);background:transparent;color:rgba(242,238,232,.85);font-weight:500;font-size:14px;cursor:pointer;font-family:'DM Sans',sans-serif;display:flex;align-items:center;gap:8px;transition:all .25s;}
+.btn-chat:hover{background:rgba(242,238,232,.1);border-color:rgba(242,238,232,.4);}
+.hero-badges{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;}
+.hero-badge{display:flex;align-items:center;gap:6px;background:rgba(242,238,232,.08);border:1px solid rgba(242,238,232,.15);border-radius:30px;padding:5px 14px;font-size:12px;color:rgba(242,238,232,.7);}
+.hero-badge i{color:var(--dourado-principal);font-size:13px;}
+
+/* ── TABS ── */
+.tabs-wrap{background:var(--branco);border-bottom:1px solid var(--border);position:sticky;top:102px;z-index:170;box-shadow:0 4px 15px var(--sombra-suave);}
+.tabs{max-width:1240px;margin:0 auto;padding:0 30px;display:flex;overflow-x:auto;scrollbar-width:none;}
+.tabs::-webkit-scrollbar{display:none;}
+.tab{padding:16px 22px;border:none;background:none;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;color:#888;cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap;transition:all .25s;display:flex;align-items:center;gap:7px;}
+.tab:hover{color:var(--vermelho-escuro);}
+.tab.on{color:var(--vermelho-escuro);border-bottom-color:var(--dourado-principal);}
+.tab i{font-size:15px;}
+
+/* ── MAIN ── */
+.main{max-width:1240px;margin:0 auto;padding:30px;}
+.sec{display:none;}
+.sec.on{display:block;}
+
+/* ── PROMO BAR ── */
+.promo-bar{background:linear-gradient(135deg,var(--vermelho-escuro),#A0031C);border-radius:var(--radius);padding:18px 24px;display:flex;align-items:center;gap:16px;margin-bottom:28px;box-shadow:0 8px 25px var(--sombra-suave);}
+.promo-bar i{font-size:26px;color:rgba(255,255,255,.85);flex-shrink:0;}
+.promo-bar-text h4{color:#fff;font-size:15px;font-weight:600;margin-bottom:2px;}
+.promo-bar-text p{color:rgba(255,255,255,.75);font-size:13px;}
+.promo-bar .btn-promo{margin-left:auto;padding:9px 22px;border-radius:30px;border:1.5px solid rgba(255,255,255,.4);background:transparent;color:#fff;font-weight:600;font-size:13px;cursor:pointer;white-space:nowrap;font-family:'DM Sans',sans-serif;transition:all .25s;flex-shrink:0;}
+.promo-bar .btn-promo:hover{background:rgba(255,255,255,.15);}
+
+/* ── SEC TITLE ── */
+.sec-title{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:700;color:var(--garnet);margin-bottom:20px;display:flex;align-items:center;gap:14px;}
+.sec-title::after{content:'';flex:1;height:2px;background:linear-gradient(to right,var(--dourado-principal),transparent);}
+.sec-title small{font-family:'DM Sans',sans-serif;font-size:13px;font-weight:400;color:var(--ink-faint);margin-left:4px;}
+
+/* ══════════════════════════════════════
+   CAPA DE LIVRO CSS (substitui emoji)
+══════════════════════════════════════ */
+.book-cover-wrap{
+  width:100%;height:210px;
+  display:flex;align-items:center;justify-content:center;
+  position:relative;overflow:hidden;
+  padding:20px 18px;
+  perspective:600px;
+}
+/* Livro em 3D */
+.book-3d{
+  position:relative;
+  width:118px;height:162px;
+  transform-style:preserve-3d;
+  transform:rotateY(-18deg) rotateX(4deg);
+  transition:transform .4s cubic-bezier(.25,.46,.45,.94);
+  filter:drop-shadow(8px 12px 20px rgba(0,0,0,.5));
+  flex-shrink:0;
+}
+.card:hover .book-3d{
+  transform:rotateY(-8deg) rotateX(2deg) translateY(-6px);
+  filter:drop-shadow(14px 20px 28px rgba(0,0,0,.55));
+}
+/* Frente da capa */
+.book-face{
+  position:absolute;inset:0;
+  border-radius:2px 6px 6px 2px;
+  overflow:hidden;
+  display:flex;flex-direction:column;
+  justify-content:space-between;
+  padding:12px 10px 10px 12px;
+  backface-visibility:hidden;
+}
+/* Espinha */
+.book-spine{
+  position:absolute;
+  left:-14px;top:2px;bottom:2px;width:14px;
+  border-radius:3px 0 0 3px;
+  transform:rotateY(90deg) translateZ(7px);
+  transform-origin:right center;
+}
+/* Reflexo diagonal na capa */
+.book-face::after{
+  content:'';position:absolute;
+  top:0;left:0;right:0;bottom:0;
+  background:linear-gradient(135deg,rgba(255,255,255,.18) 0%,transparent 50%,rgba(0,0,0,.1) 100%);
+  pointer-events:none;
+}
+/* Título na capa */
+.book-face-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:11px;font-weight:700;
+  color:rgba(255,255,255,.92);
+  line-height:1.3;
+  text-shadow:0 1px 4px rgba(0,0,0,.5);
+  display:-webkit-box;-webkit-box-orient:vertical;overflow:hidden;
+}
+.book-face-author{
+  font-size:9px;color:rgba(255,255,255,.65);
+  font-family:'DM Sans',sans-serif;
+  font-style:italic;
+}
+/* Linhas decorativas na capa */
+.book-deco{
+  position:absolute;bottom:14px;left:10px;right:10px;
+  height:1px;background:rgba(255,255,255,.2);
+}
+.book-deco::before{
+  content:'';position:absolute;bottom:4px;left:0;right:0;
+  height:1px;background:rgba(255,255,255,.12);
+}
+/* Página (lado direito) — dá espessura */
+.book-page{
+  position:absolute;
+  right:-4px;top:2px;bottom:2px;width:8px;
+  background:repeating-linear-gradient(to bottom,#f5f0e8,#f5f0e8 2px,#ede8dc 2px,#ede8dc 3px);
+  border-radius:0 3px 3px 0;
+  box-shadow:inset -2px 0 4px rgba(0,0,0,.08);
+}
+
+/* Paletas de capa */
+.b-c1 .book-face{background:linear-gradient(160deg,#1A0A06,#4A1A14,#2A0808);}
+.b-c1 .book-spine{background:linear-gradient(to bottom,#0E0503,#2A0A08);}
+.b-c2 .book-face{background:linear-gradient(160deg,#0D1B2E,#1E3A5C,#0A1520);}
+.b-c2 .book-spine{background:linear-gradient(to bottom,#060E18,#0D2136);}
+.b-c3 .book-face{background:linear-gradient(160deg,#1A3A1A,#2E5C2A,#0E2010);}
+.b-c3 .book-spine{background:linear-gradient(to bottom,#0A1E0A,#182E14);}
+.b-c4 .book-face{background:linear-gradient(160deg,#3A1A00,#6A3600,#2A1000);}
+.b-c4 .book-spine{background:linear-gradient(to bottom,#200E00,#3A1C00);}
+.b-c5 .book-face{background:linear-gradient(160deg,#2E0E2E,#5A1A5A,#1A081A);}
+.b-c5 .book-spine{background:linear-gradient(to bottom,#180618,#300830);}
+.b-c6 .book-face{background:linear-gradient(160deg,#2E0A0A,#6B1A1A,#1A0404);}
+.b-c6 .book-spine{background:linear-gradient(to bottom,#180404,#380A0A);}
+.b-c7 .book-face{background:linear-gradient(160deg,#0A2030,#1A4060,#061420);}
+.b-c7 .book-spine{background:linear-gradient(to bottom,#041018,#0E2840);}
+.b-c8 .book-face{background:linear-gradient(160deg,#0E2010,#1C4020,#081408);}
+.b-c8 .book-spine{background:linear-gradient(to bottom,#061008,#102818);}
+
+/* Ornamento dourado na capa */
+.book-ornament{
+  position:absolute;top:6px;right:6px;
+  width:22px;height:22px;
+  border:1.5px solid rgba(217,182,7,.5);
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+}
+.book-ornament i{color:rgba(217,182,7,.7);font-size:9px;}
+
+/* Tags e wish sobre a capa */
+.book-cover-wrap .tag{position:absolute;top:10px;left:10px;font-size:11px;font-weight:700;padding:4px 10px;border-radius:20px;letter-spacing:.02em;z-index:2;}
+.tag-off{background:var(--vermelho-escuro);color:#fff;}
+.tag-new{background:var(--khaki);color:#fff;}
+.tag-rare{background:var(--dourado-escuro);color:var(--gold-light);}
+.book-cover-wrap .btn-wish{position:absolute;top:8px;right:8px;width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);cursor:pointer;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.6);font-size:14px;transition:all .25s;backdrop-filter:blur(4px);z-index:2;}
+.book-cover-wrap .btn-wish:hover,.book-cover-wrap .btn-wish.on{color:var(--cotton-candy);background:rgba(255,255,255,.2);}
+
+/* ── PRODUCT GRID ── */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(195px,1fr));gap:20px;margin-bottom:40px;}
+.card{background:var(--branco);border-radius:var(--radius);border:1px solid var(--border);overflow:hidden;cursor:pointer;transition:all .3s;position:relative;}
+.card:hover{transform:translateY(-5px);box-shadow:0 16px 40px var(--sombra-suave);border-color:var(--border-strong);}
+.card-body{padding:14px;}
+.card-title{font-size:13.5px;font-weight:600;color:var(--garnet);margin-bottom:3px;line-height:1.35;display:-webkit-box;-webkit-box-orient:vertical;overflow:hidden;}
+.card-author{font-size:12px;color:var(--ink-faint);margin-bottom:8px;}
+.card-stars{display:flex;align-items:center;gap:2px;margin-bottom:9px;}
+.card-stars i{color:var(--dourado-principal);font-size:11px;}
+.card-stars span{font-size:11px;color:var(--ink-faint);margin-left:3px;}
+.card-price{display:flex;align-items:baseline;gap:8px;margin-bottom:11px;}
+.price-now{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:700;color:var(--vermelho-escuro);}
+.price-old{font-size:12px;color:var(--ink-faint);text-decoration:line-through;}
+.btn-cart{width:100%;padding:10px;border-radius:var(--radius-sm);border:none;background:linear-gradient(135deg,var(--vermelho-escuro),var(--rosa-medio));color:#fff;font-weight:700;font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;display:flex;align-items:center;justify-content:center;gap:8px;transition:all .25s;}
+.btn-cart:hover{box-shadow:0 6px 18px var(--sombra-suave);transform:translateY(-1px);}
+
+/* ── CUPONS ── */
+.coupons-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;}
+.coupon-timer{font-size:13px;color:var(--ink-faint);display:flex;align-items:center;gap:6px;}
+.coupon-timer i{color:var(--crimson);}
+.coupons-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-bottom:40px;}
+.coupon{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;display:flex;transition:all .25s;position:relative;}
+.coupon:hover{box-shadow:0 8px 28px var(--shadow-md);border-color:var(--border-strong);}
+.coupon-left{width:100px;flex-shrink:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px 10px;position:relative;}
+.coupon-left::after{content:'';position:absolute;right:-1px;top:0;bottom:0;width:1px;background:repeating-linear-gradient(to bottom,transparent,transparent 6px,var(--border) 6px,var(--border) 12px);}
+.coupon-left.gold{background:linear-gradient(145deg,var(--gold-pale),#FBF0D0);}
+.coupon-left.red{background:linear-gradient(145deg,var(--crimson-pale),#F5E0E0);}
+.coupon-left.ink{background:linear-gradient(145deg,#F0EBE8,#E8E0D8);}
+.coupon-left.green{background:linear-gradient(145deg,#EEF8EE,#DCEEDD);}
+.coupon-disc{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:700;line-height:1;text-align:center;}
+.coupon-disc.gold{color:var(--gold);}
+.coupon-disc.red{color:var(--crimson);}
+.coupon-disc.ink{color:var(--ink);}
+.coupon-disc.green{color:#1A6B1A;}
+.coupon-disc-sub{font-size:11px;font-weight:600;text-align:center;margin-top:2px;text-transform:uppercase;letter-spacing:.05em;}
+.coupon-disc-sub.gold{color:#8B6000;}
+.coupon-disc-sub.red{color:var(--crimson);}
+.coupon-disc-sub.ink{color:var(--ink-muted);}
+.coupon-disc-sub.green{color:#1A6B1A;}
+.coupon-body{flex:1;padding:14px 16px;}
+.coupon-name{font-weight:700;color:var(--ink);margin-bottom:4px;font-family:'Cormorant Garamond',serif;font-size:16px;}
+.coupon-desc{font-size:12px;color:var(--ink-faint);line-height:1.5;margin-bottom:10px;}
+.coupon-code-row{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+.coupon-code{font-family:monospace;font-size:13px;font-weight:700;background:var(--cream-dark);border:1.5px dashed var(--border-strong);padding:5px 12px;border-radius:6px;color:var(--crimson);letter-spacing:.08em;}
+.btn-copy{background:none;border:none;cursor:pointer;color:var(--ink-faint);font-size:13px;transition:color .2s;padding:4px;}
+.btn-copy:hover{color:var(--gold);}
+.coupon-validity{font-size:11px;color:var(--ink-faint);display:flex;align-items:center;gap:5px;}
+.coupon-validity i{color:var(--gold);font-size:11px;}
+.coupon-corner{position:absolute;top:10px;right:10px;font-size:11px;font-weight:700;padding:3px 8px;border-radius:10px;background:var(--crimson-pale);color:var(--crimson);}
+.coupon-corner.avail{background:#EEF8EE;color:#1A6B1A;}
+.coupon-notch-top,.coupon-notch-bot{position:absolute;width:18px;height:18px;border-radius:50%;background:var(--cream);border:1px solid var(--border);right:-9px;}
+.coupon-notch-top{top:-9px;}
+.coupon-notch-bot{bottom:-9px;}
+
+/* ══════════════════════════════════════
+   BUSCA & FILTROS — CORRIGIDO
+══════════════════════════════════════ */
+.search-bar-full{display:flex;gap:12px;margin-bottom:20px;flex-wrap:wrap;}
+.search-input-wrap{flex:1;min-width:220px;position:relative;}
+.search-input-wrap input{width:100%;padding:12px 18px 12px 44px;border:1.5px solid var(--border);border-radius:var(--radius);font-size:14px;font-family:'DM Sans',sans-serif;background:var(--white);outline:none;transition:border-color .25s;color:var(--ink);}
+.search-input-wrap input:focus{border-color:var(--gold);}
+.search-input-wrap .si{position:absolute;left:16px;top:50%;transform:translateY(-50%);color:var(--ink-faint);font-size:15px;}
+.filter-btn{padding:12px 20px;border-radius:var(--radius);border:1.5px solid var(--border);background:var(--white);font-size:13px;font-family:'DM Sans',sans-serif;color:var(--ink-muted);cursor:pointer;display:flex;align-items:center;gap:8px;transition:all .25s;font-weight:500;white-space:nowrap;}
+.filter-btn:hover,.filter-btn.on{border-color:var(--gold);color:var(--ink);background:var(--gold-pale);}
+.filter-btn i{font-size:14px;}
+.filter-count{background:var(--crimson);color:#fff;font-size:10px;font-weight:700;width:18px;height:18px;border-radius:50%;display:none;align-items:center;justify-content:center;}
+.filter-count.show{display:flex;}
+
+.filter-panel{background:var(--white);border:1.5px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:20px;display:none;animation:fadeIn .25s ease;}
+.filter-panel.on{display:block;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+.filter-panel-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;}
+.filter-panel-top h4{font-size:15px;font-weight:600;color:var(--ink);}
+.btn-clear-filters{background:none;border:none;color:var(--crimson);font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:500;}
+
+/* GRID DE FILTROS — 5 colunas limpas */
+.filter-groups{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:24px;
+  align-items:start;
+}
+@media(max-width:1000px){.filter-groups{grid-template-columns:repeat(3,1fr);}}
+@media(max-width:600px){.filter-groups{grid-template-columns:repeat(2,1fr);}}
+
+.fg-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:var(--ink-faint);margin-bottom:10px;padding-bottom:6px;border-bottom:1.5px solid var(--cream-dark);}
+.fg-opts{display:flex;flex-direction:column;gap:9px;}
+.fg-opt{display:flex;align-items:center;gap:9px;cursor:pointer;font-size:13.5px;color:var(--ink-muted);transition:color .2s;user-select:none;}
+.fg-opt:hover{color:var(--ink);}
+.fg-opt input[type=checkbox]{width:15px;height:15px;accent-color:var(--crimson);cursor:pointer;flex-shrink:0;}
+
+/* Faixa de preço */
+.filter-range{display:flex;flex-direction:column;gap:10px;}
+.range-vals{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:8px;}
+.range-vals input[type=number]{padding:9px 10px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-size:13px;font-family:'DM Sans',sans-serif;background:var(--cream);outline:none;color:var(--ink);width:100%;}
+.range-vals input[type=number]:focus{border-color:var(--gold);}
+.range-sep{color:var(--ink-faint);font-size:12px;text-align:center;}
+
+/* Ordenar */
+.filter-sorts{display:flex;flex-direction:column;gap:9px;}
+.sort-opt{display:flex;align-items:center;gap:9px;cursor:pointer;font-size:13.5px;color:var(--ink-muted);transition:color .2s;user-select:none;}
+.sort-opt:hover{color:var(--ink);}
+.sort-opt input[type=radio]{accent-color:var(--crimson);cursor:pointer;flex-shrink:0;}
+
+.filter-apply{margin-top:20px;padding-top:16px;border-top:1px solid var(--border);display:flex;gap:10px;justify-content:flex-end;}
+.btn-apply{padding:10px 28px;border-radius:30px;border:none;background:var(--crimson);color:#fff;font-weight:600;font-size:14px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .25s;}
+.btn-apply:hover{background:var(--crimson-mid);}
+.btn-cancel-filter{padding:10px 20px;border-radius:30px;border:1.5px solid var(--border);background:none;color:var(--ink-muted);font-weight:500;font-size:14px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .25s;}
+.btn-cancel-filter:hover{border-color:var(--border-strong);}
+
+.active-filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;}
+.af-tag{background:var(--cream-dark);border:1px solid var(--border);border-radius:20px;padding:5px 12px;font-size:12px;font-weight:500;color:var(--ink-muted);display:flex;align-items:center;gap:6px;}
+.af-tag button{background:none;border:none;color:var(--ink-faint);cursor:pointer;font-size:14px;line-height:1;padding:0 0 0 2px;transition:color .2s;}
+.af-tag button:hover{color:var(--crimson);}
+.results-info{font-size:13px;color:var(--ink-faint);margin-bottom:16px;}
+
+/* ── SOBRE ── */
+.sobre-wrap{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+.info-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:24px;}
+.info-card h3{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:700;color:var(--ink);margin-bottom:18px;display:flex;align-items:center;gap:10px;}
+.info-card h3 i{color:var(--gold);font-size:18px;}
+.info-row{display:flex;align-items:flex-start;gap:14px;padding:12px 0;border-bottom:1px solid var(--cream-dark);}
+.info-row:last-child{border-bottom:none;padding-bottom:0;}
+.info-row i{color:var(--gold);width:18px;text-align:center;font-size:15px;margin-top:1px;flex-shrink:0;}
+.ir-title{font-size:13px;font-weight:600;color:var(--ink);display:block;margin-bottom:2px;}
+.ir-sub{font-size:12px;color:var(--ink-faint);}
+.sobre-desc{font-size:14px;color:var(--ink-muted);line-height:1.8;margin-bottom:20px;}
+.cert-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:4px;}
+.cert{display:flex;align-items:center;gap:7px;background:var(--cream-dark);border:1px solid var(--border);border-radius:10px;padding:8px 14px;font-size:12px;font-weight:600;color:var(--ink-muted);}
+.cert i{color:var(--gold);font-size:14px;}
+.metrics-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:20px;}
+.metric{background:var(--cream);border-radius:10px;padding:14px;text-align:center;}
+.metric-val{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:700;color:var(--crimson);display:block;}
+.metric-lbl{font-size:11px;color:var(--ink-faint);margin-top:2px;display:block;text-transform:uppercase;letter-spacing:.05em;}
+
+/* ── AVALIAÇÕES ── */
+.aval-top{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:28px;display:flex;gap:48px;align-items:center;flex-wrap:wrap;margin-bottom:24px;}
+.aval-big-num{font-family:'Cormorant Garamond',serif;font-size:72px;font-weight:700;color:var(--gold);line-height:1;}
+.aval-big-stars{display:flex;gap:4px;margin:8px 0 6px;}
+.aval-big-stars i{color:var(--gold);font-size:20px;}
+.aval-big p{font-size:13px;color:var(--ink-faint);}
+.bars{flex:1;min-width:180px;}
+.bar-row{display:flex;align-items:center;gap:12px;margin-bottom:9px;}
+.bar-row:last-child{margin-bottom:0;}
+.bar-lbl{font-size:12px;font-weight:600;color:var(--ink-muted);width:12px;text-align:right;flex-shrink:0;}
+.bar-track{flex:1;height:7px;background:var(--cream-dark);border-radius:10px;overflow:hidden;}
+.bar-fill{height:100%;border-radius:10px;background:linear-gradient(to right,var(--gold),#8B6000);transition:width .9s ease;}
+.bar-cnt{font-size:11px;color:var(--ink-faint);width:28px;text-align:right;flex-shrink:0;}
+.aval-tags{display:flex;flex-wrap:wrap;gap:8px;align-self:flex-start;}
+.atag{background:var(--cream-dark);border:1px solid var(--border);border-radius:20px;padding:6px 14px;font-size:12px;font-weight:500;color:var(--ink-muted);cursor:pointer;transition:all .25s;}
+.atag:hover,.atag.on{background:var(--gold-pale);border-color:var(--gold);color:var(--ink);}
+.review-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:22px;margin-bottom:16px;transition:all .25s;}
+.review-card:hover{border-color:var(--border-strong);box-shadow:0 4px 18px var(--shadow);}
+.rv-head{display:flex;align-items:center;gap:14px;margin-bottom:14px;}
+.rv-avatar{width:44px;height:44px;border-radius:50%;background:linear-gradient(145deg,var(--gold),#8B6000);display:flex;align-items:center;justify-content:center;color:#fff;font-size:17px;font-weight:700;flex-shrink:0;font-family:'Cormorant Garamond',serif;}
+.rv-name{font-weight:600;font-size:14px;color:var(--ink);display:block;}
+.rv-date{font-size:12px;color:var(--ink-faint);}
+.rv-verified{font-size:11px;color:#1A6B1A;background:#EEF8EE;padding:2px 8px;border-radius:10px;margin-left:8px;font-weight:600;}
+.rv-stars{display:flex;gap:3px;margin-bottom:10px;}
+.rv-stars i{color:var(--gold);font-size:13px;}
+.rv-text{font-size:14px;color:var(--ink-muted);line-height:1.7;}
+.rv-book{font-size:12px;color:var(--ink-faint);margin-top:10px;display:flex;align-items:center;gap:6px;}
+.rv-book i{color:var(--gold);}
+.rv-imgs{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;}
+.rv-img{width:64px;height:64px;border-radius:8px;background:var(--cream-dark);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:24px;}
+.rv-useful{display:flex;align-items:center;gap:10px;margin-top:14px;padding-top:12px;border-top:1px solid var(--cream-dark);}
+.rv-useful span{font-size:12px;color:var(--ink-faint);}
+.btn-useful{background:none;border:1px solid var(--border);border-radius:20px;padding:4px 14px;font-size:12px;color:var(--ink-faint);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;display:flex;align-items:center;gap:5px;}
+.btn-useful:hover{border-color:var(--border-strong);color:var(--ink);}
+
+/* ── TOAST ── */
+.toast{position:fixed;bottom:28px;right:28px;background:var(--ink);color:#fff;padding:14px 22px;border-radius:14px;font-size:14px;font-weight:500;display:flex;align-items:center;gap:10px;box-shadow:0 8px 30px rgba(0,0,0,.25);transform:translateY(80px);opacity:0;transition:all .4s cubic-bezier(0.34,1.56,0.64,1);z-index:9999;}
+.toast.show{transform:translateY(0);opacity:1;}
+.toast i{color:var(--gold);}
+
+/* ── RESP ── */
+@media(max-width:900px){.sobre-wrap{grid-template-columns:1fr;}.aval-top{flex-direction:column;}.hero-content{flex-direction:column;align-items:flex-start;}.hero-actions{flex-direction:row;align-self:auto;}}
+@media(max-width:600px){.grid{grid-template-columns:repeat(2,1fr);}.hero-name{font-size:32px;}.coupons-grid{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+
+<!-- BARRA SUPERIOR -->
+<header class="shopee-top">
+  <div class="container">
+    <nav class="navbar">
+      <div class="flex v-center">
+        <div class="shopee-logo-area">
+          <span class="shopee-logo-icon">📚</span>
+          <span class="shopee-store-name" onclick="window.location.href='Entrar.html'">HAMSTORE <small>books</small></span>
+        </div>
+        <a href="#" onclick="window.location.href='GerenciamentoVendedor.html'">Central do Vendedor</a>
+        <a href="#" onclick="window.location.href='CadastroVendedor.html'">Vender na HamStore</a>
+      </div>
+      <div class="flex">
+        <div class="shopee-social-icons">
+          <span>Siga-nos</span>
+          <a href="#" class="social-icon instagram"></a>
+          <a href="#" class="social-icon whatsapp"></a>
+          <a href="#" class="social-icon tiktok"></a>
+        </div>
+      </div>
+      <ul class="navbar_links">
+        <li><a href="#" class="navbar__link-text">Ajuda</a></li>
+        <li><a href="#" onclick="window.location.href='Cadastro1.html'" class="navbar__link-text navbar__link--signup">Cadastrar</a></li>
+        <li><div class="navbar__link-separator"></div></li>
+        <li><a href="#" onclick="window.location.href='login.html'" class="navbar__link-text">Entrar</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<!-- HEADER -->
+<header class="header">
+  <h1 class="logo" onclick="window.location.href='Entrar.html'">📚 Livraria</h1>
+  <div class="search-bar"><input type="text" placeholder="Buscar livros..."></div>
+  <div class="icons">
+    <button class="btn-sem-borda" onclick="window.location.href='Carrinho.html'">🛒</button>
+    <button class="btn-sem-borda">⚙️</button>
+    <button class="btn-sem-borda" onclick="window.location.href='MinhasCompras.html'">👤</button>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-texture"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-content">
+    <div class="hero-avatar-area">
+      <div class="hero-avatar">📖
+        <div class="hero-verified"><i class="fas fa-gem" style="font-size:9px"></i> Loja Oficial</div>
+      </div>
+    </div>
+    <div class="hero-info">
+      <div class="hero-rating-row">
+        <i class="fas fa-star star-i"></i><i class="fas fa-star star-i"></i><i class="fas fa-star star-i"></i><i class="fas fa-star star-i"></i><i class="fas fa-star-half-alt star-i"></i>
+        <span class="hero-rating-text">4.8 · 1.247 avaliações · Top Vendedor 2025</span>
+      </div>
+      <div class="hero-name">MOBY LUX</div>
+      <div class="hero-tagline">Livros raros, edições especiais e clássicos de luxo — São Paulo, SP</div>
+      <div class="hero-stats">
+        <div class="hstat"><span class="hstat-val">4.8</span><span class="hstat-lbl">Avaliação</span></div>
+        <div class="hstat"><span class="hstat-val">3.2k</span><span class="hstat-lbl">Seguidores</span></div>
+        <div class="hstat"><span class="hstat-val">98%</span><span class="hstat-lbl">Aprovação</span></div>
+        <div class="hstat"><span class="hstat-val">142</span><span class="hstat-lbl">Produtos</span></div>
+        <div class="hstat"><span class="hstat-val">12.8k</span><span class="hstat-lbl">Vendas</span></div>
+        <div class="hstat"><span class="hstat-val">2 anos</span><span class="hstat-lbl">Plataforma</span></div>
+      </div>
+      <div class="hero-badges">
+        <span class="hero-badge"><i class="fas fa-truck-fast"></i> Envio em 2 dias úteis</span>
+        <span class="hero-badge"><i class="fas fa-shield-halved"></i> Compra garantida</span>
+        <span class="hero-badge"><i class="fas fa-rotate-left"></i> Devolução 7 dias</span>
+        <span class="hero-badge"><i class="fas fa-comment-dots"></i> Resposta &lt; 1h</span>
+        <span class="hero-badge"><i class="fas fa-award"></i> Top Vendedor</span>
+      </div>
+    </div>
+    <div class="hero-actions">
+      <button class="btn-follow" id="btnFollow" onclick="toggleFollow()">
+        <i class="fas fa-plus" id="followIco"></i>
+        <span id="followTxt">Seguir Loja</span>
+      </button>
+      <button class="btn-chat"><i class="fas fa-comment"></i> Iniciar Chat</button>
+    </div>
+  </div>
+</section>
+
+<!-- TABS -->
+<div class="tabs-wrap">
+  <div class="tabs">
+    <button class="tab on" onclick="switchTab('vitrine',this)"><i class="fas fa-store"></i> Vitrine</button>
+    <button class="tab" onclick="switchTab('produtos',this)"><i class="fas fa-book"></i> Todos os Produtos</button>
+    <button class="tab" onclick="switchTab('cupons',this)"><i class="fas fa-ticket"></i> Cupons &amp; Promoções</button>
+    <button class="tab" onclick="switchTab('sobre',this)"><i class="fas fa-circle-info"></i> Sobre a Loja</button>
+    <button class="tab" onclick="switchTab('avaliacoes',this)"><i class="fas fa-star"></i> Avaliações</button>
+  </div>
+</div>
+
+<!-- MACRO: helper para gerar capa de livro CSS -->
+
+<div class="main">
+
+  <!-- ══ VITRINE ══ -->
+  <div class="sec on" id="sec-vitrine">
+    <div class="promo-bar">
+      <i class="fas fa-bolt"></i>
+      <div class="promo-bar-text">
+        <h4>🎉 Semana dos Clássicos — Frete grátis acima de R$ 150 · Até 30% OFF em seleção especial</h4>
+        <p>Promoção válida até 08/06 · Use o cupom CLASSICOS10 para desconto extra</p>
+      </div>
+      <button class="promo-bar btn-promo" onclick="switchTab('cupons',document.querySelectorAll('.tab')[2])">Ver cupons</button>
+    </div>
+
+    <div class="sec-title">✨ Destaques da Loja <small>seleção especial</small></div>
+    <div class="grid">
+
+      <div class="card">
+        <div class="book-cover-wrap b-c1">
+          <span class="tag tag-off">−20%</span>
+          <button class="btn-wish" onclick="wish(this)"><i class="fas fa-heart"></i></button>
+          <div class="book-3d">
+            <div class="book-spine"></div>
+            <div class="book-face">
+              <div><div class="book-face-title">O Pequeno Príncipe</div><div class="book-face-author">Saint-Exupéry</div></div>
+              <div class="book-ornament"><i class="fas fa-star"></i></div>
+            </div>
+            <div class="book-deco"></div>
+            <div class="book-page"></div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="card-title">O Pequeno Príncipe — Ed. Especial Luxo</div>
+          <div class="card-author">Antoine de Saint-Exupéry</div>
+          <div class="card-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><span>(312)</span></div>
+          <div class="card-price"><span class="price-now">R$ 39,90</span><span class="price-old">R$ 49,90</span></div>
+          <button class="btn-cart" onclick="addCart()"><i class="fas fa-cart-plus"></i> Adicionar ao Carrinho</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="book-cover-wrap b-c2">
+          <button class="btn-wish on" onclick="wish(this)"><i class="fas fa-heart"></i></button>
+          <div class="book-3d">
+            <div class="book-spine"></div>
+            <div class="book-face">
+              <div><div class="book-face-title">Dom Quixote</div><div class="book-face-author">Cervantes</div></div>
+              <div class="book-ornament"><i class="fas fa-feather"></i></div>
+            </div>
+            <div class="book-deco"></div>
+            <div class="book-page"></div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="card-title">Dom Quixote — Ed. Encadernada em Couro</div>
+          <div class="card-author">Miguel de Cervantes</div>
+          <div class="card-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i><span>(89)</span></div>
+          <div class="card-price"><span class="price-now">R$ 129,00</span></div>
+          <button class="btn-cart" onclick="addCart()"><i class="fas fa-cart-plus"></i> Adicionar ao Carrinho</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="book-cover-wrap b-c3">
+          <span class="tag tag-new">Novo</span>
+          <button class="btn-wish" onclick="wish(this)"><i class="fas fa-heart"></i></button>
+          <div class="book-3d">
+            <div class="book-spine"></div>
+            <div class="book-face">
+              <div><div class="book-face-title">Moby Dick</div><div class="book-face-author">Herman Melville</div></div>
+              <div class="book-ornament"><i class="fas fa-anchor"></i></div>
+            </div>
+            <div class="book-deco"></div>
+            <div class="book-page"></div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="card-title">Moby Dick — Ed. Ilustrada Especial</div>
+          <div class="card-author">Herman Melville</div>
+          <div class="card-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i><span>(214)</span></div>
+          <div class="card-price"><span class="price-now">R$ 89,90</span></div>
+          <button class="btn-cart" onclick="addCart()"><i class="fas fa-cart-plus"></i> Adicionar ao Carrinho</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="book-cover-wrap b-c4">
+          <span class="tag tag-off">−15%</span>
+          <button class="btn-wish" onclick="wish(this)"><i class="fas fa-heart"></i></button>
+          <div class="book-3d">
+            <div class="book-spine"></div>
+            <div class="book-face">
+              <div><div class="book-face-title">Crime e Castigo</div><div class="book-face-author">Dostoiévski</div></div>
+              <div class="book-ornament"><i class="fas fa-eye"></i></div>
+            </div>
+            <div class="book-deco"></div>
+            <div class="book-page"></div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="card-title">Crime e Castigo — Capa Dura Premium</div>
+          <div class="card-author">Fiódor Dostoiévski</div>
+          <div class="card-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><span>(178)</span></div>
+          <div class="card-price"><span class="price-now">R$ 54,90</span><span class="price-old">R$ 64,50</span></div>
+          <button class="btn-cart" onclick="addCart()"><i class="fas fa-cart-plus"></i> Adicionar ao Carrinho</button>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="sec-title">🔥 Mais Vendidos <small>últimos 30 dias</small></div>
+    <div class="grid">
+
+      <div class="card">
+        <div class="book-cover-wrap b-c5">
+          <span class="tag tag-rare">Raro</span>
+          <button class="btn-wish" onclick="wish(this)"><i class="fas fa-heart"></i></button>
+          <div class="book-3d">
+            <div class="book-spine"></div>
+            <div class="book-face">
+              <div><div class="book-face-title">A Metamorfose</div><div class="book-face-author">Franz Kafka</div></div>
+              <div class="book-ornament"><i class="fas fa-bug"></i></div>
+            </div>
+            <div class="book-deco"></div>
+            <div class="book-page"></div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="card-title">A Metamorfose — Ed. Bilíngue Anotada</div>
+          <div class="card-author">Franz Kafka</div>
+          <div class="card-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i><span>(97)</span></div>
+          <div class="card-price"><span class="price-now">R$ 34,90</span></div>
+          <button class="btn-cart" onclick="addCart()"><i class="fas fa-cart-plus"></i> Adicionar ao Carrinho</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="book-cover-wrap b-c6">
+          <span class="tag tag-off">−30%</span>
+          <button class="btn-wish" onclick="wish(this)"><i class="fas fa-heart"></i></button>
+          <div class="book-3d">
+            <div class="book-spine"></div>
+            <div class="book-face">
+              <div><div class="book-face-title">Ilíada</div><div class="book-face-author">Homero</div></div>
+              <div class="book-ornament"><i class="fas fa-shield"></i></div>
+            </div>
+            <div class="book-deco"></div>
+            <div class="book-page"></div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="card-title">Ilíada — Tradução Clássica Ilustrada</div>
+          <div class="card-author">Homero</div>
+          <div class="card-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><span>(204)</span></div>
+          <div class="card-price"><span class="price-now">R$ 69,90</span><span class="price-old">R$ 99,90</span></div>
+          <button class="btn-cart" onclick="addCart()"><i class="fas fa-cart-plus"></i> Adicionar ao Carrinho</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="book-cover-wrap b-c7">
+          <span class="tag tag-new">Novo</span>
+          <button class="btn-wish" onclick="wish(this)"><i class="fas fa-heart"></i></button>
+          <div class="book-3d">
+            <div class="book-spine"></div>
+            <div class="book-face">
+              <div><div class="book-face-title">Jane Eyre</div><div class="book-face-author">Charlotte Brontë</div></div>
+              <div class="book-ornament"><i class="fas fa-heart"></i></div>
+            </div>
+            <div class="book-deco"></div>
+            <div class="book-page"></div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="card-title">Jane Eyre — Ed. Comemorativa 175 anos</div>
+          <div class="card-author">Charlotte Brontë</div>
+          <div class="card-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><span>(143)</span></div>
+          <div class="card-price"><span class="price-now">R$ 79,90</span></div>
+          <button class="btn-cart" onclick="addCart()"><i class="fas fa-cart-plus"></i> Adicionar ao Carrinho</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="book-cover-wrap b-c8">
+          <button class="btn-wish" onclick="wish(this)"><i class="fas fa-heart"></i></button>
+          <div class="book-3d">
+            <div class="book-spine"></div>
+            <div class="book-face">
+              <div><div class="book-face-title">Odisseia</div><div class="book-face-author">Homero · F. Lourenço</div></div>
+              <div class="book-ornament"><i class="fas fa-ship"></i></div>
+            </div>
+            <div class="book-deco"></div>
+            <div class="book-page"></div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="card-title">Odisseia — Ed. Folio Society Importada</div>
+          <div class="card-author">Homero · Trad. F. Lourenço</div>
+          <div class="card-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i><span>(67)</span></div>
+          <div class="card-price"><span class="price-now">R$ 219,00</span></div>
+          <button class="btn-cart" onclick="addCart()"><i class="fas fa-cart-plus"></i> Adicionar ao Carrinho</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══ TODOS OS PRODUTOS ══ -->
+  <div class="sec" id="sec-produtos">
+    <div class="search-bar-full">
+      <div class="search-input-wrap">
+        <i class="fas fa-search si"></i>
+        <input type="text" id="searchInput" placeholder="Buscar na loja MOBY LUX..." oninput="updateResults()">
+      </div>
+      <button class="filter-btn" id="filterToggle" onclick="toggleFilter()">
+        <i class="fas fa-sliders"></i> Filtros
+        <span class="filter-count" id="filterCount">0</span>
+      </button>
+    </div>
+
+    <div class="filter-panel" id="filterPanel">
+      <div class="filter-panel-top">
+        <h4><i class="fas fa-sliders" style="margin-right:8px;color:var(--gold)"></i> Filtros avançados</h4>
+        <button class="btn-clear-filters" onclick="clearFilters()">Limpar todos</button>
+      </div>
+
+      <!-- 5 colunas: Gênero · Edição · Avaliação · Preço · Ordenar -->
+      <div class="filter-groups">
+
+        <!-- 1. Gênero -->
+        <div>
+          <div class="fg-label">Gênero</div>
+          <div class="fg-opts">
+            <label class="fg-opt"><input type="checkbox" onchange="countFilters()"> Clássicos</label>
+            <label class="fg-opt"><input type="checkbox" onchange="countFilters()"> Romance</label>
+            <label class="fg-opt"><input type="checkbox" onchange="countFilters()"> Aventura</label>
+            <label class="fg-opt"><input type="checkbox" onchange="countFilters()"> Fantasia</label>
+            <label class="fg-opt"><input type="checkbox" onchange="countFilters()"> Terror</label>
+            <label class="fg-opt"><input type="checkbox" onchange="countFilters()"> Ficção Científica</label>
+          </div>
+        </div>
+
+        <!-- 2. Tipo de Edição -->
+        <div>
+          <div class="fg-label">Tipo de Edição</div>
+          <div class="fg-opts">
+            <label class="fg-opt"><input type="checkbox" onchange="countFilters()"> Capa Dura</label>
+            <label class="fg-opt"><input type="checkbox" onchange="countFilters()"> Couro Genuíno</label>
+            <label class="fg-opt"><input type="checkbox" onchange="countFilters()"> Ilustrada</label>
+            <label class="fg-opt"><input type="checkbox" onchange="countFilters()"> Bilíngue</label>
+            <label class="fg-opt"><input type="checkbox" onchange="countFilters()"> Colecionável</label>
+            <label class="fg-opt"><input type="checkbox" onchange="countFilters()"> Comemorativa</label>
+          </div>
+        </div>
+
+        <!-- 3. Avaliação + Disponibilidade -->
+        <div>
+          <div class="fg-label">Avaliação mínima</div>
+          <div class="fg-opts">
+            <label class="fg-opt"><input type="checkbox" onchange="countFilters()">
+              <span><i class="fas fa-star" style="color:var(--gold);font-size:11px"></i> 5 estrelas</span>
+            </label>
+            <label class="fg-opt"><input type="checkbox" onchange="countFilters()">
+              <span><i class="fas fa-star" style="color:var(--gold);font-size:11px"></i> 4+ estrelas</span>
+            </label>
+            <label class="fg-opt"><input type="checkbox" onchange="countFilters()">
+              <span><i class="fas fa-star" style="color:var(--gold);font-size:11px"></i> 3+ estrelas</span>
+            </label>
+          </div>
+          <div class="fg-label" style="margin-top:16px;">Disponibilidade</div>
+          <div class="fg-opts">
+            <label class="fg-opt"><input type="checkbox" onchange="countFilters()"> Em estoque</label>
+            <label class="fg-opt"><input type="checkbox" onchange="countFilters()"> Com desconto</label>
+            <label class="fg-opt"><input type="checkbox" onchange="countFilters()"> Frete grátis</label>
+          </div>
+        </div>
+
+        <!-- 4. Faixa de Preço -->
+        <div>
+          <div class="fg-label">Faixa de Preço (R$)</div>
+          <div class="filter-range">
+            <div class="range-vals">
+              <input type="number" id="priceMin" placeholder="Mínimo" min="0" oninput="countFilters()">
+              <span class="range-sep">até</span>
+              <input type="number" id="priceMax" placeholder="Máximo" min="0" oninput="countFilters()">
+            </div>
+          </div>
+          <div class="fg-label" style="margin-top:16px;">Preços rápidos</div>
+          <div class="fg-opts">
+            <label class="fg-opt" onclick="setPrice(0,50)"><input type="radio" name="faixa" onchange="countFilters()"> Até R$ 50</label>
+            <label class="fg-opt" onclick="setPrice(50,100)"><input type="radio" name="faixa" onchange="countFilters()"> R$ 50 – R$ 100</label>
+            <label class="fg-opt" onclick="setPrice(100,200)"><input type="radio" name="faixa" onchange="countFilters()"> R$ 100 – R$ 200</label>
+            <label class="fg-opt" onclick="setPrice(200,9999)"><input type="radio" name="faixa" onchange="countFilters()"> Acima de R$ 200</label>
+          </div>
+        </div>
+
+        <!-- 5. Ordenar por -->
+        <div>
+          <div class="fg-label">Ordenar por</div>
+          <div class="filter-sorts">
+            <label class="sort-opt"><input type="radio" name="sort" value="rel" checked onchange="countFilters()"> Relevância</label>
+            <label class="sort-opt"><input type="radio" name="sort" value="priceAsc" onchange="countFilters()"> Menor preço</label>
+            <label class="sort-opt"><input type="radio" name="sort" value="priceDesc" onchange="countFilters()"> Maior preço</label>
+            <label class="sort-opt"><input type="radio" name="sort" value="best" onchange="countFilters()"> Mais vendidos</label>
+            <label class="sort-opt"><input type="radio" name="sort" value="new" onchange="countFilters()"> Novidades</label>
+            <label class="sort-opt"><input type="radio" name="sort" value="rating" onchange="countFilters()"> Melhor avaliados</label>
+          </div>
+        </div>
+
+      </div><!-- /filter-groups -->
+
+      <div class="filter-apply">
+        <button class="btn-cancel-filter" onclick="toggleFilter()">Cancelar</button>
+        <button class="btn-apply" onclick="applyFilters()"><i class="fas fa-check" style="margin-right:6px"></i> Aplicar Filtros</button>
+      </div>
+    </div><!-- /filter-panel -->
+
+    <div class="active-filters" id="activeFilters"></div>
+    <div class="results-info" id="resultsInfo">Exibindo 10 de 142 produtos</div>
+
+    <div class="grid">
+      <!-- mesmos 10 cards com capa CSS -->
+      <div class="card"><div class="book-cover-wrap b-c1"><span class="tag tag-off">−20%</span><button class="btn-wish" onclick="wish(this)"><i class="fas fa-heart"></i></button><div class="book-3d"><div class="book-spine"></div><div class="book-face"><div><div class="book-face-title">O Pequeno Príncipe</div><div class="book-face-author">Saint-Exupéry</div></div><div class="book-ornament"><i class="fas fa-star"></i></div></div><div class="book-deco"></div><div class="book-page"></div></div></div><div class="card-body"><div class="card-title">O Pequeno Príncipe — Ed. Especial Luxo</div><div class="card-author">Antoine de Saint-Exupéry</div><div class="card-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><span>(312)</span></div><div class="card-price"><span class="price-now">R$ 39,90</span><span class="price-old">R$ 49,90</span></div><button class="btn-cart" onclick="addCart()"><i class="fas fa-cart-plus"></i> Adicionar</button></div></div>
+      <div class="card"><div class="book-cover-wrap b-c2"><button class="btn-wish" onclick="wish(this)"><i class="fas fa-heart"></i></button><div class="book-3d"><div class="book-spine"></div><div class="book-face"><div><div class="book-face-title">Dom Quixote</div><div class="book-face-author">Cervantes</div></div><div class="book-ornament"><i class="fas fa-feather"></i></div></div><div class="book-deco"></div><div class="book-page"></div></div></div><div class="card-body"><div class="card-title">Dom Quixote — Ed. Encadernada em Couro</div><div class="card-author">Miguel de Cervantes</div><div class="card-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i><span>(89)</span></div><div class="card-price"><span class="price-now">R$ 129,00</span></div><button class="btn-cart" onclick="addCart()"><i class="fas fa-cart-plus"></i> Adicionar</button></div></div>
+      <div class="card"><div class="book-cover-wrap b-c3"><span class="tag tag-new">Novo</span><button class="btn-wish" onclick="wish(this)"><i class="fas fa-heart"></i></button><div class="book-3d"><div class="book-spine"></div><div class="book-face"><div><div class="book-face-title">Moby Dick</div><div class="book-face-author">Melville</div></div><div class="book-ornament"><i class="fas fa-anchor"></i></div></div><div class="book-deco"></div><div class="book-page"></div></div></div><div class="card-body"><div class="card-title">Moby Dick — Ed. Ilustrada Especial</div><div class="card-author">Herman Melville</div><div class="card-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i><span>(214)</span></div><div class="card-price"><span class="price-now">R$ 89,90</span></div><button class="btn-cart" onclick="addCart()"><i class="fas fa-cart-plus"></i> Adicionar</button></div></div>
+      <div class="card"><div class="book-cover-wrap b-c4"><span class="tag tag-off">−15%</span><button class="btn-wish" onclick="wish(this)"><i class="fas fa-heart"></i></button><div class="book-3d"><div class="book-spine"></div><div class="book-face"><div><div class="book-face-title">Crime e Castigo</div><div class="book-face-author">Dostoiévski</div></div><div class="book-ornament"><i class="fas fa-eye"></i></div></div><div class="book-deco"></div><div class="book-page"></div></div></div><div class="card-body"><div class="card-title">Crime e Castigo — Capa Dura Premium</div><div class="card-author">Fiódor Dostoiévski</div><div class="card-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><span>(178)</span></div><div class="card-price"><span class="price-now">R$ 54,90</span><span class="price-old">R$ 64,50</span></div><button class="btn-cart" onclick="addCart()"><i class="fas fa-cart-plus"></i> Adicionar</button></div></div>
+      <div class="card"><div class="book-cover-wrap b-c5"><span class="tag tag-rare">Raro</span><button class="btn-wish" onclick="wish(this)"><i class="fas fa-heart"></i></button><div class="book-3d"><div class="book-spine"></div><div class="book-face"><div><div class="book-face-title">A Metamorfose</div><div class="book-face-author">Franz Kafka</div></div><div class="book-ornament"><i class="fas fa-bug"></i></div></div><div class="book-deco"></div><div class="book-page"></div></div></div><div class="card-body"><div class="card-title">A Metamorfose — Ed. Bilíngue Anotada</div><div class="card-author">Franz Kafka</div><div class="card-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i><span>(97)</span></div><div class="card-price"><span class="price-now">R$ 34,90</span></div><button class="btn-cart" onclick="addCart()"><i class="fas fa-cart-plus"></i> Adicionar</button></div></div>
+      <div class="card"><div class="book-cover-wrap b-c6"><span class="tag tag-off">−30%</span><button class="btn-wish" onclick="wish(this)"><i class="fas fa-heart"></i></button><div class="book-3d"><div class="book-spine"></div><div class="book-face"><div><div class="book-face-title">Ilíada</div><div class="book-face-author">Homero</div></div><div class="book-ornament"><i class="fas fa-shield"></i></div></div><div class="book-deco"></div><div class="book-page"></div></div></div><div class="card-body"><div class="card-title">Ilíada — Tradução Clássica Ilustrada</div><div class="card-author">Homero</div><div class="card-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><span>(204)</span></div><div class="card-price"><span class="price-now">R$ 69,90</span><span class="price-old">R$ 99,90</span></div><button class="btn-cart" onclick="addCart()"><i class="fas fa-cart-plus"></i> Adicionar</button></div></div>
+      <div class="card"><div class="book-cover-wrap b-c7"><span class="tag tag-new">Novo</span><button class="btn-wish" onclick="wish(this)"><i class="fas fa-heart"></i></button><div class="book-3d"><div class="book-spine"></div><div class="book-face"><div><div class="book-face-title">Jane Eyre</div><div class="book-face-author">Charlotte Brontë</div></div><div class="book-ornament"><i class="fas fa-heart"></i></div></div><div class="book-deco"></div><div class="book-page"></div></div></div><div class="card-body"><div class="card-title">Jane Eyre — Ed. Comemorativa 175 anos</div><div class="card-author">Charlotte Brontë</div><div class="card-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><span>(143)</span></div><div class="card-price"><span class="price-now">R$ 79,90</span></div><button class="btn-cart" onclick="addCart()"><i class="fas fa-cart-plus"></i> Adicionar</button></div></div>
+      <div class="card"><div class="book-cover-wrap b-c8"><button class="btn-wish" onclick="wish(this)"><i class="fas fa-heart"></i></button><div class="book-3d"><div class="book-spine"></div><div class="book-face"><div><div class="book-face-title">Odisseia</div><div class="book-face-author">Homero</div></div><div class="book-ornament"><i class="fas fa-ship"></i></div></div><div class="book-deco"></div><div class="book-page"></div></div></div><div class="card-body"><div class="card-title">Odisseia — Ed. Folio Society Importada</div><div class="card-author">Homero · Trad. F. Lourenço</div><div class="card-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i><span>(67)</span></div><div class="card-price"><span class="price-now">R$ 219,00</span></div><button class="btn-cart" onclick="addCart()"><i class="fas fa-cart-plus"></i> Adicionar</button></div></div>
+      <div class="card"><div class="book-cover-wrap b-c1"><span class="tag tag-rare">Raro</span><button class="btn-wish" onclick="wish(this)"><i class="fas fa-heart"></i></button><div class="book-3d"><div class="book-spine"></div><div class="book-face"><div><div class="book-face-title">Noites Brancas</div><div class="book-face-author">Dostoiévski</div></div><div class="book-ornament"><i class="fas fa-moon"></i></div></div><div class="book-deco"></div><div class="book-page"></div></div></div><div class="card-body"><div class="card-title">Noites Brancas — 1ª Ed. Brasileira</div><div class="card-author">Fiódor Dostoiévski</div><div class="card-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><span>(55)</span></div><div class="card-price"><span class="price-now">R$ 149,00</span></div><button class="btn-cart" onclick="addCart()"><i class="fas fa-cart-plus"></i> Adicionar</button></div></div>
+      <div class="card"><div class="book-cover-wrap b-c6"><span class="tag tag-off">−10%</span><button class="btn-wish" onclick="wish(this)"><i class="fas fa-heart"></i></button><div class="book-3d"><div class="book-spine"></div><div class="book-face"><div><div class="book-face-title">Édipo Rei</div><div class="book-face-author">Sófocles</div></div><div class="book-ornament"><i class="fas fa-landmark"></i></div></div><div class="book-deco"></div><div class="book-page"></div></div></div><div class="card-body"><div class="card-title">Édipo Rei — Ed. Bilíngue Greco-Português</div><div class="card-author">Sófocles</div><div class="card-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i><span>(38)</span></div><div class="card-price"><span class="price-now">R$ 44,90</span><span class="price-old">R$ 49,90</span></div><button class="btn-cart" onclick="addCart()"><i class="fas fa-cart-plus"></i> Adicionar</button></div></div>
+    </div>
+  </div>
+
+  <!-- ══ CUPONS ══ -->
+  <div class="sec" id="sec-cupons">
+    <div class="promo-bar"><i class="fas fa-gift"></i><div class="promo-bar-text"><h4>Copie o código e use na finalização da compra — descontos automáticos!</h4><p>Cupons acumuláveis com itens em promoção · Clique em "Copiar" para copiar o código</p></div></div>
+    <div class="coupons-header"><div class="sec-title" style="margin-bottom:0">🎟️ Cupons da Loja <small>6 disponíveis</small></div><div class="coupon-timer"><i class="fas fa-clock"></i> Renova em: <strong id="timer">23:47:12</strong></div></div>
+    <div class="coupons-grid">
+      <div class="coupon"><div class="coupon-notch-top"></div><div class="coupon-left gold"><div class="coupon-disc gold">10%</div><div class="coupon-disc-sub gold">Desconto</div></div><div class="coupon-body"><div class="coupon-name">Primeira Compra</div><div class="coupon-desc">10% de desconto na sua primeira compra na loja MOBY LUX.</div><div class="coupon-code-row"><span class="coupon-code">PRIMEIRAML</span><button class="btn-copy" onclick="copyCoupon('PRIMEIRAML',this)"><i class="fas fa-copy"></i></button></div><div class="coupon-validity"><i class="fas fa-calendar-check"></i> Válido até 30/06/2026</div></div><span class="coupon-corner avail">Disponível</span><div class="coupon-notch-bot"></div></div>
+      <div class="coupon"><div class="coupon-notch-top"></div><div class="coupon-left red"><div class="coupon-disc red">R$20</div><div class="coupon-disc-sub red">OFF</div></div><div class="coupon-body"><div class="coupon-name">Semana dos Clássicos</div><div class="coupon-desc">R$ 20 off em compras acima de R$ 150. Válido em qualquer clássico.</div><div class="coupon-code-row"><span class="coupon-code">CLASSICOS20</span><button class="btn-copy" onclick="copyCoupon('CLASSICOS20',this)"><i class="fas fa-copy"></i></button></div><div class="coupon-validity"><i class="fas fa-calendar-check"></i> Válido até 08/06/2026</div></div><span class="coupon-corner" style="background:#FFF0E0;color:#8B4000">Em breve</span><div class="coupon-notch-bot"></div></div>
+      <div class="coupon"><div class="coupon-notch-top"></div><div class="coupon-left green"><div class="coupon-disc green">Frete</div><div class="coupon-disc-sub green" style="color:#1A6B1A">GRÁTIS</div></div><div class="coupon-body"><div class="coupon-name">Frete Grátis Moby</div><div class="coupon-desc">Frete grátis em compras acima de R$ 100 para todo o Brasil.</div><div class="coupon-code-row"><span class="coupon-code">FRETEMOBYLUX</span><button class="btn-copy" onclick="copyCoupon('FRETEMOBYLUX',this)"><i class="fas fa-copy"></i></button></div><div class="coupon-validity"><i class="fas fa-calendar-check"></i> Válido até 15/06/2026</div></div><span class="coupon-corner avail">Disponível</span><div class="coupon-notch-bot"></div></div>
+      <div class="coupon"><div class="coupon-notch-top"></div><div class="coupon-left gold"><div class="coupon-disc gold">15%</div><div class="coupon-disc-sub gold">Desconto</div></div><div class="coupon-body"><div class="coupon-name">Edições em Couro</div><div class="coupon-desc">15% OFF em todas as edições encadernadas em couro genuíno.</div><div class="coupon-code-row"><span class="coupon-code">COURO15ML</span><button class="btn-copy" onclick="copyCoupon('COURO15ML',this)"><i class="fas fa-copy"></i></button></div><div class="coupon-validity"><i class="fas fa-calendar-check"></i> Válido até 30/06/2026</div></div><span class="coupon-corner avail">Disponível</span><div class="coupon-notch-bot"></div></div>
+      <div class="coupon"><div class="coupon-notch-top"></div><div class="coupon-left ink"><div class="coupon-disc ink">R$50</div><div class="coupon-disc-sub ink">OFF</div></div><div class="coupon-body"><div class="coupon-name">Kit Colecionador</div><div class="coupon-desc">R$ 50 de desconto ao comprar 3 ou mais edições especiais.</div><div class="coupon-code-row"><span class="coupon-code">KIT3MOBY</span><button class="btn-copy" onclick="copyCoupon('KIT3MOBY',this)"><i class="fas fa-copy"></i></button></div><div class="coupon-validity"><i class="fas fa-calendar-check"></i> Válido até 31/07/2026</div></div><span class="coupon-corner avail">Disponível</span><div class="coupon-notch-bot"></div></div>
+      <div class="coupon"><div class="coupon-notch-top"></div><div class="coupon-left red"><div class="coupon-disc red">25%</div><div class="coupon-disc-sub red">Desconto</div></div><div class="coupon-body"><div class="coupon-name">Seguidores VIP</div><div class="coupon-desc">Exclusivo para seguidores. 25% OFF em qualquer produto acima de R$ 80.</div><div class="coupon-code-row"><span class="coupon-code">VIP25MOBY</span><button class="btn-copy" onclick="copyCoupon('VIP25MOBY',this)"><i class="fas fa-copy"></i></button></div><div class="coupon-validity"><i class="fas fa-calendar-check"></i> Válido até 01/07/2026 · Só para seguidores</div></div><span class="coupon-corner avail">Disponível</span><div class="coupon-notch-bot"></div></div>
+    </div>
+  </div>
+
+  <!-- ══ SOBRE ══ -->
+  <div class="sec" id="sec-sobre">
+    <div class="sobre-wrap">
+      <div class="info-card">
+        <h3><i class="fas fa-store"></i> Sobre a MOBY LUX</h3>
+        <p class="sobre-desc">A MOBY LUX nasceu da paixão por livros raros e edições de luxo. Somos especialistas em obras clássicas com acabamento premium — encadernações em couro, papel de alta gramatura, ilustrações exclusivas e caixas colecionáveis.</p>
+        <div class="cert-row"><div class="cert"><i class="fas fa-award"></i> Top Vendedor 2025</div><div class="cert"><i class="fas fa-gem"></i> Loja Oficial</div><div class="cert"><i class="fas fa-shield-halved"></i> Verificada</div></div>
+        <div class="metrics-grid">
+          <div class="metric"><span class="metric-val">12.8k</span><span class="metric-lbl">Vendas realizadas</span></div>
+          <div class="metric"><span class="metric-val">98%</span><span class="metric-lbl">Aprovação geral</span></div>
+          <div class="metric"><span class="metric-val">3.2k</span><span class="metric-lbl">Seguidores</span></div>
+          <div class="metric"><span class="metric-val">2 anos</span><span class="metric-lbl">Na plataforma</span></div>
+        </div>
+        <div class="info-row" style="margin-top:18px"><i class="fas fa-map-marker-alt"></i><div><span class="ir-title">Localização</span><span class="ir-sub">São Paulo, SP · Brasil</span></div></div>
+        <div class="info-row"><i class="fas fa-calendar-alt"></i><div><span class="ir-title">Na plataforma desde</span><span class="ir-sub">Janeiro de 2023 · 2 anos</span></div></div>
+        <div class="info-row"><i class="fas fa-box-open"></i><div><span class="ir-title">Produtos disponíveis</span><span class="ir-sub">142 títulos em estoque</span></div></div>
+      </div>
+      <div>
+        <div class="info-card" style="margin-bottom:20px">
+          <h3><i class="fas fa-truck"></i> Envio &amp; Atendimento</h3>
+          <div class="info-row"><i class="fas fa-shipping-fast"></i><div><span class="ir-title">Prazo de envio</span><span class="ir-sub">Em até 2 dias úteis após confirmação</span></div></div>
+          <div class="info-row"><i class="fas fa-rotate-left"></i><div><span class="ir-title">Política de devolução</span><span class="ir-sub">Devoluções aceitas em até 7 dias corridos</span></div></div>
+          <div class="info-row"><i class="fas fa-comment-dots"></i><div><span class="ir-title">Tempo de resposta</span><span class="ir-sub">Geralmente responde em menos de 1 hora</span></div></div>
+          <div class="info-row"><i class="fas fa-shield-alt"></i><div><span class="ir-title">Garantia de qualidade</span><span class="ir-sub">Todos os produtos inspecionados antes do envio</span></div></div>
+          <div class="info-row"><i class="fas fa-clock"></i><div><span class="ir-title">Horário de atendimento</span><span class="ir-sub">Seg–Sex 9h–18h · Sáb 10h–14h</span></div></div>
+        </div>
+        <div class="info-card">
+          <h3><i class="fas fa-credit-card"></i> Pagamento &amp; Segurança</h3>
+          <div class="info-row"><i class="fas fa-lock"></i><div><span class="ir-title">Pagamentos aceitos</span><span class="ir-sub">Pix · Boleto bancário</span></div></div>
+          <div class="info-row"><i class="fas fa-receipt"></i><div><span class="ir-title">Nota fiscal</span><span class="ir-sub">Emitida automaticamente em todas as compras</span></div></div>
+          <div class="info-row"><i class="fas fa-hand-holding-heart"></i><div><span class="ir-title">Embalagem especial</span><span class="ir-sub">Caixas personalizadas para edições raras</span></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ AVALIAÇÕES ══ -->
+  <div class="sec" id="sec-avaliacoes">
+    <div class="aval-top">
+      <div class="aval-big"><div class="aval-big-num">4.8</div><div class="aval-big-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></div><p>1.247 avaliações verificadas</p></div>
+      <div class="bars">
+        <div class="bar-row"><span class="bar-lbl">5</span><div class="bar-track"><div class="bar-fill" style="width:78%"></div></div><span class="bar-cnt">972</span></div>
+        <div class="bar-row"><span class="bar-lbl">4</span><div class="bar-track"><div class="bar-fill" style="width:14%"></div></div><span class="bar-cnt">175</span></div>
+        <div class="bar-row"><span class="bar-lbl">3</span><div class="bar-track"><div class="bar-fill" style="width:5%"></div></div><span class="bar-cnt">62</span></div>
+        <div class="bar-row"><span class="bar-lbl">2</span><div class="bar-track"><div class="bar-fill" style="width:2%"></div></div><span class="bar-cnt">25</span></div>
+        <div class="bar-row"><span class="bar-lbl">1</span><div class="bar-track"><div class="bar-fill" style="width:1%"></div></div><span class="bar-cnt">13</span></div>
+      </div>
+      <div class="aval-tags"><span class="atag on" onclick="this.classList.toggle('on')">Todos</span><span class="atag" onclick="this.classList.toggle('on')">⭐ 5 estrelas</span><span class="atag" onclick="this.classList.toggle('on')">⭐ 4 estrelas</span><span class="atag" onclick="this.classList.toggle('on')">📦 Embalagem</span><span class="atag" onclick="this.classList.toggle('on')">🚀 Entrega</span><span class="atag" onclick="this.classList.toggle('on')">✅ Qualidade</span><span class="atag" onclick="this.classList.toggle('on')">💬 Atendimento</span><span class="atag" onclick="this.classList.toggle('on')">📸 Com foto</span></div>
+    </div>
+    <div class="review-card"><div class="rv-head"><div class="rv-avatar">M</div><div><span class="rv-name">Maria B. <span class="rv-verified"><i class="fas fa-check" style="font-size:9px"></i> Compra verificada</span></span><span class="rv-date">15 de maio de 2026</span></div></div><div class="rv-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><div class="rv-text">Produto chegou muito bem embalado, a edição especial é simplesmente linda! Papel de altíssima qualidade, capa dura resistente e ilustrações deslumbrantes. A embalagem personalizada da MOBY LUX é impecável.</div><div class="rv-imgs"><div class="rv-img">📦</div><div class="rv-img">📖</div><div class="rv-img">✨</div></div><div class="rv-book"><i class="fas fa-book"></i> O Pequeno Príncipe — Edição Especial Luxo</div><div class="rv-useful"><span>Útil?</span><button class="btn-useful"><i class="fas fa-thumbs-up"></i> Sim (24)</button><button class="btn-useful"><i class="fas fa-thumbs-down"></i> Não (1)</button></div></div>
+    <div class="review-card"><div class="rv-head"><div class="rv-avatar" style="background:linear-gradient(145deg,#1A5C30,#0A3A1A)">J</div><div><span class="rv-name">João P. <span class="rv-verified"><i class="fas fa-check" style="font-size:9px"></i> Compra verificada</span></span><span class="rv-date">3 de maio de 2026</span></div></div><div class="rv-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><div class="rv-text">Entrega rápida e atendimento excepcional. O Dom Quixote encadernado em couro genuíno é simplesmente uma obra de arte — superou em muito as expectativas.</div><div class="rv-book"><i class="fas fa-book"></i> Dom Quixote — Ed. Encadernada em Couro</div><div class="rv-useful"><span>Útil?</span><button class="btn-useful"><i class="fas fa-thumbs-up"></i> Sim (18)</button><button class="btn-useful"><i class="fas fa-thumbs-down"></i> Não (0)</button></div></div>
+    <div class="review-card"><div class="rv-head"><div class="rv-avatar" style="background:linear-gradient(145deg,#1A1A6B,#0A0A3A)">A</div><div><span class="rv-name">Ana C. <span class="rv-verified"><i class="fas fa-check" style="font-size:9px"></i> Compra verificada</span></span><span class="rv-date">27 de abril de 2026</span></div></div><div class="rv-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i></div><div class="rv-text">Livro muito bonito, superou as expectativas visuais. Tirei uma estrela pelo prazo de entrega um pouco além do previsto. O produto em si é perfeito.</div><div class="rv-book"><i class="fas fa-book"></i> Crime e Castigo — Capa Dura Premium</div><div class="rv-useful"><span>Útil?</span><button class="btn-useful"><i class="fas fa-thumbs-up"></i> Sim (9)</button><button class="btn-useful"><i class="fas fa-thumbs-down"></i> Não (2)</button></div></div>
+  </div>
+
+</div><!-- /main -->
+
+<div class="toast" id="toast"><i class="fas fa-check-circle"></i> <span id="toastMsg">Feito!</span></div>
+
+<script>
+function switchTab(id,el){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('on'));
+  el.classList.add('on');
+  document.getElementById('sec-'+id).classList.add('on');
+}
+let following=false;
+function toggleFollow(){
+  following=!following;
+  const btn=document.getElementById('btnFollow'),ico=document.getElementById('followIco'),txt=document.getElementById('followTxt');
+  if(following){btn.classList.add('active');ico.className='fas fa-check';txt.textContent='Seguindo';toast('Você agora segue a MOBY LUX! 🎉');}
+  else{btn.classList.remove('active');ico.className='fas fa-plus';txt.textContent='Seguir Loja';}
+}
+function wish(btn){btn.classList.toggle('on');toast(btn.classList.contains('on')?'Adicionado aos favoritos ❤️':'Removido dos favoritos');}
+function addCart(){toast('Adicionado ao carrinho! 🛒');}
+function copyCoupon(code,btn){
+  navigator.clipboard.writeText(code).catch(()=>{});
+  btn.innerHTML='<i class="fas fa-check"></i>';
+  toast('Cupom copiado: '+code+' ✓');
+  setTimeout(()=>btn.innerHTML='<i class="fas fa-copy"></i>',2000);
+}
+function toast(msg){
+  const t=document.getElementById('toast');
+  document.getElementById('toastMsg').textContent=msg;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2800);
+}
+let filterOpen=false,filterCount=0;
+function toggleFilter(){
+  filterOpen=!filterOpen;
+  document.getElementById('filterPanel').classList.toggle('on',filterOpen);
+  document.getElementById('filterToggle').classList.toggle('on',filterOpen);
+}
+function countFilters(){
+  const checks=document.querySelectorAll('#filterPanel input[type=checkbox]:checked').length;
+  const prMin=document.getElementById('priceMin').value;
+  const prMax=document.getElementById('priceMax').value;
+  filterCount=checks+(prMin?1:0)+(prMax?1:0);
+  const badge=document.getElementById('filterCount');
+  badge.textContent=filterCount;
+  badge.classList.toggle('show',filterCount>0);
+}
+function setPrice(min,max){
+  document.getElementById('priceMin').value=min||'';
+  document.getElementById('priceMax').value=max===9999?'':max;
+  countFilters();
+}
+function applyFilters(){
+  filterOpen=false;
+  document.getElementById('filterPanel').classList.remove('on');
+  document.getElementById('filterToggle').classList.remove('on');
+  if(filterCount>0)toast('Filtros aplicados ('+filterCount+') ✓');
+  renderActiveTags();
+}
+function renderActiveTags(){
+  const wrap=document.getElementById('activeFilters');wrap.innerHTML='';
+  document.querySelectorAll('#filterPanel input[type=checkbox]:checked').forEach(cb=>{
+    const lbl=cb.parentElement.textContent.trim();
+    wrap.innerHTML+=`<div class="af-tag">${lbl}<button onclick="removeFilter(this)">×</button></div>`;
+  });
+  const prMin=document.getElementById('priceMin').value;
+  const prMax=document.getElementById('priceMax').value;
+  if(prMin||prMax){
+    wrap.innerHTML+=`<div class="af-tag">R$${prMin||'0'} – ${prMax?'R$'+prMax:'sem limite'}<button onclick="clearPriceFilter(this)">×</button></div>`;
+  }
+}
+function removeFilter(btn){
+  const tag=btn.parentElement;
+  const label=tag.firstChild.textContent.trim();
+  document.querySelectorAll('#filterPanel input[type=checkbox]:checked').forEach(cb=>{
+    if(cb.parentElement.textContent.trim()===label)cb.checked=false;
+  });
+  tag.remove();countFilters();
+}
+function clearPriceFilter(btn){
+  document.getElementById('priceMin').value='';document.getElementById('priceMax').value='';
+  btn.parentElement.remove();countFilters();
+}
+function clearFilters(){
+  document.querySelectorAll('#filterPanel input[type=checkbox]').forEach(c=>c.checked=false);
+  document.getElementById('priceMin').value='';document.getElementById('priceMax').value='';
+  document.querySelectorAll('input[name=sort]')[0].checked=true;
+  document.querySelectorAll('input[name=faixa]').forEach(r=>r.checked=false);
+  countFilters();document.getElementById('activeFilters').innerHTML='';
+}
+function updateResults(){
+  const q=document.getElementById('searchInput').value;
+  document.getElementById('resultsInfo').textContent=q?`Resultados para "${q}" — 10 produtos`:'Exibindo 10 de 142 produtos';
+}
+function updateTimer(){
+  const el=document.getElementById('timer');if(!el)return;
+  let[h,m,s]=el.textContent.split(':').map(Number);
+  s--;if(s<0){s=59;m--;}if(m<0){m=59;h--;}if(h<0){h=23;m=59;s=59;}
+  el.textContent=[h,m,s].map(n=>String(n).padStart(2,'0')).join(':');
+}
+setInterval(updateTimer,1000);
+</script>
+</body>
+</html>

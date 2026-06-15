@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Endereços - Livraria</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --vermelho-escuro: #8C031C;
+            --rosa-medio: #BF6980;
+            --cinza-claro: #F0F0F2;
+            --dourado-principal: #D9B607;
+            --dourado-escuro: #8C5C03;
+            --branco: #ffffff;
+            --sombra-suave: rgba(140, 3, 28, 0.1);
+            --sombra-dourado: rgba(217, 182, 7, 0.3);
+            --cotton-candy: #E38792;
+            --garnet: #4E0A0B;
+            --dusty-white: #F2EEE8;
+            --khaki: #9DAD71;
+        }
+
+        /* ===== BARRA SUPERIOR ===== */
+        .shopee-top {
+            background-color: var(--cotton-candy);
+            color: var(--dusty-white);
+            font-size: 14px;
+            position: sticky;
+            top: 0;
+            z-index: 1001;
+            box-shadow: 0 2px 8px rgba(78, 10, 11, 0.15);
+        }
+        .container { max-width: 1280px; margin: 0 auto; padding: 0 20px; }
+        .navbar { display: flex; justify-content: space-between; align-items: center; height: 40px; }
+        .flex { display: flex; align-items: center; gap: 20px; }
+        .navbar a { color: var(--dusty-white); text-decoration: none; font-size: 13px; transition: opacity 0.2s; }
+        .navbar a:hover { opacity: 0.8; }
+        .navbar_links { display: flex; align-items: center; list-style: none; gap: 16px; margin: 0; padding: 0; }
+        .navbar__link-text { color: var(--dusty-white); font-size: 13px; }
+        .navbar__link--signup { font-weight: 500; background-color: var(--garnet); padding: 4px 12px; border-radius: 15px; }
+        .navbar__link-separator { width: 1px; height: 16px; background-color: rgba(242,238,232,0.4); margin: 0 4px; }
+        .shopee-logo-area { display: flex; align-items: center; gap: 8px; }
+        .shopee-logo-icon { font-size: 18px; }
+        .shopee-store-name { font-weight: 700; font-size: 15px; color: var(--garnet); }
+        .shopee-store-name small { font-size: 10px; font-weight: 400; color: var(--dusty-white); }
+        .shopee-social-icons { display: flex; gap: 8px; align-items: center; }
+        .social-icon { display: inline-block; width: 20px; height: 20px; background-size: contain; background-repeat: no-repeat; background-position: center; }
+
+        /* HEADER */
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--cinza-claro); min-height: 100vh; }
+        .header { display: flex; align-items: center; justify-content: space-between; background: rgba(255,255,255,0.95); backdrop-filter: blur(20px); padding: 15px 30px; box-shadow: 0 4px 20px rgba(78,10,11,0.1); position: sticky; top: 40px; z-index: 100; border-radius: 0 0 25px 25px; }
+        .logo { font-size: 28px; font-weight: bold; color: var(--garnet); cursor: pointer; }
+        .search-bar { flex: 1; margin: 0 30px; max-width: 500px; }
+        .search-bar input { width: 100%; padding: 15px 25px; border-radius: 30px; border: 2px solid var(--dusty-white); font-size: 16px; background: var(--dusty-white); }
+        .icons { font-size: 24px; display: flex; gap: 20px; cursor: pointer; color: var(--garnet); }
+        .btn-sem-borda { background: none; border: none; border-radius: 25px; color: var(--garnet); font-size: 16px; cursor: pointer; }
+
+        /* LAYOUT */
+        .layout { display: flex; max-width: 1400px; margin: 0 auto; padding: 30px 20px; gap: 30px; }
+
+        /* SIDEBAR */
+        .sidebar { width: 280px; background: var(--branco); border-radius: 20px; padding: 25px; box-shadow: 0 5px 20px var(--sombra-suave); height: fit-content; position: sticky; top: 100px; }
+        .perfil { text-align: center; padding-bottom: 20px; border-bottom: 2px solid var(--cinza-claro); margin-bottom: 20px; }
+        .avatar { width: 80px; height: 80px; background: linear-gradient(135deg, var(--rosa-medio), var(--vermelho-escuro)); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; font-size: 40px; color: var(--branco); }
+        .perfil h3 { color: var(--vermelho-escuro); font-size: 16px; margin-bottom: 5px; }
+        .btn-editar-perfil { background: transparent; border: 2px solid var(--rosa-medio); padding: 8px 20px; border-radius: 30px; color: var(--rosa-medio); font-weight: 600; cursor: pointer; transition: all 0.3s; margin-top: 10px; font-size: 13px; }
+        .btn-editar-perfil:hover { background: var(--rosa-medio); color: var(--branco); }
+        .menu-lateral { list-style: none; }
+        .menu-lateral li { padding: 12px 15px; display: flex; align-items: center; gap: 15px; color: var(--vermelho-escuro); cursor: pointer; transition: all 0.3s; border-radius: 12px; }
+        .menu-lateral li:hover { background: var(--cinza-claro); transform: translateX(5px); }
+        .menu-lateral li.ativo { background: linear-gradient(135deg, var(--dourado-principal), var(--dourado-escuro)); color: var(--branco); }
+        .menu-lateral li.ativo i { color: var(--branco) !important; }
+        .menu-lateral li i { width: 25px; color: var(--dourado-principal); font-size: 18px; }
+        .menu-lateral li span { font-weight: 500; }
+
+        /* CONTEÚDO */
+        .conteudo { flex: 1; }
+
+        /* CABEÇALHO DA SEÇÃO */
+        .secao-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 25px; }
+        .secao-titulo { font-size: 22px; font-weight: 700; color: var(--vermelho-escuro); }
+        .btn-novo-endereco { background: linear-gradient(135deg, var(--dourado-principal), var(--dourado-escuro)); color: var(--branco); border: none; padding: 12px 25px; border-radius: 30px; font-weight: 600; cursor: pointer; font-size: 14px; display: flex; align-items: center; gap: 8px; transition: all 0.3s; box-shadow: 0 4px 15px var(--sombra-dourado); }
+        .btn-novo-endereco:hover { transform: translateY(-2px); box-shadow: 0 8px 25px var(--sombra-dourado); }
+
+        /* GRID DE ENDEREÇOS */
+        .enderecos-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; }
+
+        /* CARD DE ENDEREÇO */
+        .endereco-card { background: var(--branco); border-radius: 20px; padding: 22px; box-shadow: 0 5px 20px var(--sombra-suave); transition: all 0.3s; border: 2px solid transparent; position: relative; }
+        .endereco-card:hover { transform: translateY(-3px); box-shadow: 0 12px 30px rgba(140, 3, 28, 0.15); border-color: var(--rosa-medio); }
+        .endereco-card.padrao { border-color: var(--dourado-principal); }
+        .badge-padrao { position: absolute; top: -10px; left: 20px; background: linear-gradient(135deg, var(--dourado-principal), var(--dourado-escuro)); color: var(--branco); font-size: 11px; font-weight: 700; padding: 4px 12px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .card-tipo { display: flex; align-items: center; gap: 10px; margin-bottom: 15px; }
+        .tipo-icone { width: 42px; height: 42px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 20px; }
+        .tipo-icone.casa { background: rgba(140, 3, 28, 0.1); color: var(--vermelho-escuro); }
+        .tipo-icone.trabalho { background: rgba(217, 182, 7, 0.15); color: var(--dourado-escuro); }
+        .tipo-icone.outro { background: rgba(191, 105, 128, 0.15); color: var(--rosa-medio); }
+        .tipo-nome { font-weight: 700; font-size: 15px; color: var(--vermelho-escuro); }
+        .tipo-destinatario { font-size: 13px; color: #888; margin-top: 2px; }
+        .endereco-texto { font-size: 14px; color: #555; line-height: 1.7; margin-bottom: 15px; padding: 14px; background: var(--cinza-claro); border-radius: 12px; }
+        .endereco-texto strong { color: var(--vermelho-escuro); display: block; margin-bottom: 4px; font-size: 15px; }
+        .telefone-info { font-size: 13px; color: #888; margin-bottom: 18px; display: flex; align-items: center; gap: 8px; }
+        .telefone-info i { color: var(--rosa-medio); }
+        .card-acoes { display: flex; gap: 10px; border-top: 1px solid var(--cinza-claro); padding-top: 15px; }
+        .btn-editar-end { flex: 1; background: transparent; border: 2px solid var(--rosa-medio); color: var(--rosa-medio); padding: 9px; border-radius: 20px; font-weight: 600; cursor: pointer; font-size: 13px; transition: all 0.3s; }
+        .btn-editar-end:hover { background: var(--rosa-medio); color: var(--branco); }
+        .btn-excluir-end { background: transparent; border: 2px solid #ddd; color: #aaa; padding: 9px 14px; border-radius: 20px; cursor: pointer; font-size: 13px; transition: all 0.3s; }
+        .btn-excluir-end:hover { border-color: #e74c3c; color: #e74c3c; }
+        .btn-definir-padrao { flex: 1; background: var(--cinza-claro); border: none; color: var(--vermelho-escuro); padding: 9px; border-radius: 20px; font-weight: 600; cursor: pointer; font-size: 13px; transition: all 0.3s; }
+        .btn-definir-padrao:hover { background: linear-gradient(135deg, var(--dourado-principal), var(--dourado-escuro)); color: var(--branco); }
+
+        /* CARD ADICIONAR */
+        .card-adicionar { background: var(--branco); border-radius: 20px; padding: 22px; box-shadow: 0 5px 20px var(--sombra-suave); display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 220px; cursor: pointer; transition: all 0.3s; border: 2px dashed var(--rosa-medio); gap: 12px; }
+        .card-adicionar:hover { background: rgba(191, 105, 128, 0.04); transform: translateY(-3px); border-color: var(--vermelho-escuro); }
+        .card-adicionar .add-icone { width: 56px; height: 56px; background: rgba(191, 105, 128, 0.12); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; color: var(--rosa-medio); }
+        .card-adicionar span { font-weight: 600; color: var(--rosa-medio); font-size: 15px; }
+
+        /* MODAL */
+        .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 2000; align-items: center; justify-content: center; padding: 20px; }
+        .modal-overlay.aberto { display: flex; }
+        .modal { background: var(--branco); border-radius: 24px; width: 100%; max-width: 560px; box-shadow: 0 20px 60px rgba(0,0,0,0.25); overflow: hidden; max-height: 90vh; overflow-y: auto; }
+        .modal-header { background: linear-gradient(135deg, var(--vermelho-escuro), var(--rosa-medio)); padding: 22px 28px; display: flex; align-items: center; justify-content: space-between; }
+        .modal-header h2 { color: var(--branco); font-size: 18px; font-weight: 700; }
+        .modal-fechar { background: rgba(255,255,255,0.2); border: none; color: var(--branco); width: 34px; height: 34px; border-radius: 50%; cursor: pointer; font-size: 18px; transition: all 0.3s; display: flex; align-items: center; justify-content: center; }
+        .modal-fechar:hover { background: rgba(255,255,255,0.35); }
+        .modal-body { padding: 28px; }
+
+        /* SELETOR DE TIPO */
+        .tipo-selector { display: flex; gap: 12px; margin-bottom: 22px; }
+        .tipo-btn { flex: 1; padding: 12px; border: 2px solid var(--cinza-claro); border-radius: 14px; background: var(--cinza-claro); cursor: pointer; text-align: center; transition: all 0.3s; }
+        .tipo-btn span { display: block; font-size: 22px; margin-bottom: 4px; }
+        .tipo-btn small { font-size: 12px; font-weight: 600; color: #888; }
+        .tipo-btn.selecionado { border-color: var(--dourado-principal); background: rgba(217, 182, 7, 0.08); }
+        .tipo-btn.selecionado small { color: var(--dourado-escuro); }
+
+        /* FORM */
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+        .form-row.full { grid-template-columns: 1fr; }
+        .form-row.cep-row { grid-template-columns: 1fr auto; align-items: end; }
+        .form-grupo { display: flex; flex-direction: column; gap: 6px; }
+        .form-grupo label { font-size: 13px; font-weight: 600; color: var(--vermelho-escuro); }
+        .form-grupo input, .form-grupo select { padding: 12px 16px; border: 2px solid var(--cinza-claro); border-radius: 12px; font-size: 14px; color: #333; transition: all 0.3s; background: var(--cinza-claro); outline: none; }
+        .form-grupo input:focus, .form-grupo select:focus { border-color: var(--rosa-medio); background: var(--branco); box-shadow: 0 0 0 4px rgba(191,105,128,0.1); }
+        .btn-buscar-cep { background: var(--vermelho-escuro); color: var(--branco); border: none; padding: 12px 18px; border-radius: 12px; cursor: pointer; font-weight: 600; font-size: 13px; white-space: nowrap; transition: all 0.3s; }
+        .btn-buscar-cep:hover { background: var(--rosa-medio); }
+
+        .checkbox-padrao { display: flex; align-items: center; gap: 10px; margin: 18px 0; cursor: pointer; }
+        .checkbox-padrao input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--dourado-principal); cursor: pointer; }
+        .checkbox-padrao span { font-size: 14px; color: var(--vermelho-escuro); font-weight: 500; }
+
+        .modal-footer { display: flex; gap: 12px; margin-top: 8px; }
+        .btn-cancelar { flex: 1; background: var(--cinza-claro); border: none; color: #888; padding: 14px; border-radius: 30px; font-weight: 600; cursor: pointer; font-size: 15px; transition: all 0.3s; }
+        .btn-cancelar:hover { background: #ddd; }
+        .btn-salvar { flex: 2; background: linear-gradient(135deg, var(--dourado-principal), var(--dourado-escuro)); color: var(--branco); border: none; padding: 14px; border-radius: 30px; font-weight: 700; cursor: pointer; font-size: 15px; transition: all 0.3s; box-shadow: 0 4px 15px var(--sombra-dourado); }
+        .btn-salvar:hover { transform: translateY(-2px); box-shadow: 0 8px 25px var(--sombra-dourado); }
+
+        /* CONFIRMAÇÃO EXCLUSÃO */
+        .modal-confirmar .modal-body { text-align: center; padding: 36px 28px; }
+        .modal-confirmar .modal-body i { font-size: 48px; color: #e74c3c; margin-bottom: 16px; }
+        .modal-confirmar .modal-body h3 { color: var(--vermelho-escuro); font-size: 18px; margin-bottom: 10px; }
+        .modal-confirmar .modal-body p { color: #888; font-size: 14px; line-height: 1.6; }
+        .btn-excluir-confirm { flex: 1; background: #e74c3c; color: var(--branco); border: none; padding: 14px; border-radius: 30px; font-weight: 700; cursor: pointer; font-size: 15px; transition: all 0.3s; }
+        .btn-excluir-confirm:hover { background: #c0392b; transform: translateY(-2px); }
+
+        /* NOTIFICAÇÃO TOAST */
+        .toast { position: fixed; bottom: 30px; right: 30px; background: var(--vermelho-escuro); color: var(--branco); padding: 14px 22px; border-radius: 14px; font-size: 14px; font-weight: 600; z-index: 3000; display: flex; align-items: center; gap: 10px; transform: translateY(80px); opacity: 0; transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); }
+        .toast.visivel { transform: translateY(0); opacity: 1; }
+        .toast i { font-size: 18px; color: var(--dourado-principal); }
+
+        @media (max-width: 900px) { .layout { flex-direction: column; } .sidebar { width: 100%; position: static; } .form-row { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+
+<!-- BARRA SUPERIOR -->
+<header class="shopee-top">
+    <div class="container">
+        <nav class="navbar">
+            <div class="flex">
+                <div class="shopee-logo-area">
+                    <span class="shopee-logo-icon">📚</span>
+                    <span class="shopee-store-name" onclick="window.location.href='Entrar.html'">HAMSTORE <small>books</small></span>
+                </div>
+                <a href="#" onclick="window.location.href='dashbord.html'">Central do Vendedor</a>
+                <a href="#" onclick="window.location.href='CadastroVendedor.html'">Vender na HamStore</a>
+            </div>
+            <ul class="navbar_links">
+                <li><a href="#" class="navbar__link-text">Ajuda</a></li>
+                <li><a href="#" onclick="window.location.href='Cadastro1.html'" class="navbar__link-text navbar__link--signup">Cadastrar</a></li>
+                <li><div class="navbar__link-separator"></div></li>
+                <li><a href="#" onclick="window.location.href='login.html'" class="navbar__link-text">Entrar</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<!-- HEADER -->
+<header class="header">
+    <h1 onclick="window.location.href='Entrar.html'" class="logo">📚 Livraria</h1>
+    <div class="search-bar">
+        <input type="text" placeholder="Buscar livros...">
+    </div>
+    <div class="icons">
+        <button class="btn-sem-borda" onclick="window.location.href='Carrinho.html'">🛒</button>
+        <button class="btn-sem-borda">⚙️</button>
+        <button class="btn-sem-borda" onclick="window.location.href='MinhasCompras.html'">👤</button>
+    </div>
+</header>
+
+<div class="layout">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <div class="perfil">
+            <div class="avatar"><i class="fas fa-user"></i></div>
+            <h3>mariabaeatrizoliveira...</h3>
+            <button class="btn-editar-perfil" onclick="window.location.href='EditarPerfil.html'"><i class="fas fa-pen"></i> Editar Perfil</button>
+        </div>
+        <ul class="menu-lateral">
+            <li onclick="window.location.href='MinhasCompras.html'"><i class="fas fa-shopping-bag"></i> <span>Minhas Compras</span></li>
+            <li onclick="window.location.href='Notificaçoes.html'"><i class="fas fa-bell"></i> <span>Notificações</span></li>
+            <li onclick="window.location.href='MeusCupons.html'"><i class="fas fa-ticket-alt"></i> <span>Meus Cupons</span></li>
+            <li  onclick="window.location.href='Endereços.html'"><i class="fas fa-map-marker-alt"></i> <span>Endereços</span></li>
+            <li onclick="window.location.href='OpçoesPagamento.html'" ><i class="fas fa-credit-card"></i> <span>Pagamentos</span></li>
+            <li onclick="window.location.href='Favoritos.html'"><i class="fas fa-heart"></i> <span>Favoritos</span></li>
+            <li onclick="window.location.href='Configuraçoes.html'"><i class="fas fa-cog"></i> <span>Configurações</span></li>
+            <li onclick="window.location.href='Carrinho.html'"><i class="fas fa-shopping-cart"></i> <span>Meu Carrinho</span></li>
+        </ul>
+    </aside>
+
+    <!-- CONTEÚDO -->
+    <main class="conteudo">
+        <div class="secao-header">
+            <h2 class="secao-titulo"><i class="fas fa-map-marker-alt" style="color:var(--rosa-medio); margin-right:10px;"></i>Meus Endereços</h2>
+            <button class="btn-novo-endereco" onclick="abrirModalAdicionar()">
+                <i class="fas fa-plus"></i> Adicionar Novo Endereço
+            </button>
+        </div>
+
+        <div class="enderecos-grid" id="lista-enderecos">
+
+            <!-- ENDEREÇO 1 - PADRÃO -->
+            <div class="endereco-card padrao" data-id="1">
+                <span class="badge-padrao">⭐ Padrão</span>
+                <div class="card-tipo">
+                    <div class="tipo-icone casa"><i class="fas fa-home"></i></div>
+                    <div>
+                        <div class="tipo-nome">Casa</div>
+                        <div class="tipo-destinatario">Maria Beatriz Oliveira</div>
+                    </div>
+                </div>
+                <div class="endereco-texto">
+                    <strong>Rua das Flores, 123 – Ap. 45</strong>
+                    Vila Mariana, São Paulo – SP<br>
+                    CEP: 04020-000
+                </div>
+                <div class="telefone-info"><i class="fas fa-phone-alt"></i> (11) 99876-5432</div>
+                <div class="card-acoes">
+                    <button class="btn-editar-end" onclick="abrirModalEditar(1)"><i class="fas fa-pen"></i> Editar</button>
+                    <button class="btn-excluir-end" onclick="abrirModalExcluir(1)" title="Excluir"><i class="fas fa-trash"></i></button>
+                </div>
+            </div>
+
+            <!-- ENDEREÇO 2 -->
+            <div class="endereco-card" data-id="2">
+                <div class="card-tipo">
+                    <div class="tipo-icone trabalho"><i class="fas fa-briefcase"></i></div>
+                    <div>
+                        <div class="tipo-nome">Trabalho</div>
+                        <div class="tipo-destinatario">Maria Beatriz Oliveira</div>
+                    </div>
+                </div>
+                <div class="endereco-texto">
+                    <strong>Av. Paulista, 1578 – Sala 302</strong>
+                    Bela Vista, São Paulo – SP<br>
+                    CEP: 01310-200
+                </div>
+                <div class="telefone-info"><i class="fas fa-phone-alt"></i> (11) 3456-7890</div>
+                <div class="card-acoes">
+                    <button class="btn-editar-end" onclick="abrirModalEditar(2)"><i class="fas fa-pen"></i> Editar</button>
+                    <button class="btn-definir-padrao" onclick="definirPadrao(2)"><i class="fas fa-star"></i> Definir como padrão</button>
+                    <button class="btn-excluir-end" onclick="abrirModalExcluir(2)" title="Excluir"><i class="fas fa-trash"></i></button>
+                </div>
+            </div>
+
+            <!-- CARD ADICIONAR -->
+            <div class="card-adicionar" onclick="abrirModalAdicionar()">
+                <div class="add-icone"><i class="fas fa-plus"></i></div>
+                <span>Adicionar Endereço</span>
+            </div>
+
+        </div>
+    </main>
+</div>
+
+<!-- MODAL ADICIONAR / EDITAR -->
+<div class="modal-overlay" id="modal-endereco">
+    <div class="modal">
+        <div class="modal-header">
+            <h2 id="modal-titulo"><i class="fas fa-map-marker-alt" style="margin-right:8px;"></i>Novo Endereço</h2>
+            <button class="modal-fechar" onclick="fecharModal('modal-endereco')"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="modal-body">
+
+            <div class="tipo-selector">
+                <div class="tipo-btn selecionado" onclick="selecionarTipo(this, 'casa')">
+                    <span>🏠</span><small>Casa</small>
+                </div>
+                <div class="tipo-btn" onclick="selecionarTipo(this, 'trabalho')">
+                    <span>💼</span><small>Trabalho</small>
+                </div>
+                <div class="tipo-btn" onclick="selecionarTipo(this, 'outro')">
+                    <span>📍</span><small>Outro</small>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-grupo">
+                    <label>Nome completo *</label>
+                    <input type="text" id="inp-nome" placeholder="Ex: Maria Beatriz">
+                </div>
+                <div class="form-grupo">
+                    <label>Telefone *</label>
+                    <input type="tel" id="inp-telefone" placeholder="(11) 99999-9999" oninput="mascaraTelefone(this)">
+                </div>
+            </div>
+
+            <div class="form-row cep-row">
+                <div class="form-grupo">
+                    <label>CEP *</label>
+                    <input type="text" id="inp-cep" placeholder="00000-000" maxlength="9" oninput="mascaraCEP(this)">
+                </div>
+                <button class="btn-buscar-cep" onclick="buscarCEP()"><i class="fas fa-search"></i> Buscar</button>
+            </div>
+
+            <div class="form-row">
+                <div class="form-grupo">
+                    <label>Rua / Avenida *</label>
+                    <input type="text" id="inp-rua" placeholder="Nome da rua">
+                </div>
+                <div class="form-grupo">
+                    <label>Número *</label>
+                    <input type="text" id="inp-numero" placeholder="Ex: 123">
+                </div>
+            </div>
+
+            <div class="form-row full">
+                <div class="form-grupo">
+                    <label>Complemento</label>
+                    <input type="text" id="inp-complemento" placeholder="Ap. 45, Bloco B, etc.">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-grupo">
+                    <label>Bairro *</label>
+                    <input type="text" id="inp-bairro" placeholder="Bairro">
+                </div>
+                <div class="form-grupo">
+                    <label>Cidade *</label>
+                    <input type="text" id="inp-cidade" placeholder="Cidade">
+                </div>
+            </div>
+
+            <div class="form-row full">
+                <div class="form-grupo">
+                    <label>Estado *</label>
+                    <select id="inp-estado">
+                        <option value="">Selecione o estado</option>
+                        <option value="AC">Acre</option><option value="AL">Alagoas</option>
+                        <option value="AP">Amapá</option><option value="AM">Amazonas</option>
+                        <option value="BA">Bahia</option><option value="CE">Ceará</option>
+                        <option value="DF">Distrito Federal</option><option value="ES">Espírito Santo</option>
+                        <option value="GO">Goiás</option><option value="MA">Maranhão</option>
+                        <option value="MT">Mato Grosso</option><option value="MS">Mato Grosso do Sul</option>
+                        <option value="MG">Minas Gerais</option><option value="PA">Pará</option>
+                        <option value="PB">Paraíba</option><option value="PR">Paraná</option>
+                        <option value="PE">Pernambuco</option><option value="PI">Piauí</option>
+                        <option value="RJ">Rio de Janeiro</option><option value="RN">Rio Grande do Norte</option>
+                        <option value="RS">Rio Grande do Sul</option><option value="RO">Rondônia</option>
+                        <option value="RR">Roraima</option><option value="SC">Santa Catarina</option>
+                        <option value="SP" selected>São Paulo</option><option value="SE">Sergipe</option>
+                        <option value="TO">Tocantins</option>
+                    </select>
+                </div>
+            </div>
+
+            <label class="checkbox-padrao">
+                <input type="checkbox" id="inp-padrao">
+                <span><i class="fas fa-star" style="color:var(--dourado-principal); margin-right:5px;"></i>Definir como endereço padrão</span>
+            </label>
+
+            <div class="modal-footer">
+                <button class="btn-cancelar" onclick="fecharModal('modal-endereco')">Cancelar</button>
+                <button class="btn-salvar" onclick="salvarEndereco()"><i class="fas fa-check" style="margin-right:8px;"></i>Salvar Endereço</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL CONFIRMAR EXCLUSÃO -->
+<div class="modal-overlay" id="modal-excluir">
+    <div class="modal modal-confirmar">
+        <div class="modal-body">
+            <i class="fas fa-trash-alt"></i>
+            <h3>Excluir endereço?</h3>
+            <p>Tem certeza que deseja remover este endereço? Esta ação não pode ser desfeita.</p>
+            <div class="modal-footer" style="margin-top:24px;">
+                <button class="btn-cancelar" onclick="fecharModal('modal-excluir')">Cancelar</button>
+                <button class="btn-excluir-confirm" onclick="confirmarExclusao()"><i class="fas fa-trash" style="margin-right:8px;"></i>Sim, excluir</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast">
+    <i class="fas fa-check-circle"></i>
+    <span id="toast-msg">Endereço salvo com sucesso!</span>
+</div>
+
+<script>
+    let idParaExcluir = null;
+    let modoEdicao = false;
+    let tipoSelecionado = 'casa';
+
+    function abrirModalAdicionar() {
+        modoEdicao = false;
+        document.getElementById('modal-titulo').innerHTML = '<i class="fas fa-map-marker-alt" style="margin-right:8px;"></i>Novo Endereço';
+        limparForm();
+        abrirModal('modal-endereco');
+    }
+
+    function abrirModalEditar(id) {
+        modoEdicao = true;
+        document.getElementById('modal-titulo').innerHTML = '<i class="fas fa-pen" style="margin-right:8px;"></i>Editar Endereço';
+        if (id === 1) {
+            document.getElementById('inp-nome').value = 'Maria Beatriz Oliveira';
+            document.getElementById('inp-telefone').value = '(11) 99876-5432';
+            document.getElementById('inp-cep').value = '04020-000';
+            document.getElementById('inp-rua').value = 'Rua das Flores';
+            document.getElementById('inp-numero').value = '123';
+            document.getElementById('inp-complemento').value = 'Ap. 45';
+            document.getElementById('inp-bairro').value = 'Vila Mariana';
+            document.getElementById('inp-cidade').value = 'São Paulo';
+            document.getElementById('inp-estado').value = 'SP';
+            document.getElementById('inp-padrao').checked = true;
+        } else if (id === 2) {
+            document.getElementById('inp-nome').value = 'Maria Beatriz Oliveira';
+            document.getElementById('inp-telefone').value = '(11) 3456-7890';
+            document.getElementById('inp-cep').value = '01310-200';
+            document.getElementById('inp-rua').value = 'Av. Paulista';
+            document.getElementById('inp-numero').value = '1578';
+            document.getElementById('inp-complemento').value = 'Sala 302';
+            document.getElementById('inp-bairro').value = 'Bela Vista';
+            document.getElementById('inp-cidade').value = 'São Paulo';
+            document.getElementById('inp-estado').value = 'SP';
+            document.getElementById('inp-padrao').checked = false;
+            const btns = document.querySelectorAll('.tipo-btn');
+            btns.forEach(b => b.classList.remove('selecionado'));
+            btns[1].classList.add('selecionado');
+            tipoSelecionado = 'trabalho';
+        }
+        abrirModal('modal-endereco');
+    }
+
+    function abrirModalExcluir(id) {
+        idParaExcluir = id;
+        abrirModal('modal-excluir');
+    }
+
+    function abrirModal(id) {
+        document.getElementById(id).classList.add('aberto');
+    }
+
+    function fecharModal(id) {
+        document.getElementById(id).classList.remove('aberto');
+    }
+
+    function limparForm() {
+        ['inp-nome','inp-telefone','inp-cep','inp-rua','inp-numero','inp-complemento','inp-bairro','inp-cidade'].forEach(id => {
+            document.getElementById(id).value = '';
+        });
+        document.getElementById('inp-estado').value = 'SP';
+        document.getElementById('inp-padrao').checked = false;
+        document.querySelectorAll('.tipo-btn').forEach(b => b.classList.remove('selecionado'));
+        document.querySelectorAll('.tipo-btn')[0].classList.add('selecionado');
+        tipoSelecionado = 'casa';
+    }
+
+    function selecionarTipo(el, tipo) {
+        document.querySelectorAll('.tipo-btn').forEach(b => b.classList.remove('selecionado'));
+        el.classList.add('selecionado');
+        tipoSelecionado = tipo;
+    }
+
+    function mascaraCEP(input) {
+        let v = input.value.replace(/\D/g, '').slice(0, 8);
+        if (v.length > 5) v = v.slice(0,5) + '-' + v.slice(5);
+        input.value = v;
+    }
+
+    function mascaraTelefone(input) {
+        let v = input.value.replace(/\D/g, '').slice(0, 11);
+        if (v.length > 6) v = '(' + v.slice(0,2) + ') ' + v.slice(2,7) + '-' + v.slice(7);
+        else if (v.length > 2) v = '(' + v.slice(0,2) + ') ' + v.slice(2);
+        input.value = v;
+    }
+
+    async function buscarCEP() {
+        const cep = document.getElementById('inp-cep').value.replace(/\D/g,'');
+        if (cep.length !== 8) { mostrarToast('Digite um CEP válido com 8 dígitos.', true); return; }
+        try {
+            const resp = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+            const data = await resp.json();
+            if (data.erro) { mostrarToast('CEP não encontrado.', true); return; }
+            document.getElementById('inp-rua').value = data.logradouro || '';
+            document.getElementById('inp-bairro').value = data.bairro || '';
+            document.getElementById('inp-cidade').value = data.localidade || '';
+            document.getElementById('inp-estado').value = data.uf || 'SP';
+            document.getElementById('inp-numero').focus();
+            mostrarToast('CEP encontrado! Complete o número.');
+        } catch(e) {
+            mostrarToast('Erro ao buscar CEP. Tente novamente.', true);
+        }
+    }
+
+    function salvarEndereco() {
+        const nome = document.getElementById('inp-nome').value.trim();
+        const cep = document.getElementById('inp-cep').value.trim();
+        const rua = document.getElementById('inp-rua').value.trim();
+        const numero = document.getElementById('inp-numero').value.trim();
+        if (!nome || !cep || !rua || !numero) {
+            mostrarToast('Preencha todos os campos obrigatórios (*).', true);
+            return;
+        }
+        fecharModal('modal-endereco');
+        mostrarToast(modoEdicao ? 'Endereço atualizado com sucesso!' : 'Endereço adicionado com sucesso!');
+    }
+
+    function confirmarExclusao() {
+        fecharModal('modal-excluir');
+        mostrarToast('Endereço removido com sucesso.');
+    }
+
+    function definirPadrao(id) {
+        document.querySelectorAll('.endereco-card').forEach(card => {
+            card.classList.remove('padrao');
+            const badge = card.querySelector('.badge-padrao');
+            if (badge) badge.remove();
+            const acoes = card.querySelector('.card-acoes');
+            const btnDef = card.querySelector('.btn-definir-padrao');
+            if (!btnDef && card.dataset.id !== String(id)) {
+                const btn = document.createElement('button');
+                btn.className = 'btn-definir-padrao';
+                btn.innerHTML = '<i class="fas fa-star"></i> Definir como padrão';
+                btn.onclick = () => definirPadrao(card.dataset.id);
+                acoes.insertBefore(btn, acoes.querySelector('.btn-excluir-end'));
+            }
+        });
+        const alvo = document.querySelector(`.endereco-card[data-id="${id}"]`);
+        if (alvo) {
+            alvo.classList.add('padrao');
+            const badge = document.createElement('span');
+            badge.className = 'badge-padrao';
+            badge.textContent = '⭐ Padrão';
+            alvo.insertBefore(badge, alvo.firstChild);
+            const btnDef = alvo.querySelector('.btn-definir-padrao');
+            if (btnDef) btnDef.remove();
+        }
+        mostrarToast('Endereço padrão atualizado!');
+    }
+
+    function mostrarToast(msg, erro = false) {
+        const toast = document.getElementById('toast');
+        document.getElementById('toast-msg').textContent = msg;
+        toast.style.background = erro ? '#e74c3c' : 'var(--vermelho-escuro)';
+        toast.querySelector('i').style.color = erro ? '#fff' : 'var(--dourado-principal)';
+        toast.classList.add('visivel');
+        setTimeout(() => toast.classList.remove('visivel'), 3000);
+    }
+
+    document.querySelectorAll('.modal-overlay').forEach(overlay => {
+        overlay.addEventListener('click', function(e) {
+            if (e.target === this) this.classList.remove('aberto');
+        });
+    });
+</script>
+</body>
+</html>

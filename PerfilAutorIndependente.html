@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil do Autor Independente — HamStore Books</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;0,900;1,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --vermelho-escuro: #8C031C; --rosa-medio: #BF6980;
+            --cinza-claro: #F0F0F2;    --dourado-principal: #D9B607;
+            --dourado-escuro: #8C5C03; --branco: #ffffff;
+            --sombra-suave: rgba(140,3,28,0.10);
+            --sombra-dourado: rgba(217,182,7,0.28);
+            --khaki: #9DAD71;
+            --display: 'Playfair Display', Georgia, serif;
+            --corpo: 'Inter','Segoe UI',sans-serif;
+        }
+        *{margin:0;padding:0;box-sizing:border-box;}
+        body{font-family:var(--corpo);background:#f8f7f5;color:#2a2a2a;overflow-x:hidden;}
+
+        /* ── BANNER ── */
+        .banner{height:320px;background:linear-gradient(160deg,rgba(140,3,28,.82) 0%,rgba(157,173,113,.45) 55%,rgba(140,92,3,.65) 100%),url('img/bannerAutor.jpg') center/cover no-repeat;position:relative;}
+        .banner::after{content:'';position:absolute;bottom:0;left:0;right:0;height:130px;background:linear-gradient(transparent,#f8f7f5);}
+        .banner-quote{position:absolute;bottom:36px;left:60px;z-index:4;}
+        .banner-quote .qt{font-family:var(--display);font-style:italic;font-size:17px;color:rgba(255,255,255,.9);line-height:1.45;max-width:380px;text-shadow:0 2px 12px rgba(0,0,0,.4);}
+        .banner-quote .qt::before{content:'\201C';font-size:26px;color:var(--dourado-principal);vertical-align:-4px;margin-right:2px;}
+        .banner-quote .qt::after{content:'\201D';font-size:26px;color:var(--dourado-principal);vertical-align:-4px;margin-left:2px;}
+        .banner-quote .qa{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--dourado-principal);margin-top:8px;}
+        .banner-stats{position:absolute;bottom:36px;right:60px;display:flex;gap:24px;z-index:4;}
+        .bstat{text-align:center;color:var(--branco);}
+        .bstat .num{font-family:var(--display);font-size:26px;font-weight:900;color:var(--dourado-principal);line-height:1;}
+        .bstat .lbl{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;opacity:.8;margin-top:3px;}
+        .bstat-sep{width:1px;background:rgba(255,255,255,.22);align-self:stretch;}
+
+        /* badge independente no banner */
+        .banner-ind{position:absolute;top:20px;right:20px;z-index:4;background:linear-gradient(135deg,var(--khaki),#7a8f55);border-radius:30px;padding:8px 16px;display:flex;align-items:center;gap:8px;color:var(--branco);font-size:12px;font-weight:700;box-shadow:0 4px 16px rgba(0,0,0,.2);}
+
+        /* ── PERFIL ── */
+        .perfil-wrap{max-width:1260px;margin:0 auto;padding:0 40px;}
+        .perfil{display:flex;align-items:center;gap:32px;background:var(--branco);padding:32px 44px;margin-top:-72px;border-radius:24px;box-shadow:0 20px 60px var(--sombra-suave);position:relative;z-index:10;border:1px solid rgba(255,255,255,.6);}
+        /* linha verde no topo do card perfil */
+        .perfil::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--khaki),var(--dourado-principal));border-radius:24px 24px 0 0;}
+        .foto-wrap{position:relative;flex-shrink:0;}
+        .foto-ph{width:130px;height:130px;border-radius:50%;background:linear-gradient(135deg,var(--vermelho-escuro),var(--rosa-medio));border:5px solid var(--branco);box-shadow:0 12px 40px rgba(0,0,0,.18);display:flex;align-items:center;justify-content:center;font-size:48px;color:var(--branco);}
+        .badge-tipo{position:absolute;bottom:4px;right:0;background:linear-gradient(135deg,var(--khaki),#7a8f55);color:var(--branco);font-size:10px;font-weight:700;padding:3px 10px;border-radius:20px;border:2px solid var(--branco);white-space:nowrap;box-shadow:0 3px 10px rgba(0,0,0,.15);}
+        .perfil-info{flex:1;}
+        .eyebrow{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--khaki);margin-bottom:6px;}
+        .perfil-info h1{font-family:var(--display);font-size:34px;font-weight:900;color:var(--vermelho-escuro);line-height:1.1;margin-bottom:10px;}
+        .avaliacao{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+        .estrelas{color:var(--dourado-principal);font-size:16px;}
+        .av-num{font-weight:700;font-size:14px;color:var(--vermelho-escuro);}
+        .av-total{font-size:13px;color:#888;}
+        .generos{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap;}
+        .gtag{font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;background:rgba(140,3,28,.07);color:var(--vermelho-escuro);border:1px solid rgba(140,3,28,.15);}
+        .ptags{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;}
+        .ptag{font-size:11px;font-weight:600;padding:4px 12px;border-radius:20px;background:var(--cinza-claro);color:var(--vermelho-escuro);}
+        .ptag.verde{background:rgba(157,173,113,.18);color:#4a6128;}
+        .ptag.gold{background:rgba(217,182,7,.12);color:var(--dourado-escuro);}
+        /* selo independente no perfil */
+        .selo-ind{display:flex;align-items:center;gap:12px;background:rgba(157,173,113,.1);border-radius:14px;padding:12px 16px;margin-top:14px;border-left:4px solid var(--khaki);}
+        .selo-ind .si-ico{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--khaki),#7a8f55);display:flex;align-items:center;justify-content:center;color:var(--branco);font-size:16px;flex-shrink:0;}
+        .selo-ind .si-info .si-label{font-size:10px;color:#888;font-weight:600;text-transform:uppercase;letter-spacing:1px;}
+        .selo-ind .si-info .si-nome{font-size:14px;font-weight:700;color:#4a6128;}
+        .perfil-acoes{display:flex;flex-direction:column;gap:10px;flex-shrink:0;}
+        .btn-seguir{padding:13px 32px;background:linear-gradient(135deg,var(--vermelho-escuro),var(--rosa-medio));color:var(--branco);border:none;border-radius:30px;font-weight:700;font-size:14px;cursor:pointer;transition:all .3s;box-shadow:0 8px 24px var(--sombra-suave);display:flex;align-items:center;gap:8px;}
+        .btn-seguir:hover{background:linear-gradient(135deg,var(--dourado-principal),var(--dourado-escuro));color:var(--vermelho-escuro);transform:translateY(-2px);box-shadow:0 12px 32px var(--sombra-dourado);}
+        .btn-seguir.seguindo{background:var(--cinza-claro);color:var(--vermelho-escuro);box-shadow:none;}
+        .btn-msg{padding:11px 28px;background:transparent;color:var(--vermelho-escuro);border:2px solid var(--rosa-medio);border-radius:30px;font-weight:700;font-size:14px;cursor:pointer;transition:all .3s;display:flex;align-items:center;gap:8px;}
+        .btn-msg:hover{background:var(--cinza-claro);border-color:var(--vermelho-escuro);}
+
+        /* ── NAV ── */
+        .nav-wrap{max-width:1260px;margin:28px auto 0;padding:0 40px;}
+        .menu{display:flex;gap:4px;background:var(--branco);padding:8px 12px;border-radius:50px;box-shadow:0 4px 20px var(--sombra-suave);width:fit-content;}
+        .menu a{text-decoration:none;color:#777;font-weight:600;font-size:14px;padding:10px 22px;border-radius:30px;transition:all .25s;white-space:nowrap;}
+        .menu a:hover{color:var(--vermelho-escuro);background:var(--cinza-claro);}
+        .menu a.ativo{background:linear-gradient(135deg,var(--vermelho-escuro),var(--rosa-medio));color:var(--branco);box-shadow:0 4px 14px var(--sombra-suave);}
+
+        /* ── SEÇÃO BASE ── */
+        .secao{max-width:1260px;margin:0 auto;padding:72px 40px 0;}
+        .secao-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:40px;padding-bottom:20px;border-bottom:2px solid var(--cinza-claro);}
+        .secao-header h2{font-family:var(--display);font-size:30px;font-weight:800;color:var(--vermelho-escuro);}
+        .secao-header h2 span{display:block;font-family:var(--corpo);font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--rosa-medio);margin-bottom:4px;}
+        .ver-todos{font-size:13px;font-weight:700;color:var(--rosa-medio);text-decoration:none;display:flex;align-items:center;gap:5px;padding:8px 18px;border-radius:20px;border:2px solid rgba(191,105,128,.3);transition:all .2s;}
+        .ver-todos:hover{background:var(--rosa-medio);color:var(--branco);border-color:var(--rosa-medio);}
+
+        /* ── PRÉ-VENDA (com carrinho direto) ── */
+        .lancamento-card{background:linear-gradient(135deg,var(--vermelho-escuro) 0%,#5a0114 40%,#4a5e28 100%);border-radius:24px;padding:48px 56px;display:flex;align-items:center;gap:48px;box-shadow:0 16px 56px rgba(140,3,28,.3);position:relative;overflow:hidden;}
+        .lancamento-card::before{content:'';position:absolute;top:-80px;right:-80px;width:280px;height:280px;border-radius:50%;background:rgba(255,255,255,.04);}
+        .lancamento-card::after{content:'';position:absolute;bottom:-100px;left:220px;width:340px;height:340px;border-radius:50%;background:rgba(157,173,113,.08);}
+        .lanc-capa{width:148px;height:210px;flex-shrink:0;border-radius:14px;background:rgba(255,255,255,.12);border:2px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:56px;box-shadow:0 14px 44px rgba(0,0,0,.3);position:relative;z-index:1;}
+        .lanc-info{flex:1;position:relative;z-index:1;}
+        .lanc-eyebrow{display:flex;align-items:center;gap:8px;font-size:11px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--dourado-principal);margin-bottom:12px;}
+        .lanc-eyebrow::before{content:'';display:inline-block;width:24px;height:2px;background:var(--dourado-principal);border-radius:1px;}
+        .lanc-info h3{font-family:var(--display);font-size:30px;font-weight:900;color:var(--branco);line-height:1.2;margin-bottom:8px;}
+        .lanc-info .lanc-genero{font-size:13px;color:rgba(255,255,255,.65);margin-bottom:14px;}
+        .lanc-info .lanc-sinopse{font-size:14px;color:rgba(255,255,255,.62);line-height:1.7;max-width:400px;margin-bottom:22px;}
+        .lanc-meta{display:flex;gap:28px;margin-bottom:26px;}
+        .lm .ll{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,.45);margin-bottom:3px;}
+        .lm .lv{font-weight:700;font-size:15px;color:rgba(255,255,255,.9);}
+        .lm .lv.ouro{font-family:var(--display);font-size:22px;color:var(--dourado-principal);}
+        .lanc-btns{display:flex;gap:12px;}
+        /* Compra direta — botão mais proeminente */
+        .btn-comprar{padding:14px 30px;background:linear-gradient(135deg,var(--dourado-principal),var(--dourado-escuro));color:var(--branco);border:none;border-radius:30px;font-weight:800;font-size:15px;cursor:pointer;transition:all .3s;display:flex;align-items:center;gap:8px;box-shadow:0 8px 24px var(--sombra-dourado);}
+        .btn-comprar:hover{transform:translateY(-3px);box-shadow:0 14px 36px var(--sombra-dourado);}
+        .btn-aviso{padding:13px 22px;background:rgba(255,255,255,.1);color:var(--branco);border:2px solid rgba(255,255,255,.22);border-radius:30px;font-weight:600;font-size:14px;cursor:pointer;transition:all .25s;display:flex;align-items:center;gap:8px;}
+        .btn-aviso:hover{background:rgba(255,255,255,.2);}
+
+        /* ── GRID LIVROS (venda direta) ── */
+        .livros-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:24px;}
+        .livro-card{background:var(--branco);border-radius:18px;overflow:hidden;box-shadow:0 4px 16px var(--sombra-suave);transition:all .35s;border:2px solid transparent;position:relative;cursor:pointer;}
+        .livro-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--dourado-principal),var(--dourado-escuro));}
+        .livros-grid.serie .livro-card::before{background:linear-gradient(90deg,var(--khaki),var(--dourado-principal));}
+        .livros-grid.populares .livro-card::before{background:linear-gradient(90deg,var(--rosa-medio),var(--vermelho-escuro));}
+        .livro-card:hover{transform:translateY(-8px);box-shadow:0 20px 50px rgba(140,3,28,.15);border-color:var(--rosa-medio);}
+        .livro-capa-ph{width:100%;height:240px;background:linear-gradient(135deg,var(--cinza-claro),#e2e2e4);display:flex;align-items:center;justify-content:center;font-size:64px;color:var(--rosa-medio);}
+        .livro-info{padding:16px 18px 20px;}
+        .livro-num{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--rosa-medio);margin-bottom:4px;}
+        .livro-titulo{font-weight:700;font-size:14px;color:var(--vermelho-escuro);line-height:1.35;margin-bottom:12px;}
+        .livro-rodape{display:flex;align-items:center;justify-content:space-between;}
+        .livro-preco{font-family:var(--display);font-size:20px;font-weight:800;color:var(--dourado-escuro);}
+        /* carrinho direto */
+        .btn-cart{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,var(--vermelho-escuro),var(--rosa-medio));border:none;color:var(--branco);font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;}
+        .btn-cart:hover{background:linear-gradient(135deg,var(--dourado-principal),var(--dourado-escuro));transform:scale(1.1);}
+        .num-serie{position:absolute;top:14px;right:14px;width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,var(--khaki),#7a8f55);color:var(--branco);font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.15);z-index:2;}
+
+        .scroll-livros{display:flex;gap:20px;overflow-x:auto;padding-bottom:12px;scrollbar-width:thin;scrollbar-color:var(--khaki) var(--cinza-claro);}
+        .scroll-livros::-webkit-scrollbar{height:5px;}
+        .scroll-livros::-webkit-scrollbar-track{background:var(--cinza-claro);border-radius:3px;}
+        .scroll-livros::-webkit-scrollbar-thumb{background:var(--khaki);border-radius:3px;}
+        .scroll-livros .livro-card{min-width:200px;flex-shrink:0;}
+
+        /* ── PAINEL DE VENDAS (exclusivo do autor ind.) ── */
+        .painel-vendas{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;margin-bottom:8px;}
+        .pv-card{background:var(--branco);border-radius:16px;padding:22px 24px;box-shadow:0 4px 16px var(--sombra-suave);text-align:center;border-top:4px solid;}
+        .pv-card.verde{border-color:var(--khaki);}
+        .pv-card.ouro{border-color:var(--dourado-principal);}
+        .pv-card.rosa{border-color:var(--rosa-medio);}
+        .pv-card.verm{border-color:var(--vermelho-escuro);}
+        .pv-num{font-family:var(--display);font-size:32px;font-weight:900;color:var(--vermelho-escuro);line-height:1;}
+        .pv-label{font-size:12px;color:#888;font-weight:600;margin-top:4px;text-transform:uppercase;letter-spacing:0.8px;}
+
+        /* ── AVALIAÇÕES ── */
+        .avals-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px;}
+        .aval-card{background:var(--branco);border-radius:16px;padding:22px 24px;box-shadow:0 3px 14px var(--sombra-suave);transition:box-shadow .3s;}
+        .aval-card:hover{box-shadow:0 8px 28px rgba(140,3,28,.1);}
+        .aval-topo{display:flex;align-items:center;gap:12px;margin-bottom:12px;}
+        .aval-avatar{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--rosa-medio),var(--vermelho-escuro));display:flex;align-items:center;justify-content:center;color:var(--branco);font-weight:700;font-size:15px;flex-shrink:0;}
+        .aval-nome{font-weight:700;font-size:14px;color:var(--vermelho-escuro);}
+        .aval-data{font-size:11px;color:#aaa;}
+        .aval-stars{color:var(--dourado-principal);font-size:13px;margin-bottom:8px;}
+        .aval-livro{font-size:11px;color:var(--rosa-medio);font-weight:600;margin-bottom:8px;display:flex;align-items:center;gap:4px;}
+        .aval-texto{font-size:13px;color:#555;line-height:1.65;}
+
+        /* ── EVENTOS ── */
+        .eventos-lista{display:flex;flex-direction:column;gap:16px;}
+        .evento-card{display:flex;align-items:center;gap:20px;background:var(--branco);border-radius:16px;padding:18px 24px;box-shadow:0 3px 14px var(--sombra-suave);transition:all .3s;border:2px solid transparent;cursor:pointer;}
+        .evento-card:hover{border-color:var(--dourado-principal);transform:translateX(5px);box-shadow:0 8px 28px var(--sombra-dourado);}
+        .evento-data{width:56px;height:60px;flex-shrink:0;border-radius:14px;background:linear-gradient(135deg,var(--vermelho-escuro),var(--rosa-medio));display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--branco);}
+        .evento-data .dia{font-family:var(--display);font-size:22px;font-weight:900;line-height:1;}
+        .evento-data .mes{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;opacity:.85;}
+        .evento-dados{flex:1;}
+        .evento-nome{font-weight:700;font-size:15px;color:var(--vermelho-escuro);margin-bottom:3px;}
+        .evento-local{font-size:12px;color:#888;display:flex;align-items:center;gap:5px;}
+        .evento-tipo{font-size:11px;font-weight:700;padding:4px 12px;border-radius:20px;flex-shrink:0;}
+        .evento-tipo.sessao{background:rgba(217,182,7,.12);color:var(--dourado-escuro);}
+        .evento-tipo.live{background:rgba(157,173,113,.18);color:#4a6128;}
+        .evento-tipo.feira{background:rgba(191,105,128,.12);color:var(--rosa-medio);}
+
+        /* ── SOBRE ── */
+        .bio-grid{display:grid;grid-template-columns:1fr 320px;gap:28px;align-items:start;}
+        .bio-texto{background:var(--branco);border-radius:20px;padding:40px 44px;box-shadow:0 4px 20px var(--sombra-suave);border-left:5px solid var(--khaki);}
+        .bio-texto p{font-size:15px;line-height:1.85;color:#444;margin-bottom:16px;}
+        .bio-texto p:last-child{margin-bottom:0;}
+        .bio-lateral{display:flex;flex-direction:column;gap:16px;}
+        .info-card{background:var(--branco);border-radius:18px;padding:22px 24px;box-shadow:0 4px 16px var(--sombra-suave);}
+        .info-card h4{font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--rosa-medio);margin-bottom:14px;}
+        .info-linha{display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid var(--cinza-claro);font-size:13px;}
+        .info-linha:last-child{border-bottom:none;}
+        .info-linha i{color:var(--dourado-principal);width:16px;text-align:center;flex-shrink:0;}
+        .il{color:#888;margin-right:4px;}
+        .iv{font-weight:600;color:var(--vermelho-escuro);}
+        /* plataformas de publicação */
+        .plat-card{background:var(--cinza-claro);border-radius:18px;padding:22px 24px;}
+        .plat-card h4{font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--dourado-escuro);margin-bottom:14px;}
+        .plat-lista{display:flex;flex-direction:column;gap:8px;}
+        .plat-item{display:flex;align-items:center;gap:10px;padding:9px 14px;border-radius:12px;background:var(--branco);font-size:13px;font-weight:600;color:var(--garnet, #4E0A0B);}
+        .plat-item i{color:var(--dourado-principal);}
+        .redes-card{background:linear-gradient(135deg,var(--khaki),#7a8f55);border-radius:18px;padding:22px 24px;}
+        .redes-card h4{font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.75);margin-bottom:14px;}
+        .redes-lista{display:flex;flex-direction:column;gap:8px;}
+        .rede-item{display:flex;align-items:center;gap:10px;padding:9px 14px;border-radius:12px;background:rgba(255,255,255,.18);color:var(--branco);font-size:13px;font-weight:600;text-decoration:none;transition:background .2s;}
+        .rede-item:hover{background:rgba(255,255,255,.32);}
+
+        .footer-space{height:80px;}
+
+        @media(max-width:900px){
+            .perfil-wrap,.nav-wrap,.secao{padding-left:20px;padding-right:20px;}
+            .perfil{flex-wrap:wrap;padding:28px;margin-top:-60px;}
+            .perfil-acoes{flex-direction:row;}
+            .lancamento-card{flex-direction:column;padding:36px 28px;text-align:center;gap:28px;}
+            .lanc-meta{justify-content:center;}
+            .lanc-btns{justify-content:center;}
+            .bio-grid{grid-template-columns:1fr;}
+            .banner-quote,.banner-stats,.banner-ind{display:none;}
+            .painel-vendas{grid-template-columns:repeat(2,1fr);}
+        }
+        @media(max-width:600px){
+            .perfil-info h1{font-size:26px;}
+            .secao{padding-top:48px;}
+            .livros-grid{grid-template-columns:repeat(2,1fr);}
+            .menu{flex-wrap:wrap;gap:4px;padding:8px;border-radius:16px;width:100%;}
+            .painel-vendas{grid-template-columns:repeat(2,1fr);}
+        }
+    </style>
+</head>
+<body>
+
+<!-- BANNER -->
+<div class="banner">
+    <div class="banner-ind">
+        <i class="fas fa-feather-alt"></i> Autor Independente
+    </div>
+    <div class="banner-quote">
+        <p class="qt">Publico porque acredito em cada palavra que escrevo — sem intermediários.</p>
+        <p class="qa">Nome do Autor Independente</p>
+    </div>
+    <div class="banner-stats">
+        <div class="bstat"><div class="num">12</div><div class="lbl">Títulos</div></div>
+        <div class="bstat-sep"></div>
+        <div class="bstat"><div class="num">1,2k</div><div class="lbl">Vendas</div></div>
+        <div class="bstat-sep"></div>
+        <div class="bstat"><div class="num">4,8★</div><div class="lbl">Avaliação</div></div>
+        <div class="bstat-sep"></div>
+        <div class="bstat"><div class="num">8k</div><div class="lbl">Seguidores</div></div>
+    </div>
+</div>
+
+<!-- PERFIL -->
+<div class="perfil-wrap">
+    <div class="perfil">
+        <div class="foto-wrap">
+            <div class="foto-ph"><i class="fas fa-user"></i></div>
+            <span class="badge-tipo">🎭 Independente</span>
+        </div>
+        <div class="perfil-info">
+            <p class="eyebrow">Autor independente · HamStore Books</p>
+            <h1>Nome do Autor</h1>
+            <div class="avaliacao">
+                <span class="estrelas">★★★★★</span>
+                <span class="av-num">4.8</span>
+                <span class="av-total">(87 avaliações)</span>
+            </div>
+            <div class="generos">
+                <span class="gtag">Romance</span>
+                <span class="gtag">Fantasia</span>
+                <span class="gtag">Young Adult</span>
+            </div>
+            <div class="ptags">
+                <span class="ptag">📚 12 títulos publicados</span>
+                <span class="ptag">📍 Belo Horizonte, MG</span>
+                <span class="ptag verde">🟢 Loja ativa</span>
+                <span class="ptag gold">⚡ Envio em 24h</span>
+            </div>
+            <!-- selo independente -->
+            <div class="selo-ind">
+                <div class="si-ico"><i class="fas fa-feather-alt"></i></div>
+                <div class="si-info">
+                    <div class="si-label">Publicação independente</div>
+                    <div class="si-nome">Sem vínculo com editora · Venda direta ao leitor</div>
+                </div>
+            </div>
+        </div>
+        <div class="perfil-acoes">
+            <button class="btn-seguir" id="btn-seguir" onclick="toggleSeguir()">
+                <i class="fas fa-plus" id="ico-seg"></i><span id="txt-seg">Seguir</span>
+            </button>
+            <button class="btn-msg"><i class="fas fa-comment"></i> Mensagem</button>
+        </div>
+    </div>
+</div>
+
+<!-- NAV -->
+<div class="nav-wrap">
+    <nav class="menu">
+        <a href="#loja" class="ativo">Loja</a>
+        <a href="#lancamento">Lançamento</a>
+        <a href="#serie">Série</a>
+        <a href="#populares">Populares</a>
+        <a href="#avaliacoes">Avaliações</a>
+        <a href="#eventos">Eventos</a>
+        <a href="#sobre">Sobre</a>
+    </nav>
+</div>
+
+<!-- PAINEL DE MÉTRICAS DA LOJA -->
+<div class="secao" id="loja" style="padding-top:40px;">
+    <div class="secao-header">
+        <h2><span>Minha loja</span>Resumo de vendas</h2>
+    </div>
+    <div class="painel-vendas">
+        <div class="pv-card verde">
+            <div class="pv-num">1.247</div>
+            <div class="pv-label">Vendas totais</div>
+        </div>
+        <div class="pv-card ouro">
+            <div class="pv-num">12</div>
+            <div class="pv-label">Títulos à venda</div>
+        </div>
+        <div class="pv-card rosa">
+            <div class="pv-num">4,8★</div>
+            <div class="pv-label">Avaliação média</div>
+        </div>
+        <div class="pv-card verm">
+            <div class="pv-num">24h</div>
+            <div class="pv-label">Prazo de envio</div>
+        </div>
+    </div>
+</div>
+
+<!-- LANÇAMENTO / PRÉ-VENDA (venda direta) -->
+<div class="secao" id="lancamento">
+    <div class="secao-header">
+        <h2><span>Em breve</span>Próximo lançamento</h2>
+    </div>
+    <div class="lancamento-card">
+        <div class="lanc-capa">📗</div>
+        <div class="lanc-info">
+            <p class="lanc-eyebrow">Pré-venda — compra direta</p>
+            <h3>Nome do Livro Novo</h3>
+            <p class="lanc-genero">Romance fantástico · Publicação independente</p>
+            <p class="lanc-sinopse">Em um reino esquecido pelos mapas, duas almas que não deveriam se encontrar descobrem que o destino não pede permissão — e que o amor pode ser a maior forma de resistência.</p>
+            <div class="lanc-meta">
+                <div class="lm"><div class="ll">Lançamento</div><div class="lv">15 Fev 2026</div></div>
+                <div class="lm"><div class="ll">Preço</div><div class="lv ouro">R$ 42,90</div></div>
+                <div class="lm"><div class="ll">Frete</div><div class="lv">Grátis acima R$80</div></div>
+            </div>
+            <div class="lanc-btns">
+                <button class="btn-comprar" onclick="window.location.href='Pagamento1.html'">
+                    <i class="fas fa-cart-plus"></i> Garantir pré-venda
+                </button>
+                <button class="btn-aviso"><i class="fas fa-bell"></i> Me avisar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SÉRIE -->
+<div class="secao" id="serie">
+    <div class="secao-header">
+        <h2><span>Coleção completa</span>Série: Nome da Série</h2>
+        <a href="#" class="ver-todos">Ver todos <i class="fas fa-arrow-right"></i></a>
+    </div>
+    <div class="scroll-livros serie">
+        <div class="livro-card"><span class="num-serie">1</span><div class="livro-capa-ph"><i class="fas fa-book"></i></div><div class="livro-info"><div class="livro-num">Volume 1</div><div class="livro-titulo">Livro Um da Série</div><div class="livro-rodape"><span class="livro-preco">R$ 30,00</span><button class="btn-cart" onclick="event.stopPropagation()"><i class="fas fa-cart-plus"></i></button></div></div></div>
+        <div class="livro-card"><span class="num-serie">2</span><div class="livro-capa-ph"><i class="fas fa-book"></i></div><div class="livro-info"><div class="livro-num">Volume 2</div><div class="livro-titulo">Livro Dois da Série</div><div class="livro-rodape"><span class="livro-preco">R$ 30,00</span><button class="btn-cart" onclick="event.stopPropagation()"><i class="fas fa-cart-plus"></i></button></div></div></div>
+        <div class="livro-card"><span class="num-serie">3</span><div class="livro-capa-ph"><i class="fas fa-book"></i></div><div class="livro-info"><div class="livro-num">Volume 3</div><div class="livro-titulo">Livro Três da Série</div><div class="livro-rodape"><span class="livro-preco">R$ 30,00</span><button class="btn-cart" onclick="event.stopPropagation()"><i class="fas fa-cart-plus"></i></button></div></div></div>
+        <div class="livro-card"><span class="num-serie">4</span><div class="livro-capa-ph"><i class="fas fa-book"></i></div><div class="livro-info"><div class="livro-num">Volume 4</div><div class="livro-titulo">Livro Quatro da Série</div><div class="livro-rodape"><span class="livro-preco">R$ 30,00</span><button class="btn-cart" onclick="event.stopPropagation()"><i class="fas fa-cart-plus"></i></button></div></div></div>
+        <div class="livro-card"><span class="num-serie">5</span><div class="livro-capa-ph"><i class="fas fa-book"></i></div><div class="livro-info"><div class="livro-num">Volume 5</div><div class="livro-titulo">Livro Cinco da Série</div><div class="livro-rodape"><span class="livro-preco">R$ 30,00</span><button class="btn-cart" onclick="event.stopPropagation()"><i class="fas fa-cart-plus"></i></button></div></div></div>
+    </div>
+</div>
+
+<!-- MAIS POPULARES -->
+<div class="secao" id="populares">
+    <div class="secao-header">
+        <h2><span>Mais vendidos</span>Populares da loja</h2>
+        <a href="#" class="ver-todos">Ver todos <i class="fas fa-arrow-right"></i></a>
+    </div>
+    <div class="livros-grid populares">
+        <div class="livro-card"><div class="livro-capa-ph"><i class="fas fa-book"></i></div><div class="livro-info"><div class="livro-titulo">Livro Mais Vendido Um</div><div class="livro-rodape"><span class="livro-preco">R$ 30,00</span><button class="btn-cart" onclick="event.stopPropagation()"><i class="fas fa-cart-plus"></i></button></div></div></div>
+        <div class="livro-card"><div class="livro-capa-ph"><i class="fas fa-book"></i></div><div class="livro-info"><div class="livro-titulo">Livro Mais Vendido Dois</div><div class="livro-rodape"><span class="livro-preco">R$ 34,00</span><button class="btn-cart" onclick="event.stopPropagation()"><i class="fas fa-cart-plus"></i></button></div></div></div>
+        <div class="livro-card"><div class="livro-capa-ph"><i class="fas fa-book"></i></div><div class="livro-info"><div class="livro-titulo">Livro Mais Vendido Três</div><div class="livro-rodape"><span class="livro-preco">R$ 28,00</span><button class="btn-cart" onclick="event.stopPropagation()"><i class="fas fa-cart-plus"></i></button></div></div></div>
+        <div class="livro-card"><div class="livro-capa-ph"><i class="fas fa-book"></i></div><div class="livro-info"><div class="livro-titulo">Livro Mais Vendido Quatro</div><div class="livro-rodape"><span class="livro-preco">R$ 38,00</span><button class="btn-cart" onclick="event.stopPropagation()"><i class="fas fa-cart-plus"></i></button></div></div></div>
+    </div>
+</div>
+
+<!-- AVALIAÇÕES -->
+<div class="secao" id="avaliacoes">
+    <div class="secao-header">
+        <h2><span>O que dizem os leitores</span>Avaliações da loja</h2>
+        <a href="#" class="ver-todos">Ver todas <i class="fas fa-arrow-right"></i></a>
+    </div>
+    <div class="avals-grid">
+        <div class="aval-card"><div class="aval-topo"><div class="aval-avatar">M</div><div><div class="aval-nome">Maria Fernanda</div><div class="aval-data">há 3 dias</div></div></div><div class="aval-stars">★★★★★</div><div class="aval-livro"><i class="fas fa-book" style="font-size:10px;"></i> Livro Mais Vendido Um</div><div class="aval-texto">Chegou super rápido e embalado com muito cuidado! A história é incrível, não consegui parar de ler. Com certeza vou comprar o próximo volume.</div></div>
+        <div class="aval-card"><div class="aval-topo"><div class="aval-avatar">L</div><div><div class="aval-nome">Lucas Mendes</div><div class="aval-data">há 1 semana</div></div></div><div class="aval-stars">★★★★★</div><div class="aval-livro"><i class="fas fa-book" style="font-size:10px;"></i> Livro Dois da Série</div><div class="aval-texto">Adoro apoiar autores independentes! O livro é lindo, a capa é ainda mais bonita do que nas fotos. A escrita é muito fluida e envolvente.</div></div>
+        <div class="aval-card"><div class="aval-topo"><div class="aval-avatar">A</div><div><div class="aval-nome">Ana Carolina</div><div class="aval-data">há 2 semanas</div></div></div><div class="aval-stars">★★★★☆</div><div class="aval-livro"><i class="fas fa-book" style="font-size:10px;"></i> Livro Mais Vendido Dois</div><div class="aval-texto">Muito bom! A história me surpreendeu bastante. Tirando uma pequena demora no envio, tudo perfeito. Recomendo demais.</div></div>
+    </div>
+</div>
+
+<!-- EVENTOS -->
+<div class="secao" id="eventos">
+    <div class="secao-header">
+        <h2><span>Agenda</span>Próximos eventos</h2>
+        <a href="#" class="ver-todos">Ver todos <i class="fas fa-arrow-right"></i></a>
+    </div>
+    <div class="eventos-lista">
+        <div class="evento-card"><div class="evento-data"><div class="dia">20</div><div class="mes">Jan</div></div><div class="evento-dados"><div class="evento-nome">Live de Lançamento — Novo Livro</div><div class="evento-local"><i class="fas fa-video" style="font-size:10px;color:var(--khaki)"></i> YouTube · @nomeautor · às 19h</div></div><span class="evento-tipo live">Live</span></div>
+        <div class="evento-card"><div class="evento-data"><div class="dia">05</div><div class="mes">Fev</div></div><div class="evento-dados"><div class="evento-nome">Sessão de Autógrafos — Livraria Leitura</div><div class="evento-local"><i class="fas fa-map-marker-alt" style="font-size:10px;color:var(--rosa-medio)"></i> Rua Augusta, 1200 · São Paulo, SP</div></div><span class="evento-tipo sessao">Autógrafo</span></div>
+        <div class="evento-card"><div class="evento-data"><div class="dia">12</div><div class="mes">Mar</div></div><div class="evento-dados"><div class="evento-nome">Feira do Livro Independente — BH</div><div class="evento-local"><i class="fas fa-map-marker-alt" style="font-size:10px;color:var(--rosa-medio)"></i> Praça da Liberdade · Belo Horizonte, MG</div></div><span class="evento-tipo feira">Feira</span></div>
+    </div>
+</div>
+
+<!-- SOBRE -->
+<div class="secao" id="sobre">
+    <div class="secao-header"><h2><span>Trajetória</span>Sobre o autor</h2></div>
+    <div class="bio-grid">
+        <div class="bio-texto">
+            <p>Criando histórias desde os doze anos em cadernos coloridos que nunca saíam da mochila, <strong>Nome do Autor</strong> escolheu o caminho independente por acreditar que a relação direta com o leitor é a mais honesta que um escritor pode ter.</p>
+            <p>Sem editora intermediando, cada livro é uma conversa direta: do coração de quem escreve para as mãos de quem lê. A produção independente permite cuidar de cada detalhe — da capa ao papel escolhido, da sinopse ao prazo de entrega.</p>
+            <p>Com doze títulos publicados e mais de 1.200 exemplares vendidos diretamente pela HamStore, acredita que o mercado independente não é um caminho alternativo — é o caminho do futuro.</p>
+        </div>
+        <div class="bio-lateral">
+            <div class="info-card">
+                <h4>Dados do autor</h4>
+                <div class="info-linha"><i class="fas fa-map-marker-alt"></i><span class="il">Cidade:</span><span class="iv">Belo Horizonte, MG</span></div>
+                <div class="info-linha"><i class="fas fa-calendar"></i><span class="il">Ativo desde:</span><span class="iv">2018</span></div>
+                <div class="info-linha"><i class="fas fa-book"></i><span class="il">Publicações:</span><span class="iv">12 títulos</span></div>
+                <div class="info-linha"><i class="fas fa-feather-alt"></i><span class="il">Editora:</span><span class="iv">Independente</span></div>
+                <div class="info-linha"><i class="fas fa-truck"></i><span class="il">Envio:</span><span class="iv">Em até 24h úteis</span></div>
+                <div class="info-linha"><i class="fas fa-phone"></i><span class="il">Contato:</span><span class="iv">(14) 99999-9999</span></div>
+            </div>
+            <div class="plat-card">
+                <h4>Plataformas de publicação</h4>
+                <div class="plat-lista">
+                    <div class="plat-item"><i class="fas fa-store"></i> HamStore Books</div>
+                    <div class="plat-item"><i class="fab fa-amazon"></i> Amazon KDP</div>
+                    <div class="plat-item"><i class="fas fa-book-open"></i> Clube de Autores</div>
+                </div>
+            </div>
+            <div class="redes-card">
+                <h4>Redes sociais</h4>
+                <div class="redes-lista">
+                    <a href="#" class="rede-item"><i class="fab fa-instagram"></i> @nomeautor</a>
+                    <a href="#" class="rede-item"><i class="fab fa-tiktok"></i> @nomeautor</a>
+                    <a href="#" class="rede-item"><i class="fab fa-youtube"></i> Canal do Autor</a>
+                    <a href="#" class="rede-item"><i class="fas fa-globe"></i> www.nomeautor.com</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="footer-space"></div>
+
+<script>
+    let seguindo=false;
+    function toggleSeguir(){
+        seguindo=!seguindo;
+        const btn=document.getElementById('btn-seguir');
+        btn.classList.toggle('seguindo',seguindo);
+        document.getElementById('ico-seg').className=seguindo?'fas fa-check':'fas fa-plus';
+        document.getElementById('txt-seg').textContent=seguindo?'Seguindo':'Seguir';
+    }
+    document.querySelectorAll('.menu a').forEach(a=>{
+        a.addEventListener('click',e=>{
+            const h=a.getAttribute('href');
+            if(h.startsWith('#')){e.preventDefault();const el=document.querySelector(h);if(el)el.scrollIntoView({behavior:'smooth',block:'start'});document.querySelectorAll('.menu a').forEach(x=>x.classList.remove('ativo'));a.classList.add('ativo');}
+        });
+    });
+    const secs=document.querySelectorAll('.secao[id]');
+    window.addEventListener('scroll',()=>{let cur='';secs.forEach(s=>{if(window.scrollY>=s.offsetTop-140)cur=s.id;});document.querySelectorAll('.menu a').forEach(a=>{a.classList.toggle('ativo',a.getAttribute('href')==='#'+cur);});});
+</script>
+</body>
+</html>

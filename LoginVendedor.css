@@ -1,0 +1,112 @@
+:root {
+    --vermelho-escuro: #8C031C;
+    --rosa-medio: #BF6980;
+    --cinza-claro: #F0F0F2;
+    --dourado:  #D9B607;
+    --branco: #ffffff;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, var(--vermelho-escuro), var(--rosa-medio));
+    min-height: 100vh;
+    color: var(--branco);
+}
+
+/* TOPO */
+.topo {
+    background: linear-gradient(90deg, var(--rosa-medio), var(--vermelho-escuro));
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(139,3,28,0.3);
+}
+
+.topo h2 {
+    margin: 0;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    font-size: 24px;
+}
+
+/* CONTAINER */
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+    padding: 20px;
+}
+
+/* FORMULÁRIO */
+.formulario fieldset {
+    background: var(--branco);
+    border: 3px solid var(--dourado);
+    border-radius: 20px;
+    padding: 40px;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 10px 30px rgba(139,3,28,0.2);
+}
+
+legend {
+    color: var(--vermelho-escuro);
+    font-weight: bold;
+    font-size: 20px;
+    padding: 0 15px;
+    background: var(--cinza-claro);
+    border-radius: 20px;
+}
+
+/* CAMPOS */
+.campo {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.campo label {
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: var(--vermelho-escuro);
+    font-size: 14px;
+}
+
+.campo input {
+    padding: 15px;
+    border-radius: 25px;
+    border: 2px solid var(--cinza-claro);
+    font-size: 16px;
+    transition: 0.3s;
+    background: var(--branco);
+}
+
+.campo input:focus {
+    outline: none;
+    border-color: var(--rosa-medio);
+    box-shadow: 0 0 15px rgba(191,105,128,0.3);
+    transform: scale(1.02);
+}
+
+/* BOTÃO */
+button {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 25px;
+    background: linear-gradient(45deg, var(--dourado), #8C5C03);
+    color: var(--branco);
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 15px;
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: 0.3s;
+    box-shadow: 0 4px 15px rgba(58,64,17,0.3);
+}
+
+button:hover {
+    background: linear-gradient(45deg, var(--rosa-medio), var(--vermelho-escuro));
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(139,3,28,0.4);
+}

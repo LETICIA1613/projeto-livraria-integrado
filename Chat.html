@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atendimento — HamStore Books</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+    :root {
+        --verm:     #8C031C;
+        --rosa:     #BF6980;
+        --rosa-lt:  #d4899a;
+        --ouro:     #D9B607;
+        --ouro-esc: #8C5C03;
+        --cinza:    #F0F0F2;
+        --garnet:   #4E0A0B;
+        --dusty:    #F2EEE8;
+        --khaki:    #9DAD71;
+        --branco:   #ffffff;
+        --bg:       #EDEBE8;
+        --sombra:   rgba(78,10,11,0.18);
+        --s-ouro:   rgba(217,182,7,0.25);
+    }
+    *{margin:0;padding:0;box-sizing:border-box;}
+
+    /* ─── FUNDO ─── */
+    body {
+        font-family:'Inter',system-ui,sans-serif;
+        min-height:100vh;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        background:
+            radial-gradient(ellipse 60% 50% at 20% 30%, rgba(140,3,28,.12) 0%, transparent 70%),
+            radial-gradient(ellipse 50% 60% at 80% 70%, rgba(217,182,7,.10) 0%, transparent 65%),
+            linear-gradient(160deg, #e8e5e1 0%, #f2eeea 50%, #e5e2df 100%);
+        overflow:hidden;
+        position:relative;
+    }
+    /* círculos decorativos de fundo */
+    body::before{
+        content:'';
+        position:fixed;
+        top:-120px;left:-120px;
+        width:400px;height:400px;
+        border-radius:50%;
+        background:radial-gradient(circle, rgba(140,3,28,.08) 0%, transparent 70%);
+        pointer-events:none;
+    }
+    body::after{
+        content:'';
+        position:fixed;
+        bottom:-100px;right:-80px;
+        width:360px;height:360px;
+        border-radius:50%;
+        background:radial-gradient(circle, rgba(217,182,7,.10) 0%, transparent 70%);
+        pointer-events:none;
+    }
+
+    /* ─── WRAPPER (sombra externa) ─── */
+    .chat-outer {
+        position:relative;
+        filter: drop-shadow(0 40px 80px rgba(78,10,11,.22)) drop-shadow(0 8px 24px rgba(0,0,0,.10));
+    }
+
+    /* ─── CONTAINER ─── */
+    .chat-container {
+        width:440px;
+        height:700px;
+        background:var(--branco);
+        border-radius:28px;
+        display:flex;
+        flex-direction:column;
+        overflow:hidden;
+        position:relative;
+    }
+
+    /* ─── HEADER ─── */
+    .chat-header {
+        background:
+            linear-gradient(145deg, var(--garnet) 0%, var(--verm) 45%, #a03050 75%, var(--rosa) 100%);
+        padding:22px 20px 32px;
+        position:relative;
+        flex-shrink:0;
+        overflow:hidden;
+    }
+    /* padrão pontilhado sutil */
+    .chat-header::before {
+        content:'';
+        position:absolute;
+        inset:0;
+        background-image: radial-gradient(circle, rgba(255,255,255,.06) 1px, transparent 1px);
+        background-size: 18px 18px;
+        pointer-events:none;
+    }
+    /* onda na base */
+    .chat-header::after {
+        content:'';
+        position:absolute;
+        bottom:-1px;left:0;right:0;
+        height:28px;
+        background:var(--branco);
+        border-radius:28px 28px 0 0;
+    }
+    /* reflexo diagonal */
+    .header-glow {
+        position:absolute;
+        top:-40px;right:-40px;
+        width:180px;height:180px;
+        border-radius:50%;
+        background:radial-gradient(circle, rgba(217,182,7,.18) 0%, transparent 65%);
+        pointer-events:none;
+    }
+
+    .header-row1 {
+        display:flex;
+        align-items:center;
+        gap:13px;
+        margin-bottom:14px;
+        position:relative;
+        z-index:1;
+    }
+    .h-avatar {
+        width:48px;height:48px;
+        border-radius:50%;
+        background:rgba(255,255,255,.15);
+        border:2.5px solid rgba(255,255,255,.3);
+        display:flex;align-items:center;justify-content:center;
+        font-size:22px;
+        flex-shrink:0;
+        backdrop-filter:blur(4px);
+        box-shadow: inset 0 1px 0 rgba(255,255,255,.25), 0 4px 12px rgba(0,0,0,.2);
+    }
+    .h-info{flex:1;}
+    .h-nome{font-size:15px;font-weight:700;color:var(--branco);letter-spacing:.1px;}
+    .h-status{display:flex;align-items:center;gap:5px;margin-top:3px;}
+    .h-dot{
+        width:7px;height:7px;border-radius:50%;
+        background:var(--khaki);
+        box-shadow:0 0 0 2px rgba(157,173,113,.35);
+        animation:dot-pulse 2.2s ease infinite;
+    }
+    @keyframes dot-pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.85)}}
+    .h-status-txt{font-size:12px;color:rgba(255,255,255,.78);font-weight:500;}
+    .h-btns{display:flex;gap:6px;}
+    .h-btn{
+        width:32px;height:32px;border-radius:50%;
+        background:rgba(255,255,255,.12);border:none;
+        color:rgba(255,255,255,.85);font-size:13px;
+        cursor:pointer;display:flex;align-items:center;justify-content:center;
+        transition:all .2s;backdrop-filter:blur(4px);
+    }
+    .h-btn:hover{background:rgba(255,255,255,.24);}
+
+    .header-row2{
+        display:flex;align-items:center;gap:6px;
+        position:relative;z-index:1;
+    }
+    .h-bread{
+        display:flex;align-items:center;gap:6px;
+        background:rgba(255,255,255,.1);
+        border:1px solid rgba(255,255,255,.18);
+        border-radius:30px;
+        padding:4px 12px;
+        backdrop-filter:blur(4px);
+    }
+    .h-bread .logo-txt{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--ouro);}
+    .h-bread .sep{color:rgba(255,255,255,.3);font-size:10px;}
+    .h-bread .secao-txt{font-size:11px;color:rgba(255,255,255,.65);}
+    /* métricas rápidas */
+    .h-metrics{margin-left:auto;display:flex;gap:12px;}
+    .h-metric{text-align:center;}
+    .h-metric .mn{font-size:13px;font-weight:800;color:var(--ouro);line-height:1;}
+    .h-metric .ml{font-size:9px;text-transform:uppercase;letter-spacing:.8px;color:rgba(255,255,255,.55);margin-top:1px;}
+
+    /* ─── CHIPS ─── */
+    .topicos{
+        padding:14px 18px 12px;
+        border-bottom:1px solid rgba(0,0,0,.06);
+        flex-shrink:0;
+        background:var(--branco);
+    }
+    .topicos-label{
+        font-size:10px;font-weight:700;
+        letter-spacing:1.2px;text-transform:uppercase;
+        color:#c0b8b0;margin-bottom:9px;
+    }
+    .chips-row{display:flex;gap:6px;flex-wrap:wrap;}
+    .chip{
+        font-size:12px;font-weight:600;
+        padding:6px 13px;border-radius:20px;
+        background:#f5f3f0;
+        color:var(--verm);
+        border:1.5px solid transparent;
+        cursor:pointer;
+        transition:all .22s;
+        display:flex;align-items:center;gap:5px;
+        user-select:none;
+    }
+    .chip i{font-size:10px;opacity:.8;}
+    .chip:hover{background:rgba(140,3,28,.07);border-color:rgba(140,3,28,.18);transform:translateY(-1px);}
+    .chip:active{transform:translateY(0);}
+    .chip.usado{
+        background:linear-gradient(135deg,var(--ouro),var(--ouro-esc));
+        color:var(--branco);
+        border-color:transparent;
+        pointer-events:none;
+    }
+
+    /* ─── MENSAGENS ─── */
+    .chat-messages{
+        flex:1;
+        padding:18px 16px 10px;
+        overflow-y:auto;
+        display:flex;
+        flex-direction:column;
+        gap:0;
+        scroll-behavior:smooth;
+        background:
+            linear-gradient(to bottom, rgba(240,240,242,.4) 0%, rgba(255,255,255,0) 60px),
+            var(--branco);
+    }
+    .chat-messages::-webkit-scrollbar{width:3px;}
+    .chat-messages::-webkit-scrollbar-thumb{background:rgba(191,105,128,.4);border-radius:2px;}
+    .chat-messages::-webkit-scrollbar-track{background:transparent;}
+
+    /* separador de data */
+    .date-div{
+        display:flex;align-items:center;gap:8px;
+        margin:6px 0 14px;
+    }
+    .date-div::before,.date-div::after{content:'';flex:1;height:1px;background:rgba(0,0,0,.07);}
+    .date-div span{
+        font-size:11px;color:#c0b8b0;font-weight:500;
+        background:var(--branco);padding:0 6px;
+        white-space:nowrap;
+    }
+
+    /* grupos */
+    .mg{display:flex;flex-direction:column;margin-bottom:14px;}
+    .mg.u{align-items:flex-end;}
+    .mg.b{align-items:flex-start;}
+
+    /* linha avatar + balão */
+    .mr{
+        display:flex;align-items:flex-end;gap:8px;
+        max-width:82%;
+    }
+    .mg.u .mr{flex-direction:row-reverse;}
+
+    .m-av{
+        width:30px;height:30px;flex-shrink:0;
+        border-radius:50%;
+        display:flex;align-items:center;justify-content:center;
+        font-size:13px;
+        margin-bottom:2px;
+        transition:opacity .15s;
+    }
+    .mg.b .m-av{background:linear-gradient(135deg,var(--verm),var(--rosa));color:var(--branco);box-shadow:0 2px 8px rgba(140,3,28,.2);}
+    .mg.u .m-av{background:linear-gradient(135deg,var(--ouro),var(--ouro-esc));color:var(--branco);box-shadow:0 2px 8px rgba(140,92,3,.2);}
+    .mr:not(:last-of-type) .m-av{opacity:0;}
+
+    /* balões */
+    .mb{
+        padding:10px 14px;
+        border-radius:18px;
+        font-size:13.5px;
+        line-height:1.55;
+        word-break:break-word;
+        animation:pop-in .22s cubic-bezier(.34,1.56,.64,1);
+        position:relative;
+    }
+    @keyframes pop-in{from{opacity:0;transform:scale(.88) translateY(6px)}to{opacity:1;transform:scale(1) translateY(0)}}
+
+    /* bot */
+    .mg.b .mb{
+        background:#f4f2ef;
+        color:#1a1a1a;
+        border-bottom-left-radius:5px;
+        box-shadow:0 1px 3px rgba(0,0,0,.06);
+    }
+    .mg.b .mr:not(:last-of-type) .mb{border-radius:5px 18px 18px 5px;}
+    .mg.b .mr:first-of-type .mb{border-top-left-radius:18px;}
+
+    /* usuário */
+    .mg.u .mb{
+        background:linear-gradient(135deg, var(--verm) 0%, #a8243e 100%);
+        color:var(--branco);
+        border-bottom-right-radius:5px;
+        box-shadow:0 2px 10px rgba(140,3,28,.25);
+    }
+    .mg.u .mr:not(:last-of-type) .mb{border-radius:18px 5px 5px 18px;}
+    .mg.u .mr:first-of-type .mb{border-top-right-radius:18px;}
+
+    /* meta */
+    .mm{
+        font-size:10.5px;color:#c0b8b0;
+        display:flex;align-items:center;gap:4px;
+        padding:2px 4px;margin-top:2px;
+    }
+    .mg.u .mm{justify-content:flex-end;}
+    .check-ico{color:var(--ouro);font-size:11px;}
+
+    /* ─── DIGITANDO ─── */
+    .typing-area{
+        padding:0 16px 8px;
+        flex-shrink:0;
+        display:none;
+    }
+    .typing-area.show{display:flex;}
+    .typing-bubble{
+        display:flex;align-items:center;gap:10px;
+        padding:10px 14px;
+        background:#f4f2ef;
+        border-radius:18px 18px 18px 5px;
+        box-shadow:0 1px 3px rgba(0,0,0,.06);
+        animation:pop-in .22s cubic-bezier(.34,1.56,.64,1);
+    }
+    .typing-av{
+        width:30px;height:30px;border-radius:50%;
+        background:linear-gradient(135deg,var(--verm),var(--rosa));
+        display:flex;align-items:center;justify-content:center;
+        font-size:13px;color:var(--branco);flex-shrink:0;
+        box-shadow:0 2px 8px rgba(140,3,28,.2);
+    }
+    .t-dots{display:flex;gap:4px;align-items:center;}
+    .t-dots span{
+        width:7px;height:7px;border-radius:50%;
+        background:var(--rosa-lt);
+        animation:t-bounce 1.4s ease infinite;
+    }
+    .t-dots span:nth-child(2){animation-delay:.18s;}
+    .t-dots span:nth-child(3){animation-delay:.36s;}
+    @keyframes t-bounce{0%,60%,100%{transform:translateY(0);opacity:.6}30%{transform:translateY(-7px);opacity:1}}
+    .t-label{font-size:11.5px;color:#aaa;font-style:italic;}
+
+    /* ─── AVALIAÇÃO ─── */
+    .aval-bar{
+        display:none;
+        padding:10px 18px;
+        background:rgba(217,182,7,.06);
+        border-top:1px solid rgba(217,182,7,.18);
+        align-items:center;gap:10px;
+        flex-shrink:0;
+    }
+    .aval-bar.show{display:flex;}
+    .aval-txt{font-size:12px;color:var(--ouro-esc);font-weight:600;flex:1;}
+    .aval-stars{display:flex;gap:5px;}
+    .av-s{
+        font-size:20px;color:#ddd;cursor:pointer;
+        transition:all .15s;line-height:1;
+    }
+    .av-s:hover{transform:scale(1.2);}
+    .av-s.on{color:var(--ouro);}
+
+    /* ─── FOOTER / INPUT ─── */
+    .chat-footer{
+        padding:12px 16px 16px;
+        background:var(--branco);
+        border-top:1px solid rgba(0,0,0,.06);
+        flex-shrink:0;
+    }
+    .input-row{display:flex;align-items:flex-end;gap:8px;}
+    .side-btns{display:flex;flex-direction:column;gap:4px;padding-bottom:4px;}
+    .side-btn{
+        width:34px;height:34px;border-radius:50%;
+        background:none;border:none;
+        color:#ccc;font-size:15px;cursor:pointer;
+        display:flex;align-items:center;justify-content:center;
+        transition:all .2s;
+    }
+    .side-btn:hover{color:var(--rosa);background:rgba(191,105,128,.1);}
+    .input-wrap{
+        flex:1;
+        background:#f5f3f0;
+        border-radius:22px;
+        border:1.5px solid transparent;
+        padding:10px 14px;
+        display:flex;align-items:flex-end;gap:8px;
+        transition:all .25s;
+    }
+    .input-wrap:focus-within{
+        background:var(--branco);
+        border-color:rgba(140,3,28,.22);
+        box-shadow:0 0 0 3px rgba(140,3,28,.06);
+    }
+    .input-wrap textarea{
+        flex:1;border:none;outline:none;
+        background:transparent;
+        font-size:13.5px;font-family:inherit;
+        resize:none;line-height:1.5;
+        max-height:96px;overflow-y:auto;
+        color:#1a1a1a;
+    }
+    .input-wrap textarea::placeholder{color:#c0b8b0;}
+    .cc{font-size:10px;color:#d0c8c0;align-self:flex-end;padding-bottom:1px;white-space:nowrap;}
+    .btn-send{
+        width:46px;height:46px;flex-shrink:0;
+        border-radius:50%;
+        background:linear-gradient(135deg,var(--verm),#a8243e);
+        border:none;color:var(--branco);
+        font-size:16px;cursor:pointer;
+        display:flex;align-items:center;justify-content:center;
+        transition:all .25s;
+        box-shadow:0 4px 16px rgba(140,3,28,.35);
+        position:relative;
+        overflow:hidden;
+    }
+    .btn-send::after{
+        content:'';
+        position:absolute;inset:0;
+        background:linear-gradient(135deg,rgba(255,255,255,.2),transparent);
+        border-radius:50%;
+    }
+    .btn-send:hover{transform:scale(1.08);box-shadow:0 6px 22px rgba(140,3,28,.45);}
+    .btn-send:active{transform:scale(.96);}
+    .btn-send:disabled{background:linear-gradient(135deg,#ccc,#bbb);box-shadow:none;transform:none;cursor:not-allowed;}
+    .footer-bar{
+        display:flex;align-items:center;justify-content:center;
+        gap:5px;margin-top:9px;
+    }
+    .footer-bar span{font-size:10.5px;color:#c8c0b8;}
+    .footer-bar i{font-size:10px;color:var(--khaki);}
+    .footer-bar .sep{color:#ddd;}
+
+    @media(max-width:480px){
+        body{align-items:flex-end;}
+        .chat-outer{filter:none;}
+        .chat-container{width:100%;height:100dvh;border-radius:0;}
+        .h-metrics{display:none;}
+    }
+    </style>
+</head>
+<body>
+
+<div class="chat-outer">
+<div class="chat-container">
+
+    <!-- ── HEADER ── -->
+    <div class="chat-header">
+        <div class="header-glow"></div>
+
+        <div class="header-row1">
+            <div class="h-avatar">📚</div>
+            <div class="h-info">
+                <div class="h-nome">HamStore Atendimento</div>
+                <div class="h-status">
+                    <div class="h-dot"></div>
+                    <span class="h-status-txt">Online · resposta imediata</span>
+                </div>
+            </div>
+            <div class="h-btns">
+                <button class="h-btn" title="Minimizar"><i class="fas fa-minus"></i></button>
+                <button class="h-btn" title="Fechar" onclick="window.history.back()"><i class="fas fa-times"></i></button>
+            </div>
+        </div>
+
+        <div class="header-row2">
+            <div class="h-bread">
+                <span class="logo-txt">📚 HamStore</span>
+                <span class="sep">›</span>
+                <span class="secao-txt">Suporte</span>
+            </div>
+            <div class="h-metrics">
+                <div class="h-metric"><div class="mn">98%</div><div class="ml">Satisfação</div></div>
+                <div class="h-metric"><div class="mn">&lt;1min</div><div class="ml">Resposta</div></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── CHIPS ── -->
+    <div class="topicos">
+        <div class="topicos-label">Assuntos frequentes</div>
+        <div class="chips-row">
+            <div class="chip" onclick="enviarChip(this,'Onde está meu pedido?')"><i class="fas fa-box"></i> Meu pedido</div>
+            <div class="chip" onclick="enviarChip(this,'Como faço troca ou devolução?')"><i class="fas fa-undo"></i> Troca</div>
+            <div class="chip" onclick="enviarChip(this,'Quais são as formas de pagamento?')"><i class="fas fa-wallet"></i> Pagamento</div>
+            <div class="chip" onclick="enviarChip(this,'Qual o prazo de entrega?')"><i class="fas fa-truck"></i> Entrega</div>
+        </div>
+    </div>
+
+    <!-- ── MENSAGENS ── -->
+    <div class="chat-messages" id="chatMessages">
+        <div class="date-div"><span>Hoje</span></div>
+
+        <div class="mg b">
+            <div class="mr">
+                <div class="m-av"><i class="fas fa-robot"></i></div>
+                <div class="mb">
+                    Olá! 👋 Bem-vindo(a) à <strong>HamStore Books</strong>.<br><br>
+                    Sou sua assistente virtual e posso ajudar com pedidos, pagamentos, trocas, devoluções e dúvidas sobre nosso catálogo.<br><br>
+                    Como posso te ajudar hoje?
+                </div>
+            </div>
+            <div class="mm" id="hora-inicial"></div>
+        </div>
+    </div>
+
+    <!-- ── DIGITANDO ── -->
+    <div class="typing-area" id="typingArea">
+        <div class="typing-bubble">
+            <div class="typing-av"><i class="fas fa-robot"></i></div>
+            <div class="t-dots"><span></span><span></span><span></span></div>
+            <span class="t-label">digitando…</span>
+        </div>
+    </div>
+
+    <!-- ── AVALIAÇÃO ── -->
+    <div class="aval-bar" id="avalBar">
+        <span class="aval-txt">Como foi o atendimento?</span>
+        <div class="aval-stars">
+            <span class="av-s" onclick="avaliar(1)">★</span>
+            <span class="av-s" onclick="avaliar(2)">★</span>
+            <span class="av-s" onclick="avaliar(3)">★</span>
+            <span class="av-s" onclick="avaliar(4)">★</span>
+            <span class="av-s" onclick="avaliar(5)">★</span>
+        </div>
+    </div>
+
+    <!-- ── INPUT ── -->
+    <div class="chat-footer">
+        <div class="input-row">
+            <div class="side-btns">
+                <button class="side-btn" title="Emoji"><i class="far fa-smile"></i></button>
+                <button class="side-btn" title="Anexar"><i class="fas fa-paperclip"></i></button>
+            </div>
+            <div class="input-wrap">
+                <textarea
+                    id="msgInput"
+                    placeholder="Digite sua mensagem…"
+                    rows="1"
+                    maxlength="500"
+                    oninput="autoResize(this);countChars(this)"
+                    onkeydown="keyEnter(event)"
+                ></textarea>
+                <span class="cc" id="cc">500</span>
+            </div>
+            <button class="btn-send" id="sendBtn" onclick="sendMsg()">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+        <div class="footer-bar">
+            <i class="fas fa-lock"></i>
+            <span>Conversa segura</span>
+            <span class="sep">·</span>
+            <span>HamStore Books</span>
+        </div>
+    </div>
+
+</div>
+</div>
+
+<script>
+/* ── init ── */
+document.getElementById('hora-inicial').textContent = now();
+
+const hist = [];
+const SYS = `Você é a assistente virtual da HamStore Books, livraria online brasileira especializada em ficção, romance, fantasia e livros em geral.
+Personalidade: simpática, prestativa, objetiva e com leve toque literário.
+Responda SEMPRE em português do Brasil, de forma calorosa e profissional.
+Ajude com: pedidos, pagamentos (Pix e boleto bancário — sem cartão), prazos de entrega, trocas, devoluções, livros, autores e cadastro de vendedores/autores independentes.
+Seja concisa: 1 a 4 frases salvo quando mais detalhes forem necessários.
+Nunca invente dados de pedidos reais. Se precisar de informação específica, peça número de pedido ou e-mail.
+Texto simples — sem markdown, sem asteriscos, use quebras de linha quando necessário.`;
+
+function now(){return new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});}
+function wait(ms){return new Promise(r=>setTimeout(r,ms));}
+function scroll(){const c=document.getElementById('chatMessages');c.scrollTo({top:c.scrollHeight,behavior:'smooth'});}
+
+function autoResize(el){el.style.height='auto';el.style.height=Math.min(el.scrollHeight,96)+'px';}
+function countChars(el){const r=500-el.value.length;const cc=document.getElementById('cc');cc.textContent=r;cc.style.color=r<50?'#e74c3c':'#d0c8c0';}
+function keyEnter(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMsg();}}
+
+/* grupos */
+function mkGroup(type){
+    const g=document.createElement('div');
+    g.className='mg '+type;
+    g.dataset.t=type;
+    return g;
+}
+function addBubble(g,html){
+    const row=document.createElement('div');row.className='mr';
+    const av=document.createElement('div');av.className='m-av';
+    av.innerHTML=g.dataset.t==='b'?'<i class="fas fa-robot"></i>':'<i class="fas fa-user"></i>';
+    const bub=document.createElement('div');bub.className='mb';
+    bub.innerHTML=html.replace(/\n/g,'<br>');
+    if(g.dataset.t==='b'){row.appendChild(av);row.appendChild(bub);}
+    else{row.appendChild(bub);row.appendChild(av);}
+    g.appendChild(row);
+}
+function addMeta(g,isUser){
+    const m=document.createElement('div');m.className='mm';
+    m.innerHTML=isUser?`${now()} <i class="fas fa-check-double check-ico"></i>`:now();
+    g.appendChild(m);
+}
+
+function appendUser(txt){
+    const c=document.getElementById('chatMessages');
+    const g=mkGroup('u');addBubble(g,txt);addMeta(g,true);
+    c.appendChild(g);scroll();
+}
+function appendBot(txt){
+    const c=document.getElementById('chatMessages');
+    const g=mkGroup('b');addBubble(g,txt);addMeta(g,false);
+    c.appendChild(g);scroll();
+    if(document.querySelectorAll('.mg.b').length>=4)
+        document.getElementById('avalBar').classList.add('show');
+}
+
+/* chips */
+function enviarChip(el,txt){
+    if(el.classList.contains('usado'))return;
+    el.classList.add('usado');
+    go(txt);
+}
+
+/* send */
+function sendMsg(){
+    const inp=document.getElementById('msgInput');
+    const txt=inp.value.trim();
+    if(!txt)return;
+    inp.value='';inp.style.height='auto';
+    document.getElementById('cc').textContent='500';
+    go(txt);
+}
+
+/* flow */
+async function go(txt){
+    appendUser(txt);
+    hist.push({role:'user',content:txt});
+    document.getElementById('sendBtn').disabled=true;
+    const ta=document.getElementById('typingArea');
+    ta.classList.add('show');scroll();
+    try{
+        const res=await fetch('https://api.anthropic.com/v1/messages',{
+            method:'POST',
+            headers:{'Content-Type':'application/json'},
+            body:JSON.stringify({
+                model:'claude-sonnet-4-20250514',
+                max_tokens:1000,
+                system:SYS,
+                messages:hist
+            })
+        });
+        const d=await res.json();
+        const reply=d.content?.filter(b=>b.type==='text').map(b=>b.text).join('\n')
+            ||'Não consegui processar sua mensagem agora. Tente em instantes!';
+        hist.push({role:'assistant',content:reply});
+        await wait(350);
+        ta.classList.remove('show');
+        appendBot(reply);
+    }catch(e){
+        await wait(500);
+        ta.classList.remove('show');
+        appendBot('Ops, problema técnico por aqui 😕\nTente novamente ou escreva para atendimento@hamstore.com.br');
+    }
+    document.getElementById('sendBtn').disabled=false;
+    document.getElementById('msgInput').focus();
+}
+
+/* avaliação */
+function avaliar(n){
+    document.querySelectorAll('.av-s').forEach((s,i)=>s.classList.toggle('on',i<n));
+    const bar=document.getElementById('avalBar');
+    setTimeout(()=>{
+        bar.innerHTML=`<span class="aval-txt"><i class="fas fa-heart" style="color:var(--rosa);margin-right:6px;"></i>Obrigado pelo feedback! ${'⭐'.repeat(n)}</span>`;
+    },600);
+}
+</script>
+
+</body>
+</html>

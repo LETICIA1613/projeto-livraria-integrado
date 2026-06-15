@@ -1,0 +1,268 @@
+<!--mabile-todos css´s-->
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HamStore - Livraria</title>
+
+<link rel="stylesheet" href="Entrar.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+</head>
+
+<body>
+
+<!-- ===== BARRA SUPERIOR ===== -->
+<header class="shopee-top">
+    <div class="container">
+        <nav class="navbar">
+            <div class="flex v-center">
+                <div class="shopee-logo-area">
+                    <span class="shopee-logo-icon">📚</span>
+                    <span class="shopee-store-name" onclick="window.location.href='Entrar.html'">HAMSTORE <small>books</small></span>
+                </div>
+                <a href="#" onclick="window.location.href='dashbord.html'">Central do Vendedor</a>
+                <a href="#" onclick="window.location.href='CadastroVendedor.html'">Vender na HamStore</a>
+                
+            </div>
+            <div class="flex">
+                <div class="shopee-social-icons">
+                    <span>Siga-nos</span>
+                    <a href="#" class="social-icon instagram"></a>
+                    <a href="#" class="social-icon whatsapp"></a>
+                    <a href="#" class="social-icon tiktok"></a>
+                </div>
+            </div>
+            <ul class="navbar_links">
+                <li><a href="#" class="navbar__link-text">Ajuda</a></li>
+                <li><a href="#"  onclick="window.location.href='Cadastro1.html'" class="navbar__link-text navbar__link--signup">Cadastrar</a></li>
+                <li><div class="navbar__link-separator"></div></li>
+                <li><a href="#" onclick="window.location.href='login.html'"class="navbar__link-text" >Entrar</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+<!-- HEADER -->
+<header class="header">
+<div class="menu-icon" onclick="abrirMenu()">☰</div>
+<h1 class="logo" onclick="window.location.href='Entrar.html'">📚 Livraria</h1>
+
+<div class="search-bar">
+<input type="text" placeholder="Buscar livros...">
+</div>
+
+<div class="icons">
+<button class="btn-sem-borda" onclick="window.location.href='Carrinho.html'">🛒</button>
+<button class="btn-sem-borda">⚙️</button>
+<button class="btn-sem-borda" onclick="window.location.href='MinhasCompras.html'">👤</button> 
+</div>
+</header>
+<!-- ===== MENU LATERAL PROFISSIONAL (NOVO) ===== -->
+<div id="menu" class="sidebar">
+    <span class="close-btn" onclick="fecharMenu()">×</span>
+
+
+    <!-- FILTROS -->
+    <div class="menu-section">
+        <div class="menu-title">
+            <i class="fas fa-filter"></i> FILTROS
+        </div>
+
+        <div class="filter-group">
+            <label class="filter-label">📚 Gênero</label>
+            <label class="filter-option"><input type="checkbox"> Romance</label>
+            <label class="filter-option"><input type="checkbox"> Fantasia</label>
+            <label class="filter-option"><input type="checkbox"> Terror</label>
+            <label class="filter-option"><input type="checkbox"> Suspense</label>
+            <label class="filter-option"><input type="checkbox"> Religioso</label>
+            <label class="filter-option"><input type="checkbox"> Ficção</label>
+            <label class="filter-option"><input type="checkbox"> Didático</label>
+            <label class="filter-option"><input type="checkbox"> Poema</label>
+            <label class="filter-option"><input type="checkbox"> Ficção Cientifica</label>
+            <label class="filter-option"><input type="checkbox"> Auto-ajuda</label>
+
+
+        
+        </div>
+
+        <div class="filter-group">
+            <label class="filter-label">🎂 Faixa Etária</label>
+            <label class="filter-option"><input type="checkbox"> Livre</label>
+            <label class="filter-option"><input type="checkbox"> +10 anos</label>
+            <label class="filter-option"><input type="checkbox"> +12 anos</label>
+            <label class="filter-option"><input type="checkbox"> +14 anos</label>
+            <label class="filter-option"><input type="checkbox"> +16 anos</label>
+            <label class="filter-option"><input type="checkbox"> +18 anos</label>
+        </div>
+
+        <div class="filter-group">
+            <label class="filter-label">📖 Quantidade de Páginas</label>
+            <label class="filter-option"><input type="checkbox"> Até 150 páginas</label>
+            <label class="filter-option"><input type="checkbox"> 150 - 300 páginas</label>
+            <label class="filter-option"><input type="checkbox"> 301 - 500 páginas</label>
+            <label class="filter-option"><input type="checkbox"> Mais de 500 páginas</label>
+        </div>
+
+        <div class="filter-group">
+            <label class="filter-label">💰 Faixa de Preço</label>
+            <label class="filter-option"><input type="checkbox"> De R$0,00 até R$50,00</label>
+            <label class="filter-option"><input type="checkbox"> De R$50,00 até R$100,00</label>
+            <label class="filter-option"><input type="checkbox"> De R$101,00 - R$150,00</label>
+            <label class="filter-option"><input type="checkbox"> De R$151,00 - R$200,00</label>
+            <label class="filter-option"><input type="checkbox"> De R$201,00 - R$250,00</label>
+            <label class="filter-option"><input type="checkbox"> De R$251,00 - R$300,00</label>
+            <label class="filter-option"><input type="checkbox"> Mais de 300 reais</label>
+        </div>
+        
+
+        <div class="filter-group">
+            <label class="filter-label">⭐ Avaliação dos Leitores</label>
+            <label class="filter-option"><input type="checkbox"> ★★★★★ (5 estrelas)</label>
+            <label class="filter-option"><input type="checkbox"> ★★★★☆ (4 estrelas)</label>
+            <label class="filter-option"><input type="checkbox"> ★★★☆☆ (3 estrelas)</label>
+            <label class="filter-option"><input type="checkbox"> ★★☆☆☆ (2 estrelas)</label>
+            <label class="filter-option"><input type="checkbox"> ★☆☆☆☆ (1 estrelas)</label>
+
+
+        </div>
+
+        <div class="filter-group">
+            <label class="filter-label">📅 Lançamentos</label>
+            <label class="filter-option"><input type="checkbox"> Últimos 30 dias</label>
+            <label class="filter-option"><input type="checkbox"> Última semana</label>
+            <label class="filter-option"><input type="checkbox"> Últimos 3 meses</label>
+            <label class="filter-option"><input type="checkbox"> Último ano</label>
+        </div>
+
+
+        <button id="Filtrar" class="btn-filtrar" onclick="aplicarFiltros()">
+            🔍 Filtrar
+        </button>
+
+        <button class="btn-limpar" onclick="limparFiltros()">
+            🧹 Limpar
+        </button>
+    </div>
+
+    <!-- DESCOBRIR -->
+    <div class="menu-section">
+        <div class="menu-title">
+            <i class="fas fa-compass"></i> DESCOBRIR
+        </div>
+        <ul class="menu-links">
+            <li><a href="#" onclick="return false;"><i class="fas fa-fire"></i> Mais Vendidos</a></li>
+            <li><a href="#" onclick="return false;"><i class="fas fa-star"></i> Recomendados para Você</a></li>
+            <li><a href="#" onclick="return false;"><i class="fas fa-clock"></i> Lançamentos</a></li>
+            <li><a href="#" onclick="return false;"><i class="fas fa-tag"></i> Promoções da Semana</a></li>
+        </ul>
+    </div>
+
+    <!-- CONTA -->
+    <div class="menu-section">
+        <div class="menu-title">
+            <i class="fas fa-user"></i> MINHA CONTA
+        </div>
+        <ul class="menu-links">
+            <li><a href="#" onclick="window.location.href='Favoritos.html'"><i class="fas fa-heart"></i>Favoritos</a></li>
+            <li><a href="#" onclick="window.location.href='Carrinho.html'"><i class="fas fa-shopping-cart"></i> Meu Carrinho</a></li>
+            <li><a href="#" onclick="window.location.href='MinhasCompras.html'"><i class="fas fa-history"></i> Histórico de Compras</a></li>
+            <li><a href="#" onclick="return false;"><i class="fas fa-credit-card"></i> Formas de Pagamento</a></li>
+            <li><a href="#" onclick="return false;"><i class="fas fa-map-marker-alt"></i> Endereços</a></li>
+        </ul>
+    </div>
+    <!-- Seção Ajuda -->
+    <div class="menu-section">
+        <div class="menu-title">
+            <i class="fas fa-question-circle"></i> AJUDA
+        </div>
+        <ul class="menu-links">
+            <li><a href="#" onclick="return false;"><i class="fas fa-headset"></i> Atendimento ao Cliente</a></li>
+            <li><a href="#" onclick="return false;"><i class="fas fa-question"></i> Perguntas Frequentes</a></li>
+            <li><a href="#" onclick="return false;"><i class="fas fa-truck"></i> Rastrear Pedido</a></li>
+            <li><a href="#" onclick="return false;"><i class="fas fa-exchange-alt"></i> Trocas e Devoluções</a></li>
+        </ul>
+    </div>
+
+    <button class="btn-logout" onclick="logout()">🚪 Sair</button>
+</div>
+
+<!-- LIVROS -->
+<section class="section">
+
+<h2>Os Livros Mais Lidos no Brasil</h2>
+
+<div class="cards">
+
+<div class="card" onclick="abrirProduto()">
+<img src="img/capa.jpg">
+<h3>A Revolução dos Bichos</h3>
+<p>Por: <span>R$34,90</span></p>
+<button class="btn-carrinho" onclick="event.stopPropagation(); adicionarCarrinho()">
+Adicionar ao Carrinho
+</button>
+</div>
+
+<div class="card" onclick="abrirProduto()">
+<img src="img/capa.jpg">
+<h3>O Sol é Para Todos</h3>
+<p>Por: <span>R$34,90</span></p>
+<button class="btn-carrinho">Adicionar ao Carrinho</button>
+</div>
+
+<div class="card" onclick="abrirProduto()">
+<img src="img/capa.jpg">
+<h3>O Pequeno Príncipe</h3>
+<p>Por: <span>R$34,90</span></p>
+<button class="btn-carrinho">Adicionar ao Carrinho</button>
+</div>
+
+<div class="card" onclick="abrirProduto()">
+<img src="img/capa.jpg">
+<h3>Drácula</h3>
+<p>Por: <span>R$34,90</span></p>
+<button class="btn-carrinho">Adicionar ao Carrinho</button>
+</div>
+
+</div>
+</section>
+
+<script>
+
+function abrirMenu() {
+    document.getElementById("menu").classList.add("open");
+}
+
+function fecharMenu() {
+    document.getElementById("menu").classList.remove("open");
+}
+
+function abrirProduto(){
+    window.location.href = "DescriçãoProduto.html";
+}
+
+function adicionarCarrinho(){
+    window.location.href = "Carrinho.html";
+}
+
+/* NOVAS FUNÇÕES DO MENU */
+function aplicarFiltros() {
+    alert("Filtros aplicados!");
+}
+
+function limparFiltros() {
+    document.querySelectorAll('.filter-option input').forEach(cb => cb.checked = false);
+    alert("Filtros limpos!");
+}
+
+function logout() {
+    if(confirm("Deseja sair?")) {
+        alert("Você saiu.");
+    }
+}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>HamStore - Detalhes do Livro</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        /* ===== PALETA DE CORES (mantida da página de produto) ===== */
+        :root {
+            --vinho-profundo: #5e0015;
+            --rose-gold: #c27e8f;
+            --bege-claro: #fdf8f0;
+            --ouro-antigo: #e0b81e;
+            --bronze-escuro: #9e6d0b;
+            --sombra-suave: rgba(94, 0, 21, 0.12);
+            --branco-puro: #ffffff;
+            --cinza-elegante: #f4f1ea;
+            --dourado-gradiente: linear-gradient(135deg, var(--ouro-antigo), var(--bronze-escuro));
+            --vinho-gradiente: linear-gradient(135deg, var(--vinho-profundo), #8a1e38);
+            
+            /* Cores do header HamStore */
+            --cotton-candy: #E38792;
+            --garnet: #4E0A0B;
+            --dusty-white: #F2EEE8;
+            --khaki: #9DAD71;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: radial-gradient(circle at 10% 30%, #f5efe6, #e9e2d5);
+            font-family: 'Segoe UI', 'Georgia', 'Times New Roman', serif;
+            color: #2c2418;
+            line-height: 1.5;
+        }
+
+        /* ===== BARRA SUPERIOR HAMSTORE (exatamente igual ao código enviado) ===== */
+        .shopee-top {
+            background-color: var(--cotton-candy);
+            color: var(--dusty-white);
+            font-size: 14px;
+            position: sticky;
+            top: 0;
+            z-index: 1002;
+            box-shadow: 0 2px 8px rgba(78, 10, 11, 0.15);
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 40px;
+        }
+
+        .flex {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .v-center {
+            align-items: center;
+        }
+
+        .navbar a {
+            color: var(--dusty-white);
+            text-decoration: none;
+            font-size: 13px;
+            transition: opacity 0.2s;
+        }
+
+        .navbar a:hover {
+            opacity: 0.8;
+            color: var(--dusty-white);
+        }
+
+        .navbar_links {
+            display: flex;
+            align-items: center;
+            list-style: none;
+            gap: 16px;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar__link-text {
+            color: var(--dusty-white);
+            font-size: 13px;
+        }
+
+        .navbar__link--signup {
+            font-weight: 500;
+            background-color: var(--garnet);
+            padding: 4px 12px;
+            border-radius: 15px;
+        }
+
+        .navbar__link-separator {
+            width: 1px;
+            height: 16px;
+            background-color: rgba(242, 238, 232, 0.4);
+            margin: 0 4px;
+        }
+
+        .shopee-logo-area {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        .shopee-logo-icon {
+            font-size: 18px;
+        }
+
+        .shopee-store-name {
+            font-weight: 700;
+            font-size: 15px;
+            color: var(--garnet);
+        }
+
+        .shopee-store-name small {
+            font-size: 10px;
+            font-weight: 400;
+            color: var(--dusty-white);
+        }
+
+        .shopee-social-icons {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .social-icon {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        .instagram {
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23F2EEE8"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>');
+        }
+        .whatsapp {
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23F2EEE8"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.562 1.103 3.642l-.717 2.615 2.681-.699c1.039.603 2.227.92 3.44.919 3.181 0 5.768-2.587 5.768-5.768-.001-3.18-2.587-5.767-5.767-5.767zm3.298 8.245c-.176.496-.892.905-1.461 1.026-.387.082-.815.07-1.193-.018-.38-.089-.73-.249-1.062-.45-.332-.2-.66-.44-.951-.713-.29-.273-.534-.578-.727-.907-.193-.329-.336-.678-.426-1.042-.09-.364-.122-.735-.095-1.104.027-.369.106-.724.236-1.06.13-.336.306-.648.522-.931.216-.283.466-.529.744-.733.278-.204.579-.361.893-.466.314-.105.637-.157.96-.154.226.002.451.029.672.081.221.052.434.131.634.237.2.106.386.239.553.395.167.156.312.335.433.533.242.398.366.855.358 1.318-.008.463-.148.915-.397 1.305-.249.39-.592.7-.995.898-.404.198-.856.284-1.304.25-.128-.01-.254-.034-.376-.072-.122-.038-.237-.091-.343-.158-.106-.067-.202-.147-.286-.239-.084-.092-.155-.195-.212-.306-.057-.111-.099-.229-.125-.351-.026-.122-.036-.246-.03-.369.006-.123.027-.244.062-.361.035-.117.084-.229.145-.333.061-.104.133-.199.215-.283.082-.084.173-.156.27-.215.098-.059.202-.104.31-.133.108-.029.22-.042.331-.039.111.003.221.022.327.057.106.035.206.085.296.149.09.064.168.141.233.229.065.088.116.186.15.29.034.104.051.213.051.322 0 .071-.008.142-.023.211-.015.069-.037.136-.066.2-.029.064-.065.124-.107.18-.042.056-.09.107-.143.152-.053.045-.111.084-.173.117-.062.033-.128.058-.196.075-.068.017-.138.026-.208.026-.07 0-.14-.009-.208-.026-.068-.017-.134-.042-.196-.075-.062-.033-.12-.072-.173-.117-.053-.045-.101-.096-.143-.152-.042-.056-.078-.116-.107-.18-.029-.064-.051-.131-.066-.2-.015-.069-.023-.14-.023-.211z"/></svg>');
+        }
+        .tiktok {
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23F2EEE8"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.87-4.53 2.89 2.89 0 0 1 1.09.27v-3.47a6.33 6.33 0 0 0-5.34 6.2 6.33 6.33 0 0 0 10.92 4.3 6.34 6.34 0 0 0 1.77-4.3V8.92a8.26 8.26 0 0 0 4.79 1.52V6.95a4.82 4.82 0 0 1-3.77-2.26z"/></svg>');
+        }
+
+        @media (max-width: 768px) {
+            .flex .shopee-logo-area ~ a {
+                display: none;
+            }
+            .navbar_links .navbar__link-text {
+                font-size: 12px;
+            }
+        }
+
+        /* ===== HEADER BRANCO (exatamente igual ao código enviado) ===== */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--branco-puro);
+            padding: 15px 30px;
+            box-shadow: 0 4px 20px rgba(78, 10, 11, 0.1);
+            position: sticky;
+            top: 40px;
+            z-index: 100;
+            border-radius: 0 0 25px 25px;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .menu-icon {
+            font-size: 28px;
+            cursor: pointer;
+            color: var(--garnet);
+            padding: 10px;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+        .menu-icon:hover {
+            background: var(--dusty-white);
+            transform: scale(1.1);
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: var(--garnet);
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            letter-spacing: 1px;
+        }
+
+        .search-bar {
+            flex: 1;
+            margin: 0 30px;
+            max-width: 500px;
+        }
+        .search-bar input {
+            width: 100%;
+            padding: 15px 25px;
+            border-radius: 30px;
+            border: 2px solid var(--dusty-white);
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: var(--dusty-white);
+            box-shadow: 0 4px 15px rgba(78, 10, 11, 0.1);
+            outline: none;
+        }
+        .search-bar input:focus {
+            border-color: var(--cotton-candy);
+            box-shadow: 0 0 25px rgba(227, 135, 146, 0.4);
+        }
+
+        .icons {
+            font-size: 24px;
+            display: flex;
+            gap: 20px;
+            cursor: pointer;
+            color: var(--garnet);
+        }
+        .btn-sem-borda {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--garnet);
+            transition: all 0.3s ease;
+            padding: 8px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .btn-sem-borda:hover {
+            background: var(--dusty-white);
+            transform: scale(1.15) rotate(5deg);
+            filter: drop-shadow(0 4px 12px rgba(227, 135, 146, 0.3));
+        }
+
+        /* ===== MENU LATERAL (exatamente igual ao código enviado) ===== */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 100vh;
+            background: linear-gradient(180deg, #46151B, #C74F51);
+            overflow-y: auto;
+            transition: 0.3s;
+            z-index: 10000;
+            padding-bottom: 80px;
+        }
+        .sidebar.open { width: 300px; }
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 28px;
+            cursor: pointer;
+            color: #fff;
+        }
+        .menu-section { padding: 15px; }
+        .menu-title { font-size: 18px; color: #FBDE9C; margin-bottom: 10px; font-weight: bold; }
+        .filter-group { margin-bottom: 15px; }
+        .filter-label { display: block; font-size: 13px; margin-bottom: 5px; color: #FBDE9C; }
+        .filter-option { display: block; font-size: 13px; color: #fff; margin: 5px 0; cursor: pointer; }
+        .filter-option input { margin-right: 5px; }
+        .btn-filtrar, .btn-limpar { width: 100%; padding: 10px; border-radius: 20px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        .btn-filtrar { background: #F99257; border: none; }
+        .btn-limpar { background: transparent; border: 1px solid #fff; color: #fff; }
+        .menu-links { list-style: none; padding: 0; }
+        .menu-links li { margin: 5px 0; }
+        .menu-links a { display: block; padding: 8px; color: #fff; text-decoration: none; border-radius: 10px; transition: 0.2s; }
+        .menu-links a:hover { background: rgba(255,255,255,0.2); }
+        .btn-logout { width: calc(100% - 30px); margin: 20px 15px; padding: 10px; background: #C74F51; border: none; border-radius: 20px; color: #fff; font-weight: bold; cursor: pointer; }
+        .sidebar::-webkit-scrollbar { width: 5px; }
+        .sidebar::-webkit-scrollbar-thumb { background: #F99257; border-radius: 10px; }
+
+        /* ===== CONTEÚDO DA PÁGINA DE PRODUTO (preservado) ===== */
+        .pagina-produto {
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+        .produto {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 3rem;
+            background: var(--branco-puro);
+            border-radius: 2rem;
+            padding: 2rem;
+            box-shadow: 0 30px 50px rgba(0, 0, 0, 0.08);
+            margin-bottom: 2.5rem;
+        }
+        .imagens-produto { flex: 1.2; min-width: 260px; }
+        .imagem-principal { width: 100%; height: auto; aspect-ratio: 2/3; object-fit: cover; border-radius: 1.5rem; box-shadow: 0 20px 35px rgba(0,0,0,0.2); }
+        .miniaturas { display: flex; gap: 0.8rem; margin-top: 1.2rem; flex-wrap: wrap; }
+        .miniatura { width: 75px; height: 110px; object-fit: cover; border-radius: 0.8rem; cursor: pointer; border: 2px solid transparent; transition: all 0.2s; }
+        .miniatura.active { border-color: var(--ouro-antigo); transform: scale(0.98); }
+        .seguir-autor { background: var(--cinza-elegante); padding: 1rem; border-radius: 1.5rem; margin-top: 1.8rem; text-align: center; }
+        .autor-info { display: flex; align-items: center; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+        .foto-autor { width: 48px; height: 48px; border-radius: 50%; object-fit: cover; border: 2px solid var(--ouro-antigo); }
+        .btn-seguir { background: var(--dourado-gradiente); border: none; padding: 0.4rem 1rem; border-radius: 40px; font-weight: bold; cursor: pointer; }
+        .btn-seguir.seguindo { background: #bdb28b; }
+        .info-produto { flex: 1.5; }
+        .info-produto h2 { font-size: 2rem; color: var(--vinho-profundo); }
+        .preco { font-size: 2.3rem; font-weight: 800; color: var(--vinho-profundo); margin: 1rem 0; }
+        .estoque { color: #2c6e2c; font-weight: bold; background: #e5f4e5; display: inline-block; padding: 0.2rem 1rem; border-radius: 30px; }
+        .acoes { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1.5rem; }
+        button { background: var(--vinho-gradiente); border: none; padding: 0.8rem 1.8rem; border-radius: 60px; font-weight: bold; color: white; cursor: pointer; transition: all 0.25s; display: inline-flex; align-items: center; gap: 0.6rem; }
+        .btn-comprar { background: var(--dourado-gradiente); color: #341d05; }
+        select { padding: 0.5rem 1rem; border-radius: 2rem; border: 1px solid var(--rose-gold); background: white; }
+        .sinopse, .detalhes, .avaliacoes, .recomendados { background: var(--branco-puro); border-radius: 1.8rem; padding: 2rem; margin-bottom: 2rem; }
+        h2.borda-livro { font-size: 1.8rem; border-left: 6px solid var(--ouro-antigo); padding-left: 1rem; margin-bottom: 1.5rem; color: var(--vinho-profundo); }
+        .detalhes-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px,1fr)); gap: 1.2rem; }
+        .detalhe { background: var(--cinza-elegante); padding: 1rem; border-radius: 1.2rem; text-align: center; cursor: pointer; }
+        .detalhe i { font-size: 1.8rem; color: var(--ouro-antigo); }
+        .nota-geral { text-align: center; }
+        .filtros-avaliacao { display: flex; flex-wrap: wrap; gap: 0.7rem; margin: 1.5rem 0; }
+        .filtro-btn { background: #e9e2d5; color: #5a3e2a; padding: 0.4rem 1rem; border-radius: 40px; cursor: pointer; }
+        .filtro-btn.ativo { background: var(--ouro-antigo); font-weight: bold; }
+        .comentario { display: flex; gap: 1rem; border-bottom: 1px solid #e2d9cc; padding: 1.2rem 0; }
+        .foto-perfil { width: 52px; height: 52px; border-radius: 50%; object-fit: cover; }
+        .cards-recomendados { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 2rem; margin-top: 1.5rem; }
+        .card-recomendado { background: var(--branco-puro); border-radius: 1.5rem; overflow: hidden; transition: 0.35s; border: 1px solid rgba(224,184,30,0.2); }
+        .card-recomendado:hover { transform: translateY(-12px); box-shadow: 0 30px 45px rgba(94,0,21,0.15); border-color: var(--ouro-antigo); }
+        .card-img-wrapper { position: relative; overflow: hidden; background: #f3ede3; }
+        .card-img-wrapper img { width: 100%; aspect-ratio: 2/3; object-fit: cover; transition: transform 0.5s; }
+        .card-recomendado:hover .card-img-wrapper img { transform: scale(1.05); }
+        .card-badge { position: absolute; top: 12px; left: 12px; background: var(--dourado-gradiente); color: #2c1a08; font-size: 0.7rem; font-weight: bold; padding: 0.2rem 0.7rem; border-radius: 30px; }
+        .card-content { padding: 1.2rem 1rem; text-align: center; }
+        .card-content h3 { font-size: 1.05rem; color: var(--vinho-profundo); }
+        .card-autor { font-size: 0.75rem; color: #8f7a62; }
+        .card-estrelas { color: var(--ouro-antigo); font-size: 0.8rem; margin: 0.4rem 0; }
+        .card-preco { font-size: 1.4rem; font-weight: 800; color: var(--vinho-profundo); }
+        .card-recomendado button { width: 85%; padding: 0.6rem 0; font-size: 0.85rem; justify-content: center; background: var(--vinho-gradiente); margin-top: 0.5rem; }
+        .toast-msg { position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%); background: #2c2418e6; backdrop-filter: blur(10px); color: #ffecb3; padding: 0.8rem 1.6rem; border-radius: 60px; z-index: 9999; pointer-events: none; }
+        @media (max-width: 780px) {
+            .produto { flex-direction: column; }
+            .pagina-produto { padding: 0 1rem; margin-top: 1rem; }
+            .header { flex-wrap: wrap; justify-content: center; top: 40px; gap: 0.8rem; }
+            .search-bar { order: 3; width: 100%; max-width: none; margin: 0; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ===== BARRA SUPERIOR HAMSTORE (exatamente igual) ===== -->
+<header class="shopee-top">
+    <div class="container">
+        <nav class="navbar">
+            <div class="flex v-center">
+                <div class="shopee-logo-area">
+                    <span class="shopee-logo-icon">📚</span>
+                    <span class="shopee-store-name">HAMSTORE <small>books</small></span>
+                </div>
+                <a href="#" onclick="window.location.href='GerenciamentoVendedor.html'">Central do Vendedor</a>
+                <a href="#" onclick="window.location.href='CadastroVendedor.html'">Vender na HamStore</a>
+            </div>
+            <div class="flex">
+                <div class="shopee-social-icons">
+                    <span>Siga-nos</span>
+                    <a href="#" class="social-icon instagram"></a>
+                    <a href="#" class="social-icon whatsapp"></a>
+                    <a href="#" class="social-icon tiktok"></a>
+                </div>
+            </div>
+            <ul class="navbar_links">
+                <li><a href="#" class="navbar__link-text">Ajuda</a></li>
+                <li><a href="#" onclick="window.location.href='Cadastro1.html'" class="navbar__link-text navbar__link--signup">Cadastrar</a></li>
+                <li><div class="navbar__link-separator"></div></li>
+                <li><a href="#" onclick="window.location.href='login.html'" class="navbar__link-text">Entrar</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<!-- ===== HEADER BRANCO COM BUSCA (exatamente igual) ===== -->
+<header class="header">
+    <h1 class="logo" onclick="window.location.href='Entrar.html'">📚 Livraria</h1>
+    <div class="search-bar">
+        <input type="text" placeholder="Buscar livros...">
+    </div>
+    <div class="icons">
+        <button class="btn-sem-borda" onclick="window.location.href='Carrinho.html'">🛒</button>
+        <button class="btn-sem-borda" onclick="window.location.href='Configuraçoes.html'">⚙️</button>
+        <button class="btn-sem-borda" onclick="window.location.href='MinhasCompras.html'">👤</button>
+    </div>
+</header>
+
+<!-- ===== CONTEÚDO PRINCIPAL (PÁGINA DE PRODUTO) ===== -->
+<div class="pagina-produto">
+    <div class="produto">
+        <div class="imagens-produto">
+            <img class="imagem-principal" id="mainImage" src="https://placehold.co/400x600/f4ede4/8C5C03?text=Capa+do+Livro" alt="capa">
+            <div class="miniaturas" id="thumbnailsContainer"></div>
+            <div class="seguir-autor">
+                <p><i class="fas fa-feather-alt"></i> Conecte-se com o autor</p>
+                <div class="autor-info">
+                    <img src="https://randomuser.me/api/portraits/men/32.jpg" class="foto-autor" alt="autor">
+                    <span><b>Isabela Montenegro</b></span>
+                    <button id="seguirAutorBtn" class="btn-seguir">Seguir</button>
+                </div>
+            </div>
+        </div>
+        <div class="info-produto">
+            <h2>Jardins de Alabastro</h2>
+            <p>Capa comum, laminação fosca</p>
+            <p>por <b>Isabela Montenegro</b> (Autora), <b>Ricardo Alves</b> (Tradutor)</p>
+            <p class="avaliacao"><span class="estrelas-douradas">★★★★★</span> <strong>5.0</strong> (142 avaliações)</p>
+            <hr>
+            <div class="preco">R$ 64,90</div>
+            <p><i class="fas fa-credit-card"></i> À vista no Pix: 10% OFF | ou 6x s/ juros de R$10,82</p>
+            <p class="estoque"><i class="fas fa-check-circle"></i> Em estoque - pronto para envio</p>
+            <label><i class="fas fa-copy"></i> Quantidade</label>
+            <select id="quantidadeSelect"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select>
+            <div class="acoes">
+                <button id="addCarrinhoBtn"><i class="fas fa-cart-plus"></i> Adicionar ao carrinho</button>
+                <button class="btn-comprar" id="comprarAgoraBtn"><i class="fas fa-bolt"></i> Comprar agora</button>
+            </div>
+            <a href="PerfilLoja.html" style="color: var(--rose-gold); display: inline-block; margin-top: 1rem;"><i class="fas fa-store"></i> Visitar loja oficial</a>
+        </div>
+    </div>
+
+    <section class="sinopse">
+        <h2 class="borda-livro">Sinopse</h2>
+        <p>Em um reino onde as pétalas guardam segredos ancestrais, Alina descobre que seu destino está entrelaçado com uma maldição dourada. "Jardins de Alabastro" é uma odisséia sobre memória, coragem e amor eterno. Uma narrativa que envolve leitores de todas as idades, combinando fantasia e emoção em cada página. Com mais de 50 mil exemplares vendidos, essa edição especial traz conteúdo extra e notas da autora.</p>
+    </section>
+
+    <section class="detalhes">
+        <h2 class="borda-livro">Detalhes do produto</h2>
+        <div class="detalhes-grid">
+            <div class="detalhe"><i class="fas fa-barcode"></i><h4>ISBN-10</h4><p>8544001823</p></div>
+            <div class="detalhe"><i class="fas fa-barcode"></i><h4>ISBN-13</h4><p>978-8544001820</p></div>
+            <div class="detalhe"><i class="fas fa-hashtag"></i><h4>Edição</h4><p>1ª edição (2025)</p></div>
+            <div class="detalhe" onclick="window.location.href='PerfilEditora.html'"><i class="fas fa-building"></i><h4>Editora</h4><p>Martin Claret</p></div>
+            <div class="detalhe"><i class="fas fa-calendar"></i><h4>Data publicação</h4><p>12 abril 2025</p></div>
+            <div class="detalhe"><i class="fas fa-globe"></i><h4>Idioma</h4><p>Português</p></div>
+            <div class="detalhe"><i class="fas fa-ruler-combined"></i><h4>Dimensões</h4><p>21.4 x 13.6 x 2.8 cm</p></div>
+            <div class="detalhe"><i class="fas fa-book"></i><h4>Páginas</h4><p>424 páginas</p></div>
+        </div>
+    </section>
+
+    <section class="avaliacoes">
+        <h2 class="borda-livro">Avaliação do produto</h2>
+        <div class="nota-geral">
+            <h3>★ 5.0 de 5.0</h3>
+            <div class="estrelas-douradas">★★★★★</div>
+        </div>
+        <div class="filtros-avaliacao" id="filtrosContainer">
+            <button data-filter="all" class="filtro-btn ativo">Todas</button>
+            <button data-filter="5" class="filtro-btn">5 estrelas</button>
+            <button data-filter="4" class="filtro-btn">4 estrelas</button>
+            <button data-filter="3" class="filtro-btn">3 estrelas</button>
+            <button data-filter="2" class="filtro-btn">2 estrelas</button>
+            <button data-filter="1" class="filtro-btn">1 estrela</button>
+        </div>
+        <div id="comentariosLista"></div>
+    </section>
+
+    <section class="recomendados">
+        <h2 class="borda-livro"><i class="fas fa-fire"></i> Recomendados para você</h2>
+        <div class="cards-recomendados" id="recomendadosCards"></div>
+    </section>
+</div>
+
+<script>
+    // Dados dos recomendados
+    const recomendacoesData = [
+        { titulo: "O Nome do Vento", autor: "Patrick Rothfuss", preco: 59.90, estrelas: 5, imagem: "https://placehold.co/300x450/e7dbc9/8C5C03?text=Vento", badge: "⭐ Mais vendido" },
+        { titulo: "Cem Anos de Solidão", autor: "Gabriel García Márquez", preco: 49.90, estrelas: 5, imagem: "https://placehold.co/300x450/e7dbc9/8C5C03?text=Cem+Anos", badge: "🏆 Clássico" },
+        { titulo: "A Biblioteca da Meia-Noite", autor: "Matt Haig", preco: 54.90, estrelas: 4.5, imagem: "https://placehold.co/300x450/e7dbc9/8C5C03?text=Biblioteca", badge: "📚 Em alta" },
+        { titulo: "O Alquimista", autor: "Paulo Coelho", preco: 39.90, estrelas: 4, imagem: "https://placehold.co/300x450/e7dbc9/8C5C03?text=Alquimista", badge: "✨ Inspirador" }
+    ];
+
+    // Avaliações
+    const avaliacoesData = [
+        { usuario: "Luna Escritora", estrelas: 5, data: "10 abril 2026", texto: "Simplesmente inesquecível! A narrativa me transportou. Recomendo demais.", foto: "https://randomuser.me/api/portraits/women/68.jpg" },
+        { usuario: "Thiago Leitor", estrelas: 5, data: "05 abril 2026", texto: "Livro impecável, capa linda e a história envolvente. Vale cada página.", foto: "https://randomuser.me/api/portraits/men/45.jpg" },
+        { usuario: "Carla M.", estrelas: 4, data: "01 abril 2026", texto: "Muito bom, só achei o início um pouco lento, mas depois prende.", foto: "https://randomuser.me/api/portraits/women/23.jpg" },
+        { usuario: "Fernando R.", estrelas: 5, data: "28 março 2026", texto: "Um dos melhores livros de fantasia nacional! Ansioso pela continuação.", foto: "https://randomuser.me/api/portraits/men/22.jpg" },
+        { usuario: "Beatriz S.", estrelas: 3, data: "20 março 2026", texto: "História bonita mas com alguns clichês previsíveis. Boa leitura.", foto: "https://randomuser.me/api/portraits/women/49.jpg" }
+    ];
+
+    let filtroAtivo = 'all';
+
+    function renderRecomendados() {
+        const container = document.getElementById('recomendadosCards');
+        container.innerHTML = recomendacoesData.map(livro => {
+            let estrelasHtml = '★'.repeat(Math.floor(livro.estrelas)) + (livro.estrelas % 1 >= 0.5 ? '½' : '') + '☆'.repeat(5 - Math.ceil(livro.estrelas));
+            return `<div class="card-recomendado"><div class="card-img-wrapper"><div class="card-badge">${livro.badge}</div><img src="${livro.imagem}" alt="${livro.titulo}"></div><div class="card-content"><h3>${livro.titulo}</h3><div class="card-autor">${livro.autor}</div><div class="card-estrelas">${estrelasHtml}</div><div class="card-preco">R$ ${livro.preco.toFixed(2)} <small>até 3x</small></div><button onclick="adicionarRecomendado('${livro.titulo}')"><i class="fas fa-cart-shopping"></i> Quero este</button></div></div>`;
+        }).join('');
+    }
+
+    function adicionarRecomendado(titulo) { mostrarToast(`✨ "${titulo}" adicionado ao carrinho!`); }
+    function mostrarToast(msg) { let t = document.querySelector('.toast-msg'); if(t) t.remove(); let div = document.createElement('div'); div.className = 'toast-msg'; div.innerHTML = `<i class="fas fa-info-circle"></i> ${msg}`; document.body.appendChild(div); setTimeout(() => div.remove(), 2400); }
+
+    const capasLista = ["https://placehold.co/400x600/f0e5d5/9E6D0B?text=Edição+Capa+dura","https://placehold.co/400x600/eedccd/8C5C03?text=Arte+exclusiva","https://placehold.co/400x600/f4ede4/5e0015?text=Detalhe+contraste"];
+    let imagemAtual = capasLista[0];
+    function carregarMiniaturas() { const container = document.getElementById('thumbnailsContainer'); container.innerHTML = ''; capasLista.forEach(src => { let thumb = document.createElement('img'); thumb.src = src; thumb.classList.add('miniatura'); if(src === imagemAtual) thumb.classList.add('active'); thumb.addEventListener('click', () => { document.getElementById('mainImage').src = src; imagemAtual = src; document.querySelectorAll('.miniatura').forEach(t => t.classList.remove('active')); thumb.classList.add('active'); }); container.appendChild(thumb); }); }
+    
+    function renderComentarios() { const container = document.getElementById('comentariosLista'); const filtrados = filtroAtivo === 'all' ? avaliacoesData : avaliacoesData.filter(a => a.estrelas === parseInt(filtroAtivo)); if(filtrados.length === 0) { container.innerHTML = `<div style="padding:2rem;text-align:center;"><i class="fas fa-comment-slash"></i> Nenhuma avaliação com esse filtro.</div>`; return; } container.innerHTML = filtrados.map(av => `<div class="comentario"><img src="${av.foto}" class="foto-perfil"><div><strong>${av.usuario}</strong><div class="estrelas-douradas">${'★'.repeat(av.estrelas)}${'☆'.repeat(5-av.estrelas)}</div><small>Publicado em ${av.data}</small><p>${av.texto}</p></div></div>`).join(''); }
+    
+    function setupFiltros() { document.querySelectorAll('.filtro-btn').forEach(btn => { btn.addEventListener('click', () => { document.querySelectorAll('.filtro-btn').forEach(b => b.classList.remove('ativo')); btn.classList.add('ativo'); filtroAtivo = btn.getAttribute('data-filter'); renderComentarios(); }); }); }
+
+    document.getElementById('addCarrinhoBtn')?.addEventListener('click', () => mostrarToast('📚 "Jardins de Alabastro" adicionado ao carrinho'));
+    document.getElementById('comprarAgoraBtn')?.addEventListener('click', () => { mostrarToast('Redirecionando...'); setTimeout(() => { if(confirm('Simular compra?')) window.location.href = 'FazerPedido.html'; }, 600); });
+    
+    let seguindo = false; document.getElementById('seguirAutorBtn')?.addEventListener('click', function() { seguindo = !seguindo; this.textContent = seguindo ? 'Seguindo' : 'Seguir'; this.classList.toggle('seguindo'); mostrarToast(seguindo ? 'Agora você segue Isabela Montenegro' : 'Você deixou de seguir'); });
+
+    // Funções do menu lateral
+    function abrirMenu() { document.getElementById("menu").classList.add("open"); }
+    function fecharMenu() { document.getElementById("menu").classList.remove("open"); }
+    function aplicarFiltros() { alert("Filtros aplicados!"); }
+    function limparFiltros() { document.querySelectorAll('.filter-option input').forEach(cb => cb.checked = false); alert("Filtros limpos!"); }
+    function logout() { if(confirm("Deseja sair?")) alert("Você saiu."); }
+
+    // Tornar funções globais para os botões
+    window.abrirMenu = abrirMenu;
+    window.fecharMenu = fecharMenu;
+    window.aplicarFiltros = aplicarFiltros;
+    window.limparFiltros = limparFiltros;
+    window.logout = logout;
+    window.adicionarRecomendado = adicionarRecomendado;
+
+    carregarMiniaturas();
+    renderComentarios();
+    renderRecomendados();
+    setupFiltros();
+    document.getElementById('mainImage').src = capasLista[0];
+</script>
+</body>
+</html>

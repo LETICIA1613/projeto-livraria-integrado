@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pagamentos - Livraria</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --vermelho-escuro: #8C031C;
+            --rosa-medio: #BF6980;
+            --cinza-claro: #F0F0F2;
+            --dourado-principal: #D9B607;
+            --dourado-escuro: #8C5C03;
+            --branco: #ffffff;
+            --sombra-suave: rgba(140, 3, 28, 0.1);
+            --sombra-dourado: rgba(217, 182, 7, 0.3);
+            --cotton-candy: #E38792;
+            --garnet: #4E0A0B;
+            --dusty-white: #F2EEE8;
+            --khaki: #9DAD71;
+        }
+
+        /* BARRA SUPERIOR */
+        .shopee-top { background-color: var(--cotton-candy); color: var(--dusty-white); font-size: 14px; position: sticky; top: 0; z-index: 1001; box-shadow: 0 2px 8px rgba(78, 10, 11, 0.15); }
+        .container { max-width: 1280px; margin: 0 auto; padding: 0 20px; }
+        .navbar { display: flex; justify-content: space-between; align-items: center; height: 40px; }
+        .flex { display: flex; align-items: center; gap: 20px; }
+        .navbar a { color: var(--dusty-white); text-decoration: none; font-size: 13px; transition: opacity 0.2s; }
+        .navbar a:hover { opacity: 0.8; }
+        .navbar_links { display: flex; align-items: center; list-style: none; gap: 16px; margin: 0; padding: 0; }
+        .navbar__link-text { color: var(--dusty-white); font-size: 13px; }
+        .navbar__link--signup { font-weight: 500; background-color: var(--garnet); padding: 4px 12px; border-radius: 15px; }
+        .navbar__link-separator { width: 1px; height: 16px; background-color: rgba(242,238,232,0.4); margin: 0 4px; }
+        .shopee-logo-area { display: flex; align-items: center; gap: 8px; }
+        .shopee-store-name { font-weight: 700; font-size: 15px; color: var(--garnet); cursor: pointer; }
+        .shopee-store-name small { font-size: 10px; font-weight: 400; color: var(--dusty-white); }
+
+        /* HEADER */
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--cinza-claro); min-height: 100vh; }
+        .header { display: flex; align-items: center; justify-content: space-between; background: rgba(255,255,255,0.95); backdrop-filter: blur(20px); padding: 15px 30px; box-shadow: 0 4px 20px rgba(78,10,11,0.1); position: sticky; top: 40px; z-index: 100; border-radius: 0 0 25px 25px; }
+        .logo { font-size: 28px; font-weight: bold; color: var(--garnet); cursor: pointer; }
+        .search-bar { flex: 1; margin: 0 30px; max-width: 500px; }
+        .search-bar input { width: 100%; padding: 15px 25px; border-radius: 30px; border: 2px solid var(--dusty-white); font-size: 16px; background: var(--dusty-white); }
+        .icons { font-size: 24px; display: flex; gap: 20px; color: var(--garnet); }
+        .btn-sem-borda { background: none; border: none; color: var(--garnet); font-size: 16px; cursor: pointer; }
+
+        /* LAYOUT */
+        .layout { display: flex; max-width: 1400px; margin: 0 auto; padding: 30px 20px; gap: 30px; }
+
+        /* SIDEBAR */
+        .sidebar { width: 280px; background: var(--branco); border-radius: 20px; padding: 25px; box-shadow: 0 5px 20px var(--sombra-suave); height: fit-content; position: sticky; top: 110px; }
+        .perfil { text-align: center; padding-bottom: 20px; border-bottom: 2px solid var(--cinza-claro); margin-bottom: 20px; }
+        .avatar { width: 80px; height: 80px; background: linear-gradient(135deg, var(--rosa-medio), var(--vermelho-escuro)); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; font-size: 40px; color: var(--branco); }
+        .perfil h3 { color: var(--vermelho-escuro); font-size: 16px; margin-bottom: 5px; }
+        .btn-editar-perfil { background: transparent; border: 2px solid var(--rosa-medio); padding: 8px 20px; border-radius: 30px; color: var(--rosa-medio); font-weight: 600; cursor: pointer; transition: all 0.3s; margin-top: 10px; font-size: 13px; }
+        .btn-editar-perfil:hover { background: var(--rosa-medio); color: var(--branco); }
+        .menu-lateral { list-style: none; }
+        .menu-lateral li { padding: 12px 15px; display: flex; align-items: center; gap: 15px; color: var(--vermelho-escuro); cursor: pointer; transition: all 0.3s; border-radius: 12px; }
+        .menu-lateral li:hover { background: var(--cinza-claro); transform: translateX(5px); }
+        .menu-lateral li.ativo { background: linear-gradient(135deg, var(--dourado-principal), var(--dourado-escuro)); color: var(--branco); }
+        .menu-lateral li.ativo i { color: var(--branco) !important; }
+        .menu-lateral li i { width: 25px; color: var(--dourado-principal); font-size: 18px; }
+        .menu-lateral li span { font-weight: 500; }
+
+        /* CONTEÚDO */
+        .conteudo { flex: 1; }
+        .secao-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 25px; }
+        .secao-titulo { font-size: 22px; font-weight: 700; color: var(--vermelho-escuro); }
+
+        /* ABAS */
+        .metodo-tabs { display: flex; gap: 8px; margin-bottom: 22px; }
+        .metodo-tab { padding: 10px 24px; border: 2px solid var(--cinza-claro); border-radius: 30px; background: var(--branco); font-weight: 600; font-size: 13px; color: var(--vermelho-escuro); cursor: pointer; transition: all 0.3s; }
+        .metodo-tab:hover { border-color: var(--rosa-medio); }
+        .metodo-tab.ativo { background: linear-gradient(135deg, var(--dourado-principal), var(--dourado-escuro)); color: var(--branco); border-color: transparent; box-shadow: 0 4px 15px var(--sombra-dourado); }
+
+        /* SEÇÃO */
+        .secao-metodo { margin-bottom: 30px; }
+        .secao-metodo-titulo { font-size: 13px; font-weight: 700; color: #999; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+        .secao-metodo-titulo::after { content: ''; flex: 1; height: 1px; background: var(--cinza-claro); }
+
+        /* CARD PAGAMENTO */
+        .pagamento-card { background: var(--branco); border-radius: 18px; padding: 20px 22px; margin-bottom: 14px; box-shadow: 0 4px 16px var(--sombra-suave); display: flex; align-items: center; gap: 16px; transition: all 0.3s; border: 2px solid transparent; }
+        .pagamento-card:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(140,3,28,0.12); border-color: var(--rosa-medio); }
+        .pagamento-card.padrao { border-color: var(--dourado-principal); }
+
+        .card-logo { width: 56px; height: 46px; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 13px; font-weight: 800; }
+        .logo-pix { background: #e8faf8; color: #00897b; font-size: 24px; }
+        .logo-boleto { background: #f0f0f2; color: #555; font-size: 22px; }
+
+        .card-info { flex: 1; }
+        .card-nome { font-weight: 700; font-size: 15px; color: var(--vermelho-escuro); margin-bottom: 3px; }
+        .card-detalhe { font-size: 13px; color: #888; line-height: 1.5; }
+        .card-badges { display: flex; gap: 8px; margin-top: 6px; flex-wrap: wrap; }
+        .badge { font-size: 11px; padding: 3px 10px; border-radius: 20px; font-weight: 700; }
+        .badge-padrao { background: linear-gradient(135deg, var(--dourado-principal), var(--dourado-escuro)); color: var(--branco); }
+        .badge-info { background: rgba(0,137,123,0.1); color: #00695c; }
+        .badge-neutro { background: var(--cinza-claro); color: #666; }
+
+        .card-acoes { display: flex; gap: 10px; flex-shrink: 0; align-items: center; }
+        .btn-card-acao { padding: 8px 16px; border-radius: 20px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.3s; border: 2px solid transparent; }
+        .btn-card-editar { background: transparent; border-color: var(--rosa-medio); color: var(--rosa-medio); }
+        .btn-card-editar:hover { background: var(--rosa-medio); color: var(--branco); }
+        .btn-card-excluir { background: transparent; border-color: #ddd; color: #aaa; padding: 8px 12px; }
+        .btn-card-excluir:hover { border-color: #e74c3c; color: #e74c3c; }
+        .btn-card-padrao { background: var(--cinza-claro); border-color: transparent; color: var(--vermelho-escuro); }
+        .btn-card-padrao:hover { background: linear-gradient(135deg, var(--dourado-principal), var(--dourado-escuro)); color: var(--branco); }
+
+        /* STATUS ATIVO */
+        .status-ativo { display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; color: #27ae60; }
+
+        /* CARD ADICIONAR */
+        .card-adicionar { background: var(--branco); border-radius: 18px; padding: 20px 22px; margin-bottom: 14px; display: flex; align-items: center; gap: 16px; cursor: pointer; transition: all 0.3s; border: 2px dashed var(--rosa-medio); }
+        .card-adicionar:hover { background: rgba(191,105,128,0.04); transform: translateY(-2px); border-color: var(--vermelho-escuro); }
+        .add-circle { width: 56px; height: 46px; border-radius: 12px; background: rgba(191,105,128,0.12); display: flex; align-items: center; justify-content: center; color: var(--rosa-medio); font-size: 22px; flex-shrink: 0; }
+        .card-adicionar span { font-weight: 600; color: var(--rosa-medio); font-size: 14px; }
+
+        /* HISTÓRICO */
+        .historico-item { background: var(--branco); border-radius: 16px; padding: 16px 20px; margin-bottom: 12px; box-shadow: 0 3px 12px var(--sombra-suave); display: flex; align-items: center; gap: 14px; }
+        .hist-icone { width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
+        .hist-icone.sucesso { background: rgba(46,204,113,0.12); color: #27ae60; }
+        .hist-icone.pendente { background: rgba(230,126,34,0.12); color: #e67e22; }
+        .hist-icone.falhou { background: rgba(231,76,60,0.12); color: #e74c3c; }
+        .hist-info { flex: 1; }
+        .hist-titulo { font-weight: 600; font-size: 14px; color: var(--vermelho-escuro); }
+        .hist-data { font-size: 12px; color: #888; margin-top: 2px; }
+        .hist-status { font-size: 12px; font-weight: 700; padding: 3px 10px; border-radius: 20px; margin-top: 5px; display: inline-block; }
+        .hist-status.sucesso { background: rgba(46,204,113,0.12); color: #27ae60; }
+        .hist-status.pendente { background: rgba(230,126,34,0.12); color: #e67e22; }
+        .hist-status.falhou { background: rgba(231,76,60,0.12); color: #e74c3c; }
+        .hist-valor { font-weight: 700; font-size: 16px; color: var(--vermelho-escuro); text-align: right; }
+
+        /* MODAL */
+        .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 2000; align-items: center; justify-content: center; padding: 20px; }
+        .modal-overlay.aberto { display: flex; }
+        .modal { background: var(--branco); border-radius: 24px; width: 100%; max-width: 480px; overflow: hidden; max-height: 90vh; overflow-y: auto; }
+        .modal-header { background: linear-gradient(135deg, var(--vermelho-escuro), var(--rosa-medio)); padding: 22px 28px; display: flex; align-items: center; justify-content: space-between; }
+        .modal-header h2 { color: var(--branco); font-size: 18px; font-weight: 700; }
+        .modal-fechar { background: rgba(255,255,255,0.2); border: none; color: var(--branco); width: 34px; height: 34px; border-radius: 50%; cursor: pointer; font-size: 18px; display: flex; align-items: center; justify-content: center; transition: all 0.3s; }
+        .modal-fechar:hover { background: rgba(255,255,255,0.35); }
+        .modal-body { padding: 28px; }
+
+        /* FORM */
+        .form-grupo { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
+        .form-grupo label { font-size: 13px; font-weight: 600; color: var(--vermelho-escuro); }
+        .form-grupo input, .form-grupo select { padding: 12px 16px; border: 2px solid var(--cinza-claro); border-radius: 12px; font-size: 14px; color: #333; background: var(--cinza-claro); outline: none; transition: all 0.3s; }
+        .form-grupo input:focus, .form-grupo select:focus { border-color: var(--rosa-medio); background: var(--branco); box-shadow: 0 0 0 4px rgba(191,105,128,0.1); }
+        .info-box { padding: 14px; border-radius: 12px; font-size: 13px; line-height: 1.6; margin-bottom: 14px; }
+        .info-box.pix { background: rgba(0,137,123,0.08); color: #00695c; }
+        .info-box.boleto { background: rgba(140,3,28,0.06); color: var(--vermelho-escuro); }
+        .modal-footer { display: flex; gap: 12px; margin-top: 8px; }
+        .btn-cancelar { flex: 1; background: var(--cinza-claro); border: none; color: #888; padding: 14px; border-radius: 30px; font-weight: 600; cursor: pointer; font-size: 15px; }
+        .btn-cancelar:hover { background: #ddd; }
+        .btn-salvar { flex: 2; background: linear-gradient(135deg, var(--dourado-principal), var(--dourado-escuro)); color: var(--branco); border: none; padding: 14px; border-radius: 30px; font-weight: 700; cursor: pointer; font-size: 15px; transition: all 0.3s; box-shadow: 0 4px 15px var(--sombra-dourado); }
+        .btn-salvar:hover { transform: translateY(-2px); }
+
+        /* TOAST */
+        .toast { position: fixed; bottom: 30px; right: 30px; background: var(--vermelho-escuro); color: var(--branco); padding: 14px 22px; border-radius: 14px; font-size: 14px; font-weight: 600; z-index: 3000; display: flex; align-items: center; gap: 10px; transform: translateY(80px); opacity: 0; transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); }
+        .toast.visivel { transform: translateY(0); opacity: 1; }
+        .toast i { color: var(--dourado-principal); font-size: 18px; }
+
+        @media (max-width: 900px) { .layout { flex-direction: column; } .sidebar { width: 100%; position: static; } }
+    </style>
+</head>
+<body>
+
+<!-- BARRA SUPERIOR -->
+<header class="shopee-top">
+    <div class="container">
+        <nav class="navbar">
+            <div class="flex">
+                <div class="shopee-logo-area">
+                    <span style="font-size:18px;">📚</span>
+                    <span class="shopee-store-name" onclick="window.location.href='Entrar.html'">HAMSTORE <small>books</small></span>
+                </div>
+                <a href="#" onclick="window.location.href='dashbord.html'">Central do Vendedor</a>
+                <a href="#" onclick="window.location.href='CadastroVendedor.html'">Vender na HamStore</a>
+            </div>
+            <ul class="navbar_links">
+                <li><a href="#" class="navbar__link-text">Ajuda</a></li>
+                <li><a href="#" class="navbar__link-text navbar__link--signup">Cadastrar</a></li>
+                <li><div class="navbar__link-separator"></div></li>
+                <li><a href="#" class="navbar__link-text">Entrar</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<!-- HEADER -->
+<header class="header">
+    <h1 onclick="window.location.href='Entrar.html'" class="logo">📚 Livraria</h1>
+    <div class="search-bar"><input type="text" placeholder="Buscar livros..."></div>
+    <div class="icons">
+        <button class="btn-sem-borda" onclick="window.location.href='Carrinho.html'">🛒</button>
+        <button class="btn-sem-borda">⚙️</button>
+        <button class="btn-sem-borda" onclick="window.location.href='MinhasCompras.html'">👤</button>
+    </div>
+</header>
+
+<div class="layout">
+    <aside class="sidebar">
+        <div class="perfil">
+            <div class="avatar"><i class="fas fa-user"></i></div>
+            <h3>mariabaeatrizoliveira...</h3>
+            <button class="btn-editar-perfil" onclick="window.location.href='EditarPerfil.html'"><i class="fas fa-pen"></i> Editar Perfil</button>
+        </div>
+        <ul class="menu-lateral">
+            <li onclick="window.location.href='MinhasCompras.html'"><i class="fas fa-shopping-bag"></i> <span>Minhas Compras</span></li>
+            <li onclick="window.location.href='Notificaçoes.html'"><i class="fas fa-bell"></i> <span>Notificações</span></li>
+            <li onclick="window.location.href='MeusCupons.html'"><i class="fas fa-ticket-alt"></i> <span>Meus Cupons</span></li>
+            <li onclick="window.location.href='Endereços.html'"><i class="fas fa-map-marker-alt"></i> <span>Endereços</span></li>
+            <li><i class="fas fa-credit-card"></i> <span>Pagamentos</span></li>
+            <li onclick="window.location.href='Favoritos.html'"><i class="fas fa-heart"></i> <span>Favoritos</span></li>
+            <li onclick="window.location.href='Configuraçoes.html'"><i class="fas fa-cog"></i> <span>Configurações</span></li>
+            <li onclick="window.location.href='Carrinho.html'"><i class="fas fa-shopping-cart"></i> <span>Meu Carrinho</span></li>
+        </ul>
+    </aside>
+
+    <main class="conteudo">
+        <div class="secao-header">
+            <h2 class="secao-titulo"><i class="fas fa-wallet" style="color:var(--rosa-medio);margin-right:10px;"></i>Meus Pagamentos</h2>
+        </div>
+
+        <!-- ABAS -->
+        <div class="metodo-tabs">
+            <button class="metodo-tab ativo" onclick="trocarAba(this,'metodos')">Métodos de Pagamento</button>
+            <button class="metodo-tab" onclick="trocarAba(this,'historico')">Histórico</button>
+        </div>
+
+        <!-- ABA: MÉTODOS -->
+        <div id="aba-metodos">
+
+            <!-- PIX -->
+            <div class="secao-metodo">
+                <div class="secao-metodo-titulo"><i class="fas fa-bolt"></i> Pix</div>
+
+                <div class="pagamento-card padrao">
+                    <div class="card-logo logo-pix">⚡</div>
+                    <div class="card-info">
+                        <div class="card-nome">Pix</div>
+                        <div class="card-detalhe">Chave: mariabeatriz@email.com</div>
+                        <div class="card-badges">
+                            <span class="badge badge-padrao">⭐ Padrão</span>
+                            <span class="badge badge-info">Instantâneo · Sem taxa</span>
+                        </div>
+                    </div>
+                    <div class="card-acoes">
+                        <button class="btn-card-acao btn-card-editar" onclick="abrirModal('pix-editar')"><i class="fas fa-pen"></i> Editar chave</button>
+                        <button class="btn-card-acao btn-card-excluir" onclick="confirmarExcluir()" title="Excluir"><i class="fas fa-trash"></i></button>
+                    </div>
+                </div>
+
+                <div class="card-adicionar" onclick="abrirModal('pix-novo')">
+                    <div class="add-circle"><i class="fas fa-plus"></i></div>
+                    <span>Adicionar chave Pix</span>
+                </div>
+            </div>
+
+            <!-- BOLETO -->
+            <div class="secao-metodo">
+                <div class="secao-metodo-titulo"><i class="fas fa-barcode"></i> Boleto bancário</div>
+
+                <div class="pagamento-card">
+                    <div class="card-logo logo-boleto">🧾</div>
+                    <div class="card-info">
+                        <div class="card-nome">Boleto bancário</div>
+                        <div class="card-detalhe">Gerado no momento da compra · Prazo de pagamento: 3 dias úteis<br>Compensação em até 1 dia útil após o pagamento</div>
+                        <div class="card-badges">
+                            <span class="badge badge-neutro">Sem necessidade de cadastro</span>
+                        </div>
+                    </div>
+                    <div class="card-acoes">
+                        <span class="status-ativo"><i class="fas fa-check-circle"></i> Disponível</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ABA: HISTÓRICO -->
+        <div id="aba-historico" style="display:none;">
+
+            <div class="historico-item">
+                <div class="hist-icone sucesso"><i class="fas fa-check"></i></div>
+                <div class="hist-info">
+                    <div class="hist-titulo">O Pequeno Príncipe - Edição Especial</div>
+                    <div class="hist-data">28/04/2026 · Pix · chave: mariabeatriz@email.com</div>
+                    <span class="hist-status sucesso">Pago</span>
+                </div>
+                <div class="hist-valor">R$ 39,90</div>
+            </div>
+
+            <div class="historico-item">
+                <div class="hist-icone sucesso"><i class="fas fa-check"></i></div>
+                <div class="hist-info">
+                    <div class="hist-titulo">1984 - George Orwell (x2)</div>
+                    <div class="hist-data">15/03/2026 · Boleto bancário</div>
+                    <span class="hist-status sucesso">Pago</span>
+                </div>
+                <div class="hist-valor">R$ 45,00</div>
+            </div>
+
+            <div class="historico-item">
+                <div class="hist-icone pendente"><i class="fas fa-clock"></i></div>
+                <div class="hist-info">
+                    <div class="hist-titulo">Dom Casmurro - Machado de Assis</div>
+                    <div class="hist-data">07/06/2026 · Boleto · vence 10/06/2026</div>
+                    <span class="hist-status pendente">Aguardando pagamento</span>
+                </div>
+                <div style="text-align:right;">
+                    <div class="hist-valor">R$ 29,90</div>
+                    <button style="margin-top:6px;background:linear-gradient(135deg,#e67e22,#d35400);color:#fff;border:none;padding:6px 14px;border-radius:20px;font-size:12px;font-weight:700;cursor:pointer;" onclick="window.location.href='Pagamento.html'">Pagar agora</button>
+                </div>
+            </div>
+
+        </div>
+    </main>
+</div>
+
+<!-- MODAL PIX -->
+<div class="modal-overlay" id="modal-pix">
+    <div class="modal">
+        <div class="modal-header">
+            <h2 id="modal-pix-titulo"><i class="fas fa-bolt" style="margin-right:8px;"></i>Chave Pix</h2>
+            <button class="modal-fechar" onclick="fecharModal('modal-pix')"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="modal-body">
+            <div class="info-box pix">
+                <i class="fas fa-info-circle" style="margin-right:6px;"></i>
+                Pagamentos via Pix são processados instantaneamente, sem nenhuma taxa adicional.
+            </div>
+            <div class="form-grupo">
+                <label>Tipo de chave *</label>
+                <select id="inp-tipo-pix">
+                    <option value="">Selecione o tipo</option>
+                    <option value="cpf">CPF / CNPJ</option>
+                    <option value="email" selected>E-mail</option>
+                    <option value="telefone">Telefone</option>
+                    <option value="aleatoria">Chave aleatória</option>
+                </select>
+            </div>
+            <div class="form-grupo">
+                <label>Chave Pix *</label>
+                <input type="text" id="inp-chave-pix" placeholder="Digite sua chave Pix" value="mariabeatriz@email.com">
+            </div>
+            <div class="modal-footer">
+                <button class="btn-cancelar" onclick="fecharModal('modal-pix')">Cancelar</button>
+                <button class="btn-salvar" onclick="salvar('modal-pix')"><i class="fas fa-check" style="margin-right:8px;"></i>Salvar chave</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL CONFIRMAR EXCLUSÃO -->
+<div class="modal-overlay" id="modal-excluir">
+    <div class="modal">
+        <div class="modal-body" style="text-align:center;padding:40px 28px;">
+            <i class="fas fa-trash-alt" style="font-size:48px;color:#e74c3c;margin-bottom:16px;display:block;"></i>
+            <h3 style="color:var(--vermelho-escuro);font-size:18px;margin-bottom:10px;">Remover chave Pix?</h3>
+            <p style="color:#888;font-size:14px;line-height:1.6;">Esta chave será removida da sua conta. Você poderá adicionar outra quando quiser.</p>
+            <div class="modal-footer" style="margin-top:24px;">
+                <button class="btn-cancelar" onclick="fecharModal('modal-excluir')">Cancelar</button>
+                <button style="flex:1;background:#e74c3c;color:#fff;border:none;padding:14px;border-radius:30px;font-weight:700;cursor:pointer;font-size:15px;" onclick="excluir()">
+                    <i class="fas fa-trash" style="margin-right:8px;"></i>Remover
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="toast" id="toast">
+    <i class="fas fa-check-circle"></i>
+    <span id="toast-msg">Salvo com sucesso!</span>
+</div>
+
+<script>
+    function trocarAba(btn, aba) {
+        document.querySelectorAll('.metodo-tab').forEach(t => t.classList.remove('ativo'));
+        btn.classList.add('ativo');
+        document.getElementById('aba-metodos').style.display = aba === 'metodos' ? 'block' : 'none';
+        document.getElementById('aba-historico').style.display = aba === 'historico' ? 'block' : 'none';
+    }
+
+    function abrirModal(tipo) {
+        if (tipo === 'pix-editar') {
+            document.getElementById('modal-pix-titulo').innerHTML = '<i class="fas fa-pen" style="margin-right:8px;"></i>Editar chave Pix';
+        } else {
+            document.getElementById('modal-pix-titulo').innerHTML = '<i class="fas fa-bolt" style="margin-right:8px;"></i>Nova chave Pix';
+            document.getElementById('inp-chave-pix').value = '';
+            document.getElementById('inp-tipo-pix').value = '';
+        }
+        document.getElementById('modal-pix').classList.add('aberto');
+    }
+
+    function fecharModal(id) { document.getElementById(id).classList.remove('aberto'); }
+    function confirmarExcluir() { document.getElementById('modal-excluir').classList.add('aberto'); }
+
+    function excluir() {
+        fecharModal('modal-excluir');
+        mostrarToast('Chave Pix removida.');
+    }
+
+    function salvar(modalId) {
+        const chave = document.getElementById('inp-chave-pix').value.trim();
+        const tipo = document.getElementById('inp-tipo-pix').value;
+        if (!chave || !tipo) { mostrarToast('Preencha todos os campos.', true); return; }
+        fecharModal(modalId);
+        mostrarToast('Chave Pix salva com sucesso!');
+    }
+
+    function mostrarToast(msg, erro = false) {
+        const toast = document.getElementById('toast');
+        document.getElementById('toast-msg').textContent = msg;
+        toast.style.background = erro ? '#e74c3c' : 'var(--vermelho-escuro)';
+        toast.classList.add('visivel');
+        setTimeout(() => toast.classList.remove('visivel'), 3000);
+    }
+
+    document.querySelectorAll('.modal-overlay').forEach(o => {
+        o.addEventListener('click', e => { if (e.target === o) o.classList.remove('aberto'); });
+    });
+</script>
+</body>
+</html>

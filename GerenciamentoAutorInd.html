@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Painel do Autor Independente — HamStore Books</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+    :root {
+        --vermelho-escuro: #8C031C;
+        --rosa-medio: #BF6980;
+        --cinza-claro: #F0F0F2;
+        --dourado-principal: #D9B607;
+        --dourado-escuro: #8C5C03;
+        --branco: #ffffff;
+        --sombra-suave: rgba(140, 3, 28, 0.1);
+        --sombra-dourado: rgba(217, 182, 7, 0.3);
+        --cotton-candy: #E38792;
+        --garnet: #4E0A0B;
+        --dusty-white: #F2EEE8;
+        --khaki: #9DAD71;
+        --fonte-display: 'Playfair Display', Georgia, serif;
+        --fonte-corpo: 'Inter', 'Segoe UI', sans-serif;
+        --sb-w: 258px;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: var(--fonte-corpo); background: #f5f3f0; color: var(--garnet); min-height: 100vh; display: flex; flex-direction: column; }
+
+    /* ═══ BARRA SUPERIOR (cotton-candy) ═══ */
+    .shopee-top { background-color: var(--cotton-candy); color: var(--dusty-white); font-size: 14px; position: sticky; top: 0; z-index: 1001; box-shadow: 0 2px 8px rgba(78,10,11,0.15); }
+    .container { max-width: 1280px; margin: 0 auto; padding: 0 20px; }
+    .navbar { display: flex; justify-content: space-between; align-items: center; height: 40px; }
+    .flex { display: flex; align-items: center; gap: 20px; }
+    .navbar a { color: var(--dusty-white); text-decoration: none; font-size: 13px; transition: opacity .2s; }
+    .navbar a:hover { opacity: .8; }
+    .navbar_links { display: flex; align-items: center; list-style: none; gap: 16px; margin: 0; padding: 0; }
+    .navbar__link-text { color: var(--dusty-white); font-size: 13px; }
+    .navbar__link--signup { font-weight: 500; background-color: var(--garnet); padding: 4px 12px; border-radius: 15px; }
+    .navbar__link-separator { width: 1px; height: 16px; background-color: rgba(242,238,232,.4); margin: 0 4px; }
+    .shopee-logo-area { display: flex; align-items: center; gap: 8px; }
+    .shopee-store-name { font-weight: 700; font-size: 15px; color: var(--garnet); cursor: pointer; }
+    .shopee-store-name small { font-size: 10px; font-weight: 400; color: var(--dusty-white); }
+    .shopee-social-icons { display: flex; gap: 8px; align-items: center; }
+    .social-icon { display: inline-block; width: 20px; height: 20px; background-size: contain; background-repeat: no-repeat; background-position: center; }
+    .instagram { background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23F2EEE8"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>'); }
+    .whatsapp { background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23F2EEE8"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.126.556 4.118 1.523 5.847L.057 23.882l6.204-1.448A11.934 11.934 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.782 9.782 0 01-5.004-1.373l-.36-.214-3.713.868.922-3.596-.234-.37A9.789 9.789 0 012.182 12C2.182 6.57 6.57 2.182 12 2.182c5.43 0 9.818 4.388 9.818 9.818 0 5.43-4.388 9.818-9.818 9.818z"/></svg>'); }
+    .tiktok { background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23F2EEE8"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.87-4.53v-3.47a6.33 6.33 0 0 0-5.34 6.2 6.33 6.33 0 0 0 10.92 4.3 6.34 6.34 0 0 0 1.77-4.3V8.92a8.26 8.26 0 0 0 4.79 1.52V6.95a4.82 4.82 0 0 1-3.77-2.26z"/></svg>'); }
+
+    /* ═══ HEADER PRINCIPAL ═══ */
+    .header { display: flex; align-items: center; justify-content: space-between; background: rgba(255,255,255,.97); backdrop-filter: blur(20px); padding: 13px 30px; box-shadow: 0 4px 20px var(--sombra-suave); position: sticky; top: 40px; z-index: 100; border-radius: 0 0 20px 20px; }
+    .logo { font-size: 24px; font-weight: 800; color: var(--garnet); cursor: pointer; letter-spacing: 1px; }
+    .search-bar { flex: 1; margin: 0 28px; max-width: 480px; }
+    .search-bar input { width: 100%; padding: 12px 22px; border-radius: 30px; border: 2px solid var(--dusty-white); font-size: 14px; background: var(--dusty-white); outline: none; transition: all .3s; }
+    .search-bar input:focus { border-color: var(--cotton-candy); box-shadow: 0 0 18px rgba(227,135,146,.3); }
+    .hd-icons { display: flex; gap: 14px; }
+    .btn-hd { background: none; border: none; color: var(--garnet); font-size: 20px; cursor: pointer; transition: all .3s; padding: 5px; border-radius: 10px; }
+    .btn-hd:hover { color: var(--cotton-candy); transform: translateY(-2px); }
+
+    /* ═══ LAYOUT PAINEL ═══ */
+    .painel-layout { display: flex; flex: 1; }
+
+    /* ═══ SIDEBAR ═══ */
+    .sidebar { width: var(--sb-w); background: var(--branco); border-right: 1px solid rgba(0,0,0,.06); display: flex; flex-direction: column; position: sticky; top: 101px; height: calc(100vh - 101px); overflow-y: auto; flex-shrink: 0; }
+    .sb-perfil { padding: 22px 18px 14px; border-bottom: 1px solid var(--cinza-claro); }
+    .sb-av-wrap { position: relative; width: 66px; margin: 0 auto 12px; }
+    .sb-av { width: 66px; height: 66px; border-radius: 50%; background: linear-gradient(135deg, var(--vermelho-escuro), var(--rosa-medio)); display: flex; align-items: center; justify-content: center; font-size: 26px; color: var(--branco); border: 3px solid var(--branco); box-shadow: 0 4px 14px var(--sombra-suave); }
+    .sb-av-edit { position: absolute; bottom: 0; right: 0; width: 22px; height: 22px; background: var(--dourado-principal); border: 2px solid var(--branco); border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 9px; color: var(--branco); }
+    .sb-nome { text-align: center; font-family: var(--fonte-display); font-size: 14px; font-weight: 700; color: var(--vermelho-escuro); margin-bottom: 2px; }
+    .sb-tipo { text-align: center; font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--rosa-medio); }
+    .sb-extra { text-align: center; font-size: 11px; color: #aaa; margin-top: 6px; display: flex; align-items: center; justify-content: center; gap: 5px; }
+    .sb-extra i { color: var(--dourado-principal); font-size: 10px; }
+    .sb-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--khaki); flex-shrink: 0; }
+    .sb-nav { flex: 1; padding: 10px 10px; }
+    .ng-lbl { font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: #c0b0a8; padding: 10px 8px 5px; }
+    .ni { display: flex; align-items: center; gap: 10px; padding: 9px 11px; border-radius: 11px; cursor: pointer; transition: all .2s; color: #666; font-size: 13px; font-weight: 500; position: relative; margin-bottom: 2px; }
+    .ni:hover { background: var(--cinza-claro); color: var(--vermelho-escuro); }
+    .ni.on { background: linear-gradient(135deg, rgba(140,3,28,.09), rgba(191,105,128,.05)); color: var(--vermelho-escuro); font-weight: 700; }
+    .ni.on::before { content: ''; position: absolute; left: 0; top: 6px; bottom: 6px; width: 3px; background: linear-gradient(to bottom, var(--dourado-principal), var(--dourado-escuro)); border-radius: 0 3px 3px 0; }
+    .ni i { width: 17px; text-align: center; font-size: 13px; color: var(--dourado-principal); flex-shrink: 0; }
+    .ni-badge { margin-left: auto; background: var(--vermelho-escuro); color: var(--branco); font-size: 9px; font-weight: 700; padding: 2px 6px; border-radius: 20px; }
+    .sb-footer { padding: 12px 14px; border-top: 1px solid var(--cinza-claro); display: flex; flex-direction: column; gap: 7px; }
+    .btn-sair { width: 100%; padding: 9px; background: none; border: 1.5px solid rgba(140,3,28,.18); border-radius: 9px; color: var(--vermelho-escuro); font-size: 12px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 7px; transition: all .2s; }
+    .btn-sair:hover { background: rgba(140,3,28,.05); }
+    .btn-ver-perfil { width: 100%; padding: 9px; background: linear-gradient(135deg, var(--vermelho-escuro), var(--rosa-medio)); border: none; border-radius: 9px; color: var(--branco); font-size: 12px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 7px; transition: all .2s; box-shadow: 0 3px 10px var(--sombra-suave); }
+    .btn-ver-perfil:hover { transform: translateY(-1px); }
+
+    /* ═══ CONTEÚDO PRINCIPAL ═══ */
+    .main-painel { flex: 1; overflow-y: auto; min-width: 0; }
+    .secao { display: none; padding: 30px 34px; max-width: 940px; }
+    .secao.ativa { display: block; }
+    .ph { margin-bottom: 22px; }
+    .ph h1 { font-family: var(--fonte-display); font-size: 26px; font-weight: 800; color: var(--vermelho-escuro); margin-bottom: 3px; }
+    .ph p { font-size: 13px; color: #999; }
+
+    /* ═══ CARDS ═══ */
+    .card { background: var(--branco); border-radius: 18px; overflow: hidden; box-shadow: 0 2px 12px var(--sombra-suave); margin-bottom: 18px; transition: box-shadow .25s; }
+    .card:hover { box-shadow: 0 6px 24px rgba(140,3,28,.12); }
+    .card-header { padding: 14px 20px; display: flex; align-items: center; gap: 11px; border-bottom: 1px solid var(--cinza-claro); background: linear-gradient(135deg, #fefefe, var(--cinza-claro)); }
+    .card-header h2 { font-size: 14px; font-weight: 700; color: var(--vermelho-escuro); flex: 1; }
+    .ch-ico { width: 30px; height: 30px; border-radius: 9px; background: linear-gradient(135deg, var(--dourado-principal), var(--dourado-escuro)); display: flex; align-items: center; justify-content: center; color: var(--branco); font-size: 13px; flex-shrink: 0; }
+    .card-body { padding: 20px; }
+
+    /* ═══ FORM ═══ */
+    .fg2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .fg2.c1 { grid-template-columns: 1fr; }
+    .fg2.c3 { grid-template-columns: 1fr 1fr 1fr; }
+    .fg { display: flex; flex-direction: column; gap: 5px; }
+    .fg label { font-size: 11px; font-weight: 700; color: var(--vermelho-escuro); text-transform: uppercase; letter-spacing: .5px; }
+    .fg input, .fg select, .fg textarea { padding: 10px 13px; border: 1.5px solid #e0dbd5; border-radius: 10px; font-size: 13px; color: var(--garnet); background: var(--cinza-claro); outline: none; transition: all .25s; font-family: var(--fonte-corpo); }
+    .fg input:focus, .fg select:focus, .fg textarea:focus { border-color: var(--dourado-principal); background: var(--branco); box-shadow: 0 0 0 3px rgba(217,182,7,.1); }
+    .fg textarea { resize: vertical; min-height: 90px; line-height: 1.6; }
+    .fg .hint { font-size: 10px; color: #bbb; margin-top: 2px; }
+    .iw { position: relative; }
+    .iw input { padding-left: 38px; }
+    .iw i { position: absolute; left: 13px; top: 50%; transform: translateY(-50%); color: var(--rosa-medio); font-size: 13px; }
+
+    /* ═══ MÉTRICAS DASHBOARD ═══ */
+    .mg-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 13px; margin-bottom: 18px; }
+    .mc { background: var(--branco); border-radius: 15px; padding: 16px 18px; box-shadow: 0 2px 10px var(--sombra-suave); }
+    .mc .mc-ico { width: 38px; height: 38px; border-radius: 11px; display: flex; align-items: center; justify-content: center; font-size: 16px; margin-bottom: 10px; }
+    .mc .mc-val { font-family: var(--fonte-display); font-size: 24px; font-weight: 800; color: var(--vermelho-escuro); line-height: 1; }
+    .mc .mc-lbl { font-size: 11px; color: #999; margin-top: 3px; }
+    .mc .mc-d { font-size: 10px; font-weight: 700; margin-top: 5px; display: flex; align-items: center; gap: 3px; }
+    .mc-d.up { color: #27ae60; } .mc-d.dn { color: #e74c3c; }
+
+    /* ═══ TABELA ═══ */
+    .tb { width: 100%; border-collapse: collapse; }
+    .tb th { padding: 9px 12px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .8px; color: #999; text-align: left; border-bottom: 2px solid var(--cinza-claro); }
+    .tb td { padding: 11px 12px; font-size: 13px; border-bottom: 1px solid var(--cinza-claro); color: #333; vertical-align: middle; }
+    .tb tr:last-child td { border-bottom: none; }
+    .tb tr:hover td { background: #faf8f5; }
+    .lm { display: flex; align-items: center; gap: 9px; }
+    .lm-cap { width: 34px; height: 44px; border-radius: 5px; background: linear-gradient(135deg, var(--cinza-claro), #ddd); display: flex; align-items: center; justify-content: center; font-size: 15px; color: var(--rosa-medio); flex-shrink: 0; }
+    .lm-t { font-weight: 600; font-size: 12px; color: var(--vermelho-escuro); }
+    .lm-a { font-size: 10px; color: #999; }
+    .sp { font-size: 10px; font-weight: 700; padding: 3px 9px; border-radius: 20px; }
+    .sp-pub { background: rgba(39,174,96,.1); color: #1e7e34; }
+    .sp-ras { background: rgba(217,182,7,.1); color: var(--dourado-escuro); }
+    .sp-rev { background: rgba(33,150,243,.1); color: #1565c0; }
+
+    /* ═══ CHIPS ═══ */
+    .chips-lista { display: flex; flex-wrap: wrap; gap: 7px; padding: 8px 0; }
+    .chip { display: flex; align-items: center; gap: 5px; background: var(--cinza-claro); border: 1.5px solid #d8d0c8; border-radius: 20px; padding: 4px 11px; font-size: 12px; font-weight: 500; color: var(--vermelho-escuro); }
+    .chip-x { background: none; border: none; color: #bbb; cursor: pointer; font-size: 13px; line-height: 1; padding: 0; }
+    .chip-x:hover { color: var(--vermelho-escuro); }
+    .chip-add-row { display: flex; gap: 8px; margin-top: 4px; }
+    .chip-add-row input { flex: 1; padding: 7px 11px; border: 1.5px solid #d8d0c8; border-radius: 20px; font-size: 12px; outline: none; background: var(--cinza-claro); transition: border-color .2s; }
+    .chip-add-row input:focus { border-color: var(--dourado-principal); }
+    .btn-chip-add { padding: 7px 14px; background: linear-gradient(135deg, var(--dourado-principal), var(--dourado-escuro)); border: none; border-radius: 20px; color: var(--branco); font-size: 11px; font-weight: 700; cursor: pointer; white-space: nowrap; }
+
+    /* ═══ SELOS / OBRAS ═══ */
+    .sl-lista { display: flex; flex-direction: column; gap: 10px; }
+    .sl-item { display: flex; align-items: center; gap: 12px; padding: 13px 15px; background: var(--cinza-claro); border-radius: 12px; border: 1.5px solid transparent; transition: all .2s; }
+    .sl-item:hover { border-color: #d8d0c8; }
+    .sl-ico { width: 36px; height: 36px; border-radius: 9px; display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
+    .sl-dados { flex: 1; }
+    .sl-nome { font-weight: 700; font-size: 13px; color: var(--vermelho-escuro); margin-bottom: 2px; }
+    .sl-sub { font-size: 11px; color: #999; }
+    .sl-ac { display: flex; gap: 5px; }
+    .bi { width: 28px; height: 28px; border-radius: 7px; border: 1.5px solid #d8d0c8; background: var(--branco); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 11px; color: #888; transition: all .2s; }
+    .bi:hover { border-color: var(--rosa-medio); color: var(--vermelho-escuro); }
+    .bi.del:hover { border-color: #e74c3c; color: #e74c3c; }
+    .btn-add-item { width: 100%; padding: 11px; background: none; border: 2px dashed #d0c8c0; border-radius: 12px; color: var(--rosa-medio); font-size: 12px; font-weight: 700; cursor: pointer; transition: all .2s; display: flex; align-items: center; justify-content: center; gap: 7px; margin-top: 8px; }
+    .btn-add-item:hover { border-color: var(--dourado-principal); color: var(--dourado-escuro); }
+
+    /* ═══ AUTORES GRID ═══ */
+    .ag { display: grid; grid-template-columns: repeat(auto-fill, minmax(175px, 1fr)); gap: 10px; }
+    .ai { background: var(--cinza-claro); border-radius: 13px; padding: 14px; text-align: center; border: 1.5px solid transparent; transition: all .2s; position: relative; }
+    .ai:hover { border-color: #d8d0c8; }
+    .ai-av { width: 48px; height: 48px; border-radius: 50%; background: linear-gradient(135deg, var(--vermelho-escuro), var(--rosa-medio)); display: flex; align-items: center; justify-content: center; margin: 0 auto 9px; font-size: 18px; color: var(--branco); font-family: var(--fonte-display); font-weight: 700; }
+    .ai-nm { font-weight: 700; font-size: 12px; color: var(--vermelho-escuro); margin-bottom: 2px; }
+    .ai-g { font-size: 10px; color: #999; margin-bottom: 7px; }
+    .ai-del { position: absolute; top: 7px; right: 7px; width: 20px; height: 20px; border-radius: 5px; border: none; background: rgba(231,76,60,.1); color: #e74c3c; font-size: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity .2s; }
+    .ai:hover .ai-del { opacity: 1; }
+
+    /* ═══ PEDIDOS ═══ */
+    .pi { display: flex; align-items: center; gap: 12px; padding: 13px 15px; background: var(--cinza-claro); border-radius: 12px; margin-bottom: 9px; border-left: 4px solid transparent; }
+    .pi.novo { border-left-color: var(--khaki); }
+    .pi.prep { border-left-color: var(--dourado-principal); }
+    .pi.env  { border-left-color: var(--rosa-medio); }
+    .pi-num { font-size: 12px; font-weight: 700; color: var(--vermelho-escuro); min-width: 78px; }
+    .pi-d { flex: 1; }
+    .pi-t { font-weight: 600; font-size: 13px; color: var(--vermelho-escuro); }
+    .pi-s { font-size: 11px; color: #999; margin-top: 1px; }
+    .pi-v { font-weight: 700; font-size: 13px; color: var(--dourado-escuro); min-width: 68px; text-align: right; }
+    .pi-st { font-size: 10px; font-weight: 700; padding: 3px 9px; border-radius: 20px; flex-shrink: 0; }
+    .ps-n { background: rgba(157,173,113,.2); color: #3a6b1a; }
+    .ps-p { background: rgba(217,182,7,.12); color: var(--dourado-escuro); }
+    .ps-e { background: rgba(191,105,128,.12); color: var(--rosa-medio); }
+
+    /* ═══ ESTOQUE ═══ */
+    .est-item { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--cinza-claro); }
+    .est-item:last-child { border-bottom: none; }
+    .est-bw { flex: 1; }
+    .est-labels { display: flex; justify-content: space-between; margin-bottom: 4px; font-size: 12px; }
+    .est-nm { font-weight: 600; color: var(--vermelho-escuro); }
+    .est-qt { font-weight: 700; color: var(--dourado-escuro); }
+    .est-qt.baixo { color: #e74c3c; }
+    .est-bar { height: 7px; background: #e8e4e0; border-radius: 10px; overflow: hidden; }
+    .est-fill { height: 100%; border-radius: 10px; background: linear-gradient(90deg, var(--dourado-principal), var(--dourado-escuro)); }
+    .est-fill.baixo { background: linear-gradient(90deg, #e74c3c, #c0392b); }
+
+    /* ═══ EVENTOS ═══ */
+    .ev-item { display: flex; align-items: center; gap: 12px; padding: 13px 15px; background: var(--cinza-claro); border-radius: 12px; margin-bottom: 9px; border: 1.5px solid transparent; transition: all .2s; }
+    .ev-item:hover { border-color: #d8d0c8; }
+    .ev-data { width: 48px; height: 52px; border-radius: 11px; background: linear-gradient(135deg, var(--vermelho-escuro), var(--rosa-medio)); display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--branco); flex-shrink: 0; }
+    .ev-dia { font-family: var(--fonte-display); font-size: 18px; font-weight: 900; line-height: 1; }
+    .ev-mes { font-size: 9px; font-weight: 700; text-transform: uppercase; opacity: .85; }
+    .ev-d { flex: 1; }
+    .ev-t { font-weight: 600; font-size: 13px; color: var(--vermelho-escuro); }
+    .ev-s { font-size: 11px; color: #999; margin-top: 1px; }
+    .et { font-size: 10px; font-weight: 700; padding: 3px 9px; border-radius: 20px; flex-shrink: 0; }
+    .et-sess { background: rgba(217,182,7,.12); color: var(--dourado-escuro); }
+    .et-live { background: rgba(157,173,113,.2); color: #3a6b1a; }
+    .et-feira { background: rgba(191,105,128,.12); color: var(--rosa-medio); }
+
+    /* ═══ PRÊMIOS ═══ */
+    .pr-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+    .pr-item { background: var(--cinza-claro); border-radius: 12px; padding: 13px; display: flex; align-items: center; gap: 10px; border: 1.5px solid transparent; transition: all .2s; position: relative; }
+    .pr-item:hover { border-color: #d8d0c8; }
+    .pr-ico { width: 38px; height: 38px; border-radius: 10px; background: linear-gradient(135deg, var(--dourado-principal), var(--dourado-escuro)); display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
+    .pr-t { font-weight: 600; font-size: 12px; color: var(--vermelho-escuro); }
+    .pr-s { font-size: 10px; color: #999; margin-top: 2px; }
+
+    /* ═══ TOGGLES ═══ */
+    .tog-row { display: flex; align-items: center; justify-content: space-between; padding: 11px 0; border-bottom: 1px solid var(--cinza-claro); }
+    .tog-row:last-child { border-bottom: none; }
+    .tog-info .t { font-weight: 600; font-size: 13px; color: var(--vermelho-escuro); }
+    .tog-info .s { font-size: 11px; color: #999; margin-top: 1px; }
+    .tog { width: 42px; height: 22px; background: #d8d0c8; border-radius: 20px; position: relative; cursor: pointer; transition: background .25s; flex-shrink: 0; }
+    .tog.on { background: linear-gradient(135deg, var(--dourado-principal), var(--dourado-escuro)); }
+    .tog::after { content: ''; position: absolute; top: 3px; left: 3px; width: 16px; height: 16px; border-radius: 50%; background: var(--branco); box-shadow: 0 1px 4px rgba(0,0,0,.18); transition: left .25s; }
+    .tog.on::after { left: 23px; }
+
+    /* ═══ UPLOADS ═══ */
+    .upa { border: 2px dashed #d0c8c0; border-radius: 13px; padding: 22px; text-align: center; cursor: pointer; background: var(--cinza-claro); position: relative; transition: all .25s; }
+    .upa:hover { border-color: var(--dourado-principal); background: #fdf9ed; }
+    .upa input[type=file] { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+    .upa-ico { width: 42px; height: 42px; border-radius: 50%; background: linear-gradient(135deg, var(--dourado-principal), var(--dourado-escuro)); display: flex; align-items: center; justify-content: center; margin: 0 auto 9px; color: var(--branco); font-size: 16px; }
+    .upa h4 { font-size: 13px; font-weight: 700; color: var(--vermelho-escuro); margin-bottom: 3px; }
+    .upa p { font-size: 11px; color: #999; }
+    .banner-upa { border: 2px dashed #d0c8c0; border-radius: 13px; height: 130px; display: flex; align-items: center; justify-content: center; cursor: pointer; background: linear-gradient(135deg, rgba(140,3,28,.05), rgba(191,105,128,.03)); position: relative; overflow: hidden; transition: all .25s; }
+    .banner-upa:hover { border-color: var(--dourado-principal); }
+    .banner-upa input[type=file] { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+    .bup-txt { text-align: center; }
+    .bup-txt i { font-size: 24px; color: var(--rosa-medio); margin-bottom: 7px; display: block; }
+    .bup-txt p { font-size: 12px; color: #999; }
+
+    /* ═══ INFO BOX ═══ */
+    .info-box { display: flex; align-items: flex-start; gap: 12px; background: rgba(217,182,7,.07); border: 1.5px solid rgba(217,182,7,.22); border-radius: 13px; padding: 13px 16px; margin-bottom: 16px; }
+    .ib-ico { width: 38px; height: 38px; border-radius: 10px; background: linear-gradient(135deg, var(--vermelho-escuro), var(--rosa-medio)); display: flex; align-items: center; justify-content: center; color: var(--branco); font-size: 15px; flex-shrink: 0; }
+    .ib-txt { flex: 1; }
+    .ib-txt .t { font-weight: 700; font-size: 13px; color: var(--vermelho-escuro); }
+    .ib-txt .s { font-size: 11px; color: #888; margin-top: 2px; }
+    .ib-btn { font-size: 11px; font-weight: 700; color: var(--rosa-medio); padding: 5px 11px; border: 1px solid rgba(191,105,128,.3); border-radius: 20px; cursor: pointer; background: none; transition: all .2s; white-space: nowrap; align-self: center; flex-shrink: 0; }
+    .ib-btn:hover { background: var(--rosa-medio); color: var(--branco); }
+
+    /* ═══ GRÁFICO ═══ */
+    .chart-bars { display: flex; align-items: flex-end; gap: 6px; height: 70px; margin-top: 14px; }
+    .cb-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px; }
+    .cb-bar { width: 100%; border-radius: 4px 4px 0 0; background: linear-gradient(to top, var(--dourado-escuro), var(--dourado-principal)); min-height: 4px; transition: height .5s; }
+    .cb-lbl { font-size: 9px; color: #bbb; white-space: nowrap; }
+
+    /* ═══ BOTÕES AÇÃO ═══ */
+    .btn-salvar { padding: 11px 26px; background: linear-gradient(135deg, var(--dourado-principal), var(--dourado-escuro)); border: none; border-radius: 11px; color: var(--branco); font-size: 13px; font-weight: 700; cursor: pointer; transition: all .25s; display: flex; align-items: center; gap: 7px; box-shadow: 0 4px 13px var(--sombra-dourado); }
+    .btn-salvar:hover { transform: translateY(-2px); box-shadow: 0 8px 20px var(--sombra-dourado); }
+    .btn-cancelar { padding: 11px 22px; background: none; border: 1.5px solid #d8d0c8; border-radius: 11px; color: #888; font-size: 13px; font-weight: 600; cursor: pointer; transition: all .2s; }
+    .btn-cancelar:hover { border-color: var(--rosa-medio); color: var(--vermelho-escuro); }
+    .af { display: flex; gap: 9px; padding-top: 7px; }
+
+    /* ═══ MODAL ═══ */
+    .mo { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.45); z-index: 2000; align-items: center; justify-content: center; padding: 18px; }
+    .mo.open { display: flex; }
+    .modal-box { background: var(--branco); border-radius: 18px; width: 100%; max-width: 500px; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,.22); }
+    .modal-box .mh { background: linear-gradient(135deg, var(--vermelho-escuro), var(--rosa-medio)); padding: 18px 22px; display: flex; align-items: center; justify-content: space-between; }
+    .modal-box .mh h3 { color: var(--branco); font-size: 15px; font-weight: 700; }
+    .mh-close { background: rgba(255,255,255,.18); border: none; color: var(--branco); width: 28px; height: 28px; border-radius: 50%; cursor: pointer; font-size: 15px; display: flex; align-items: center; justify-content: center; }
+    .mh-close:hover { background: rgba(255,255,255,.32); }
+    .mb { padding: 22px; }
+    .mf { display: flex; gap: 9px; margin-top: 18px; }
+
+    /* ═══ TOAST ═══ */
+    .toast { position: fixed; bottom: 26px; right: 26px; background: var(--garnet); color: var(--branco); padding: 13px 18px; border-radius: 13px; font-size: 12px; font-weight: 600; z-index: 3000; display: flex; align-items: center; gap: 9px; transform: translateY(80px); opacity: 0; transition: all .4s cubic-bezier(.34,1.56,.64,1); box-shadow: 0 8px 26px rgba(0,0,0,.18); }
+    .toast.show { transform: translateY(0); opacity: 1; }
+    .toast i { color: var(--dourado-principal); }
+
+    @media(max-width:900px) { .sidebar{display:none;} .mg-grid{grid-template-columns:repeat(2,1fr);} .fg2{grid-template-columns:1fr;} .secao{padding:18px;} }
+
+</style>
+</head>
+<body>
+<!-- ===== BARRA SUPERIOR ===== -->
+<header class="shopee-top">
+  <div class="container">
+    <nav class="navbar">
+      <div class="flex">
+        <div class="shopee-logo-area">
+          <span style="font-size:18px;">📚</span>
+          <span class="shopee-store-name" onclick="window.location.href='Entrar.html'">HAMSTORE <small>books</small></span>
+        </div>
+        <a href="#" onclick="window.location.href='dashbord.html'">Central do Vendedor</a>
+        <a href="#" onclick="window.location.href='CadastroVendedor.html'">Vender na HamStore</a>
+      </div>
+      <div class="flex">
+        <div class="shopee-social-icons">
+          <span style="font-size:13px;color:var(--dusty-white);">Siga-nos</span>
+          <a href="#" class="social-icon instagram"></a>
+          <a href="#" class="social-icon whatsapp"></a>
+          <a href="#" class="social-icon tiktok"></a>
+        </div>
+      </div>
+      <ul class="navbar_links">
+        <li><a href="#" class="navbar__link-text">Ajuda</a></li>
+        <li><a href="#" onclick="window.location.href='Cadastro1.html'" class="navbar__link-text navbar__link--signup">Cadastrar</a></li>
+        <li><div class="navbar__link-separator"></div></li>
+        <li><a href="#" onclick="window.location.href='login.html'" class="navbar__link-text">Entrar</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+<!-- HEADER PRINCIPAL -->
+<header class="header">
+  <h1 onclick="window.location.href='Entrar.html'" class="logo">📚 Livraria</h1>
+  <div class="search-bar"><input type="text" placeholder="Buscar livros..."></div>
+  <div class="hd-icons">
+    <button class="btn-hd" onclick="window.location.href='Carrinho.html'">🛒</button>
+    <button class="btn-hd">⚙️</button>
+    <button class="btn-hd" onclick="window.location.href='MinhasCompras.html'">👤</button>
+  </div>
+</header>
+
+<div class="painel-layout">
+<aside class="sidebar">
+  <div class="sb-perfil">
+    <div class="sb-av-wrap">
+      <div class="sb-av" style="background:linear-gradient(135deg,#2e7d50,var(--khaki));"><i class="fas fa-feather-alt"></i></div>
+      <div class="sb-av-edit"><i class="fas fa-pen"></i></div>
+    </div>
+    <div class="sb-nome">Nome do Autor</div>
+    <div class="sb-tipo" style="color:var(--khaki);">🎭 Autor Independente</div>
+    <div class="sb-extra"><div class="sb-dot" style="background:var(--khaki);"></div>&nbsp;<span style="color:var(--khaki);font-weight:700;">Loja ativa</span></div>
+  </div>
+  <nav class="sb-nav">
+    <div class="ng-lbl">Geral</div>
+    <div class="ni on" onclick="ir('dashboard',this)"><i class="fas fa-chart-line"></i> Dashboard</div>
+    <div class="ni" onclick="ir('perfil',this)"><i class="fas fa-user-edit"></i> Editar Perfil</div>
+    <div class="ni" onclick="ir('aparencia',this)"><i class="fas fa-image"></i> Banner &amp; Visual</div>
+    <div class="ng-lbl">Minha Loja</div>
+    <div class="ni" onclick="ir('livros',this)"><i class="fas fa-book"></i> Meus Livros</div>
+    <div class="ni" onclick="ir('pedidos',this)"><i class="fas fa-shopping-bag"></i> Pedidos <span class="ni-badge">3</span></div>
+    <div class="ni" onclick="ir('estoque',this)"><i class="fas fa-boxes"></i> Estoque</div>
+    <div class="ni" onclick="ir('frete',this)"><i class="fas fa-truck"></i> Frete &amp; Políticas</div>
+    <div class="ng-lbl">Presença</div>
+    <div class="ni" onclick="ir('prevenda',this)"><i class="fas fa-lock-open"></i> Pré-venda</div>
+    <div class="ni" onclick="ir('eventos',this)"><i class="fas fa-calendar"></i> Eventos</div>
+    <div class="ni" onclick="ir('config',this)"><i class="fas fa-cog"></i> Configurações</div>
+  </nav>
+  <div class="sb-footer">
+    <button class="btn-ver-perfil" onclick="window.location.href='PerfilAutorIndependente.html'"><i class="fas fa-eye"></i> Ver perfil público</button>
+    <button class="btn-sair"><i class="fas fa-sign-out-alt"></i> Sair</button>
+  </div>
+</aside>
+<main class="main-painel">
+
+<!-- DASHBOARD -->
+<section class="secao ativa" id="sec-dashboard">
+  <div class="ph"><h1>Dashboard</h1><p>Visão geral da sua loja independente</p></div>
+  <div class="mg-grid">
+    <div class="mc"><div class="mc-ico" style="background:rgba(39,174,96,.1);"><i class="fas fa-shopping-bag" style="color:#27ae60;"></i></div><div class="mc-val">1.247</div><div class="mc-lbl">Vendas totais</div><div class="mc-d up"><i class="fas fa-arrow-up"></i> +43 este mês</div></div>
+    <div class="mc"><div class="mc-ico" style="background:rgba(217,182,7,.12);"><i class="fas fa-dollar-sign" style="color:var(--dourado-escuro);"></i></div><div class="mc-val">R$37k</div><div class="mc-lbl">Receita total</div><div class="mc-d up"><i class="fas fa-arrow-up"></i> +R$2.4k este mês</div></div>
+    <div class="mc"><div class="mc-ico" style="background:rgba(157,173,113,.15);"><i class="fas fa-star" style="color:#3a6b1a;"></i></div><div class="mc-val">4.8</div><div class="mc-lbl">Avaliação média</div><div class="mc-d up"><i class="fas fa-arrow-up"></i> 87 avaliações</div></div>
+    <div class="mc"><div class="mc-ico" style="background:rgba(140,3,28,.09);"><i class="fas fa-users" style="color:var(--vermelho-escuro);"></i></div><div class="mc-val">8k</div><div class="mc-lbl">Seguidores</div><div class="mc-d up"><i class="fas fa-arrow-up"></i> +312 este mês</div></div>
+  </div>
+  <div class="card">
+    <div class="card-header"><div class="ch-ico" style="background:linear-gradient(135deg,var(--khaki),#6a8f50);"><i class="fas fa-shopping-bag"></i></div><h2>Pedidos recentes</h2><span style="margin-left:auto;font-size:11px;font-weight:700;color:#27ae60;background:rgba(39,174,96,.1);padding:4px 11px;border-radius:20px;">3 novos</span></div>
+    <div class="card-body" style="padding:16px;">
+      <div class="pi novo"><div class="pi-num">#HMS10245</div><div class="pi-d"><div class="pi-t">Livro Mais Vendido Um + Vol. 2</div><div class="pi-s">Maria Fernanda · SP · há 2h · Pix</div></div><div class="pi-v">R$60,00</div><span class="pi-st ps-n">Novo</span></div>
+      <div class="pi prep"><div class="pi-num">#HMS10244</div><div class="pi-d"><div class="pi-t">Livro Mais Vendido Três</div><div class="pi-s">Lucas Mendes · RJ · ontem · Boleto</div></div><div class="pi-v">R$28,00</div><span class="pi-st ps-p">Preparando</span></div>
+      <div class="pi env"><div class="pi-num">#HMS10243</div><div class="pi-d"><div class="pi-t">Série completa (5 vols.)</div><div class="pi-s">Ana Carolina · MG · 2 dias · Pix</div></div><div class="pi-v">R$150,00</div><span class="pi-st ps-e">Enviado</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- EDITAR PERFIL -->
+<section class="secao" id="sec-perfil">
+  <div class="ph"><h1>Editar Perfil</h1><p>Informações públicas do seu perfil de autor independente</p></div>
+  <div class="card">
+    <div class="card-header"><div class="ch-ico" style="background:linear-gradient(135deg,var(--khaki),#6a8f50);"><i class="fas fa-user"></i></div><h2>Informações pessoais</h2></div>
+    <div class="card-body">
+      <div class="fg2" style="margin-bottom:14px;">
+        <div class="fg"><label>Nome completo *</label><input type="text" value="Nome do Autor"></div>
+        <div class="fg"><label>Pseudônimo literário</label><input type="text" placeholder="Nome de autor (se diferente)"></div>
+      </div>
+      <div class="fg2 c1" style="margin-bottom:14px;">
+        <div class="fg"><label>Biografia</label><textarea>Criando histórias desde os doze anos em cadernos coloridos, escolhi o caminho independente por acreditar que a relação direta com o leitor é a mais honesta que um escritor pode ter.</textarea></div>
+      </div>
+      <div class="fg2" style="margin-bottom:14px;">
+        <div class="fg"><label>Cidade / Estado</label><input type="text" value="Belo Horizonte, MG"></div>
+        <div class="fg"><label>Citação do banner</label><input type="text" value="Publico porque acredito em cada palavra que escrevo."></div>
+      </div>
+      <div class="fg2" style="margin-bottom:14px;">
+        <div class="fg"><label>Site / Blog pessoal</label><div class="iw"><i class="fas fa-globe"></i><input type="url" value="https://www.nomeautor.com"></div></div>
+        <div class="fg"><label>Telefone de contato</label><div class="iw"><i class="fas fa-phone"></i><input type="tel" value="(14) 99999-9999"></div></div>
+      </div>
+      <div class="fg2 c3">
+        <div class="fg"><label>Instagram</label><div class="iw"><i class="fab fa-instagram"></i><input type="text" value="@nomeautor"></div></div>
+        <div class="fg"><label>TikTok</label><div class="iw"><i class="fab fa-tiktok"></i><input type="text" value="@nomeautor"></div></div>
+        <div class="fg"><label>YouTube</label><div class="iw"><i class="fab fa-youtube"></i><input type="text" placeholder="Nome do canal"></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header"><div class="ch-ico" style="background:linear-gradient(135deg,var(--khaki),#6a8f50);"><i class="fas fa-tags"></i></div><h2>Gêneros literários</h2></div>
+    <div class="card-body">
+      <div class="chips-lista" id="chips-gi">
+        <div class="chip">Romance<button class="chip-x" onclick="remChip(this)">×</button></div>
+        <div class="chip">Fantasia<button class="chip-x" onclick="remChip(this)">×</button></div>
+        <div class="chip">Young Adult<button class="chip-x" onclick="remChip(this)">×</button></div>
+      </div>
+      <div class="chip-add-row">
+        <input type="text" id="inp-gi" placeholder="Adicionar gênero..." onkeydown="if(event.key==='Enter')addChip('chips-gi','inp-gi')">
+        <button class="btn-chip-add" onclick="addChip('chips-gi','inp-gi')"><i class="fas fa-plus"></i> Adicionar</button>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header"><div class="ch-ico" style="background:linear-gradient(135deg,var(--khaki),#6a8f50);"><i class="fas fa-store"></i></div><h2>Plataformas de publicação</h2></div>
+    <div class="card-body">
+      <p style="font-size:12px;color:#999;margin-bottom:10px;">Onde seus livros estão disponíveis além da HamStore.</p>
+      <div class="chips-lista" id="chips-plat">
+        <div class="chip">HamStore Books<button class="chip-x" onclick="remChip(this)">×</button></div>
+        <div class="chip">Amazon KDP<button class="chip-x" onclick="remChip(this)">×</button></div>
+        <div class="chip">Clube de Autores<button class="chip-x" onclick="remChip(this)">×</button></div>
+      </div>
+      <div class="chip-add-row">
+        <input type="text" id="inp-plat" placeholder="Adicionar plataforma..." onkeydown="if(event.key==='Enter')addChip('chips-plat','inp-plat')">
+        <button class="btn-chip-add" onclick="addChip('chips-plat','inp-plat')"><i class="fas fa-plus"></i> Adicionar</button>
+      </div>
+    </div>
+  </div>
+  <div class="af"><button class="btn-salvar" onclick="salvar()"><i class="fas fa-check"></i> Salvar alterações</button><button class="btn-cancelar">Cancelar</button></div>
+</section>
+
+<!-- BANNER & VISUAL -->
+<section class="secao" id="sec-aparencia">
+  <div class="ph"><h1>Banner &amp; Visual</h1><p>Aparência do perfil público</p></div>
+  <div class="card">
+    <div class="card-header"><div class="ch-ico" style="background:linear-gradient(135deg,var(--khaki),#6a8f50);"><i class="fas fa-image"></i></div><h2>Banner de capa</h2></div>
+    <div class="card-body">
+      <div class="banner-upa" style="background:linear-gradient(135deg,rgba(157,173,113,.1),rgba(157,173,113,.04));"><input type="file" accept="image/*"><div class="bup-txt"><i class="fas fa-image" style="color:var(--khaki);"></i><p>Clique para enviar · 1400×320px · JPG ou PNG · Máx. 5MB</p></div></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header"><div class="ch-ico" style="background:linear-gradient(135deg,var(--khaki),#6a8f50);"><i class="fas fa-user-circle"></i></div><h2>Foto de perfil</h2></div>
+    <div class="card-body">
+      <div style="display:flex;gap:18px;align-items:flex-start;flex-wrap:wrap;">
+        <div style="width:88px;height:88px;border-radius:50%;background:linear-gradient(135deg,var(--khaki),#6a8f50);display:flex;align-items:center;justify-content:center;font-size:34px;color:var(--branco);box-shadow:0 6px 18px rgba(157,173,113,.3);flex-shrink:0;">👤</div>
+        <div style="flex:1;"><div class="upa"><input type="file" accept="image/*"><div class="upa-ico" style="background:linear-gradient(135deg,var(--khaki),#6a8f50);"><i class="fas fa-camera"></i></div><h4>Enviar nova foto</h4><p>JPG ou PNG · Máx. 2MB · 400×400px</p></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="af"><button class="btn-salvar" onclick="salvar('Visual salvo!')"><i class="fas fa-check"></i> Salvar visual</button></div>
+</section>
+
+<!-- MEUS LIVROS -->
+<section class="secao" id="sec-livros">
+  <div class="ph"><h1>Meus Livros</h1><p>Gerencie preços, capas e informações de cada título</p></div>
+  <div class="card">
+    <div class="card-header"><div class="ch-ico" style="background:linear-gradient(135deg,var(--khaki),#6a8f50);"><i class="fas fa-book"></i></div><h2>Catálogo da loja</h2><button class="btn-salvar" style="margin-left:auto;padding:7px 15px;font-size:12px;" onclick="abrirModal('modal-livro-ind','Novo Livro')"><i class="fas fa-plus"></i> Novo livro</button></div>
+    <div class="card-body" style="padding:0;">
+      <table class="tb">
+        <thead><tr><th>Livro</th><th>Preço</th><th>Estoque</th><th>Vendas</th><th>Status</th><th></th></tr></thead>
+        <tbody>
+          <tr><td><div class="lm"><div class="lm-cap"><i class="fas fa-book"></i></div><div><div class="lm-t">Livro Mais Vendido Um</div><div class="lm-a">Romance · Capa comum</div></div></div></td><td>R$30,00</td><td>47 un.</td><td>312</td><td><span class="sp sp-pub">Publicado</span></td><td><div style="display:flex;gap:5px;"><button class="bi"><i class="fas fa-pen"></i></button><button class="bi del"><i class="fas fa-trash"></i></button></div></td></tr>
+          <tr><td><div class="lm"><div class="lm-cap"><i class="fas fa-book"></i></div><div><div class="lm-t">Vol. 1 da Série</div><div class="lm-a">Fantasia · Capa dura</div></div></div></td><td>R$34,00</td><td>23 un.</td><td>289</td><td><span class="sp sp-pub">Publicado</span></td><td><div style="display:flex;gap:5px;"><button class="bi"><i class="fas fa-pen"></i></button><button class="bi del"><i class="fas fa-trash"></i></button></div></td></tr>
+          <tr><td><div class="lm"><div class="lm-cap"><i class="fas fa-book"></i></div><div><div class="lm-t">Próximo Lançamento</div><div class="lm-a">Romance · Pré-venda</div></div></div></td><td>R$42,90</td><td>—</td><td>—</td><td><span class="sp sp-ras">Rascunho</span></td><td><div style="display:flex;gap:5px;"><button class="bi"><i class="fas fa-pen"></i></button><button class="bi del"><i class="fas fa-trash"></i></button></div></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- PEDIDOS -->
+<section class="secao" id="sec-pedidos">
+  <div class="ph"><h1>Pedidos</h1><p>Gerencie e acompanhe os pedidos da sua loja</p></div>
+  <div class="card">
+    <div class="card-header"><div class="ch-ico" style="background:linear-gradient(135deg,var(--khaki),#6a8f50);"><i class="fas fa-shopping-bag"></i></div><h2>Todos os pedidos</h2></div>
+    <div class="card-body" style="padding:16px;">
+      <div class="pi novo"><div class="pi-num">#HMS10245</div><div class="pi-d"><div class="pi-t">Livro Mais Vendido Um + Vol. 2</div><div class="pi-s">Maria Fernanda · SP · há 2h · Pix</div></div><div class="pi-v">R$60,00</div><span class="pi-st ps-n">Novo</span><div style="display:flex;gap:5px;margin-left:8px;"><button class="bi" title="Preparando"><i class="fas fa-box" style="font-size:10px;color:var(--dourado-escuro);"></i></button></div></div>
+      <div class="pi prep"><div class="pi-num">#HMS10244</div><div class="pi-d"><div class="pi-t">Livro Mais Vendido Três</div><div class="pi-s">Lucas Mendes · RJ · ontem · Boleto</div></div><div class="pi-v">R$28,00</div><span class="pi-st ps-p">Preparando</span><div style="display:flex;gap:5px;margin-left:8px;"><button class="bi" title="Enviado"><i class="fas fa-truck" style="font-size:10px;color:var(--khaki);"></i></button></div></div>
+      <div class="pi env"><div class="pi-num">#HMS10243</div><div class="pi-d"><div class="pi-t">Série completa (5 vols.)</div><div class="pi-s">Ana Carolina · MG · 2 dias · Pix</div></div><div class="pi-v">R$150,00</div><span class="pi-st ps-e">Enviado</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ESTOQUE -->
+<section class="secao" id="sec-estoque">
+  <div class="ph"><h1>Estoque</h1><p>Controle a quantidade disponível de cada título</p></div>
+  <div class="card">
+    <div class="card-header"><div class="ch-ico" style="background:linear-gradient(135deg,var(--khaki),#6a8f50);"><i class="fas fa-boxes"></i></div><h2>Níveis de estoque</h2></div>
+    <div class="card-body">
+      <div class="est-item"><div class="est-bw"><div class="est-labels"><span class="est-nm">Livro Mais Vendido Um</span><span class="est-qt">47 unidades</span></div><div class="est-bar"><div class="est-fill" style="width:70%;"></div></div></div><div style="display:flex;gap:5px;margin-left:12px;"><button class="bi"><i class="fas fa-minus" style="font-size:10px;"></i></button><button class="bi"><i class="fas fa-plus" style="font-size:10px;"></i></button></div></div>
+      <div class="est-item"><div class="est-bw"><div class="est-labels"><span class="est-nm">Vol. 1 da Série</span><span class="est-qt">23 unidades</span></div><div class="est-bar"><div class="est-fill" style="width:35%;"></div></div></div><div style="display:flex;gap:5px;margin-left:12px;"><button class="bi"><i class="fas fa-minus" style="font-size:10px;"></i></button><button class="bi"><i class="fas fa-plus" style="font-size:10px;"></i></button></div></div>
+      <div class="est-item"><div class="est-bw"><div class="est-labels"><span class="est-nm">Livro Mais Vendido Dois</span><span class="est-qt baixo">3 unidades</span></div><div class="est-bar"><div class="est-fill baixo" style="width:5%;"></div></div></div><div style="display:flex;gap:5px;margin-left:12px;"><button class="bi"><i class="fas fa-minus" style="font-size:10px;"></i></button><button class="bi"><i class="fas fa-plus" style="font-size:10px;"></i></button></div></div>
+      <div style="margin-top:14px;padding:11px 14px;background:rgba(231,76,60,.07);border-radius:10px;font-size:12px;color:#c0392b;display:flex;align-items:center;gap:7px;"><i class="fas fa-exclamation-triangle"></i> <span><strong>Atenção:</strong> "Livro Mais Vendido Dois" está com estoque baixo. Repor em breve.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- FRETE & POLÍTICAS -->
+<section class="secao" id="sec-frete">
+  <div class="ph"><h1>Frete &amp; Políticas</h1><p>Configure termos de entrega e devolução da sua loja</p></div>
+  <div class="card">
+    <div class="card-header"><div class="ch-ico" style="background:linear-gradient(135deg,var(--khaki),#6a8f50);"><i class="fas fa-truck"></i></div><h2>Configurações de frete</h2></div>
+    <div class="card-body">
+      <div class="fg2" style="margin-bottom:14px;">
+        <div class="fg"><label>Prazo de envio</label><select><option>Em até 1 dia útil</option><option selected>Em até 2 dias úteis</option><option>Em até 3 dias úteis</option><option>Combinado</option></select></div>
+        <div class="fg"><label>Frete grátis acima de (R$)</label><input type="number" value="80" placeholder="0 = sem frete grátis"></div>
+      </div>
+      <div class="fg2">
+        <div class="fg"><label>Prazo para devolução</label><select><option>7 dias corridos</option><option>14 dias corridos</option><option>30 dias corridos</option></select></div>
+        <div class="fg"><label>Regiões de entrega</label><select><option>Todo o Brasil</option><option>Sul e Sudeste</option><option>Somente SP</option></select></div>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header"><div class="ch-ico" style="background:linear-gradient(135deg,var(--khaki),#6a8f50);"><i class="fas fa-file-alt"></i></div><h2>Mensagem de embalagem</h2></div>
+    <div class="card-body">
+      <div class="fg"><label>Mensagem para o comprador</label><textarea>Obrigado por apoiar autores independentes! Cada compra me ajuda a continuar escrevendo. Espero que você ame a leitura! ✍️</textarea><span class="hint">Incluída no pacote junto com o pedido.</span></div>
+    </div>
+  </div>
+  <div class="af"><button class="btn-salvar" onclick="salvar()"><i class="fas fa-check"></i> Salvar configurações</button></div>
+</section>
+
+<!-- PRÉ-VENDA -->
+<section class="secao" id="sec-prevenda">
+  <div class="ph"><h1>Pré-venda</h1><p>Configure e ative a pré-venda do próximo lançamento</p></div>
+  <div class="card">
+    <div class="card-header"><div class="ch-ico" style="background:linear-gradient(135deg,var(--khaki),#6a8f50);"><i class="fas fa-lock-open"></i></div><h2>Lançamento em pré-venda</h2></div>
+    <div class="card-body">
+      <div class="fg2" style="margin-bottom:14px;">
+        <div class="fg"><label>Título *</label><input type="text" value="Nome do Livro Novo"></div>
+        <div class="fg"><label>Série / Coleção</label><input type="text" placeholder="Deixe vazio se for avulso"></div>
+      </div>
+      <div class="fg2 c3" style="margin-bottom:14px;">
+        <div class="fg"><label>Data de lançamento *</label><input type="date" value="2026-09-15"></div>
+        <div class="fg"><label>Preço de pré-venda *</label><input type="text" value="R$ 42,90"></div>
+        <div class="fg"><label>Formato</label><select><option>Capa comum</option><option>Capa dura</option><option>E-book</option></select></div>
+      </div>
+      <div class="fg2 c1" style="margin-bottom:14px;">
+        <div class="fg"><label>Sinopse</label><textarea>Em um reino esquecido pelos mapas, duas almas que não deveriam se encontrar descobrem que o destino não pede permissão.</textarea></div>
+      </div>
+      <div class="tog-row" style="margin-bottom:14px;">
+        <div class="tog-info"><div class="t">Pré-venda ativa no perfil</div><div class="s">Exibir a seção de pré-venda publicamente</div></div>
+        <div class="tog on" onclick="this.classList.toggle('on')"></div>
+      </div>
+      <div class="af"><button class="btn-salvar" onclick="salvar('Pré-venda publicada!')"><i class="fas fa-rocket"></i> Publicar pré-venda</button><button class="btn-cancelar">Salvar rascunho</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- EVENTOS -->
+<section class="secao" id="sec-eventos">
+  <div class="ph"><h1>Eventos</h1><p>Sessões de autógrafo, lives e participações em feiras</p></div>
+  <div class="card">
+    <div class="card-header"><div class="ch-ico" style="background:linear-gradient(135deg,var(--khaki),#6a8f50);"><i class="fas fa-calendar"></i></div><h2>Agenda</h2><button class="btn-salvar" style="margin-left:auto;padding:7px 15px;font-size:12px;" onclick="abrirModal('modal-evento-ind','Novo Evento')"><i class="fas fa-plus"></i> Novo evento</button></div>
+    <div class="card-body">
+      <div class="ev-item"><div class="ev-data" style="background:linear-gradient(135deg,var(--khaki),#6a8f50);"><div class="ev-dia">20</div><div class="ev-mes">Jan</div></div><div class="ev-d"><div class="ev-t">Live de Lançamento — Novo Livro</div><div class="ev-s">YouTube · @nomeautor · 19h</div></div><span class="et et-live">Live</span><button class="bi del" style="margin-left:8px;"><i class="fas fa-trash" style="font-size:10px;"></i></button></div>
+      <div class="ev-item"><div class="ev-data" style="background:linear-gradient(135deg,var(--khaki),#6a8f50);"><div class="ev-dia">05</div><div class="ev-mes">Fev</div></div><div class="ev-d"><div class="ev-t">Sessão de Autógrafos — Livraria Leitura</div><div class="ev-s">Rua Augusta · São Paulo, SP</div></div><span class="et et-sess">Autógrafo</span><button class="bi del" style="margin-left:8px;"><i class="fas fa-trash" style="font-size:10px;"></i></button></div>
+      <div class="ev-item"><div class="ev-data" style="background:linear-gradient(135deg,var(--khaki),#6a8f50);"><div class="ev-dia">12</div><div class="ev-mes">Mar</div></div><div class="ev-d"><div class="ev-t">Feira do Livro Independente — BH</div><div class="ev-s">Praça da Liberdade · Belo Horizonte, MG</div></div><span class="et et-feira">Feira</span><button class="bi del" style="margin-left:8px;"><i class="fas fa-trash" style="font-size:10px;"></i></button></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONFIG -->
+<section class="secao" id="sec-config">
+  <div class="ph"><h1>Configurações</h1><p>Conta, notificações e privacidade</p></div>
+  <div class="card">
+    <div class="card-header"><div class="ch-ico" style="background:linear-gradient(135deg,var(--khaki),#6a8f50);"><i class="fas fa-bell"></i></div><h2>Notificações</h2></div>
+    <div class="card-body">
+      <div class="tog-row"><div class="tog-info"><div class="t">Novos pedidos</div><div class="s">Receber alerta a cada nova compra na loja</div></div><div class="tog on" onclick="this.classList.toggle('on')"></div></div>
+      <div class="tog-row"><div class="tog-info"><div class="t">Novos seguidores</div><div class="s">Notificação ao ganhar novo seguidor</div></div><div class="tog on" onclick="this.classList.toggle('on')"></div></div>
+      <div class="tog-row"><div class="tog-info"><div class="t">Avaliações de livros</div><div class="s">Ser notificado de novas avaliações</div></div><div class="tog on" onclick="this.classList.toggle('on')"></div></div>
+      <div class="tog-row"><div class="tog-info"><div class="t">Resumo semanal de vendas</div><div class="s">Relatório toda segunda-feira por e-mail</div></div><div class="tog" onclick="this.classList.toggle('on')"></div></div>
+      <div class="tog-row"><div class="tog-info"><div class="t">Alertas de estoque baixo</div><div class="s">Quando um título atingir menos de 5 unidades</div></div><div class="tog on" onclick="this.classList.toggle('on')"></div></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header"><div class="ch-ico" style="background:linear-gradient(135deg,var(--khaki),#6a8f50);"><i class="fas fa-lock"></i></div><h2>Loja &amp; Privacidade</h2></div>
+    <div class="card-body">
+      <div class="tog-row"><div class="tog-info"><div class="t">Loja ativa (aceitar pedidos)</div><div class="s">Desative para pausar vendas temporariamente</div></div><div class="tog on" onclick="this.classList.toggle('on')"></div></div>
+      <div class="tog-row"><div class="tog-info"><div class="t">Perfil público</div><div class="s">Qualquer pessoa pode ver seu perfil</div></div><div class="tog on" onclick="this.classList.toggle('on')"></div></div>
+      <div class="tog-row"><div class="tog-info"><div class="t">Exibir número de vendas</div><div class="s">Mostrar contagem de vendas na loja</div></div><div class="tog on" onclick="this.classList.toggle('on')"></div></div>
+      <div class="tog-row"><div class="tog-info"><div class="t">Exibir telefone de contato</div><div class="s">Mostrar telefone no perfil público</div></div><div class="tog" onclick="this.classList.toggle('on')"></div></div>
+    </div>
+  </div>
+  <div class="af"><button class="btn-salvar" onclick="salvar()"><i class="fas fa-check"></i> Salvar configurações</button></div>
+</section>
+
+</main>
+</div>
+
+<!-- MODAIS INDEPENDENTE -->
+<div class="mo" id="modal-livro-ind">
+  <div class="modal-box"><div class="mh" style="background:linear-gradient(135deg,#2e7d50,var(--khaki));"><h3><i class="fas fa-book" style="margin-right:7px;"></i>Adicionar Livro</h3><button class="mh-close" onclick="fecharModal('modal-livro-ind')"><i class="fas fa-times"></i></button></div>
+  <div class="mb">
+    <div class="fg" style="margin-bottom:12px;"><label>Título *</label><input type="text" placeholder="Título completo"></div>
+    <div class="fg2" style="margin-bottom:12px;">
+      <div class="fg"><label>Preço *</label><input type="text" placeholder="R$ 0,00"></div>
+      <div class="fg"><label>Formato</label><select><option>Capa comum</option><option>Capa dura</option><option>E-book</option></select></div>
+    </div>
+    <div class="fg2" style="margin-bottom:12px;">
+      <div class="fg"><label>Gênero</label><input type="text" placeholder="Romance, Fantasia..."></div>
+      <div class="fg"><label>Estoque inicial</label><input type="number" placeholder="0" min="0"></div>
+    </div>
+    <div class="fg"><label>Sinopse</label><textarea rows="3" placeholder="Descrição do livro..."></textarea></div>
+    <div class="mf"><button class="btn-cancelar" onclick="fecharModal('modal-livro-ind')">Cancelar</button><button class="btn-salvar" onclick="fecharModal('modal-livro-ind');salvar('Livro adicionado!')"><i class="fas fa-check"></i> Adicionar</button></div>
+  </div></div>
+</div>
+<div class="mo" id="modal-evento-ind">
+  <div class="modal-box"><div class="mh" style="background:linear-gradient(135deg,#2e7d50,var(--khaki));"><h3><i class="fas fa-calendar" style="margin-right:7px;"></i>Novo Evento</h3><button class="mh-close" onclick="fecharModal('modal-evento-ind')"><i class="fas fa-times"></i></button></div>
+  <div class="mb">
+    <div class="fg" style="margin-bottom:12px;"><label>Nome do evento *</label><input type="text" placeholder="Ex: Live de Lançamento"></div>
+    <div class="fg2" style="margin-bottom:12px;">
+      <div class="fg"><label>Data *</label><input type="date"></div>
+      <div class="fg"><label>Tipo</label><select><option>Live</option><option>Sessão de Autógrafo</option><option>Palestra</option><option>Feira</option><option>Outro</option></select></div>
+    </div>
+    <div class="fg"><label>Local / Link</label><input type="text" placeholder="Endereço ou link da transmissão"></div>
+    <div class="mf"><button class="btn-cancelar" onclick="fecharModal('modal-evento-ind')">Cancelar</button><button class="btn-salvar" onclick="fecharModal('modal-evento-ind');salvar('Evento adicionado!')"><i class="fas fa-check"></i> Salvar</button></div>
+  </div></div>
+</div>
+
+<div class="toast" id="toast"><i class="fas fa-check-circle"></i><span id="toast-msg">Salvo!</span></div>
+<script>
+function ir(id,el){document.querySelectorAll('.ni').forEach(n=>n.classList.remove('on'));document.querySelectorAll('.secao').forEach(s=>s.classList.remove('ativa'));el.classList.add('on');document.getElementById('sec-'+id).classList.add('ativa');}
+function addChip(cid,iid){var inp=document.getElementById(iid);var v=inp.value.trim();if(!v)return;var d=document.createElement('div');d.className='chip';d.innerHTML=v+'<button class="chip-x" onclick="remChip(this)">×</button>';document.getElementById(cid).appendChild(d);inp.value='';}
+function remChip(b){b.parentElement.remove();}
+function abrirModal(id,titulo){document.getElementById(id).classList.add('open');var el=document.getElementById(id+'-titulo');if(el&&titulo)el.textContent=titulo;}
+function fecharModal(id){document.getElementById(id).classList.remove('open');}
+function salvar(msg){var t=document.getElementById('toast');document.getElementById('toast-msg').textContent=msg||'Alterações salvas com sucesso!';t.classList.add('show');setTimeout(function(){t.classList.remove('show');},3000);}
+document.addEventListener('DOMContentLoaded',function(){document.querySelectorAll('.mo').forEach(function(o){o.addEventListener('click',function(e){if(e.target===o)o.classList.remove('open');});});});
+
+</script>
+</body></html>

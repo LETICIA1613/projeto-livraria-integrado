@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Vendedor - Livraria</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --vermelho-escuro: #8C031C;
+            --rosa-medio: #BF6980;
+            --cinza-claro: #F0F0F2;
+            --dourado-principal: #D9B607;
+            --dourado-escuro: #8C5C03;
+            --branco: #ffffff;
+            --sombra: 0 10px 30px rgba(0,0,0,0.08);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--cinza-claro) 0%, var(--rosa-medio) 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .titulo {
+            text-align: center;
+            color: var(--vermelho-escuro);
+            margin-bottom: 30px;
+            font-size: 28px;
+            font-weight: 600;
+        }
+
+        .card {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: var(--branco);
+            border-radius: 30px;
+            box-shadow: var(--sombra);
+            overflow: hidden;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card-topo {
+            background: linear-gradient(135deg, var(--vermelho-escuro), var(--rosa-medio));
+            padding: 30px;
+            text-align: center;
+        }
+
+        .card-topo h1 {
+            color: var(--dourado-principal);
+            font-size: 36px;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        .card-topo p {
+            color: rgba(255,255,255,0.8);
+            margin-top: 10px;
+            font-size: 14px;
+        }
+
+        .form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            padding: 40px;
+        }
+
+        .lado {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            color: var(--vermelho-escuro);
+            font-size: 14px;
+        }
+
+        input, select, textarea {
+            padding: 12px 16px;
+            border: 2px solid var(--cinza-claro);
+            border-radius: 15px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            outline: none;
+            font-family: inherit;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            border-color: var(--dourado-principal);
+            box-shadow: 0 0 0 3px rgba(217, 182, 7, 0.1);
+        }
+
+        fieldset {
+            border: 2px solid var(--cinza-claro);
+            border-radius: 15px;
+            padding: 15px 20px;
+        }
+
+        legend {
+            padding: 0 10px;
+            font-weight: 600;
+            color: var(--vermelho-escuro);
+        }
+
+        .checkbox-group, .radio-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .checkbox-group label, .radio-group label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: normal;
+            cursor: pointer;
+        }
+
+        .checkbox-group input, .radio-group input {
+            width: auto;
+            cursor: pointer;
+        }
+
+        .btn-cadastrar {
+            background: linear-gradient(135deg, var(--dourado-principal), var(--dourado-escuro));
+            color: var(--vermelho-escuro);
+            border: none;
+            padding: 14px 30px;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .btn-cadastrar:hover {
+            background: linear-gradient(135deg, var(--rosa-medio), var(--vermelho-escuro));
+            color: var(--branco);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--dourado-escuro);
+            margin-bottom: 10px;
+            padding-bottom: 5px;
+            border-bottom: 2px solid var(--dourado-principal);
+        }
+
+        .tipo-conta {
+            display: flex;
+            gap: 20px;
+            padding: 15px;
+            background: var(--cinza-claro);
+            border-radius: 15px;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+        }
+
+        .tipo-conta label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            padding: 10px 20px;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .tipo-conta input[type="radio"] {
+            width: auto;
+            margin: 0;
+        }
+
+        .tipo-conta label:has(input:checked) {
+            background: var(--dourado-principal);
+            color: var(--vermelho-escuro);
+        }
+
+        .perfil-especifico {
+            display: none;
+            background: var(--cinza-claro);
+            padding: 15px;
+            border-radius: 15px;
+            margin-top: 10px;
+        }
+
+        .perfil-especifico.ativo {
+            display: block;
+        }
+
+        .editor-item, .autor-item, .obra-item {
+            background: var(--branco);
+            padding: 12px;
+            border-radius: 12px;
+            margin-bottom: 10px;
+            border: 1px solid var(--cinza-claro);
+        }
+
+        .btn-add {
+            background: var(--dourado-principal);
+            color: var(--vermelho-escuro);
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .btn-add:hover {
+            background: var(--dourado-escuro);
+            color: var(--branco);
+        }
+
+        .btn-remove {
+            background: var(--vermelho-escuro);
+            color: var(--branco);
+            border: none;
+            padding: 4px 10px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 11px;
+            margin-left: 10px;
+        }
+
+        .btn-remove:hover {
+            background: #ff4444;
+        }
+
+        .editor-header, .autor-header, .obra-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        /* DICA CPF/CNI */
+        .campo-dica {
+            font-size: 12px;
+            color: #888;
+            margin-top: 3px;
+        }
+
+        @media (max-width: 900px) {
+            .form { grid-template-columns: 1fr; gap: 30px; padding: 25px; }
+        }
+
+        @media (max-width: 600px) {
+            .form { padding: 20px; }
+            .checkbox-group { flex-direction: column; gap: 8px; }
+            .tipo-conta { flex-direction: column; gap: 10px; }
+        }
+
+        .success-message {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(135deg, var(--dourado-principal), var(--dourado-escuro));
+            color: var(--vermelho-escuro);
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-weight: bold;
+            z-index: 1100;
+            animation: fadeInOut 3s ease;
+        }
+
+        @keyframes fadeInOut {
+            0% { opacity: 0; transform: translateY(20px); }
+            15% { opacity: 1; transform: translateY(0); }
+            85% { opacity: 1; }
+            100% { opacity: 0; transform: translateY(-20px); }
+        }
+    </style>
+</head>
+<body>
+
+<h2 class="titulo">📚 Cadastro - Livraria da Mari</h2>
+
+<div class="card">
+    <div class="card-topo">
+        <h1>📖 Livraria</h1>
+        <p>Junte-se à nossa comunidade - Seja Vendedor, Editor ou Autor Independente</p>
+    </div>
+
+    <form class="form" id="cadastroForm" onsubmit="return cadastrarVendedor(event)">
+
+        <!-- Lado Esquerdo -->
+        <div class="lado">
+            <div class="form-group">
+                <label>👤 Nome Completo *</label>
+                <input type="text" id="nomeCompleto" placeholder="Digite seu nome completo" required>
+            </div>
+
+            <div class="form-group">
+                <label>📧 E-mail *</label>
+                <input type="email" id="email" placeholder="seuemail@exemplo.com" required>
+            </div>
+
+            <div class="form-group">
+                <label>🏢 Nome da Empresa / Marca Pessoal *</label>
+                <input type="text" id="nomeEmpresa" placeholder="Nome da sua empresa/livraria/marca" required>
+            </div>
+
+            <!-- Tipo de Conta -->
+            <fieldset>
+                <legend>🎯 Tipo de Conta</legend>
+                <div class="tipo-conta">
+                    <label>
+                        <input type="radio" name="tipoConta" value="vendedor" onchange="alterarTipoConta()" checked>
+                        🛍️ Vendedor
+                    </label>
+                    <label>
+                        <input type="radio" name="tipoConta" value="editor" onchange="alterarTipoConta()">
+                        📘 Editora
+                    </label>
+                    <label>
+                        <input type="radio" name="tipoConta" value="autorIndependente" onchange="alterarTipoConta()">
+                        🎭 Autor Independente
+                    </label>
+                </div>
+            </fieldset>
+
+            <!-- Perfil de Editor -->
+            <div id="perfilEditor" class="perfil-especifico">
+                <div class="section-title">📘 Perfil de Editor</div>
+                <div class="form-group">
+                    <label>Nome da Editora *</label>
+                    <input type="text" id="nomeEditora" placeholder="Nome da sua editora">
+                </div>
+                <div class="form-group">
+                    <label>Site da Editora</label>
+                    <input type="url" id="siteEditora" placeholder="https://www.suaeditora.com">
+                </div>
+                <div class="form-group">
+                    <label>Ano de Fundação</label>
+                    <input type="number" id="anoFundacao" placeholder="AAAA" min="1900" max="2026">
+                </div>
+               
+            </div>
+
+            <!-- Perfil de Autor Independente -->
+            <div id="perfilAutorIndependente" class="perfil-especifico">
+                <div class="section-title">🎭 Autor Independente</div>
+                <div class="form-group">
+                    <label>Pseudônimo (se houver)</label>
+                    <input type="text" id="pseudonimoInd" placeholder="Nome artístico/pseudônimo">
+                </div>
+                <div class="form-group">
+                    <label>Gêneros Literários *</label>
+                    <input type="text" id="generosLiterariosInd" placeholder="Romance, Ficção, Poesia, etc.">
+                </div>
+                <div class="form-group">
+                    <label>Biografia Resumida</label>
+                    <textarea id="biografiaInd" rows="3" placeholder="Conte um pouco sobre sua trajetória..."></textarea>
+                </div>
+                
+            </div>
+
+            <div class="form-group">
+                <label>📄 CNPJ (se aplicável)</label>
+                <input type="text" id="cnpj" placeholder="00.000.000/0000-00">
+            </div>
+
+            <div class="form-group">
+                <label>🪪 CPF / CNI </label>
+                <input type="text" id="cpf" placeholder="000.000.000-00" maxlength="14" required>
+            </div>
+
+            <div class="form-group">
+                <label>npm install📞 Telefone *</label>
+                <input type="tel" id="telefone" placeholder="(11) 99999-9999" required>
+            </div>
+
+            <div class="form-group">
+                <label>📍 Endereço *</label>
+                <input type="text" id="endereco" placeholder="Rua, número, bairro, cidade - UF" required>
+            </div>
+        </div>
+
+        <!-- Lado Direito -->
+        <div class="lado">
+            <fieldset>
+                <legend>📚 Especialização em Livros</legend>
+                <div class="checkbox-group">
+                    <label><input type="checkbox" value="Educacionais"> Educacionais</label>
+                    <label><input type="checkbox" value="Infantis"> Infantis</label>
+                    <label><input type="checkbox" value="Religiosos"> Religiosos</label>
+                    <label><input type="checkbox" value="Acadêmicos"> Acadêmicos</label>
+                    <label><input type="checkbox" value="Ficção"> Ficção</label>
+                    <label><input type="checkbox" value="Técnicos"> Técnicos</label>
+                    <label><input type="checkbox" value="Juvenil"> Juvenil</label>
+                    <label><input type="checkbox" value="Autoajuda"> Autoajuda</label>
+                    <label><input type="checkbox" value="Poesia"> Poesia</label>
+                    <label><input type="checkbox" value="Biografia"> Biografia</label>
+                </div>
+                <div class="form-group" style="margin-top: 10px;">
+                    <label>Outros:</label>
+                    <input type="text" id="outrosEspecializacao" placeholder="Especifique outras especializações">
+                </div>
+            </fieldset>
+
+           
+          
+            <div class="form-group">
+                <label>🔒 Criar Senha *</label>
+                <input type="password" id="senha" placeholder="Mínimo 6 caracteres" required>
+            </div>
+
+            <div class="form-group">
+                <label>🔒 Confirmar Senha *</label>
+                <input type="password" id="confirmarSenha" placeholder="Digite a senha novamente" required>
+            </div>
+
+            <button type="submit" class="btn-cadastrar">✅ Cadastrar</button>
+        </div>
+
+    </form>
+</div>
+
+<script>
+    let editoras = [];
+    let autores = [];
+    let obras = [];
+
+    function alterarTipoConta() {
+        const tipoConta = document.querySelector('input[name="tipoConta"]:checked').value;
+        const perfilEditor = document.getElementById('perfilEditor');
+        const perfilAutorIndependente = document.getElementById('perfilAutorIndependente');
+        const secaoEditoras = document.getElementById('secaoEditorasParceiras');
+        const secaoAutores = document.getElementById('secaoAutoresParceiros');
+        const secaoObras = document.getElementById('secaoObras');
+        const secaoSeloIndependente = document.getElementById('secaoSeloIndependente');
+
+        perfilEditor.classList.remove('ativo');
+        perfilAutorIndependente.classList.remove('ativo');
+
+        if (tipoConta === 'editor') {
+            perfilEditor.classList.add('ativo');
+            secaoObras.style.display = 'block';
+            secaoSeloIndependente.style.display = 'none';
+        } else if (tipoConta === 'autorIndependente') {
+            perfilAutorIndependente.classList.add('ativo');
+            secaoObras.style.display = 'block';
+            secaoSeloIndependente.style.display = 'block';
+        } else {
+            secaoObras.style.display = 'none';
+            secaoSeloIndependente.style.display = 'none';
+        }
+
+        secaoEditoras.style.display = 'block';
+        secaoAutores.style.display = 'block';
+    }
+
+    function adicionarEditora() {
+        const nome = prompt("Digite o nome da editora:");
+        if (nome && nome.trim()) {
+            editoras.push({ id: Date.now() + Math.random(), nome: nome.trim() });
+            renderizarEditoras();
+        }
+    }
+
+    function removerEditora(id) {
+        editoras = editoras.filter(e => e.id !== id);
+        renderizarEditoras();
+    }
+
+    function renderizarEditoras() {
+        const container = document.getElementById('editorasContainer');
+        if (editoras.length === 0) {
+            container.innerHTML = '<div style="color:#999;padding:10px;text-align:center;background:var(--cinza-claro);border-radius:12px;">Nenhuma editora adicionada</div>';
+            return;
+        }
+        container.innerHTML = editoras.map(e => `
+            <div class="editor-item">
+                <div class="editor-header">
+                    <strong>📘 ${e.nome}</strong>
+                    <button type="button" class="btn-remove" onclick="removerEditora(${e.id})">✖ Remover</button>
+                </div>
+            </div>`).join('');
+    }
+
+    function adicionarAutor() {
+        const nome = prompt("Digite o nome do autor:");
+        if (nome && nome.trim()) {
+            autores.push({ id: Date.now() + Math.random(), nome: nome.trim() });
+            renderizarAutores();
+        }
+    }
+
+    function removerAutor(id) {
+        autores = autores.filter(a => a.id !== id);
+        renderizarAutores();
+    }
+
+    function renderizarAutores() {
+        const container = document.getElementById('autoresContainer');
+        if (autores.length === 0) {
+            container.innerHTML = '<div style="color:#999;padding:10px;text-align:center;background:var(--cinza-claro);border-radius:12px;">Nenhum autor adicionado</div>';
+            return;
+        }
+        container.innerHTML = autores.map(a => `
+            <div class="autor-item">
+                <div class="autor-header">
+                    <strong>✍️ ${a.nome}</strong>
+                    <button type="button" class="btn-remove" onclick="removerAutor(${a.id})">✖ Remover</button>
+                </div>
+            </div>`).join('');
+    }
+
+    function adicionarObra() {
+        const titulo = prompt("Digite o título da obra:");
+        if (titulo && titulo.trim()) {
+            const ano = prompt("Digite o ano de publicação:");
+            obras.push({ id: Date.now() + Math.random(), titulo: titulo.trim(), ano: ano || "Não informado" });
+            renderizarObras();
+        }
+    }
+
+    function removerObra(id) {
+        obras = obras.filter(o => o.id !== id);
+        renderizarObras();
+    }
+
+    function renderizarObras() {
+        const container = document.getElementById('obrasContainer');
+        if (obras.length === 0) {
+            container.innerHTML = '<div style="color:#999;padding:10px;text-align:center;background:var(--cinza-claro);border-radius:12px;">Nenhuma obra adicionada</div>';
+            return;
+        }
+        container.innerHTML = obras.map(o => `
+            <div class="obra-item">
+                <div class="obra-header">
+                    <strong>📖 ${o.titulo}${o.ano !== "Não informado" ? ` (${o.ano})` : ''}</strong>
+                    <button type="button" class="btn-remove" onclick="removerObra(${o.id})">✖ Remover</button>
+                </div>
+            </div>`).join('');
+    }
+
+    function mostrarMensagem(mensagem, isError = false) {
+        const msgDiv = document.createElement('div');
+        msgDiv.className = 'success-message';
+        msgDiv.innerHTML = (isError ? '❌ ' : '✅ ') + mensagem;
+        document.body.appendChild(msgDiv);
+        setTimeout(() => msgDiv.remove(), 3000);
+    }
+
+    function validarCPF(cpf) {
+        const d = cpf.replace(/[^\d]/g, '');
+        return d.length === 11 || d.length === 9;
+    }
+
+    function validarTelefone(tel) {
+        const t = tel.replace(/[^\d]/g, '');
+        return t.length >= 10 && t.length <= 11;
+    }
+
+    function cadastrarVendedor(event) {
+        event.preventDefault();
+
+        const tipoConta    = document.querySelector('input[name="tipoConta"]:checked').value;
+        const nomeCompleto = document.getElementById('nomeCompleto').value.trim();
+        const email        = document.getElementById('email').value.trim();
+        const nomeEmpresa  = document.getElementById('nomeEmpresa').value.trim();
+        const cnpj         = document.getElementById('cnpj').value.trim();
+        const cpf          = document.getElementById('cpf').value.trim();
+        const telefone     = document.getElementById('telefone').value.trim();
+        const endereco     = document.getElementById('endereco').value.trim();
+        const senha        = document.getElementById('senha').value;
+        const confirmarSenha = document.getElementById('confirmarSenha').value;
+
+        const especializacoes = [];
+        document.querySelectorAll('.checkbox-group input[type="checkbox"]:checked').forEach(cb => especializacoes.push(cb.value));
+        const outros = document.getElementById('outrosEspecializacao').value.trim();
+        if (outros) especializacoes.push(outros);
+
+        if (!nomeCompleto)                    { mostrarMensagem('Informe o nome completo', true); return false; }
+        if (!email || !email.includes('@'))   { mostrarMensagem('E-mail inválido', true); return false; }
+        if (!nomeEmpresa)                     { mostrarMensagem('Informe o nome da empresa/marca', true); return false; }
+        if (!validarCPF(cpf))                 { mostrarMensagem('CPF/CNI inválido', true); return false; }
+        if (!validarTelefone(telefone))       { mostrarMensagem('Telefone inválido', true); return false; }
+        if (!endereco)                        { mostrarMensagem('Informe o endereço', true); return false; }
+        if (senha.length < 6)                 { mostrarMensagem('Senha deve ter no mínimo 6 caracteres', true); return false; }
+        if (senha !== confirmarSenha)         { mostrarMensagem('Senhas não conferem', true); return false; }
+
+        if (tipoConta === 'editor') {
+            if (!document.getElementById('nomeEditora').value.trim()) { mostrarMensagem('Informe o nome da editora', true); return false; }
+        }
+        if (tipoConta === 'autorIndependente') {
+            if (!document.getElementById('generosLiterariosInd').value.trim()) { mostrarMensagem('Informe os gêneros literários', true); return false; }
+        }
+
+        const vendedorData = {
+            id: Date.now(),
+            tipoConta, nomeCompleto, email, nomeEmpresa,
+            cnpj: cnpj || null, cpf, telefone, endereco,
+            especializacoes, editoras, autores, obras,
+            senhaHash: btoa(senha),
+            dataCadastro: new Date().toISOString(),
+            status: 'ativo',
+            perfilEditor: (tipoConta === 'editor') ? {
+                nomeEditora:     document.getElementById('nomeEditora').value.trim(),
+                siteEditora:     document.getElementById('siteEditora').value.trim(),
+                anoFundacao:     document.getElementById('anoFundacao').value,
+                livrosPublicados:document.getElementById('livrosPublicados').value
+            } : null,
+            perfilAutorIndependente: (tipoConta === 'autorIndependente') ? {
+                pseudonimo:      document.getElementById('pseudonimoInd').value.trim(),
+                generosLiterarios:document.getElementById('generosLiterariosInd').value.trim(),
+                biografia:       document.getElementById('biografiaInd').value.trim(),
+                plataformas:     document.getElementById('plataformas').value.trim(),
+                redesSociais:    document.getElementById('redesSociais').value.trim(),
+                premios:         document.getElementById('premiosInd').value.trim(),
+                nomeSelo:        document.getElementById('nomeSelo').value.trim()
+            } : null
+        };
+
+        let vendedores = JSON.parse(localStorage.getItem('vendedores_cadastrados')) || [];
+        if (vendedores.some(v => v.email === email)) {
+            mostrarMensagem('Este e-mail já está cadastrado!', true);
+            return false;
+        }
+        vendedores.push(vendedorData);
+        localStorage.setItem('vendedores_cadastrados', JSON.stringify(vendedores));
+        localStorage.setItem('vendedor_logado', JSON.stringify(vendedorData));
+
+        const tipoTexto = tipoConta === 'editor' ? 'Editor' : tipoConta === 'autorIndependente' ? 'Autor Independente' : 'Vendedor';
+        mostrarMensagem(`Cadastro como ${tipoTexto} realizado com sucesso! Redirecionando...`);
+        setTimeout(() => window.location.href = 'painel.html', 2000);
+        return false;
+    }
+
+    // Máscaras
+    document.getElementById('cnpj').addEventListener('input', function(e) {
+        let v = e.target.value.replace(/\D/g, '');
+        if (v.length <= 14) {
+            if (v.length > 12) v = v.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, '$1.$2.$3/$4-$5');
+            else if (v.length > 8) v = v.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})/, '$1.$2.$3/$4');
+            else if (v.length > 5) v = v.replace(/^(\d{2})(\d{3})(\d{3})/, '$1.$2.$3');
+            else if (v.length > 2) v = v.replace(/^(\d{2})(\d{3})/, '$1.$2');
+            e.target.value = v;
+        }
+    });
+
+    document.getElementById('cpf').addEventListener('input', function(e) {
+        let v = e.target.value.replace(/\D/g, '');
+        if (v.length <= 11) {
+            if (v.length > 9) v = v.replace(/^(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+            else if (v.length > 6) v = v.replace(/^(\d{3})(\d{3})(\d{3})/, '$1.$2.$3');
+            else if (v.length > 3) v = v.replace(/^(\d{3})(\d{3})/, '$1.$2');
+            e.target.value = v;
+        }
+    });
+
+    document.getElementById('telefone').addEventListener('input', function(e) {
+        let v = e.target.value.replace(/\D/g, '');
+        if (v.length <= 11) {
+            if (v.length > 10) v = v.replace(/^(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
+            else if (v.length > 6) v = v.replace(/^(\d{2})(\d{4})(\d{4})/, '($1) $2-$3');
+            else if (v.length > 2) v = v.replace(/^(\d{2})(\d{4})/, '($1) $2');
+            e.target.value = v;
+        }
+    });
+
+    renderizarEditoras();
+    renderizarAutores();
+    renderizarObras();
+    alterarTipoConta();
+</script>
+
+</body>
+</html>

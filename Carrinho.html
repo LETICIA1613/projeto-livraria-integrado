@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Carrinho - Livraria</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --vermelho-escuro: #8C031C;
+            --rosa-medio: #BF6980;
+            --cinza-claro: #F0F0F2;
+            --dourado-principal: #D9B607;
+            --dourado-escuro: #8C5C03;
+            --branco: #ffffff;
+            --sombra-suave: rgba(140, 3, 28, 0.1);
+            --sombra-dourado: rgba(217, 182, 7, 0.3);
+        }
+                             /* ===== PALETA DE CORES HAMSTORE ===== */
+:root {
+    --cotton-candy: #E38792;
+    --garnet: #4E0A0B;
+    --dusty-white: #F2EEE8;
+    --khaki: #9DAD71;
+}
+
+/* ===== BARRA SUPERIOR SHOPEE ===== */
+.shopee-top {
+    background-color: var(--cotton-candy);
+    color: var(--dusty-white);
+    font-size: 14px;
+    position: sticky;
+    top: 0;
+    z-index: 1001;
+    box-shadow: 0 2px 8px rgba(78, 10, 11, 0.15);
+}
+
+.container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 40px;
+}
+
+.flex {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.v-center {
+    align-items: center;
+}
+
+.navbar a {
+    color: var(--dusty-white);
+    text-decoration: none;
+    font-size: 13px;
+    transition: opacity 0.2s;
+}
+
+.navbar a:hover {
+    opacity: 0.8;
+    color: var(--dusty-white);
+}
+
+.navbar_links {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    gap: 16px;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar__link-text {
+    color: var(--dusty-white);
+    font-size: 13px;
+}
+
+.navbar__link--signup {
+    font-weight: 500;
+    background-color: var(--garnet);
+    padding: 4px 12px;
+    border-radius: 15px;
+}
+
+.navbar__link-separator {
+    width: 1px;
+    height: 16px;
+    background-color: rgba(242, 238, 232, 0.4);
+    margin: 0 4px;
+}
+
+.shopee-logo-area {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.shopee-logo-icon {
+    font-size: 18px;
+}
+
+.shopee-store-name {
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--garnet);
+}
+
+.shopee-store-name small {
+    font-size: 10px;
+    font-weight: 400;
+    color: var(--dusty-white);
+}
+
+.shopee-social-icons {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.social-icon {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.instagram {
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23F2EEE8"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>');
+}
+
+.whatsapp {
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23F2EEE8"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.562 1.103 3.642l-.717 2.615 2.681-.699c1.039.603 2.227.92 3.44.919 3.181 0 5.768-2.587 5.768-5.768-.001-3.18-2.587-5.767-5.767-5.767zm3.298 8.245c-.176.496-.892.905-1.461 1.026-.387.082-.815.07-1.193-.018-.38-.089-.73-.249-1.062-.45-.332-.2-.66-.44-.951-.713-.29-.273-.534-.578-.727-.907-.193-.329-.336-.678-.426-1.042-.09-.364-.122-.735-.095-1.104.027-.369.106-.724.236-1.06.13-.336.306-.648.522-.931.216-.283.466-.529.744-.733.278-.204.579-.361.893-.466.314-.105.637-.157.96-.154.226.002.451.029.672.081.221.052.434.131.634.237.2.106.386.239.553.395.167.156.312.335.433.533.242.398.366.855.358 1.318-.008.463-.148.915-.397 1.305-.249.39-.592.7-.995.898-.404.198-.856.284-1.304.25-.128-.01-.254-.034-.376-.072-.122-.038-.237-.091-.343-.158-.106-.067-.202-.147-.286-.239-.084-.092-.155-.195-.212-.306-.057-.111-.099-.229-.125-.351-.026-.122-.036-.246-.03-.369.006-.123.027-.244.062-.361.035-.117.084-.229.145-.333.061-.104.133-.199.215-.283.082-.084.173-.156.27-.215.098-.059.202-.104.31-.133.108-.029.22-.042.331-.039.111.003.221.022.327.057.106.035.206.085.296.149.09.064.168.141.233.229.065.088.116.186.15.29.034.104.051.213.051.322 0 .071-.008.142-.023.211-.015.069-.037.136-.066.2-.029.064-.065.124-.107.18-.042.056-.09.107-.143.152-.053.045-.111.084-.173.117-.062.033-.128.058-.196.075-.068.017-.138.026-.208.026-.07 0-.14-.009-.208-.026-.068-.017-.134-.042-.196-.075-.062-.033-.12-.072-.173-.117-.053-.045-.101-.096-.143-.152-.042-.056-.078-.116-.107-.18-.029-.064-.051-.131-.066-.2-.015-.069-.023-.14-.023-.211z"/></svg>');
+}
+
+.tiktok {
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23F2EEE8"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.87-4.53 2.89 2.89 0 0 1 1.09.27v-3.47a6.33 6.33 0 0 0-5.34 6.2 6.33 6.33 0 0 0 10.92 4.3 6.34 6.34 0 0 0 1.77-4.3V8.92a8.26 8.26 0 0 0 4.79 1.52V6.95a4.82 4.82 0 0 1-3.77-2.26z"/></svg>');
+}
+
+/* RESPONSIVO BARRA */
+@media (max-width: 768px) {
+    .flex .shopee-logo-area ~ a {
+        display: none;
+    }
+    
+    .navbar_links .navbar__link-text {
+        font-size: 12px;
+    }
+}
+
+/* ===== RESTANTE DO SEU CSS COM AS CORES ATUALIZADAS ===== */
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, var(--cotton-candy), var(--khaki));
+    min-height: 100vh;
+    color: var(--dusty-white);
+}
+
+/* HEADER */
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(20px);
+    padding: 15px 30px;
+    box-shadow: 0 4px 20px rgba(78, 10, 11, 0.1);
+    position: sticky;
+    top: 40px;
+    z-index: 100;
+    border-radius: 0 0 25px 25px;
+}
+
+.logo {
+    font-size: 28px;
+    font-weight: bold;
+    color: var(--garnet);
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    letter-spacing: 1px;
+}
+
+.menu-icon {
+    font-size: 28px;
+    cursor: pointer;
+    color: var(--garnet);
+    padding: 10px;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
+
+.menu-icon:hover {
+    background: var(--dusty-white);
+    transform: scale(1.1);
+}
+
+.btn-sem-borda {
+    background: none;                    
+    border: none;                        
+    border-radius: 25px;                 
+    color: var(--garnet);               
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    text-shadow: none;
+}
+
+.btn-sem-borda::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--khaki), var(--cotton-candy));
+    border-radius: 2px;
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+}
+
+.btn-sem-borda:hover::after {
+    width: 80%;
+}
+
+.btn-sem-borda:hover {
+    color: var(--cotton-candy);
+    transform: translateY(-2px);
+    text-shadow: 0 2px 8px rgba(78, 10, 11, 0.3);
+}
+
+.search-bar {
+    flex: 1;
+    margin: 0 30px;
+    max-width: 500px;
+}
+
+.search-bar input {
+    width: 100%;
+    padding: 15px 25px;
+    border-radius: 30px;
+    border: 2px solid var(--dusty-white);
+    font-size: 16px;
+    transition: all 0.3s ease;
+    background: var(--dusty-white);
+    box-shadow: 0 4px 15px rgba(78, 10, 11, 0.1);
+}
+
+.search-bar input:focus {
+    border-color: var(--cotton-candy);
+    box-shadow: 0 0 25px rgba(227, 135, 146, 0.4);
+    outline: none;
+}
+
+.icons {
+    font-size: 24px;
+    display: flex;
+    gap: 20px;
+    cursor: pointer;
+    color: var(--garnet);
+}
+
+.icons span {
+    padding: 12px;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.icons span:hover {
+    background: var(--dusty-white);
+    transform: scale(1.15) rotate(5deg);
+    filter: drop-shadow(0 4px 12px rgba(227, 135, 146, 0.3));
+}
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--cinza-claro); min-height: 100vh; }
+        .layout { display: flex; max-width: 1400px; margin: 0 auto; padding: 30px 20px; gap: 30px; }
+
+        /* MENU LATERAL */
+        .sidebar { width: 280px; background: var(--branco); border-radius: 20px; padding: 25px; box-shadow: 0 5px 20px var(--sombra-suave); height: fit-content; position: sticky; top: 30px; }
+        .perfil { text-align: center; padding-bottom: 20px; border-bottom: 2px solid var(--cinza-claro); margin-bottom: 20px; }
+        .avatar { width: 80px; height: 80px; background: linear-gradient(135deg, var(--rosa-medio), var(--vermelho-escuro)); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; font-size: 40px; color: var(--branco); }
+        .perfil h3 { color: var(--vermelho-escuro); font-size: 16px; margin-bottom: 5px; }
+        .btn-editar-perfil { background: transparent; border: 2px solid var(--rosa-medio); padding: 8px 20px; border-radius: 30px; color: var(--rosa-medio); font-weight: 600; cursor: pointer; transition: all 0.3s ease; margin-top: 10px; font-size: 13px; }
+        .btn-editar-perfil:hover { background: var(--rosa-medio); color: var(--branco); }
+        .menu-lateral { list-style: none; }
+        .menu-lateral li { padding: 12px 15px; display: flex; align-items: center; gap: 15px; color: var(--vermelho-escuro); cursor: pointer; transition: all 0.3s ease; border-radius: 12px; }
+        .menu-lateral li:hover { background: var(--cinza-claro); transform: translateX(5px); }
+        .menu-lateral li i { width: 25px; color: var(--dourado-principal); font-size: 18px; }
+        .menu-lateral li span { font-weight: 500; }
+
+        /* CONTEÚDO CARRINHO */
+        .conteudo { flex: 1; }
+        .carrinho-header { margin-bottom: 25px; }
+        .carrinho-header h1 { color: var(--vermelho-escuro); font-size: 24px; display: flex; align-items: center; gap: 10px; }
+        .carrinho-header h1 i { color: var(--dourado-principal); }
+
+        /* TABELA/GRID */
+        .carrinho-grid { background: var(--branco); border-radius: 20px; overflow: hidden; box-shadow: 0 5px 20px var(--sombra-suave); margin-bottom: 30px; }
+        .carrinho-header-row { display: grid; grid-template-columns: 50px 3fr 1fr 1fr 1fr 50px; background: linear-gradient(135deg, var(--cinza-claro), #f8f8fa); padding: 18px 20px; font-weight: 600; color: var(--vermelho-escuro); border-bottom: 2px solid var(--cinza-claro); }
+        .carrinho-item { display: grid; grid-template-columns: 50px 3fr 1fr 1fr 1fr 50px; align-items: center; padding: 20px; border-bottom: 1px solid var(--cinza-claro); transition: all 0.3s ease; }
+        .carrinho-item:hover { background: rgba(217, 182, 7, 0.05); }
+        .checkbox-item { width: 20px; height: 20px; accent-color: var(--dourado-principal); cursor: pointer; }
+        .produto-info-carrinho { display: flex; gap: 15px; align-items: center; }
+        .produto-img-carrinho { width: 60px; height: 80px; background: linear-gradient(135deg, var(--cinza-claro), #e8e8ea); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 28px; color: var(--rosa-medio); }
+        .produto-detalhes-carrinho h4 { color: var(--vermelho-escuro); font-size: 15px; margin-bottom: 5px; }
+        .produto-detalhes-carrinho p { color: var(--dourado-escuro); font-size: 12px; }
+        .quantidade-control { display: flex; align-items: center; gap: 10px; }
+        .quantidade-control button { width: 30px; height: 30px; border-radius: 50%; border: none; background: var(--cinza-claro); cursor: pointer; font-weight: bold; transition: all 0.3s ease; }
+        .quantidade-control button:hover { background: var(--dourado-principal); color: var(--branco); }
+        .quantidade-control span { font-weight: 600; min-width: 30px; text-align: center; }
+        .preco-unitario { font-weight: 600; color: var(--vermelho-escuro); }
+        .subtotal { font-weight: 700; color: var(--dourado-principal); font-size: 18px; }
+        .btn-remover-item { background: transparent; border: none; font-size: 18px; color: var(--rosa-medio); cursor: pointer; transition: all 0.3s ease; }
+        .btn-remover-item:hover { color: var(--vermelho-escuro); transform: scale(1.1); }
+
+        /* RESUMO */
+        .resumo-card { background: var(--branco); border-radius: 20px; padding: 25px; box-shadow: 0 5px 20px var(--sombra-suave); }
+        .resumo-card h3 { color: var(--vermelho-escuro); margin-bottom: 20px; font-size: 20px; }
+        .resumo-linha { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--cinza-claro); }
+        .resumo-linha:last-child { border-bottom: none; }
+        .resumo-total { font-weight: 700; font-size: 20px; color: var(--dourado-principal); margin-top: 15px; padding-top: 15px; border-top: 2px solid var(--cinza-claro); display: flex; justify-content: space-between; }
+        .cupom-area { display: flex; gap: 10px; margin: 20px 0; }
+        .cupom-area input { flex: 1; padding: 12px 15px; border: 2px solid var(--cinza-claro); border-radius: 30px; outline: none; transition: all 0.3s ease; }
+        .cupom-area input:focus { border-color: var(--rosa-medio); }
+        .cupom-area button { padding: 12px 20px; background: transparent; border: 2px solid var(--rosa-medio); border-radius: 30px; color: var(--rosa-medio); font-weight: 600; cursor: pointer; transition: all 0.3s ease; }
+        .cupom-area button:hover { background: var(--rosa-medio); color: var(--branco); }
+        .btn-finalizar { width: 100%; padding: 16px; background: linear-gradient(135deg, var(--dourado-principal), var(--dourado-escuro)); border: none; border-radius: 35px; color: var(--vermelho-escuro); font-weight: bold; font-size: 16px; cursor: pointer; transition: all 0.3s ease; margin-top: 15px; text-transform: uppercase; letter-spacing: 1px; }
+        .btn-finalizar:hover { background: linear-gradient(135deg, var(--rosa-medio), var(--vermelho-escuro)); color: var(--branco); transform: translateY(-2px); box-shadow: 0 8px 25px var(--sombra-dourado); }
+        .btn-continuar { width: 100%; padding: 14px; background: transparent; border: 2px solid var(--rosa-medio); border-radius: 35px; color: var(--rosa-medio); font-weight: 600; cursor: pointer; transition: all 0.3s ease; margin-top: 10px; }
+        .btn-continuar:hover { background: var(--cinza-claro); }
+
+        /* CARRINHO VAZIO */
+        .carrinho-vazio { text-align: center; padding: 80px 40px; background: var(--branco); border-radius: 25px; }
+        .carrinho-vazio i { font-size: 80px; color: var(--rosa-medio); margin-bottom: 20px; }
+        .carrinho-vazio h2 { color: var(--vermelho-escuro); margin-bottom: 10px; }
+        .carrinho-vazio p { color: var(--dourado-escuro); margin-bottom: 30px; }
+        .btn-explorar { background: linear-gradient(135deg, var(--dourado-principal), var(--dourado-escuro)); padding: 12px 30px; border-radius: 30px; color: var(--vermelho-escuro); text-decoration: none; font-weight: bold; display: inline-block; transition: all 0.3s ease; }
+        .btn-explorar:hover { background: linear-gradient(135deg, var(--rosa-medio), var(--vermelho-escuro)); color: var(--branco); transform: translateY(-2px); }
+
+        /* SELECIONAR TODOS */
+        .selecionar-todos { display: flex; align-items: center; gap: 12px; padding: 15px 20px; background: var(--cinza-claro); border-radius: 15px; margin-bottom: 20px; }
+        .selecionar-todos input { width: 20px; height: 20px; accent-color: var(--dourado-principal); cursor: pointer; }
+        .selecionar-todos label { font-weight: 600; color: var(--vermelho-escuro); cursor: pointer; }
+
+        @media (max-width: 1000px) {
+            .layout { flex-direction: column; }
+            .sidebar { width: 100%; position: static; }
+            .carrinho-header-row { display: none; }
+            .carrinho-item { grid-template-columns: 1fr; gap: 15px; text-align: center; }
+            .produto-info-carrinho { flex-direction: column; text-align: center; }
+            .quantidade-control { justify-content: center; }
+            .btn-remover-item { justify-self: center; }
+        }
+    </style>
+</head>
+<body>
+              <!-- ===== BARRA SUPERIOR ===== -->
+<header class="shopee-top">
+    <div class="container">
+        <nav class="navbar">
+            <div class="flex v-center">
+                <div class="shopee-logo-area">
+                    <span class="shopee-logo-icon">📚</span>
+                    <span class="shopee-store-name" onclick="window.location.href='Entrar.html'">HAMSTORE <small>books</small></span>
+                </div>
+                <a href="#" onclick="window.location.href='dashbord.html'">Central do Vendedor</a>
+                <a href="#" onclick="window.location.href='CadastroVendedor.html'">Vender na HamStore</a>
+                
+            </div>
+            <div class="flex">
+                <div class="shopee-social-icons">
+                    <span>Siga-nos</span>
+                    <a href="#" class="social-icon instagram"></a>
+                    <a href="#" class="social-icon whatsapp"></a>
+                    <a href="#" class="social-icon tiktok"></a>
+                </div>
+            </div>
+            <ul class="navbar_links">
+                <li><a href="#" class="navbar__link-text">Ajuda</a></li>
+                <li><a href="#"  onclick="window.location.href='Cadastro1.html'" class="navbar__link-text navbar__link--signup">Cadastrar</a></li>
+                <li><div class="navbar__link-separator"></div></li>
+                <li><a href="#" onclick="window.location.href='login.html'"class="navbar__link-text" >Entrar</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+<!-- HEADER -->
+<header class="header">
+<h1 onclick="window.location.href='Entrar.html'" class="logo">📚 Livraria</h1>
+
+<div class="search-bar">
+<input type="text" placeholder="Buscar livros...">
+</div>
+
+<div class="icons">
+<button class="btn-sem-borda" onclick="window.location.href='Carrinho.html'">🛒</button>
+<button class="btn-sem-borda">⚙️</button>
+<button class="btn-sem-borda" onclick="window.location.href='MinhasCompras.html'">👤</button> 
+</div>
+</header>
+    <div class="layout">
+        <aside class="sidebar">
+            <div class="perfil">
+                <div class="avatar"><i class="fas fa-user"></i></div>
+                <h3>mariabaeatrizoliveira...</h3>
+                <button class="btn-editar-perfil" onclick="window.location.href='EditarPerfil.html'"><i class="fas fa-pen"></i> Editar Perfil</button>
+            </div>
+            <ul class="menu-lateral">
+                <li onclick="window.location.href='MinhasCompras.html'"><i class="fas fa-shopping-bag"></i> <span>Minhas Compras</span></li>
+                <li onclick="window.location.href='Notificaçoes.html'"><i class="fas fa-bell"></i> <span>Notificações</span></li>
+                <li onclick="window.location.href='MeusCupons.html'"><i class="fas fa-ticket-alt"></i> <span>Meus Cupons</span></li>
+                <li onclick="window.location.href='Endereços.html'"><i class="fas fa-map-marker-alt"></i><span>Endereços</span></li>
+                <li onclick="window.location.href='OpçoesPagamento.html'" class="ativo"><i class="fas fa-credit-card"></i> <span>Pagamentos</span></li>
+                <li onclick="window.location.href='Favoritos.html'"><i class="fas fa-heart"></i> <span>Favoritos</span></li>
+                <li onclick="window.location.href='Configuraçoes.html'"><i class="fas fa-cog"></i> <span>Configurações</span></li>
+                <li onclick="window.location.href='Carrinho.html'"><i class="fas fa-shopping-cart"></i> <span>Meu Carrinho</span></li>
+            </ul>
+        </aside>
+
+        <main class="conteudo">
+            <div class="carrinho-header">
+                <h1><i class="fas fa-shopping-cart"></i> Meu Carrinho</h1>
+            </div>
+
+            <div id="carrinhoContainer"></div>
+        </main>
+    </div>
+
+    <script>
+        // DADOS DO CARRINHO (simulando)
+        let carrinho = [
+            { id: 1, nome: "O Pequeno Príncipe", autor: "Antoine de Saint-Exupéry", preco: 39.90, quantidade: 1, icone: "🌟", selecionado: true },
+            { id: 2, nome: "1984 - George Orwell", autor: "George Orwell", preco: 45.00, quantidade: 2, icone: "📖", selecionado: true },
+            { id: 3, nome: "Dom Casmurro", autor: "Machado de Assis", preco: 42.50, quantidade: 1, icone: "📚", selecionado: false }
+        ];
+
+        let cupomAplicado = false;
+        let desconto = 0;
+
+        function salvarCarrinho() {
+            localStorage.setItem('carrinho_livraria', JSON.stringify(carrinho));
+        }
+
+        function carregarCarrinho() {
+            const salvo = localStorage.getItem('carrinho_livraria');
+            if (salvo) {
+                carrinho = JSON.parse(salvo);
+            }
+        }
+
+        function renderizarCarrinho() {
+            const container = document.getElementById('carrinhoContainer');
+            const itensSelecionados = carrinho.filter(item => item.selecionado);
+            const totalItens = itensSelecionados.reduce((acc, item) => acc + item.quantidade, 0);
+            const subtotal = itensSelecionados.reduce((acc, item) => acc + (item.preco * item.quantidade), 0);
+            const total = subtotal;
+
+            if (carrinho.length === 0) {
+                container.innerHTML = `
+                    <div class="carrinho-vazio">
+                        <i class="fas fa-shopping-cart"></i>
+                        <h2>Seu carrinho está vazio</h2>
+                        <p>Explore nossa livraria e adicione seus livros favoritos!</p>
+                        <a href="Entrar.html" class="btn-explorar"><i class="fas fa-book"></i> Explorar livros</a>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = `
+                <div class="selecionar-todos">
+                    <input type="checkbox" id="selecionarTodos" ${carrinho.every(item => item.selecionado) ? 'checked' : ''}>
+                    <label for="selecionarTodos">Selecionar todos os produtos (${carrinho.length} itens)</label>
+                </div>
+
+                <div class="carrinho-grid">
+                    <div class="carrinho-header-row">
+                        <div></div>
+                        <div>Produto</div>
+                        <div>Preço</div>
+                        <div>Quantidade</div>
+                        <div>Subtotal</div>
+                        <div></div>
+                    </div>
+                    ${carrinho.map(item => `
+                        <div class="carrinho-item" data-id="${item.id}">
+                            <input type="checkbox" class="checkbox-item" ${item.selecionado ? 'checked' : ''} onchange="toggleSelecionado(${item.id})">
+                            <div class="produto-info-carrinho">
+                                <div class="produto-img-carrinho"><i class="fas fa-book-open"></i> ${item.icone}</div>
+                                <div class="produto-detalhes-carrinho">
+                                    <h4>${item.nome}</h4>
+                                    <p>${item.autor}</p>
+                                </div>
+                            </div>
+                            <div class="preco-unitario">R$ ${item.preco.toFixed(2)}</div>
+                            <div class="quantidade-control">
+                                <button onclick="alterarQuantidade(${item.id}, -1)">-</button>
+                                <span>${item.quantidade}</span>
+                                <button onclick="alterarQuantidade(${item.id}, 1)">+</button>
+                            </div>
+                            <div class="subtotal">R$ ${(item.preco * item.quantidade).toFixed(2)}</div>
+                            <button class="btn-remover-item" onclick="removerItem(${item.id})"><i class="fas fa-trash-alt"></i></button>
+                        </div>
+                    `).join('')}
+                </div>
+
+                <div class="resumo-card">
+                    <h3>Resumo do pedido</h3>
+                   
+                    
+                    <div class="resumo-total"><span>Total</span><span>R$ ${total.toFixed(2)}</span></div>
+                    <button class="btn-continuar" onclick="window.location.href='Entrar.html'"><i class="fas fa-shopping-cart"></i> Comprar</button>
+                    <button class="btn-continuar" onclick="window.location.href='Entrar.html'"><i class="fas fa-shopping-cart"></i> Continuar comprando</button>
+                </div>
+            `;
+
+            document.getElementById('selecionarTodos').addEventListener('change', (e) => {
+                carrinho.forEach(item => item.selecionado = e.target.checked);
+                salvarCarrinho();
+                renderizarCarrinho();
+            });
+        }
+
+        function toggleSelecionado(id) {
+            const item = carrinho.find(i => i.id === id);
+            if (item) item.selecionado = !item.selecionado;
+            salvarCarrinho();
+            renderizarCarrinho();
+        }
+
+        function alterarQuantidade(id, delta) {
+            const item = carrinho.find(i => i.id === id);
+            if (item) {
+                item.quantidade = Math.max(1, item.quantidade + delta);
+                salvarCarrinho();
+                renderizarCarrinho();
+            }
+        }
+
+        function removerItem(id) {
+            carrinho = carrinho.filter(i => i.id !== id);
+            salvarCarrinho();
+            renderizarCarrinho();
+        }
+
+       
+        
+
+        carregarCarrinho();
+        renderizarCarrinho();
+    </script>
+</body>
+</html>

@@ -1,0 +1,1144 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil da Editora — HamStore Books</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* ═══════════════════════════════════
+           TOKENS
+        ═══════════════════════════════════ */
+        :root {
+            --vermelho-escuro: #8C031C;
+            --rosa-medio:      #BF6980;
+            --cinza-claro:     #F0F0F2;
+            --dourado-principal: #D9B607;
+            --dourado-escuro:  #8C5C03;
+            --branco:          #ffffff;
+            --sombra-suave:    rgba(140, 3, 28, 0.10);
+            --sombra-dourado:  rgba(217, 182, 7, 0.30);
+
+            --fonte-display: 'Playfair Display', Georgia, serif;
+            --fonte-corpo:   'Inter', 'Segoe UI', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: var(--fonte-corpo);
+            background: #f8f7f5;
+            color: #2a2a2a;
+            overflow-x: hidden;
+        }
+
+        /* ═══════════════════════════════════
+           BANNER
+        ═══════════════════════════════════ */
+        .banner {
+            height: 320px;
+            background:
+                linear-gradient(160deg,
+                    rgba(140,3,28,0.82) 0%,
+                    rgba(191,105,128,0.55) 50%,
+                    rgba(140,92,3,0.65) 100%),
+                url('img/banner.jpg') center / cover no-repeat;
+            position: relative;
+        }
+
+        /* fade suave na borda inferior */
+        .banner::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            height: 120px;
+            background: linear-gradient(to bottom, transparent, #f8f7f5);
+        }
+
+        /* estatísticas flutuantes no banner */
+        .banner-stats {
+            position: absolute;
+            bottom: 28px;
+            right: 60px;
+            display: flex;
+            gap: 24px;
+            z-index: 5;
+        }
+        .bstat {
+            text-align: center;
+            color: var(--branco);
+        }
+        .bstat .num {
+            font-family: var(--fonte-display);
+            font-size: 28px;
+            font-weight: 900;
+            color: var(--dourado-principal);
+            line-height: 1;
+        }
+        .bstat .label {
+            font-size: 11px;
+            font-weight: 600;
+            opacity: 0.85;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin-top: 3px;
+        }
+        .bstat-sep {
+            width: 1px;
+            background: rgba(255,255,255,0.25);
+            align-self: stretch;
+        }
+
+        /* ═══════════════════════════════════
+           CARD DE PERFIL
+        ═══════════════════════════════════ */
+        .perfil-wrap {
+            max-width: 1260px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        .perfil {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+            background: var(--branco);
+            padding: 32px 44px;
+            margin-top: -72px;
+            border-radius: 24px;
+            box-shadow: 0 20px 60px var(--sombra-suave);
+            position: relative;
+            z-index: 10;
+            border: 1px solid rgba(255,255,255,0.6);
+        }
+
+        .foto-wrap { position: relative; flex-shrink: 0; }
+        .foto {
+            width: 130px; height: 130px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid var(--branco);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.18);
+            display: block;
+            background: var(--cinza-claro);
+            /* fallback quando não há imagem */
+        }
+        .foto-placeholder {
+            width: 130px; height: 130px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--vermelho-escuro), var(--rosa-medio));
+            border: 5px solid var(--branco);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.18);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 52px; color: var(--branco);
+            flex-shrink: 0;
+        }
+        .selo-verificado {
+            position: absolute;
+            bottom: 6px; right: 2px;
+            width: 30px; height: 30px;
+            background: linear-gradient(135deg, var(--dourado-principal), var(--dourado-escuro));
+            border-radius: 50%;
+            border: 3px solid var(--branco);
+            display: flex; align-items: center; justify-content: center;
+            color: var(--branco); font-size: 12px;
+        }
+
+        .perfil-info { flex: 1; }
+        .perfil-info .eyebrow {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--rosa-medio);
+            margin-bottom: 6px;
+        }
+        .perfil-info h1 {
+            font-family: var(--fonte-display);
+            font-size: 34px;
+            font-weight: 900;
+            color: var(--vermelho-escuro);
+            line-height: 1.1;
+            margin-bottom: 10px;
+        }
+        .avaliacao {
+            display: flex; align-items: center; gap: 8px;
+            margin-bottom: 8px;
+        }
+        .estrelas { color: var(--dourado-principal); font-size: 16px; }
+        .av-num { font-weight: 700; font-size: 14px; color: var(--vermelho-escuro); }
+        .av-total { font-size: 13px; color: #888; }
+        .perfil-info .site {
+            display: inline-flex; align-items: center; gap: 6px;
+            color: var(--rosa-medio); font-size: 13px; font-weight: 600;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .perfil-info .site:hover { color: var(--vermelho-escuro); }
+        .perfil-tags { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
+        .ptag {
+            font-size: 11px; font-weight: 600;
+            padding: 4px 12px; border-radius: 20px;
+            background: var(--cinza-claro);
+            color: var(--vermelho-escuro);
+        }
+        .ptag.gold { background: rgba(217,182,7,0.12); color: var(--dourado-escuro); }
+
+        .perfil-acoes { display: flex; flex-direction: column; gap: 10px; flex-shrink: 0; }
+        .btn-seguir {
+            padding: 13px 32px;
+            background: linear-gradient(135deg, var(--vermelho-escuro), var(--rosa-medio));
+            color: var(--branco); border: none;
+            border-radius: 30px; font-weight: 700; font-size: 14px;
+            cursor: pointer; letter-spacing: 0.5px;
+            transition: all 0.3s;
+            box-shadow: 0 8px 24px var(--sombra-suave);
+            display: flex; align-items: center; gap: 8px;
+        }
+        .btn-seguir:hover {
+            background: linear-gradient(135deg, var(--dourado-principal), var(--dourado-escuro));
+            color: var(--vermelho-escuro);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 32px var(--sombra-dourado);
+        }
+        .btn-seguir.seguindo {
+            background: var(--cinza-claro);
+            color: var(--vermelho-escuro);
+            box-shadow: none;
+        }
+        .btn-contato {
+            padding: 11px 28px;
+            background: transparent;
+            color: var(--vermelho-escuro);
+            border: 2px solid var(--rosa-medio);
+            border-radius: 30px; font-weight: 700; font-size: 14px;
+            cursor: pointer; letter-spacing: 0.5px;
+            transition: all 0.3s;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .btn-contato:hover {
+            background: var(--cinza-claro);
+            border-color: var(--vermelho-escuro);
+        }
+
+        /* ═══════════════════════════════════
+           NAV
+        ═══════════════════════════════════ */
+        .nav-wrap {
+            max-width: 1260px;
+            margin: 28px auto 0;
+            padding: 0 40px;
+        }
+        .menu {
+            display: flex;
+            gap: 4px;
+            background: var(--branco);
+            padding: 8px 12px;
+            border-radius: 50px;
+            box-shadow: 0 4px 20px var(--sombra-suave);
+            width: fit-content;
+        }
+        .menu a {
+            text-decoration: none;
+            color: #777;
+            font-weight: 600;
+            font-size: 14px;
+            padding: 10px 22px;
+            border-radius: 30px;
+            transition: all 0.25s;
+            white-space: nowrap;
+        }
+        .menu a:hover { color: var(--vermelho-escuro); background: var(--cinza-claro); }
+        .menu a.ativo {
+            background: linear-gradient(135deg, var(--vermelho-escuro), var(--rosa-medio));
+            color: var(--branco);
+            box-shadow: 0 4px 14px var(--sombra-suave);
+        }
+
+        /* ═══════════════════════════════════
+           SEÇÕES — ESTRUTURA BASE
+        ═══════════════════════════════════ */
+        .secao {
+            max-width: 1260px;
+            margin: 0 auto;
+            padding: 72px 40px 0;
+        }
+        .secao-header {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid var(--cinza-claro);
+        }
+        .secao-header h2 {
+            font-family: var(--fonte-display);
+            font-size: 30px;
+            font-weight: 800;
+            color: var(--vermelho-escuro);
+            position: relative;
+        }
+        .secao-header h2 span {
+            display: block;
+            font-family: var(--fonte-corpo);
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--rosa-medio);
+            margin-bottom: 4px;
+        }
+        .ver-todos {
+            font-size: 13px; font-weight: 700;
+            color: var(--rosa-medio);
+            text-decoration: none;
+            display: flex; align-items: center; gap: 5px;
+            padding: 8px 18px; border-radius: 20px;
+            border: 2px solid rgba(191,105,128,0.3);
+            transition: all 0.2s;
+        }
+        .ver-todos:hover {
+            background: var(--rosa-medio);
+            color: var(--branco);
+            border-color: var(--rosa-medio);
+        }
+
+        /* ═══════════════════════════════════
+           SELOS EDITORIAIS
+        ═══════════════════════════════════ */
+        .selos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 24px;
+        }
+        .selo-card {
+            background: var(--branco);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px var(--sombra-suave);
+            transition: all 0.35s;
+            border: 2px solid transparent;
+        }
+        .selo-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 16px 48px rgba(140,3,28,0.14);
+            border-color: var(--dourado-principal);
+        }
+        .selo-topo {
+            padding: 24px 28px 18px;
+            background: linear-gradient(135deg, var(--vermelho-escuro), var(--rosa-medio));
+            position: relative;
+        }
+        .selo-topo .icone {
+            font-size: 28px;
+            margin-bottom: 8px;
+            display: block;
+        }
+        .selo-topo h3 {
+            font-family: var(--fonte-display);
+            font-size: 22px;
+            color: var(--branco);
+            font-weight: 800;
+        }
+        .selo-topo .qtd {
+            position: absolute; top: 20px; right: 24px;
+            background: rgba(255,255,255,0.2);
+            color: var(--branco); font-size: 12px; font-weight: 700;
+            padding: 4px 12px; border-radius: 20px;
+        }
+        .selo-corpo { padding: 20px 28px 24px; }
+        .generos { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
+        .genero-tag {
+            font-size: 12px; font-weight: 600;
+            padding: 5px 12px; border-radius: 20px;
+            background: var(--cinza-claro);
+            color: var(--vermelho-escuro);
+            border-left: 3px solid var(--dourado-principal);
+        }
+        .btn-explorar {
+            width: 100%;
+            padding: 12px;
+            background: var(--cinza-claro);
+            border: none; border-radius: 12px;
+            font-weight: 700; font-size: 13px;
+            color: var(--vermelho-escuro);
+            cursor: pointer; transition: all 0.25s;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+        }
+        .btn-explorar:hover {
+            background: linear-gradient(135deg, var(--dourado-principal), var(--dourado-escuro));
+            color: var(--branco);
+        }
+
+        /* ═══════════════════════════════════
+           LANÇAMENTOS
+        ═══════════════════════════════════ */
+        .livros-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 24px;
+        }
+        .livro-card {
+            background: var(--branco);
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 4px 16px var(--sombra-suave);
+            transition: all 0.35s;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+        .livro-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 50px rgba(140,3,28,0.15);
+            border-color: var(--rosa-medio);
+        }
+        .livro-capa {
+            width: 100%;
+            height: 260px;
+            object-fit: cover;
+            display: block;
+            background: linear-gradient(135deg, var(--cinza-claro), #e4e4e6);
+        }
+        .livro-capa-placeholder {
+            width: 100%; height: 260px;
+            background: linear-gradient(135deg, var(--cinza-claro), #ddd);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 64px; color: var(--rosa-medio);
+        }
+        .livro-info { padding: 18px 18px 20px; }
+        .livro-badge {
+            display: inline-block;
+            font-size: 10px; font-weight: 700;
+            padding: 3px 10px; border-radius: 20px;
+            background: linear-gradient(135deg, var(--dourado-principal), var(--dourado-escuro));
+            color: var(--branco);
+            margin-bottom: 8px;
+            letter-spacing: 0.5px; text-transform: uppercase;
+        }
+        .livro-titulo {
+            font-weight: 700; font-size: 15px;
+            color: var(--vermelho-escuro);
+            line-height: 1.35;
+            margin-bottom: 4px;
+        }
+        .livro-autor {
+            font-size: 12px; color: #888;
+            margin-bottom: 12px;
+        }
+        .livro-rodape {
+            display: flex; align-items: center;
+            justify-content: space-between;
+        }
+        .livro-preco {
+            font-family: var(--fonte-display);
+            font-size: 20px; font-weight: 800;
+            color: var(--dourado-escuro);
+        }
+        .btn-carrinho {
+            width: 34px; height: 34px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, var(--vermelho-escuro), var(--rosa-medio));
+            border: none; color: var(--branco);
+            font-size: 14px; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.2s;
+        }
+        .btn-carrinho:hover {
+            background: linear-gradient(135deg, var(--dourado-principal), var(--dourado-escuro));
+            transform: scale(1.1);
+        }
+
+        /* ═══════════════════════════════════
+           MAIS VENDIDOS
+        ═══════════════════════════════════ */
+        .ranking-lista { display: flex; flex-direction: column; gap: 12px; }
+        .rank-item {
+            display: flex; align-items: center; gap: 18px;
+            background: var(--branco);
+            border-radius: 16px;
+            padding: 16px 22px;
+            box-shadow: 0 3px 14px var(--sombra-suave);
+            transition: all 0.3s;
+            border: 2px solid transparent;
+            cursor: pointer;
+        }
+        .rank-item:hover {
+            border-color: var(--dourado-principal);
+            transform: translateX(6px);
+            box-shadow: 0 8px 28px var(--sombra-dourado);
+        }
+        .rank-num {
+            width: 40px; height: 40px; flex-shrink: 0;
+            border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 900; font-size: 16px;
+        }
+        .rank-num.top1 { background: linear-gradient(135deg, #f0c14b, #c8960c); color: var(--branco); }
+        .rank-num.top2 { background: linear-gradient(135deg, #b0bec5, #78909c); color: var(--branco); }
+        .rank-num.top3 { background: linear-gradient(135deg, #c8a07a, #a0673a); color: var(--branco); }
+        .rank-num.resto { background: var(--cinza-claro); color: var(--vermelho-escuro); }
+
+        .rank-capa {
+            width: 44px; height: 56px; flex-shrink: 0;
+            border-radius: 6px;
+            background: linear-gradient(135deg, var(--cinza-claro), #ddd);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 20px; color: var(--rosa-medio);
+            box-shadow: 2px 2px 8px rgba(0,0,0,0.08);
+        }
+        .rank-dados { flex: 1; }
+        .rank-titulo { font-weight: 700; font-size: 15px; color: var(--vermelho-escuro); }
+        .rank-autor  { font-size: 12px; color: #888; margin-top: 2px; }
+        .rank-vendas {
+            display: flex; flex-direction: column; align-items: flex-end; flex-shrink: 0;
+        }
+        .rank-num-vendas {
+            font-weight: 900; font-size: 18px;
+            color: var(--dourado-escuro);
+        }
+        .rank-label { font-size: 11px; color: #aaa; }
+        .rank-barra-wrap {
+            width: 80px; height: 4px;
+            background: var(--cinza-claro);
+            border-radius: 2px; margin-top: 4px;
+        }
+        .rank-barra {
+            height: 100%;
+            background: linear-gradient(90deg, var(--dourado-principal), var(--dourado-escuro));
+            border-radius: 2px;
+            transition: width 1s ease;
+        }
+
+        /* ═══════════════════════════════════
+           AUTORES
+        ═══════════════════════════════════ */
+        .autores-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        .autor-card {
+            background: var(--branco);
+            border-radius: 20px;
+            padding: 28px 20px 22px;
+            text-align: center;
+            box-shadow: 0 4px 16px var(--sombra-suave);
+            transition: all 0.35s;
+            border: 2px solid transparent;
+            cursor: pointer;
+        }
+        .autor-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--dourado-principal);
+            box-shadow: 0 16px 48px var(--sombra-dourado);
+        }
+        .autor-avatar {
+            width: 72px; height: 72px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--vermelho-escuro), var(--rosa-medio));
+            margin: 0 auto 14px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 28px; color: var(--branco);
+            font-weight: 800; font-family: var(--fonte-display);
+        }
+        .autor-nome {
+            font-weight: 700; font-size: 15px;
+            color: var(--vermelho-escuro);
+            margin-bottom: 4px;
+        }
+        .autor-obras {
+            font-size: 12px; color: #888;
+            margin-bottom: 12px;
+        }
+        .autor-genero {
+            display: inline-block;
+            font-size: 11px; font-weight: 600;
+            padding: 3px 10px; border-radius: 20px;
+            background: var(--cinza-claro);
+            color: var(--vermelho-escuro);
+        }
+
+        /* ═══════════════════════════════════
+           PRÉ-VENDA
+        ═══════════════════════════════════ */
+        .prevenda-card {
+            background: linear-gradient(135deg, var(--vermelho-escuro) 0%, #6b0215 50%, var(--dourado-escuro) 100%);
+            border-radius: 24px;
+            padding: 48px 56px;
+            display: flex;
+            align-items: center;
+            gap: 48px;
+            box-shadow: 0 16px 56px rgba(140,3,28,0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        .prevenda-card::before {
+            content: '';
+            position: absolute;
+            top: -80px; right: -80px;
+            width: 300px; height: 300px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.04);
+        }
+        .prevenda-card::after {
+            content: '';
+            position: absolute;
+            bottom: -100px; left: 200px;
+            width: 360px; height: 360px;
+            border-radius: 50%;
+            background: rgba(217,182,7,0.06);
+        }
+        .prevenda-capa {
+            width: 160px; height: 210px; flex-shrink: 0;
+            border-radius: 12px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.05));
+            border: 2px solid rgba(255,255,255,0.2);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 60px;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+            position: relative; z-index: 1;
+        }
+        .prevenda-info { flex: 1; position: relative; z-index: 1; }
+        .prevenda-eyebrow {
+            font-size: 11px; font-weight: 700;
+            letter-spacing: 2.5px; text-transform: uppercase;
+            color: var(--dourado-principal);
+            margin-bottom: 12px;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .prevenda-eyebrow::before {
+            content: '';
+            display: inline-block;
+            width: 24px; height: 2px;
+            background: var(--dourado-principal);
+            border-radius: 1px;
+        }
+        .prevenda-info h3 {
+            font-family: var(--fonte-display);
+            font-size: 32px; font-weight: 900;
+            color: var(--branco);
+            line-height: 1.15;
+            margin-bottom: 8px;
+        }
+        .prevenda-autor { font-size: 14px; color: rgba(255,255,255,0.7); margin-bottom: 16px; }
+        .prevenda-desc {
+            font-size: 14px; color: rgba(255,255,255,0.65);
+            line-height: 1.7; margin-bottom: 24px;
+            max-width: 420px;
+        }
+        .prevenda-meta { display: flex; gap: 24px; margin-bottom: 28px; }
+        .pmeta { color: rgba(255,255,255,0.85); }
+        .pmeta .pl { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: rgba(255,255,255,0.5); margin-bottom: 2px; }
+        .pmeta .pv { font-weight: 700; font-size: 15px; }
+        .pmeta .pv.ouro { color: var(--dourado-principal); font-size: 20px; font-family: var(--fonte-display); }
+        .prevenda-acoes { display: flex; gap: 12px; align-items: center; }
+        .btn-prevenda {
+            padding: 13px 28px;
+            background: linear-gradient(135deg, var(--dourado-principal), var(--dourado-escuro));
+            color: var(--branco); border: none;
+            border-radius: 30px; font-weight: 700; font-size: 14px;
+            cursor: pointer; letter-spacing: 0.5px;
+            transition: all 0.3s;
+            display: flex; align-items: center; gap: 8px;
+            box-shadow: 0 8px 24px var(--sombra-dourado);
+        }
+        .btn-prevenda:hover { transform: translateY(-3px); box-shadow: 0 14px 36px var(--sombra-dourado); }
+        .btn-notif {
+            padding: 13px 22px;
+            background: rgba(255,255,255,0.12);
+            color: var(--branco);
+            border: 2px solid rgba(255,255,255,0.25);
+            border-radius: 30px; font-weight: 600; font-size: 14px;
+            cursor: pointer; transition: all 0.3s;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .btn-notif:hover { background: rgba(255,255,255,0.22); border-color: rgba(255,255,255,0.4); }
+
+        /* ═══════════════════════════════════
+           NEWSLETTER (CTA FINAL)
+        ═══════════════════════════════════ */
+        .newsletter-wrap {
+            max-width: 1260px;
+            margin: 72px auto 0;
+            padding: 0 40px 80px;
+        }
+        .newsletter {
+            background: var(--branco);
+            border-radius: 24px;
+            padding: 40px 56px;
+            display: flex; align-items: center; gap: 40px;
+            box-shadow: 0 4px 20px var(--sombra-suave);
+            border: 2px solid var(--cinza-claro);
+        }
+        .newsletter-txt { flex: 1; }
+        .newsletter-txt h3 {
+            font-family: var(--fonte-display);
+            font-size: 24px; font-weight: 800;
+            color: var(--vermelho-escuro); margin-bottom: 6px;
+        }
+        .newsletter-txt p { font-size: 14px; color: #888; }
+        .newsletter-form { display: flex; gap: 10px; flex-shrink: 0; }
+        .newsletter-form input {
+            padding: 13px 20px;
+            border: 2px solid var(--cinza-claro);
+            border-radius: 12px; font-size: 14px;
+            outline: none; width: 260px;
+            transition: border-color 0.2s;
+        }
+        .newsletter-form input:focus { border-color: var(--rosa-medio); }
+        .newsletter-form button {
+            padding: 13px 24px;
+            background: linear-gradient(135deg, var(--vermelho-escuro), var(--rosa-medio));
+            color: var(--branco); border: none;
+            border-radius: 12px; font-weight: 700; font-size: 14px;
+            cursor: pointer; transition: all 0.25s;
+            white-space: nowrap;
+        }
+        .newsletter-form button:hover {
+            background: linear-gradient(135deg, var(--dourado-principal), var(--dourado-escuro));
+            color: var(--vermelho-escuro);
+            transform: translateY(-2px);
+        }
+
+        /* ═══════════════════════════════════
+           RESPONSIVO
+        ═══════════════════════════════════ */
+        @media (max-width: 900px) {
+            .perfil-wrap, .nav-wrap, .secao, .newsletter-wrap { padding: 0 20px; }
+            .perfil { flex-wrap: wrap; padding: 28px 28px; margin-top: -60px; gap: 20px; }
+            .perfil-acoes { flex-direction: row; }
+            .banner-stats { display: none; }
+            .prevenda-card { flex-direction: column; padding: 36px 28px; text-align: center; }
+            .prevenda-capa { margin: 0 auto; }
+            .prevenda-meta { justify-content: center; }
+            .prevenda-acoes { justify-content: center; }
+            .newsletter { flex-direction: column; padding: 32px 28px; text-align: center; }
+            .newsletter-form { flex-direction: column; width: 100%; }
+            .newsletter-form input { width: 100%; }
+        }
+
+        @media (max-width: 600px) {
+            .perfil { padding: 22px 20px; }
+            .perfil-info h1 { font-size: 26px; }
+            .foto-placeholder { width: 90px; height: 90px; font-size: 36px; }
+            .secao { padding-top: 48px; }
+            .livros-grid { grid-template-columns: repeat(2, 1fr); }
+            .menu { flex-wrap: wrap; gap: 4px; padding: 8px; border-radius: 16px; width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ═══════ BANNER ═══════ -->
+<div class="banner">
+    <div class="banner-stats">
+        <div class="bstat">
+            <div class="num">12+</div>
+            <div class="label">Anos de mercado</div>
+        </div>
+        <div class="bstat-sep"></div>
+        <div class="bstat">
+            <div class="num">850</div>
+            <div class="label">Títulos publicados</div>
+        </div>
+        <div class="bstat-sep"></div>
+        <div class="bstat">
+            <div class="num">120</div>
+            <div class="label">Autores ativos</div>
+        </div>
+        <div class="bstat-sep"></div>
+        <div class="bstat">
+            <div class="num">4.9★</div>
+            <div class="label">Avaliação média</div>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════ PERFIL ═══════ -->
+<div class="perfil-wrap">
+    <div class="perfil">
+        <div class="foto-wrap">
+            <div class="foto-placeholder">📖</div>
+            <div class="selo-verificado"><i class="fas fa-check"></i></div>
+        </div>
+
+        <div class="perfil-info">
+            <p class="eyebrow">Editora oficial · HamStore Books</p>
+            <h1>Editora Livraria</h1>
+            <div class="avaliacao">
+                <span class="estrelas">★★★★★</span>
+                <span class="av-num">5.0</span>
+                <span class="av-total">(100 avaliações)</span>
+            </div>
+            <a href="#" class="site">
+                <i class="fas fa-globe" style="font-size:12px;"></i>
+                www.editora.com.br
+            </a>
+            <div class="perfil-tags">
+                <span class="ptag">📍 São Paulo, SP</span>
+                <span class="ptag">📅 Fundada em 2012</span>
+                <span class="ptag gold">🏆 Vendedor Destaque</span>
+                <span class="ptag">🚚 Envio expresso</span>
+            </div>
+        </div>
+
+        <div class="perfil-acoes">
+            <button class="btn-seguir" id="btn-seguir" onclick="toggleSeguir()">
+                <i class="fas fa-plus" id="ico-seguir"></i>
+                <span id="txt-seguir">Seguir</span>
+            </button>
+            <button class="btn-contato">
+                <i class="fas fa-comment"></i> Contato
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════ NAV ═══════ -->
+<div class="nav-wrap">
+    <nav class="menu">
+        <a href="#inicio" class="ativo">Início</a>
+        <a href="#selos">Selos</a>
+        <a href="#lancamentos">Lançamentos</a>
+        <a href="#vendidos">Mais vendidos</a>
+        <a href="#autores">Autores</a>
+        <a href="#prevenda">Pré-venda</a>
+    </nav>
+</div>
+
+<!-- ═══════ SELOS EDITORIAIS ═══════ -->
+<div class="secao" id="selos">
+    <div class="secao-header">
+        <h2><span>Catálogo</span>Nossos selos editoriais</h2>
+        <a href="#" class="ver-todos">Ver todos <i class="fas fa-arrow-right"></i></a>
+    </div>
+    <div class="selos-grid">
+        <div class="selo-card">
+            <div class="selo-topo">
+                <span class="icone">📕</span>
+                <h3>Ficção</h3>
+                <span class="qtd">48 títulos</span>
+            </div>
+            <div class="selo-corpo">
+                <div class="generos">
+                    <span class="genero-tag">Romance</span>
+                    <span class="genero-tag">Suspense</span>
+                    <span class="genero-tag">Terror</span>
+                    <span class="genero-tag">Fantasia</span>
+                </div>
+                <button class="btn-explorar">
+                    <i class="fas fa-book-open"></i> Explorar selo
+                </button>
+            </div>
+        </div>
+
+        <div class="selo-card">
+            <div class="selo-topo" style="background: linear-gradient(135deg,#6a3d9a,#9c27b0);">
+                <span class="icone">🌙</span>
+                <h3>Jovem</h3>
+                <span class="qtd">32 títulos</span>
+            </div>
+            <div class="selo-corpo">
+                <div class="generos">
+                    <span class="genero-tag">Young Adult</span>
+                    <span class="genero-tag">Fantasia Juvenil</span>
+                    <span class="genero-tag">Coming-of-age</span>
+                </div>
+                <button class="btn-explorar">
+                    <i class="fas fa-book-open"></i> Explorar selo
+                </button>
+            </div>
+        </div>
+
+        <div class="selo-card">
+            <div class="selo-topo" style="background: linear-gradient(135deg,#1a4a6b,#1976d2);">
+                <span class="icone">🎓</span>
+                <h3>Acadêmico</h3>
+                <span class="qtd">24 títulos</span>
+            </div>
+            <div class="selo-corpo">
+                <div class="generos">
+                    <span class="genero-tag">Técnicos</span>
+                    <span class="genero-tag">Universitários</span>
+                    <span class="genero-tag">Pesquisa</span>
+                </div>
+                <button class="btn-explorar">
+                    <i class="fas fa-book-open"></i> Explorar selo
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════ LANÇAMENTOS ═══════ -->
+<div class="secao" id="lancamentos">
+    <div class="secao-header">
+        <h2><span>Novidades</span>Lançamentos do mês</h2>
+        <a href="#" class="ver-todos">Ver todos <i class="fas fa-arrow-right"></i></a>
+    </div>
+    <div class="livros-grid">
+        <div class="livro-card" onclick="window.location.href='Produto.html'">
+            <div class="livro-capa-placeholder"><i class="fas fa-book"></i></div>
+            <div class="livro-info">
+                <span class="livro-badge">Lançamento</span>
+                <div class="livro-titulo">Título A — Uma história extraordinária</div>
+                <div class="livro-autor">Autor X · Ficção</div>
+                <div class="livro-rodape">
+                    <span class="livro-preco">R$ 40,00</span>
+                    <button class="btn-carrinho" onclick="event.stopPropagation()">
+                        <i class="fas fa-cart-plus"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="livro-card" onclick="window.location.href='Produto.html'">
+            <div class="livro-capa-placeholder"><i class="fas fa-book"></i></div>
+            <div class="livro-info">
+                <span class="livro-badge">Lançamento</span>
+                <div class="livro-titulo">Título B — Entre sombras e luz</div>
+                <div class="livro-autor">Autor Y · Romance</div>
+                <div class="livro-rodape">
+                    <span class="livro-preco">R$ 35,00</span>
+                    <button class="btn-carrinho" onclick="event.stopPropagation()">
+                        <i class="fas fa-cart-plus"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="livro-card" onclick="window.location.href='Produto.html'">
+            <div class="livro-capa-placeholder"><i class="fas fa-book"></i></div>
+            <div class="livro-info">
+                <span class="livro-badge">Lançamento</span>
+                <div class="livro-titulo">Título C — O último verão</div>
+                <div class="livro-autor">Autor Z · Suspense</div>
+                <div class="livro-rodape">
+                    <span class="livro-preco">R$ 50,00</span>
+                    <button class="btn-carrinho" onclick="event.stopPropagation()">
+                        <i class="fas fa-cart-plus"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="livro-card" onclick="window.location.href='Produto.html'">
+            <div class="livro-capa-placeholder"><i class="fas fa-book"></i></div>
+            <div class="livro-info">
+                <span class="livro-badge">Lançamento</span>
+                <div class="livro-titulo">Título D — Raízes do silêncio</div>
+                <div class="livro-autor">Autor W · Fantasia</div>
+                <div class="livro-rodape">
+                    <span class="livro-preco">R$ 45,00</span>
+                    <button class="btn-carrinho" onclick="event.stopPropagation()">
+                        <i class="fas fa-cart-plus"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════ MAIS VENDIDOS ═══════ -->
+<div class="secao" id="vendidos">
+    <div class="secao-header">
+        <h2><span>Rankings</span>Mais vendidos</h2>
+    </div>
+    <div class="ranking-lista">
+        <div class="rank-item">
+            <div class="rank-num top1">1°</div>
+            <div class="rank-capa"><i class="fas fa-book"></i></div>
+            <div class="rank-dados">
+                <div class="rank-titulo">Livro Número Um da Editora</div>
+                <div class="rank-autor">Autor Principal · Ficção</div>
+            </div>
+            <div class="rank-vendas">
+                <div class="rank-num-vendas">50</div>
+                <div class="rank-label">vendas</div>
+                <div class="rank-barra-wrap"><div class="rank-barra" style="width:100%"></div></div>
+            </div>
+        </div>
+
+        <div class="rank-item">
+            <div class="rank-num top2">2°</div>
+            <div class="rank-capa"><i class="fas fa-book"></i></div>
+            <div class="rank-dados">
+                <div class="rank-titulo">Segundo Livro Mais Popular</div>
+                <div class="rank-autor">Autor Destaque · Romance</div>
+            </div>
+            <div class="rank-vendas">
+                <div class="rank-num-vendas">40</div>
+                <div class="rank-label">vendas</div>
+                <div class="rank-barra-wrap"><div class="rank-barra" style="width:80%"></div></div>
+            </div>
+        </div>
+
+        <div class="rank-item">
+            <div class="rank-num top3">3°</div>
+            <div class="rank-capa"><i class="fas fa-book"></i></div>
+            <div class="rank-dados">
+                <div class="rank-titulo">Terceiro Lugar nas Vendas</div>
+                <div class="rank-autor">Autor Revelação · Suspense</div>
+            </div>
+            <div class="rank-vendas">
+                <div class="rank-num-vendas">30</div>
+                <div class="rank-label">vendas</div>
+                <div class="rank-barra-wrap"><div class="rank-barra" style="width:60%"></div></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════ AUTORES ═══════ -->
+<div class="secao" id="autores">
+    <div class="secao-header">
+        <h2><span>Nosso time</span>Autores em destaque</h2>
+        <a href="#" class="ver-todos">Ver todos <i class="fas fa-arrow-right"></i></a>
+    </div>
+    <div class="autores-grid">
+        <div class="autor-card">
+            <div class="autor-avatar">A1</div>
+            <div class="autor-nome">Autor Silva</div>
+            <div class="autor-obras">12 obras publicadas</div>
+            <span class="autor-genero">Ficção</span>
+        </div>
+        <div class="autor-card">
+            <div class="autor-avatar">A2</div>
+            <div class="autor-nome">Autor Costa</div>
+            <div class="autor-obras">8 obras publicadas</div>
+            <span class="autor-genero">Romance</span>
+        </div>
+        <div class="autor-card">
+            <div class="autor-avatar">A3</div>
+            <div class="autor-nome">Autor Lima</div>
+            <div class="autor-obras">5 obras publicadas</div>
+            <span class="autor-genero">Suspense</span>
+        </div>
+        <div class="autor-card">
+            <div class="autor-avatar">A4</div>
+            <div class="autor-nome">Autor Souza</div>
+            <div class="autor-obras">15 obras publicadas</div>
+            <span class="autor-genero">Fantasia</span>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════ PRÉ-VENDA ═══════ -->
+<div class="secao" id="prevenda">
+    <div class="secao-header">
+        <h2><span>Em breve</span>Pré-venda exclusiva</h2>
+    </div>
+    <div class="prevenda-card">
+        <div class="prevenda-capa">📚</div>
+        <div class="prevenda-info">
+            <p class="prevenda-eyebrow">Pré-venda aberta</p>
+            <h3>O Novo Livro do Autor X</h3>
+            <p class="prevenda-autor">por Autor X · Ficção literária</p>
+            <p class="prevenda-desc">
+                Uma narrativa singular que atravessa décadas e fronteiras, explorando os laços invisíveis entre memória, identidade e o poder transformador das palavras.
+            </p>
+            <div class="prevenda-meta">
+                <div class="pmeta">
+                    <div class="pl">Lançamento</div>
+                    <div class="pv">01 de Janeiro, 2026</div>
+                </div>
+                <div class="pmeta">
+                    <div class="pl">Preço</div>
+                    <div class="pv ouro">R$ 54,90</div>
+                </div>
+                <div class="pmeta">
+                    <div class="pl">Formato</div>
+                    <div class="pv">Capa dura</div>
+                </div>
+            </div>
+            <div class="prevenda-acoes">
+                <button class="btn-prevenda">
+                    <i class="fas fa-lock-open"></i> Garantir meu exemplar
+                </button>
+                <button class="btn-notif">
+                    <i class="fas fa-bell"></i> Avisar no lançamento
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════ NEWSLETTER ═══════ -->
+<div class="newsletter-wrap">
+    <div class="newsletter">
+        <div class="newsletter-txt">
+            <h3>                                               </h3>
+            <p>                                                 </p>
+        </div>
+     
+    </div>
+</div>
+
+<script>
+    let seguindo = false;
+    function toggleSeguir() {
+        seguindo = !seguindo;
+        const btn = document.getElementById('btn-seguir');
+        const ico = document.getElementById('ico-seguir');
+        const txt = document.getElementById('txt-seguir');
+        if (seguindo) {
+            btn.classList.add('seguindo');
+            ico.className = 'fas fa-check';
+            txt.textContent = 'Seguindo';
+        } else {
+            btn.classList.remove('seguindo');
+            ico.className = 'fas fa-plus';
+            txt.textContent = 'Seguir';
+        }
+    }
+
+    function assinar() {
+        const input = document.querySelector('.newsletter-form input');
+        if (!input.value.includes('@')) {
+            input.style.borderColor = '#e74c3c';
+            return;
+        }
+        const btn = document.querySelector('.newsletter-form button');
+        btn.innerHTML = '<i class="fas fa-check"></i> Inscrito!';
+        btn.style.background = 'linear-gradient(135deg,#2e7d32,#1b5e20)';
+        input.value = '';
+        input.style.borderColor = '';
+        setTimeout(() => {
+            btn.innerHTML = '<i class="fas fa-paper-plane"></i> Assinar';
+            btn.style.background = '';
+        }, 3000);
+    }
+
+    // Scroll suave nos links do menu
+    document.querySelectorAll('.menu a').forEach(a => {
+        a.addEventListener('click', e => {
+            const href = a.getAttribute('href');
+            if (href.startsWith('#')) {
+                e.preventDefault();
+                const el = document.querySelector(href);
+                if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                document.querySelectorAll('.menu a').forEach(x => x.classList.remove('ativo'));
+                a.classList.add('ativo');
+            }
+        });
+    });
+
+    // Animar barras de ranking ao aparecer
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+            if (e.isIntersecting) {
+                e.target.querySelectorAll('.rank-barra').forEach(b => {
+                    const w = b.style.width;
+                    b.style.width = '0';
+                    setTimeout(() => b.style.width = w, 100);
+                });
+            }
+        });
+    }, { threshold: 0.3 });
+    const rl = document.querySelector('.ranking-lista');
+    if (rl) observer.observe(rl);
+</script>
+</body>
+</html>

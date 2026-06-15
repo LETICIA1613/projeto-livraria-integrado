@@ -1,0 +1,1207 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Cancelar Pedido - Livraria Online</title>
+    <style>
+        :root {
+            --vermelho-escuro: #8C031C;
+            --rosa-medio: #BF6980;
+            --cinza-claro: #F0F0F2;
+            --verde-escuro: #3A4011;
+            --branco: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Georgia, serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--vermelho-escuro), var(--rosa-medio));
+            padding: 20px;
+            min-height: 100vh;
+            color: var(--branco);
+            position: relative;
+        }
+
+        /* Elementos decorativos de livraria */
+        body::before {
+            content: "📚";
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            font-size: 80px;
+            opacity: 0.1;
+            pointer-events: none;
+        }
+
+        body::after {
+            content: "📖";
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            font-size: 60px;
+            opacity: 0.1;
+            pointer-events: none;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .foto {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--cinza-claro), var(--branco));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            text-decoration: none;
+            font-size: 24px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            transition: 0.3s;
+        }
+
+        .foto:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(139,3,28,0.4);
+        }
+
+        .foto::after {
+            content: "✏️";
+            position: absolute;
+            bottom: -3px;
+            right: -3px;
+            background: var(--verde-escuro);
+            color: var(--branco);
+            font-size: 12px;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(58,64,17,0.5);
+            cursor: pointer;
+        }
+
+        .perfil {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .perfil h2 {
+            color: var(--branco);
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            font-size: 28px;
+        }
+
+        .perfil p {
+            font-style: italic;
+            opacity: 0.9;
+            font-size: 14px;
+        }
+
+        /* topo */
+        .topo {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .voltar {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: var(--branco);
+            padding: 10px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            font-family: Georgia, serif;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .voltar:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateX(-3px);
+        }
+
+        .titulo-pagina {
+            font-size: 24px;
+            color: var(--branco);
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Cards de pedidos */
+        .pedidos-container {
+            margin-top: 20px;
+        }
+
+        .pedido-card {
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255,255,255,0.2);
+            transition: 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pedido-card:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-3px);
+        }
+
+        .pedido-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .loja-nome {
+            font-size: 20px;
+            font-weight: bold;
+            color: var(--branco);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .loja-nome .icone-loja {
+            font-size: 28px;
+        }
+
+        .status-pedido {
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .status-confirmado {
+            background: var(--verde-escuro);
+        }
+
+        .status-preparando {
+            background: #8B6914;
+        }
+
+        .status-cancelado {
+            background: var(--vermelho-escuro);
+        }
+
+        .entrega-info {
+            background: rgba(0,0,0,0.2);
+            border-radius: 15px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .info-label {
+            font-weight: bold;
+            opacity: 0.9;
+        }
+
+        .info-value {
+            color: var(--cinza-claro);
+        }
+
+        /* Itens do pedido */
+        .itens-pedido {
+            margin: 15px 0;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .item-pedido {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 14px;
+            padding: 5px;
+            transition: 0.3s;
+        }
+
+        .item-pedido:hover {
+            background: rgba(255,255,255,0.1);
+            border-radius: 8px;
+            transform: translateX(5px);
+        }
+
+        /* Botões */
+        .botoes-acoes {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn-cancelar {
+            background: linear-gradient(135deg, var(--vermelho-escuro), #6B0215);
+            border: none;
+            color: var(--branco);
+            padding: 12px 24px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            font-family: Georgia, serif;
+            font-weight: bold;
+            transition: 0.3s;
+            flex: 1;
+        }
+
+        .btn-cancelar:hover {
+            transform: scale(1.02);
+            box-shadow: 0 5px 15px rgba(139,3,28,0.5);
+        }
+
+        .btn-detalhes {
+            background: rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: var(--branco);
+            padding: 12px 24px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            font-family: Georgia, serif;
+            transition: 0.3s;
+            flex: 1;
+        }
+
+        .btn-detalhes:hover {
+            background: rgba(255,255,255,0.3);
+            transform: scale(1.02);
+        }
+
+        /* Modal de detalhes - VERSÃO BONITINHA */
+        .modal-detalhes {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.85);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .modal-detalhes-content {
+            background: linear-gradient(135deg, #2c1810, #4a2c20);
+            border-radius: 30px;
+            padding: 0;
+            max-width: 600px;
+            width: 90%;
+            max-height: 85vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            animation: modalSlideIn 0.4s ease;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                transform: scale(0.8) translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1) translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-detalhes-header {
+            background: linear-gradient(135deg, var(--verde-escuro), #4d5517);
+            padding: 25px;
+            text-align: center;
+            position: relative;
+            border-radius: 30px 30px 0 0;
+        }
+
+        .modal-detalhes-header h2 {
+            font-size: 28px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .fechar-detalhes {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: var(--branco);
+            font-size: 28px;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.3s;
+        }
+
+        .fechar-detalhes:hover {
+            background: rgba(255,255,255,0.3);
+            transform: rotate(90deg);
+        }
+
+        .modal-detalhes-body {
+            padding: 25px;
+        }
+
+        /* Resumo do pedido */
+        .resumo-pedido {
+            background: rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .resumo-pedido .loja-grande {
+            font-size: 24px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .loja-grande .icone {
+            font-size: 40px;
+        }
+
+        .badge-status {
+            display: inline-block;
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        /* Card de informações */
+        .info-card {
+            background: rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .info-card-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .info-card-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .info-card-item:last-child {
+            border-bottom: none;
+        }
+
+        /* Lista de itens */
+        .itens-lista {
+            background: rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .itens-lista-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .item-detalhe {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px;
+            margin-bottom: 8px;
+            background: rgba(0,0,0,0.2);
+            border-radius: 12px;
+            transition: 0.3s;
+        }
+
+        .item-detalhe:hover {
+            background: rgba(0,0,0,0.3);
+            transform: translateX(5px);
+        }
+
+        .item-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex: 1;
+        }
+
+        .item-emoji {
+            font-size: 28px;
+        }
+
+        .item-nome {
+            font-weight: bold;
+        }
+
+        .item-preco {
+            color: var(--dourado);
+            font-weight: bold;
+        }
+
+        /* Total */
+        .total-card {
+            background: linear-gradient(135deg, rgba(58,64,17,0.8), rgba(77,85,23,0.8));
+            border-radius: 20px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .total-valor {
+            font-size: 32px;
+            font-weight: bold;
+            color: var(--dourado);
+            margin-top: 10px;
+        }
+
+        .subtotal-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        /* Botão fechar */
+        .btn-fechar-modal {
+            background: var(--verde-escuro);
+            border: none;
+            color: var(--branco);
+            padding: 12px 30px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 16px;
+            font-family: Georgia, serif;
+            font-weight: bold;
+            transition: 0.3s;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .btn-fechar-modal:hover {
+            transform: scale(1.02);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+        }
+
+        /* Scroll personalizado */
+        .modal-detalhes-content::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .modal-detalhes-content::-webkit-scrollbar-track {
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+        }
+
+        .modal-detalhes-content::-webkit-scrollbar-thumb {
+            background: var(--verde-escuro);
+            border-radius: 10px;
+        }
+
+        /* Modal de cancelamento */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, var(--vermelho-escuro), var(--rosa-medio));
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+            border: 1px solid rgba(255,255,255,0.3);
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .fechar-modal {
+            background: none;
+            border: none;
+            color: var(--branco);
+            font-size: 28px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .fechar-modal:hover {
+            transform: scale(1.1);
+        }
+
+        .motivo-cancelamento {
+            width: 100%;
+            padding: 12px;
+            border-radius: 10px;
+            border: none;
+            background: rgba(255,255,255,0.2);
+            color: var(--branco);
+            font-family: Georgia, serif;
+            margin: 15px 0;
+            resize: vertical;
+        }
+
+        .motivo-cancelamento::placeholder {
+            color: rgba(255,255,255,0.7);
+        }
+
+        .motivo-cancelamento:focus {
+            outline: none;
+            background: rgba(255,255,255,0.3);
+        }
+
+        .radio-group {
+            margin: 15px 0;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+
+        .radio-option input {
+            cursor: pointer;
+        }
+
+        .btn-confirmar-cancelamento {
+            background: var(--verde-escuro);
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        /* Alertas */
+        .alert {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 15px 25px;
+            border-radius: 10px;
+            color: white;
+            font-weight: bold;
+            z-index: 1001;
+            animation: slideInRight 0.3s ease;
+        }
+
+        .alert-success {
+            background: #4CAF50;
+        }
+
+        .alert-error {
+            background: var(--vermelho-escuro);
+        }
+
+        .alert-warning {
+            background: #ff9800;
+        }
+
+        .alert-info {
+            background: #2196F3;
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        /* Banner informativo */
+        .banner-info {
+            background: rgba(0,0,0,0.3);
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+            border-left: 4px solid var(--vermelho-escuro);
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+            
+            .perfil h2 {
+                font-size: 22px;
+            }
+            
+            .loja-nome {
+                font-size: 18px;
+            }
+            
+            .botoes-acoes {
+                flex-direction: column;
+            }
+
+            .modal-detalhes-header h2 {
+                font-size: 22px;
+            }
+
+            .total-valor {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Banner informativo -->
+        <div class="banner-info">
+            📚 Cancelamento de pedidos - Leia com atenção: pedidos já enviados não podem ser cancelados
+        </div>
+
+        <!-- Topo da página -->
+        <div class="topo">
+            <button class="voltar" onclick="history.back()">
+                <span>←</span> Voltar à livraria
+            </button>
+            <div class="titulo-pagina">
+                <span>❌</span> Cancelar Pedido
+            </div>
+        </div>
+
+        <!-- Perfil do usuário -->
+        <div class="perfil">
+            <div class="foto">📖</div>
+            <div>
+                <h2>Olá, Leitor(a) Maria!</h2>
+                <p>Selecione o pedido que deseja cancelar</p>
+            </div>
+        </div>
+
+        <!-- Lista de pedidos -->
+        <div class="pedidos-container" id="pedidosContainer"></div>
+    </div>
+
+    <!-- Modal de detalhes BONITINHO -->
+    <div id="modalDetalhes" class="modal-detalhes">
+        <div class="modal-detalhes-content">
+            <div class="modal-detalhes-header">
+                <button class="fechar-detalhes" onclick="fecharModalDetalhes()">✕</button>
+                <h2>
+                    <span>📖</span>
+                    Detalhes do Pedido
+                    <span>✨</span>
+                </h2>
+                <p style="opacity: 0.9;">Confira todas as informações abaixo</p>
+            </div>
+            <div class="modal-detalhes-body" id="modalDetalhesBody">
+                <!-- Conteúdo inserido via JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de cancelamento -->
+    <div id="modalCancelamento" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>❌ Cancelar Pedido</h3>
+                <button class="fechar-modal" onclick="fecharModal()">&times;</button>
+            </div>
+            <div id="modalPedidoInfo"></div>
+            
+            <div class="radio-group">
+                <p><strong>Motivo do cancelamento:</strong></p>
+                <label class="radio-option">
+                    <input type="radio" name="motivo" value="Comprei por engano">
+                    📚 Comprei por engano
+                </label>
+                <label class="radio-option">
+                    <input type="radio" name="motivo" value="Encontrei preço menor">
+                    💰 Encontrei preço menor em outra livraria
+                </label>
+                <label class="radio-option">
+                    <input type="radio" name="motivo" value="Tempo de entrega muito longo">
+                    ⏱️ Tempo de entrega muito longo
+                </label>
+                <label class="radio-option">
+                    <input type="radio" name="motivo" value="Mudei de ideia sobre o livro">
+                    🤔 Mudei de ideia sobre o livro
+                </label>
+                <label class="radio-option">
+                    <input type="radio" name="motivo" value="Outro">
+                    📝 Outro motivo
+                </label>
+            </div>
+            
+            <textarea class="motivo-cancelamento" id="outroMotivo" placeholder="Descreva o motivo (se escolheu 'Outro')" rows="3"></textarea>
+            
+            <button class="btn-cancelar btn-confirmar-cancelamento" onclick="confirmarCancelamento()">
+                Confirmar Cancelamento
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Dados dos pedidos
+        let pedidos = [
+            {
+                id: 1,
+                loja: "Livraria Cultura",
+                iconeLoja: "🏛️",
+                status: "confirmado",
+                statusTexto: "✅ Pedido confirmado",
+                statusCor: "status-confirmado",
+                data: "25/01/2024",
+                valor: "R$ 94,80",
+                frete: "R$ 10,00",
+                subtotal: "R$ 84,80",
+                enderecoEntrega: "Rua das Letras, 123 - Apt 42, São Paulo - SP",
+                metodoPagamento: "Cartão de Crédito (Visa final 1234)",
+                itens: [
+                    { nome: "O Alquimista - Paulo Coelho", emoji: "📖", quantidade: 1, preco: "R$ 49,90", precoNum: 49.90 },
+                    { nome: "Dom Casmurro - Machado de Assis", emoji: "📕", quantidade: 1, preco: "R$ 39,90", precoNum: 39.90 },
+                    { nome: "Marcador de Páginas Personalizado", emoji: "🎁", quantidade: 1, preco: "R$ 5,00", precoNum: 5.00 }
+                ],
+                podeCancelar: true
+            },
+            {
+                id: 2,
+                loja: "Saraiva Livreiros",
+                iconeLoja: "📚",
+                status: "preparando",
+                statusTexto: "📦 Em preparação",
+                statusCor: "status-preparando",
+                data: "24/01/2024",
+                valor: "R$ 134,70",
+                frete: "R$ 15,00",
+                subtotal: "R$ 119,70",
+                enderecoEntrega: "Rua das Letras, 123 - Apt 42, São Paulo - SP",
+                metodoPagamento: "PIX",
+                itens: [
+                    { nome: "A Culpa é das Estrelas - John Green", emoji: "📘", quantidade: 1, preco: "R$ 44,90", precoNum: 44.90 },
+                    { nome: "Harry Potter - Pedra Filosofal", emoji: "📙", quantidade: 1, preco: "R$ 59,90", precoNum: 59.90 },
+                    { nome: "O Pequeno Príncipe", emoji: "📗", quantidade: 1, preco: "R$ 29,90", precoNum: 29.90 }
+                ],
+                podeCancelar: true
+            },
+            {
+                id: 3,
+                loja: "Amazon Livros",
+                iconeLoja: "📦",
+                status: "enviado",
+                statusTexto: "🚚 Já foi enviado",
+                statusCor: "",
+                data: "23/01/2024",
+                valor: "R$ 64,80",
+                frete: "R$ 0,00",
+                subtotal: "R$ 64,80",
+                enderecoEntrega: "Rua das Letras, 123 - Apt 42, São Paulo - SP",
+                metodoPagamento: "Cartão de Débito",
+                itens: [
+                    { nome: "1984 - George Orwell", emoji: "📕", quantidade: 1, preco: "R$ 34,90", precoNum: 34.90 },
+                    { nome: "Revolução dos Bichos", emoji: "📔", quantidade: 1, preco: "R$ 29,90", precoNum: 29.90 }
+                ],
+                podeCancelar: false,
+                mensagemErro: "❌ Este pedido já foi enviado e não pode mais ser cancelado"
+            }
+        ];
+
+        let pedidoSelecionado = null;
+
+        // Renderizar pedidos
+        function renderizarPedidos() {
+            const container = document.getElementById('pedidosContainer');
+            container.innerHTML = '';
+
+            if (pedidos.length === 0) {
+                container.innerHTML = `
+                    <div style="text-align: center; padding: 50px; background: rgba(255,255,255,0.1); border-radius: 20px;">
+                        <div style="font-size: 48px; margin-bottom: 20px;">📚</div>
+                        <h3>Nenhum pedido ativo</h3>
+                        <p>Todos os seus pedidos foram entregues ou cancelados</p>
+                        <button class="voltar" style="margin-top: 20px;" onclick="history.back()">Voltar à livraria</button>
+                    </div>
+                `;
+                return;
+            }
+
+            pedidos.forEach(pedido => {
+                const totalItens = pedido.itens.reduce((sum, item) => sum + item.quantidade, 0);
+                
+                const cardHTML = `
+                    <div class="pedido-card">
+                        <div class="pedido-header">
+                            <div class="loja-nome">
+                                <span class="icone-loja">${pedido.iconeLoja}</span>
+                                ${pedido.loja}
+                            </div>
+                            <div class="status-pedido ${pedido.statusCor}">
+                                ${pedido.statusTexto}
+                            </div>
+                        </div>
+
+                        <div class="entrega-info">
+                            <div class="info-row">
+                                <span class="info-label">📅 Data do pedido:</span>
+                                <span class="info-value">${pedido.data}</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">📍 Endereço de entrega:</span>
+                                <span class="info-value">${pedido.enderecoEntrega}</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">📦 Quantidade de itens:</span>
+                                <span class="info-value">${totalItens} livros</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">💰 Valor total:</span>
+                                <span class="info-value"><strong>${pedido.valor}</strong></span>
+                            </div>
+                        </div>
+
+                        <div class="itens-pedido">
+                            <strong>📚 Livros no pedido:</strong>
+                            ${pedido.itens.map(item => `
+                                <div class="item-pedido">
+                                    <span>${item.quantidade}x ${item.emoji} ${item.nome}</span>
+                                    <span>${item.preco}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+
+                        <div class="botoes-acoes">
+                            ${pedido.podeCancelar ? `
+                                <button class="btn-cancelar" onclick="abrirModalCancelamento(${pedido.id})">
+                                    ❌ Cancelar Pedido
+                                </button>
+                                <button class="btn-detalhes" onclick="verDetalhes(${pedido.id})">
+                                    📖 Ver detalhes
+                                </button>
+                            ` : `
+                                <button class="btn-detalhes" style="width: 100%;" onclick="verDetalhes(${pedido.id})">
+                                    📖 Ver detalhes do pedido
+                                </button>
+                                <div style="text-align: center; margin-top: 10px; color: #ff9999; font-size: 12px;">
+                                    ${pedido.mensagemErro}
+                                </div>
+                            `}
+                        </div>
+                    </div>
+                `;
+
+                container.innerHTML += cardHTML;
+            });
+        }
+
+        // Ver detalhes - VERSÃO BONITINHA
+        function verDetalhes(pedidoId) {
+            const pedido = pedidos.find(p => p.id === pedidoId);
+            if (!pedido) return;
+            
+            const modalBody = document.getElementById('modalDetalhesBody');
+            
+            // Status badge
+            let statusBadge = '';
+            if (pedido.status === 'confirmado') {
+                statusBadge = '<span class="badge-status" style="background: var(--verde-escuro);">✅ Pedido Confirmado</span>';
+            } else if (pedido.status === 'preparando') {
+                statusBadge = '<span class="badge-status" style="background: #8B6914;">📦 Em Preparação</span>';
+            } else if (pedido.status === 'enviado') {
+                statusBadge = '<span class="badge-status" style="background: #2196F3;">🚚 Já foi Enviado</span>';
+            }
+            
+            // Lista de itens
+            const itensHTML = pedido.itens.map(item => `
+                <div class="item-detalhe">
+                    <div class="item-info">
+                        <div class="item-emoji">${item.emoji}</div>
+                        <div>
+                            <div class="item-nome">${item.nome}</div>
+                            <div style="font-size: 12px; opacity: 0.8;">Quantidade: ${item.quantidade}</div>
+                        </div>
+                    </div>
+                    <div class="item-preco">${item.preco}</div>
+                </div>
+            `).join('');
+            
+            const html = `
+                <div class="resumo-pedido">
+                    <div class="loja-grande">
+                        <span class="icone">${pedido.iconeLoja}</span>
+                        ${pedido.loja}
+                        <span class="icone">✨</span>
+                    </div>
+                    ${statusBadge}
+                </div>
+
+                <div class="info-card">
+                    <div class="info-card-title">
+                        <span>📋</span> Informações do Pedido
+                    </div>
+                    <div class="info-card-item">
+                        <span>📅 Data do pedido</span>
+                        <span><strong>${pedido.data}</strong></span>
+                    </div>
+                    <div class="info-card-item">
+                        <span>🆔 Número do pedido</span>
+                        <span><strong>#PED-${pedido.id}${pedido.data.replace(/\//g, '')}</strong></span>
+                    </div>
+                    <div class="info-card-item">
+                        <span>💳 Método de pagamento</span>
+                        <span><strong>${pedido.metodoPagamento}</strong></span>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-card-title">
+                        <span>📍</span> Endereço de Entrega
+                    </div>
+                    <div class="info-card-item">
+                        <span>🏠 Destinatário</span>
+                        <span><strong>Maria Silva</strong></span>
+                    </div>
+                    <div class="info-card-item">
+                        <span>📮 Endereço</span>
+                        <span><strong>${pedido.enderecoEntrega}</strong></span>
+                    </div>
+                    <div class="info-card-item">
+                        <span>📞 Telefone</span>
+                        <span><strong>(11) 98765-4321</strong></span>
+                    </div>
+                </div>
+
+                <div class="itens-lista">
+                    <div class="itens-lista-title">
+                        <span>📚</span> Itens do Pedido (${pedido.itens.length} livros)
+                    </div>
+                    ${itensHTML}
+                </div>
+
+                <div class="total-card">
+                    <div class="subtotal-item">
+                        <span>Subtotal</span>
+                        <span>${pedido.subtotal}</span>
+                    </div>
+                    <div class="subtotal-item">
+                        <span>Frete</span>
+                        <span>${pedido.frete}</span>
+                    </div>
+                    <div style="height: 1px; background: rgba(255,255,255,0.2); margin: 15px 0;"></div>
+                    <div class="subtotal-item" style="font-size: 18px;">
+                        <span><strong>TOTAL</strong></span>
+                        <span><strong class="total-valor" style="font-size: 24px;">${pedido.valor}</strong></span>
+                    </div>
+                </div>
+
+                <button class="btn-fechar-modal" onclick="fecharModalDetalhes()">
+                    ✨ Fechar ✨
+                </button>
+            `;
+            
+            modalBody.innerHTML = html;
+            document.getElementById('modalDetalhes').style.display = 'flex';
+        }
+
+        // Fechar modal de detalhes
+        function fecharModalDetalhes() {
+            document.getElementById('modalDetalhes').style.display = 'none';
+        }
+
+        // Abrir modal de cancelamento
+        function abrirModalCancelamento(pedidoId) {
+            const pedido = pedidos.find(p => p.id === pedidoId);
+            if (!pedido || !pedido.podeCancelar) {
+                mostrarAlerta("Este pedido não pode ser cancelado!", "error");
+                return;
+            }
+            
+            pedidoSelecionado = pedido;
+            const modal = document.getElementById('modalCancelamento');
+            
+            const modalInfo = document.getElementById('modalPedidoInfo');
+            modalInfo.innerHTML = `
+                <p><strong>📚 Livraria:</strong> ${pedido.loja}</p>
+                <p><strong>📅 Data:</strong> ${pedido.data}</p>
+                <p><strong>💰 Valor:</strong> ${pedido.valor}</p>
+                <p><strong>📦 Itens:</strong> ${pedido.itens.length} livros</p>
+                <hr style="margin: 15px 0; border-color: rgba(255,255,255,0.2);">
+            `;
+            
+            modal.style.display = 'flex';
+            
+            // Limpar formulário
+            document.querySelectorAll('input[name="motivo"]').forEach(radio => radio.checked = false);
+            document.getElementById('outroMotivo').value = '';
+        }
+
+        // Fechar modal
+        function fecharModal() {
+            document.getElementById('modalCancelamento').style.display = 'none';
+            pedidoSelecionado = null;
+        }
+
+        // Confirmar cancelamento
+        function confirmarCancelamento() {
+            if (!pedidoSelecionado) return;
+            
+            let motivoSelecionado = document.querySelector('input[name="motivo"]:checked');
+            if (!motivoSelecionado) {
+                mostrarAlerta("Por favor, selecione um motivo para o cancelamento", "warning");
+                return;
+            }
+            
+            let motivo = motivoSelecionado.value;
+            if (motivo === "Outro") {
+                const outroMotivo = document.getElementById('outroMotivo').value.trim();
+                if (!outroMotivo) {
+                    mostrarAlerta("Por favor, descreva o motivo do cancelamento", "warning");
+                    return;
+                }
+                motivo = outroMotivo;
+            }
+            
+            // Simular cancelamento
+            setTimeout(() => {
+                const index = pedidos.findIndex(p => p.id === pedidoSelecionado.id);
+                if (index !== -1) {
+                    pedidos.splice(index, 1);
+                    renderizarPedidos();
+                    
+                    mostrarAlerta(
+                        `✅ Pedido cancelado com sucesso!\n\n📚 Livraria: ${pedidoSelecionado.loja}\n📝 Motivo: ${motivo}\n💰 O reembolso será processado em até 5 dias úteis.`,
+                        "success"
+                    );
+                }
+                
+                fecharModal();
+            }, 500);
+        }
+
+        // Mostrar alerta
+        function mostrarAlerta(mensagem, tipo) {
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `alert alert-${tipo}`;
+            alertDiv.innerHTML = mensagem.replace(/\n/g, '<br>');
+            
+            document.body.appendChild(alertDiv);
+            
+            setTimeout(() => {
+                alertDiv.style.animation = 'slideInRight 0.3s ease reverse';
+                setTimeout(() => {
+                    alertDiv.remove();
+                }, 300);
+            }, 4000);
+        }
+
+        // Fechar modais clicando fora
+        window.onclick = function(event) {
+            const modalCancel = document.getElementById('modalCancelamento');
+            const modalDetalhes = document.getElementById('modalDetalhes');
+            if (event.target === modalCancel) {
+                fecharModal();
+            }
+            if (event.target === modalDetalhes) {
+                fecharModalDetalhes();
+            }
+        }
+
+        // Inicializar página
+        renderizarPedidos();
+    </script>
+</body>
+</html>

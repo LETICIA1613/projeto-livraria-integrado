@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil do Autor — HamStore Books</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;0,900;1,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --vermelho-escuro: #8C031C; --rosa-medio: #BF6980;
+            --cinza-claro: #F0F0F2;    --dourado-principal: #D9B607;
+            --dourado-escuro: #8C5C03; --branco: #ffffff;
+            --sombra-suave: rgba(140,3,28,0.10);
+            --sombra-dourado: rgba(217,182,7,0.28);
+            --display: 'Playfair Display', Georgia, serif;
+            --corpo: 'Inter','Segoe UI',sans-serif;
+        }
+        *{margin:0;padding:0;box-sizing:border-box;}
+        body{font-family:var(--corpo);background:#f8f7f5;color:#2a2a2a;overflow-x:hidden;}
+
+        /* ── BANNER ── */
+        .banner{height:320px;background:linear-gradient(160deg,rgba(140,3,28,.82) 0%,rgba(191,105,128,.52) 52%,rgba(140,92,3,.62) 100%),url('img/bannerAutor.jpg') center/cover no-repeat;position:relative;}
+        .banner::after{content:'';position:absolute;bottom:0;left:0;right:0;height:130px;background:linear-gradient(transparent,#f8f7f5);}
+        .banner-quote{position:absolute;bottom:36px;left:60px;z-index:4;}
+        .banner-quote .qt{font-family:var(--display);font-style:italic;font-size:17px;color:rgba(255,255,255,.9);line-height:1.45;max-width:380px;text-shadow:0 2px 12px rgba(0,0,0,.4);}
+        .banner-quote .qt::before{content:'\201C';font-size:26px;color:var(--dourado-principal);vertical-align:-4px;margin-right:2px;}
+        .banner-quote .qt::after{content:'\201D';font-size:26px;color:var(--dourado-principal);vertical-align:-4px;margin-left:2px;}
+        .banner-quote .qa{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--dourado-principal);margin-top:8px;}
+        .banner-stats{position:absolute;bottom:36px;right:60px;display:flex;gap:24px;z-index:4;}
+        .bstat{text-align:center;color:var(--branco);}
+        .bstat .num{font-family:var(--display);font-size:26px;font-weight:900;color:var(--dourado-principal);line-height:1;}
+        .bstat .lbl{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;opacity:.8;margin-top:3px;}
+        .bstat-sep{width:1px;background:rgba(255,255,255,.22);align-self:stretch;}
+
+        /* aviso "representado por editora" */
+        .banner-editora{position:absolute;top:20px;right:20px;z-index:4;background:rgba(255,255,255,.15);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.3);border-radius:30px;padding:8px 16px;display:flex;align-items:center;gap:8px;color:var(--branco);font-size:12px;font-weight:600;}
+        .banner-editora i{color:var(--dourado-principal);}
+
+        /* ── PERFIL ── */
+        .perfil-wrap{max-width:1260px;margin:0 auto;padding:0 40px;}
+        .perfil{display:flex;align-items:center;gap:32px;background:var(--branco);padding:32px 44px;margin-top:-72px;border-radius:24px;box-shadow:0 20px 60px var(--sombra-suave);position:relative;z-index:10;border:1px solid rgba(255,255,255,.6);}
+        .foto-wrap{position:relative;flex-shrink:0;}
+        .foto-ph{width:130px;height:130px;border-radius:50%;background:linear-gradient(135deg,var(--vermelho-escuro),var(--rosa-medio));border:5px solid var(--branco);box-shadow:0 12px 40px rgba(0,0,0,.18);display:flex;align-items:center;justify-content:center;font-size:48px;color:var(--branco);}
+        .badge-tipo{position:absolute;bottom:4px;right:0;background:linear-gradient(135deg,var(--vermelho-escuro),var(--rosa-medio));color:var(--branco);font-size:10px;font-weight:700;padding:3px 10px;border-radius:20px;border:2px solid var(--branco);white-space:nowrap;box-shadow:0 3px 10px var(--sombra-suave);}
+        .perfil-info{flex:1;}
+        .eyebrow{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--rosa-medio);margin-bottom:6px;}
+        .perfil-info h1{font-family:var(--display);font-size:34px;font-weight:900;color:var(--vermelho-escuro);line-height:1.1;margin-bottom:10px;}
+        .avaliacao{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+        .estrelas{color:var(--dourado-principal);font-size:16px;}
+        .av-num{font-weight:700;font-size:14px;color:var(--vermelho-escuro);}
+        .av-total{font-size:13px;color:#888;}
+        .generos{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap;}
+        .gtag{font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;background:rgba(140,3,28,.07);color:var(--vermelho-escuro);border:1px solid rgba(140,3,28,.15);}
+        .ptags{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;}
+        .ptag{font-size:11px;font-weight:600;padding:4px 12px;border-radius:20px;background:var(--cinza-claro);color:var(--vermelho-escuro);}
+        .ptag.gold{background:rgba(217,182,7,.12);color:var(--dourado-escuro);}
+        /* box editora no perfil */
+        .editora-box{display:flex;align-items:center;gap:12px;background:var(--cinza-claro);border-radius:14px;padding:12px 16px;margin-top:14px;border-left:4px solid var(--dourado-principal);}
+        .editora-box .eb-logo{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--vermelho-escuro),var(--rosa-medio));display:flex;align-items:center;justify-content:center;color:var(--branco);font-size:16px;flex-shrink:0;}
+        .editora-box .eb-info .eb-label{font-size:10px;color:#888;font-weight:600;text-transform:uppercase;letter-spacing:1px;}
+        .editora-box .eb-info .eb-nome{font-size:14px;font-weight:700;color:var(--vermelho-escuro);}
+        .editora-box .eb-link{margin-left:auto;font-size:12px;font-weight:700;color:var(--rosa-medio);text-decoration:none;display:flex;align-items:center;gap:4px;padding:6px 12px;border-radius:20px;border:1px solid rgba(191,105,128,.3);transition:all .2s;}
+        .editora-box .eb-link:hover{background:var(--rosa-medio);color:var(--branco);border-color:var(--rosa-medio);}
+        .perfil-acoes{display:flex;flex-direction:column;gap:10px;flex-shrink:0;}
+        .btn-seguir{padding:13px 32px;background:linear-gradient(135deg,var(--vermelho-escuro),var(--rosa-medio));color:var(--branco);border:none;border-radius:30px;font-weight:700;font-size:14px;cursor:pointer;transition:all .3s;box-shadow:0 8px 24px var(--sombra-suave);display:flex;align-items:center;gap:8px;}
+        .btn-seguir:hover{background:linear-gradient(135deg,var(--dourado-principal),var(--dourado-escuro));color:var(--vermelho-escuro);transform:translateY(-2px);box-shadow:0 12px 32px var(--sombra-dourado);}
+        .btn-seguir.seguindo{background:var(--cinza-claro);color:var(--vermelho-escuro);box-shadow:none;}
+        .btn-msg{padding:11px 28px;background:transparent;color:var(--vermelho-escuro);border:2px solid var(--rosa-medio);border-radius:30px;font-weight:700;font-size:14px;cursor:pointer;transition:all .3s;display:flex;align-items:center;gap:8px;}
+        .btn-msg:hover{background:var(--cinza-claro);border-color:var(--vermelho-escuro);}
+
+        /* ── NAV ── */
+        .nav-wrap{max-width:1260px;margin:28px auto 0;padding:0 40px;}
+        .menu{display:flex;gap:4px;background:var(--branco);padding:8px 12px;border-radius:50px;box-shadow:0 4px 20px var(--sombra-suave);width:fit-content;}
+        .menu a{text-decoration:none;color:#777;font-weight:600;font-size:14px;padding:10px 22px;border-radius:30px;transition:all .25s;white-space:nowrap;}
+        .menu a:hover{color:var(--vermelho-escuro);background:var(--cinza-claro);}
+        .menu a.ativo{background:linear-gradient(135deg,var(--vermelho-escuro),var(--rosa-medio));color:var(--branco);box-shadow:0 4px 14px var(--sombra-suave);}
+
+        /* ── SEÇÃO BASE ── */
+        .secao{max-width:1260px;margin:0 auto;padding:72px 40px 0;}
+        .secao-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:40px;padding-bottom:20px;border-bottom:2px solid var(--cinza-claro);}
+        .secao-header h2{font-family:var(--display);font-size:30px;font-weight:800;color:var(--vermelho-escuro);}
+        .secao-header h2 span{display:block;font-family:var(--corpo);font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--rosa-medio);margin-bottom:4px;}
+        .ver-todos{font-size:13px;font-weight:700;color:var(--rosa-medio);text-decoration:none;display:flex;align-items:center;gap:5px;padding:8px 18px;border-radius:20px;border:2px solid rgba(191,105,128,.3);transition:all .2s;}
+        .ver-todos:hover{background:var(--rosa-medio);color:var(--branco);border-color:var(--rosa-medio);}
+
+        /* ── AVISO "compra via editora" ── */
+        .aviso-editora{display:flex;align-items:flex-start;gap:14px;background:rgba(217,182,7,.08);border:2px solid rgba(217,182,7,.25);border-radius:16px;padding:18px 22px;margin-bottom:28px;}
+        .aviso-editora i{color:var(--dourado-escuro);font-size:20px;margin-top:2px;flex-shrink:0;}
+        .aviso-editora div{font-size:14px;color:var(--dourado-escuro);line-height:1.6;}
+        .aviso-editora a{color:var(--vermelho-escuro);font-weight:700;text-decoration:none;}
+        .aviso-editora a:hover{text-decoration:underline;}
+
+        /* ── LANÇAMENTO ── */
+        .lancamento-card{background:linear-gradient(135deg,var(--vermelho-escuro) 0%,#5a0114 45%,var(--dourado-escuro) 100%);border-radius:24px;padding:48px 56px;display:flex;align-items:center;gap:48px;box-shadow:0 16px 56px rgba(140,3,28,.3);position:relative;overflow:hidden;}
+        .lancamento-card::before{content:'';position:absolute;top:-80px;right:-80px;width:280px;height:280px;border-radius:50%;background:rgba(255,255,255,.04);}
+        .lancamento-card::after{content:'';position:absolute;bottom:-100px;left:220px;width:340px;height:340px;border-radius:50%;background:rgba(217,182,7,.06);}
+        .lanc-capa{width:148px;height:210px;flex-shrink:0;border-radius:14px;background:rgba(255,255,255,.12);border:2px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:56px;box-shadow:0 14px 44px rgba(0,0,0,.3);position:relative;z-index:1;}
+        .lanc-info{flex:1;position:relative;z-index:1;}
+        .lanc-eyebrow{display:flex;align-items:center;gap:8px;font-size:11px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--dourado-principal);margin-bottom:12px;}
+        .lanc-eyebrow::before{content:'';display:inline-block;width:24px;height:2px;background:var(--dourado-principal);border-radius:1px;}
+        .lanc-info h3{font-family:var(--display);font-size:30px;font-weight:900;color:var(--branco);line-height:1.2;margin-bottom:8px;}
+        .lanc-info .lanc-genero{font-size:13px;color:rgba(255,255,255,.65);margin-bottom:14px;}
+        .lanc-info .lanc-sinopse{font-size:14px;color:rgba(255,255,255,.62);line-height:1.7;max-width:400px;margin-bottom:22px;}
+        .lanc-meta{display:flex;gap:28px;margin-bottom:26px;}
+        .lm .ll{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,.45);margin-bottom:3px;}
+        .lm .lv{font-weight:700;font-size:15px;color:rgba(255,255,255,.9);}
+        .lm .lv.ouro{font-family:var(--display);font-size:22px;color:var(--dourado-principal);}
+        .lanc-btns{display:flex;gap:12px;}
+        /* Nesta página: compra vai para editora */
+        .btn-editora{padding:13px 28px;background:linear-gradient(135deg,var(--dourado-principal),var(--dourado-escuro));color:var(--branco);border:none;border-radius:30px;font-weight:700;font-size:14px;cursor:pointer;transition:all .3s;display:flex;align-items:center;gap:8px;box-shadow:0 8px 24px var(--sombra-dourado);}
+        .btn-editora:hover{transform:translateY(-3px);box-shadow:0 14px 36px var(--sombra-dourado);}
+        .btn-aviso{padding:13px 22px;background:rgba(255,255,255,.1);color:var(--branco);border:2px solid rgba(255,255,255,.22);border-radius:30px;font-weight:600;font-size:14px;cursor:pointer;transition:all .25s;display:flex;align-items:center;gap:8px;}
+        .btn-aviso:hover{background:rgba(255,255,255,.2);}
+
+        /* ── GRID LIVROS (somente visualização, compra via editora) ── */
+        .livros-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:24px;}
+        .livro-card{background:var(--branco);border-radius:18px;overflow:hidden;box-shadow:0 4px 16px var(--sombra-suave);transition:all .35s;border:2px solid transparent;position:relative;}
+        .livro-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--dourado-principal),var(--dourado-escuro));}
+        .livros-grid.serie .livro-card::before{background:linear-gradient(90deg,var(--rosa-medio),var(--vermelho-escuro));}
+        .livros-grid.populares .livro-card::before{background:linear-gradient(90deg,var(--dourado-principal),var(--rosa-medio));}
+        .livro-card:hover{transform:translateY(-8px);box-shadow:0 20px 50px rgba(140,3,28,.15);border-color:var(--rosa-medio);}
+        .livro-capa-ph{width:100%;height:240px;background:linear-gradient(135deg,var(--cinza-claro),#e2e2e4);display:flex;align-items:center;justify-content:center;font-size:64px;color:var(--rosa-medio);}
+        .livro-info{padding:16px 18px 20px;}
+        .livro-num{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--rosa-medio);margin-bottom:4px;}
+        .livro-titulo{font-weight:700;font-size:14px;color:var(--vermelho-escuro);line-height:1.35;margin-bottom:12px;}
+        .livro-rodape{display:flex;align-items:center;justify-content:space-between;}
+        .livro-preco{font-family:var(--display);font-size:20px;font-weight:800;color:var(--dourado-escuro);}
+        /* botão "Ver na editora" em vez de "adicionar ao carrinho" */
+        .btn-ver-editora{padding:7px 14px;background:var(--cinza-claro);border:none;border-radius:10px;font-size:12px;font-weight:700;color:var(--vermelho-escuro);cursor:pointer;transition:all .2s;white-space:nowrap;display:flex;align-items:center;gap:5px;}
+        .btn-ver-editora:hover{background:linear-gradient(135deg,var(--vermelho-escuro),var(--rosa-medio));color:var(--branco);}
+        .num-serie{position:absolute;top:14px;right:14px;width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,var(--vermelho-escuro),var(--rosa-medio));color:var(--branco);font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(140,3,28,.3);z-index:2;}
+
+        /* scroll horizontal série */
+        .scroll-livros{display:flex;gap:20px;overflow-x:auto;padding-bottom:12px;scrollbar-width:thin;scrollbar-color:var(--rosa-medio) var(--cinza-claro);}
+        .scroll-livros::-webkit-scrollbar{height:5px;}
+        .scroll-livros::-webkit-scrollbar-track{background:var(--cinza-claro);border-radius:3px;}
+        .scroll-livros::-webkit-scrollbar-thumb{background:var(--rosa-medio);border-radius:3px;}
+        .scroll-livros .livro-card{min-width:200px;flex-shrink:0;}
+
+        /* ── EVENTOS ── */
+        .eventos-lista{display:flex;flex-direction:column;gap:16px;}
+        .evento-card{display:flex;align-items:center;gap:20px;background:var(--branco);border-radius:16px;padding:18px 24px;box-shadow:0 3px 14px var(--sombra-suave);transition:all .3s;border:2px solid transparent;cursor:pointer;}
+        .evento-card:hover{border-color:var(--dourado-principal);transform:translateX(5px);box-shadow:0 8px 28px var(--sombra-dourado);}
+        .evento-data{width:56px;height:60px;flex-shrink:0;border-radius:14px;background:linear-gradient(135deg,var(--vermelho-escuro),var(--rosa-medio));display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--branco);}
+        .evento-data .dia{font-family:var(--display);font-size:22px;font-weight:900;line-height:1;}
+        .evento-data .mes{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;opacity:.85;}
+        .evento-dados{flex:1;}
+        .evento-nome{font-weight:700;font-size:15px;color:var(--vermelho-escuro);margin-bottom:3px;}
+        .evento-local{font-size:12px;color:#888;display:flex;align-items:center;gap:5px;}
+        .evento-tipo{font-size:11px;font-weight:700;padding:4px 12px;border-radius:20px;flex-shrink:0;}
+        .evento-tipo.sessao{background:rgba(217,182,7,.12);color:var(--dourado-escuro);}
+        .evento-tipo.palestra{background:rgba(140,3,28,.08);color:var(--vermelho-escuro);}
+        .evento-tipo.feira{background:rgba(191,105,128,.12);color:var(--rosa-medio);}
+
+        /* ── SOBRE ── */
+        .bio-grid{display:grid;grid-template-columns:1fr 320px;gap:28px;align-items:start;}
+        .bio-texto{background:var(--branco);border-radius:20px;padding:40px 44px;box-shadow:0 4px 20px var(--sombra-suave);border-left:5px solid var(--dourado-principal);}
+        .bio-texto p{font-size:15px;line-height:1.85;color:#444;margin-bottom:16px;}
+        .bio-texto p:last-child{margin-bottom:0;}
+        .bio-lateral{display:flex;flex-direction:column;gap:16px;}
+        .info-card{background:var(--branco);border-radius:18px;padding:22px 24px;box-shadow:0 4px 16px var(--sombra-suave);}
+        .info-card h4{font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--rosa-medio);margin-bottom:14px;}
+        .info-linha{display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid var(--cinza-claro);font-size:13px;}
+        .info-linha:last-child{border-bottom:none;}
+        .info-linha i{color:var(--dourado-principal);width:16px;text-align:center;flex-shrink:0;}
+        .il{color:#888;margin-right:4px;}
+        .iv{font-weight:600;color:var(--vermelho-escuro);}
+        .redes-card{background:linear-gradient(135deg,var(--vermelho-escuro),var(--rosa-medio));border-radius:18px;padding:22px 24px;}
+        .redes-card h4{font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.7);margin-bottom:14px;}
+        .redes-lista{display:flex;flex-direction:column;gap:8px;}
+        .rede-item{display:flex;align-items:center;gap:10px;padding:9px 14px;border-radius:12px;background:rgba(255,255,255,.12);color:var(--branco);font-size:13px;font-weight:600;text-decoration:none;transition:background .2s;}
+        .rede-item:hover{background:rgba(255,255,255,.22);}
+
+        /* ── PRÊMIOS ── */
+        .premios-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:18px;}
+        .premio-card{background:var(--branco);border-radius:16px;padding:22px 24px;box-shadow:0 4px 16px var(--sombra-suave);display:flex;align-items:center;gap:16px;transition:all .3s;border:2px solid transparent;}
+        .premio-card:hover{border-color:var(--dourado-principal);box-shadow:0 8px 28px var(--sombra-dourado);}
+        .premio-ico{width:52px;height:52px;border-radius:14px;background:linear-gradient(135deg,var(--dourado-principal),var(--dourado-escuro));display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;}
+        .premio-dados .pn{font-weight:700;font-size:14px;color:var(--vermelho-escuro);}
+        .premio-dados .pa{font-size:12px;color:#888;margin-top:2px;}
+
+        .footer-space{height:80px;}
+
+        @media(max-width:900px){
+            .perfil-wrap,.nav-wrap,.secao{padding-left:20px;padding-right:20px;}
+            .perfil{flex-wrap:wrap;padding:28px;margin-top:-60px;}
+            .perfil-acoes{flex-direction:row;}
+            .lancamento-card{flex-direction:column;padding:36px 28px;text-align:center;gap:28px;}
+            .lanc-meta{justify-content:center;}
+            .lanc-btns{justify-content:center;}
+            .bio-grid{grid-template-columns:1fr;}
+            .banner-quote,.banner-stats,.banner-editora{display:none;}
+        }
+        @media(max-width:600px){
+            .perfil-info h1{font-size:26px;}
+            .secao{padding-top:48px;}
+            .livros-grid{grid-template-columns:repeat(2,1fr);}
+            .menu{flex-wrap:wrap;gap:4px;padding:8px;border-radius:16px;width:100%;}
+        }
+    </style>
+</head>
+<body>
+
+<!-- BANNER -->
+<div class="banner">
+    <div class="banner-editora">
+        <i class="fas fa-building"></i> Representado por Editora Parceira
+    </div>
+   
+    <div class="banner-stats">
+        <div class="bstat"><div class="num">18</div><div class="lbl">Livros</div></div>
+        <div class="bstat-sep"></div>
+        <div class="bstat"><div class="num">3</div><div class="lbl">Séries</div></div>
+        <div class="bstat-sep"></div>
+        <div class="bstat"><div class="num">4,9★</div><div class="lbl">Avaliação</div></div>
+        <div class="bstat-sep"></div>
+        <div class="bstat"><div class="num">42k</div><div class="lbl">Leitores</div></div>
+    </div>
+</div>
+
+<!-- PERFIL -->
+<div class="perfil-wrap">
+    <div class="perfil">
+        <div class="foto-wrap">
+            <div class="foto-ph"><i class="fas fa-user"></i></div>
+            <span class="badge-tipo">✍️ Autor</span>
+        </div>
+        <div class="perfil-info">
+            <p class="eyebrow">Autor · HamStore Books</p>
+            <h1>Nome do Autor</h1>
+            <div class="avaliacao">
+                <span class="estrelas">★★★★★</span>
+                <span class="av-num">5.0</span>
+                <span class="av-total">(100 avaliações)</span>
+            </div>
+            <div class="generos">
+                <span class="gtag">Ficção</span>
+                <span class="gtag">Romance</span>
+                <span class="gtag">Fantasia</span>
+            </div>
+            <div class="ptags">
+                <span class="ptag">📚 18 livros publicados</span>
+                <span class="ptag">📍 São Paulo, SP</span>
+                <span class="ptag gold">🏆 Premiado Jabuti (3×)</span>
+            </div>
+            <!-- editora parceira em destaque -->
+            <div class="editora-box">
+                <div class="eb-logo"><i class="fas fa-building"></i></div>
+                <div class="eb-info">
+                    <div class="eb-label">Publicado por</div>
+                    <div class="eb-nome">Editora Parceira</div>
+                </div>
+                <a href="PerfilEditora.html" class="eb-link">
+                    <i class="fas fa-arrow-right" style="font-size:10px;"></i> Ver editora
+                </a>
+            </div>
+        </div>
+        <div class="perfil-acoes">
+            <button class="btn-seguir" id="btn-seguir" onclick="toggleSeguir()">
+                <i class="fas fa-plus" id="ico-seg"></i><span id="txt-seg">Seguir</span>
+            </button>
+            <button class="btn-msg"><i class="fas fa-comment"></i> Mensagem</button>
+        </div>
+    </div>
+</div>
+
+<!-- NAV -->
+<div class="nav-wrap">
+    <nav class="menu">
+        <a href="#inicio" class="ativo">Início</a>
+        <a href="#lancamento">Lançamento</a>
+        <a href="#serie">Série</a>
+        <a href="#populares">Populares</a>
+        <a href="#eventos">Eventos</a>
+        <a href="#premios">Prêmios</a>
+        <a href="#sobre">Sobre</a>
+    </nav>
+</div>
+
+<!-- AVISO GERAL -->
+<div class="secao" id="inicio" style="padding-top:40px;">
+    <div class="aviso-editora">
+        <i class="fas fa-info-circle"></i>
+        <div>Os livros deste autor são publicados e vendidos pela <strong>Editora Parceira</strong>. Para comprar, você será redirecionado para a página da editora. <a href="PerfilEditora.html">Visitar página da editora →</a></div>
+    </div>
+</div>
+
+<!-- LANÇAMENTO -->
+<div class="secao" id="lancamento">
+    <div class="secao-header">
+        <h2><span>Em breve</span>Próximo lançamento</h2>
+    </div>
+    <div class="lancamento-card">
+        <div class="lanc-capa">📗</div>
+        <div class="lanc-info">
+            <p class="lanc-eyebrow">Pré-venda via editora</p>
+            <h3>Nome do Livro Novo</h3>
+            <p class="lanc-genero">Ficção literária · Editora Parceira</p>
+            <p class="lanc-sinopse">Em uma cidade onde memórias podem ser transferidas entre pessoas, uma jovem descobre que suas próprias lembranças foram roubadas — e parte em busca de quem é, de verdade.</p>
+            <div class="lanc-meta">
+                <div class="lm"><div class="ll">Lançamento</div><div class="lv">01 Jan 2026</div></div>
+                <div class="lm"><div class="ll">Preço</div><div class="lv ouro">R$ 49,90</div></div>
+                <div class="lm"><div class="ll">Formato</div><div class="lv">Capa dura</div></div>
+            </div>
+            <div class="lanc-btns">
+                <button class="btn-editora" onclick="window.location.href='PerfilEditora.html'">
+                    <i class="fas fa-store"></i> Comprar na editora
+                </button>
+                <button class="btn-aviso"><i class="fas fa-bell"></i> Me avisar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SÉRIE -->
+<div class="secao" id="serie">
+    <div class="secao-header">
+        <h2><span>Coleção completa</span>Série: Nome da Série</h2>
+        <a href="PerfilEditora.html" class="ver-todos">Ver na editora <i class="fas fa-arrow-right"></i></a>
+    </div>
+    <div class="scroll-livros serie">
+        <div class="livro-card"><span class="num-serie">1</span><div class="livro-capa-ph"><i class="fas fa-book"></i></div><div class="livro-info"><div class="livro-num">Volume 1</div><div class="livro-titulo">Livro Um da Série</div><div class="livro-rodape"><span class="livro-preco">R$ 30,00</span><button class="btn-ver-editora"><i class="fas fa-store"></i> Editora</button></div></div></div>
+        <div class="livro-card"><span class="num-serie">2</span><div class="livro-capa-ph"><i class="fas fa-book"></i></div><div class="livro-info"><div class="livro-num">Volume 2</div><div class="livro-titulo">Livro Dois da Série</div><div class="livro-rodape"><span class="livro-preco">R$ 30,00</span><button class="btn-ver-editora"><i class="fas fa-store"></i> Editora</button></div></div></div>
+        <div class="livro-card"><span class="num-serie">3</span><div class="livro-capa-ph"><i class="fas fa-book"></i></div><div class="livro-info"><div class="livro-num">Volume 3</div><div class="livro-titulo">Livro Três da Série</div><div class="livro-rodape"><span class="livro-preco">R$ 30,00</span><button class="btn-ver-editora"><i class="fas fa-store"></i> Editora</button></div></div></div>
+        <div class="livro-card"><span class="num-serie">4</span><div class="livro-capa-ph"><i class="fas fa-book"></i></div><div class="livro-info"><div class="livro-num">Volume 4</div><div class="livro-titulo">Livro Quatro da Série</div><div class="livro-rodape"><span class="livro-preco">R$ 30,00</span><button class="btn-ver-editora"><i class="fas fa-store"></i> Editora</button></div></div></div>
+        <div class="livro-card"><span class="num-serie">5</span><div class="livro-capa-ph"><i class="fas fa-book"></i></div><div class="livro-info"><div class="livro-num">Volume 5</div><div class="livro-titulo">Livro Cinco da Série</div><div class="livro-rodape"><span class="livro-preco">R$ 30,00</span><button class="btn-ver-editora"><i class="fas fa-store"></i> Editora</button></div></div></div>
+    </div>
+</div>
+
+<!-- MAIS POPULARES -->
+<div class="secao" id="populares">
+    <div class="secao-header">
+        <h2><span>Mais lidos</span>Populares do autor</h2>
+        <a href="PerfilEditora.html" class="ver-todos">Ver na editora <i class="fas fa-arrow-right"></i></a>
+    </div>
+    <div class="livros-grid populares">
+        <div class="livro-card"><div class="livro-capa-ph"><i class="fas fa-book"></i></div><div class="livro-info"><div class="livro-titulo">Livro Mais Lido Um</div><div class="livro-rodape"><span class="livro-preco">R$ 30,00</span><button class="btn-ver-editora"><i class="fas fa-store"></i> Editora</button></div></div></div>
+        <div class="livro-card"><div class="livro-capa-ph"><i class="fas fa-book"></i></div><div class="livro-info"><div class="livro-titulo">Livro Mais Lido Dois</div><div class="livro-rodape"><span class="livro-preco">R$ 34,00</span><button class="btn-ver-editora"><i class="fas fa-store"></i> Editora</button></div></div></div>
+        <div class="livro-card"><div class="livro-capa-ph"><i class="fas fa-book"></i></div><div class="livro-info"><div class="livro-titulo">Livro Mais Lido Três</div><div class="livro-rodape"><span class="livro-preco">R$ 28,00</span><button class="btn-ver-editora"><i class="fas fa-store"></i> Editora</button></div></div></div>
+        <div class="livro-card"><div class="livro-capa-ph"><i class="fas fa-book"></i></div><div class="livro-info"><div class="livro-titulo">Livro Mais Lido Quatro</div><div class="livro-rodape"><span class="livro-preco">R$ 38,00</span><button class="btn-ver-editora"><i class="fas fa-store"></i> Editora</button></div></div></div>
+    </div>
+</div>
+
+<!-- EVENTOS -->
+<div class="secao" id="eventos">
+    <div class="secao-header">
+        <h2><span>Agenda</span>Próximos eventos</h2>
+        <a href="#" class="ver-todos">Ver todos <i class="fas fa-arrow-right"></i></a>
+    </div>
+    <div class="eventos-lista">
+        <div class="evento-card"><div class="evento-data"><div class="dia">14</div><div class="mes">Jan</div></div><div class="evento-dados"><div class="evento-nome">Sessão de Autógrafos — Livraria Cultura</div><div class="evento-local"><i class="fas fa-map-marker-alt" style="font-size:10px;color:var(--rosa-medio)"></i> Av. Paulista, 2073 · São Paulo, SP</div></div><span class="evento-tipo sessao">Autógrafo</span></div>
+        <div class="evento-card"><div class="evento-data"><div class="dia">22</div><div class="mes">Fev</div></div><div class="evento-dados"><div class="evento-nome">Palestra: O Processo Criativo na Ficção</div><div class="evento-local"><i class="fas fa-map-marker-alt" style="font-size:10px;color:var(--rosa-medio)"></i> USP · São Paulo, SP</div></div><span class="evento-tipo palestra">Palestra</span></div>
+        <div class="evento-card"><div class="evento-data"><div class="dia">08</div><div class="mes">Mar</div></div><div class="evento-dados"><div class="evento-nome">Feira do Livro de São Paulo 2026</div><div class="evento-local"><i class="fas fa-map-marker-alt" style="font-size:10px;color:var(--rosa-medio)"></i> Parque Trianon · São Paulo, SP</div></div><span class="evento-tipo feira">Feira</span></div>
+    </div>
+</div>
+
+<!-- PRÊMIOS -->
+<div class="secao" id="premios">
+    <div class="secao-header">
+        <h2><span>Reconhecimentos</span>Prêmios e conquistas</h2>
+    </div>
+    <div class="premios-grid">
+        <div class="premio-card"><div class="premio-ico">🏆</div><div class="premio-dados"><div class="pn">Prêmio Jabuti — Melhor Ficção</div><div class="pa">2023 · Câmara Brasileira do Livro</div></div></div>
+        <div class="premio-card"><div class="premio-ico">🥇</div><div class="premio-dados"><div class="pn">Prêmio Jabuti — Romance</div><div class="pa">2021 · Câmara Brasileira do Livro</div></div></div>
+        <div class="premio-card"><div class="premio-ico">📖</div><div class="premio-dados"><div class="pn">Finalista Portugal Telecom</div><div class="pa">2020 · Literatura Brasileira</div></div></div>
+        <div class="premio-card"><div class="premio-ico">⭐</div><div class="premio-dados"><div class="pn">Prêmio Jabuti — Estreante</div><div class="pa">2015 · Câmara Brasileira do Livro</div></div></div>
+    </div>
+</div>
+
+<!-- SOBRE -->
+<div class="secao" id="sobre">
+    <div class="secao-header"><h2><span>Trajetória</span>Sobre o autor</h2></div>
+    <div class="bio-grid">
+        <div class="bio-texto">
+            <p>Nascido em São Paulo, <strong>Nome do Autor</strong> descobriu a paixão pela escrita aos quinze anos. Formado em Letras pela USP, passou anos como editor antes de publicar sua primeira obra — um gesto que mudaria completamente o rumo de sua vida.</p>
+            <p>Sua narrativa é reconhecida pela profundidade psicológica dos personagens e por ambientações que parecem existir entre o sonho e a memória. Com dezoito títulos publicados, seus livros já alcançaram leitores em mais de doze países.</p>
+            <p>Premiado três vezes pelo Jabuti Literário e finalista do Portugal Telecom, acredita que toda boa história começa com uma pergunta que o autor ainda não sabe responder. Mora em São Paulo com dois gatos e uma biblioteca que já invadiu a sala de jantar.</p>
+        </div>
+        <div class="bio-lateral">
+            <div class="info-card">
+                <h4>Dados do autor</h4>
+                <div class="info-linha"><i class="fas fa-map-marker-alt"></i><span class="il">Cidade:</span><span class="iv">São Paulo, SP</span></div>
+                <div class="info-linha"><i class="fas fa-graduation-cap"></i><span class="il">Formação:</span><span class="iv">Letras — USP</span></div>
+                <div class="info-linha"><i class="fas fa-calendar"></i><span class="il">Ativo desde:</span><span class="iv">2010</span></div>
+                <div class="info-linha"><i class="fas fa-book"></i><span class="il">Publicações:</span><span class="iv">18 títulos</span></div>
+                <div class="info-linha"><i class="fas fa-building"></i><span class="il">Editora:</span><span class="iv">Editora Parceira</span></div>
+                <div class="info-linha"><i class="fas fa-phone"></i><span class="il">Contato:</span><span class="iv">(14) 99999-9999</span></div>
+            </div>
+            <div class="redes-card">
+                <h4>Redes sociais</h4>
+                <div class="redes-lista">
+                    <a href="#" class="rede-item"><i class="fab fa-instagram"></i> @nomeautor</a>
+                    <a href="#" class="rede-item"><i class="fab fa-tiktok"></i> @nomeautor</a>
+                    <a href="#" class="rede-item"><i class="fas fa-globe"></i> www.nomeautor.com</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="footer-space"></div>
+
+<script>
+    let seguindo=false;
+    function toggleSeguir(){
+        seguindo=!seguindo;
+        const btn=document.getElementById('btn-seguir');
+        btn.classList.toggle('seguindo',seguindo);
+        document.getElementById('ico-seg').className=seguindo?'fas fa-check':'fas fa-plus';
+        document.getElementById('txt-seg').textContent=seguindo?'Seguindo':'Seguir';
+    }
+    document.querySelectorAll('.menu a').forEach(a=>{
+        a.addEventListener('click',e=>{
+            const h=a.getAttribute('href');
+            if(h.startsWith('#')){e.preventDefault();const el=document.querySelector(h);if(el)el.scrollIntoView({behavior:'smooth',block:'start'});document.querySelectorAll('.menu a').forEach(x=>x.classList.remove('ativo'));a.classList.add('ativo');}
+        });
+    });
+    const secs=document.querySelectorAll('.secao[id]');
+    window.addEventListener('scroll',()=>{let cur='';secs.forEach(s=>{if(window.scrollY>=s.offsetTop-140)cur=s.id;});document.querySelectorAll('.menu a').forEach(a=>{a.classList.toggle('ativo',a.getAttribute('href')==='#'+cur);});});
+</script>
+</body>
+</html>

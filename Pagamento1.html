@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrinho — HamStore Books</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --vermelho-escuro: #8C031C;
+            --rosa-medio:      #BF6980;
+            --cinza-claro:     #F0F0F2;
+            --dourado-principal: #D9B607;
+            --dourado-escuro:  #8C5C03;
+            --branco:          #ffffff;
+            --sombra-suave:    rgba(140, 3, 28, 0.1);
+            --sombra-dourado:  rgba(217, 182, 7, 0.3);
+            --cotton-candy:    #E38792;
+            --garnet:          #4E0A0B;
+            --dusty-white:     #F2EEE8;
+            --khaki:           #9DAD71;
+        }
+
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--cinza-claro); min-height: 100vh; color: var(--garnet); }
+
+        /* ═══ BARRA SUPERIOR ═══ */
+        .shopee-top { background-color: var(--cotton-candy); color: var(--dusty-white); font-size: 14px; position: sticky; top: 0; z-index: 1001; box-shadow: 0 2px 8px rgba(78,10,11,0.15); }
+        .container { max-width: 1280px; margin: 0 auto; padding: 0 20px; }
+        .navbar { display: flex; justify-content: space-between; align-items: center; height: 40px; }
+        .flex { display: flex; align-items: center; gap: 20px; }
+        .navbar a { color: var(--dusty-white); text-decoration: none; font-size: 13px; transition: opacity 0.2s; }
+        .navbar a:hover { opacity: 0.8; }
+        .navbar_links { display: flex; align-items: center; list-style: none; gap: 16px; margin: 0; padding: 0; }
+        .navbar__link-text { color: var(--dusty-white); font-size: 13px; }
+        .navbar__link--signup { font-weight: 500; background-color: var(--garnet); padding: 4px 12px; border-radius: 15px; }
+        .navbar__link-separator { width: 1px; height: 16px; background-color: rgba(242,238,232,0.4); margin: 0 4px; }
+        .shopee-logo-area { display: flex; align-items: center; gap: 8px; }
+        .shopee-store-name { font-weight: 700; font-size: 15px; color: var(--garnet); cursor: pointer; }
+        .shopee-store-name small { font-size: 10px; font-weight: 400; color: var(--dusty-white); }
+        .shopee-social-icons { display: flex; gap: 8px; align-items: center; }
+        .social-icon { display: inline-block; width: 20px; height: 20px; background-size: contain; background-repeat: no-repeat; background-position: center; }
+        .instagram { background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23F2EEE8"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>'); }
+        .whatsapp { background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23F2EEE8"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.126.556 4.118 1.523 5.847L.057 23.882l6.204-1.448A11.934 11.934 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.782 9.782 0 01-5.004-1.373l-.36-.214-3.713.868.922-3.596-.234-.37A9.789 9.789 0 012.182 12C2.182 6.57 6.57 2.182 12 2.182c5.43 0 9.818 4.388 9.818 9.818 0 5.43-4.388 9.818-9.818 9.818z"/></svg>'); }
+        .tiktok { background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23F2EEE8"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.87-4.53v-3.47a6.33 6.33 0 0 0-5.34 6.2 6.33 6.33 0 0 0 10.92 4.3 6.34 6.34 0 0 0 1.77-4.3V8.92a8.26 8.26 0 0 0 4.79 1.52V6.95a4.82 4.82 0 0 1-3.77-2.26z"/></svg>'); }
+
+        /* ═══ HEADER ═══ */
+        .header { display: flex; align-items: center; justify-content: space-between; background: rgba(255,255,255,0.97); backdrop-filter: blur(20px); padding: 14px 30px; box-shadow: 0 4px 20px var(--sombra-suave); position: sticky; top: 40px; z-index: 100; border-radius: 0 0 20px 20px; }
+        .logo { font-size: 26px; font-weight: bold; color: var(--garnet); cursor: pointer; letter-spacing: 1px; }
+        .search-bar { flex: 1; margin: 0 30px; max-width: 480px; }
+        .search-bar input { width: 100%; padding: 13px 22px; border-radius: 30px; border: 2px solid var(--dusty-white); font-size: 15px; background: var(--dusty-white); outline: none; transition: all 0.3s; }
+        .search-bar input:focus { border-color: var(--cotton-candy); box-shadow: 0 0 20px rgba(227,135,146,0.3); }
+        .icons { display: flex; gap: 16px; }
+        .btn-sem-borda { background: none; border: none; color: var(--garnet); font-size: 22px; cursor: pointer; transition: all 0.3s; padding: 6px; border-radius: 10px; position: relative; }
+        .btn-sem-borda:hover { color: var(--cotton-candy); transform: translateY(-2px); }
+        .carrinho-badge { position: absolute; top: 0; right: 0; width: 18px; height: 18px; background: var(--vermelho-escuro); color: var(--branco); border-radius: 50%; font-size: 10px; font-weight: 800; display: flex; align-items: center; justify-content: center; border: 2px solid var(--branco); }
+
+        /* ═══ BARRA DE PROGRESSO ═══ */
+        .progresso-wrap { background: var(--branco); border-bottom: 2px solid var(--cinza-claro); padding: 0 32px; box-shadow: 0 2px 8px var(--sombra-suave); }
+        .progresso-inner { max-width: 860px; margin: 0 auto; display: flex; align-items: center; height: 60px; }
+        .etapa { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+        .etapa-linha { flex: 1; height: 3px; background: var(--cinza-claro); border-radius: 2px; margin: 0 10px; transition: background 0.5s; }
+        .etapa-num { width: 32px; height: 32px; border-radius: 50%; border: 2px solid var(--cinza-claro); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 800; color: #bbb; background: var(--branco); transition: all 0.4s; flex-shrink: 0; }
+        .etapa.ativa .etapa-num { border-color: var(--dourado-principal); color: var(--dourado-escuro); background: rgba(217,182,7,0.12); box-shadow: 0 0 0 4px rgba(217,182,7,0.15); }
+        .etapa.feita .etapa-num { background: linear-gradient(135deg, var(--dourado-principal), var(--dourado-escuro)); border-color: var(--dourado-escuro); color: var(--branco); }
+        .etapa-label { font-size: 13px; font-weight: 700; color: #bbb; white-space: nowrap; }
+        .etapa.ativa .etapa-label { color: var(--vermelho-escuro); }
+        .etapa.feita .etapa-label { color: var(--dourado-escuro); }
+
+        /* ═══ LAYOUT 2 COLUNAS ═══ */
+        .cart-layout { max-width: 1000px; margin: 32px auto 60px; padding: 0 20px; display: grid; grid-template-columns: 1fr 320px; gap: 24px; align-items: start; }
+
+        /* ═══ CARD BASE ═══ */
+        .card { background: var(--branco); border-radius: 20px; overflow: hidden; box-shadow: 0 4px 20px var(--sombra-suave); margin-bottom: 20px; transition: box-shadow 0.3s; }
+        .card:hover { box-shadow: 0 8px 32px rgba(140,3,28,0.12); }
+        .card-header { padding: 16px 22px; display: flex; align-items: center; gap: 12px; border-bottom: 2px solid var(--cinza-claro); background: linear-gradient(135deg, #fefefe, var(--cinza-claro)); }
+        .card-header h3 { font-size: 15px; font-weight: 700; color: var(--vermelho-escuro); flex: 1; }
+        .icon-badge { width: 34px; height: 34px; border-radius: 10px; background: linear-gradient(135deg, var(--dourado-principal), var(--dourado-escuro)); display: flex; align-items: center; justify-content: center; color: var(--branco); font-size: 15px; flex-shrink: 0; }
+        .card-body { padding: 20px 22px; }
+
+        /* ═══ SELETOR GERAL ═══ */
+        .sel-row { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--cinza-claro); }
+        .sel-row:last-child { border-bottom: none; }
+        .checkbox-custom { width: 20px; height: 20px; border-radius: 6px; border: 2px solid var(--cinza-claro); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s; flex-shrink: 0; }
+        .checkbox-custom.checked { background: linear-gradient(135deg, var(--dourado-principal), var(--dourado-escuro)); border-color: var(--dourado-principal); color: var(--branco); font-size: 11px; }
+        .sel-label { font-size: 13px; font-weight: 600; color: var(--garnet); }
+
+        /* ═══ GRUPO DE LOJA ═══ */
+        .loja-grupo { background: var(--branco); border-radius: 20px; overflow: hidden; box-shadow: 0 4px 20px var(--sombra-suave); margin-bottom: 16px; }
+        .loja-header { display: flex; align-items: center; gap: 12px; padding: 14px 22px; background: linear-gradient(135deg, #fefefe, var(--cinza-claro)); border-bottom: 2px solid var(--cinza-claro); }
+        .loja-icon { width: 36px; height: 36px; background: linear-gradient(135deg, var(--vermelho-escuro), var(--rosa-medio)); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: var(--branco); font-size: 16px; flex-shrink: 0; }
+        .loja-nome { font-weight: 700; font-size: 14px; color: var(--vermelho-escuro); flex: 1; }
+        .loja-frete { display: flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 600; color: #27ae60; }
+        .loja-frete i { font-size: 11px; }
+        .loja-select { display: flex; align-items: center; gap: 6px; padding: 14px 22px; border-bottom: 1px solid var(--cinza-claro); font-size: 13px; color: #888; cursor: pointer; }
+        .loja-select .checkbox-custom { flex-shrink: 0; }
+
+        /* ═══ ITEM DO CARRINHO ═══ */
+        .cart-item { padding: 18px 22px; border-bottom: 1px solid var(--cinza-claro); display: flex; gap: 14px; align-items: flex-start; transition: background 0.2s; }
+        .cart-item:last-child { border-bottom: none; }
+        .cart-item:hover { background: rgba(240,240,242,0.5); }
+        .item-check { flex-shrink: 0; margin-top: 4px; }
+        .item-img { width: 72px; height: 90px; background: linear-gradient(135deg, var(--cinza-claro), #e4e4e6); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: var(--rosa-medio); font-size: 28px; flex-shrink: 0; box-shadow: 2px 3px 10px var(--sombra-suave); }
+        .item-body { flex: 1; min-width: 0; }
+        .item-titulo { font-weight: 700; font-size: 14px; color: var(--garnet); line-height: 1.4; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .item-autor { font-size: 12px; color: #888; margin-bottom: 6px; }
+        .item-tags { display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 10px; }
+        .tag { font-size: 10px; padding: 2px 8px; border-radius: 20px; background: var(--cinza-claro); color: #666; font-weight: 500; }
+        .tag.destaque { background: rgba(217,182,7,0.12); color: var(--dourado-escuro); }
+        .item-acoes { display: flex; align-items: center; gap: 8px; }
+        /* controle de quantidade */
+        .qtd-ctrl { display: flex; align-items: center; gap: 0; background: var(--cinza-claro); border-radius: 20px; overflow: hidden; }
+        .qtd-btn { width: 30px; height: 30px; border: none; background: transparent; cursor: pointer; font-size: 14px; color: var(--vermelho-escuro); font-weight: 700; transition: background 0.2s; display: flex; align-items: center; justify-content: center; }
+        .qtd-btn:hover { background: rgba(140,3,28,0.1); }
+        .qtd-num { min-width: 28px; text-align: center; font-weight: 700; font-size: 13px; color: var(--garnet); }
+        /* ações rápidas */
+        .item-quick { display: flex; gap: 6px; margin-left: auto; }
+        .quick-btn { width: 30px; height: 30px; border-radius: 8px; border: none; background: var(--cinza-claro); cursor: pointer; font-size: 12px; display: flex; align-items: center; justify-content: center; transition: all 0.2s; color: #888; }
+        .quick-btn:hover { background: rgba(140,3,28,0.1); color: var(--vermelho-escuro); }
+        .quick-btn.fav:hover { color: var(--rosa-medio); background: rgba(191,105,128,0.1); }
+        .quick-btn.del:hover { color: #e74c3c; background: rgba(231,76,60,0.08); }
+        /* preço direito */
+        .item-preco-col { flex-shrink: 0; text-align: right; display: flex; flex-direction: column; justify-content: space-between; align-items: flex-end; }
+        .item-preco-atual { font-weight: 800; font-size: 16px; color: var(--vermelho-escuro); }
+        .item-preco-de { font-size: 11px; color: #bbb; text-decoration: line-through; margin-bottom: 2px; }
+        .item-desconto { font-size: 10px; font-weight: 700; color: #27ae60; background: rgba(39,174,96,0.1); padding: 2px 7px; border-radius: 20px; }
+
+        /* ═══ ITEM ESGOTADO ═══ */
+        .cart-item.esgotado { opacity: 0.55; }
+        .badge-esgotado { font-size: 10px; font-weight: 700; color: #e74c3c; background: rgba(231,76,60,0.1); padding: 2px 8px; border-radius: 20px; border: 1px solid rgba(231,76,60,0.2); }
+
+        /* ═══ SALVO PARA DEPOIS ═══ */
+        .salvos-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+        .salvos-header h4 { font-size: 13px; font-weight: 700; color: #888; display: flex; align-items: center; gap: 6px; }
+        .ver-todos-link { font-size: 12px; font-weight: 600; color: var(--rosa-medio); text-decoration: none; }
+        .ver-todos-link:hover { color: var(--vermelho-escuro); }
+        .salvos-scroll { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 8px; scrollbar-width: thin; scrollbar-color: var(--rosa-medio) transparent; }
+        .salvos-scroll::-webkit-scrollbar { height: 3px; }
+        .salvos-scroll::-webkit-scrollbar-thumb { background: var(--rosa-medio); border-radius: 2px; }
+        .salvo-card { flex-shrink: 0; width: 140px; background: var(--branco); border-radius: 14px; overflow: hidden; box-shadow: 0 3px 12px var(--sombra-suave); border: 2px solid transparent; transition: all 0.25s; cursor: pointer; }
+        .salvo-card:hover { border-color: var(--rosa-medio); transform: translateY(-2px); }
+        .salvo-img { width: 100%; height: 80px; background: linear-gradient(135deg, var(--cinza-claro), #e4e4e6); display: flex; align-items: center; justify-content: center; font-size: 30px; color: var(--rosa-medio); }
+        .salvo-info { padding: 8px 10px 10px; }
+        .salvo-titulo { font-size: 12px; font-weight: 600; color: var(--garnet); line-height: 1.3; margin-bottom: 4px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+        .salvo-preco { font-size: 13px; font-weight: 800; color: var(--dourado-escuro); }
+        .btn-mover { width: 100%; margin-top: 6px; padding: 5px; background: var(--cinza-claro); border: none; border-radius: 8px; font-size: 11px; font-weight: 700; color: var(--vermelho-escuro); cursor: pointer; transition: all 0.2s; }
+        .btn-mover:hover { background: linear-gradient(135deg, var(--dourado-principal), var(--dourado-escuro)); color: var(--branco); }
+
+        /* ═══ CUPOM ═══ */
+        .cupom-row { display: flex; gap: 10px; }
+        .inp-cupom { flex: 1; padding: 12px 16px; border: 2px solid var(--cinza-claro); border-radius: 12px; font-size: 14px; color: var(--garnet); outline: none; transition: all 0.3s; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; }
+        .inp-cupom:focus { border-color: var(--dourado-principal); box-shadow: 0 0 0 3px rgba(217,182,7,0.12); }
+        .btn-cupom { padding: 12px 20px; background: var(--cinza-claro); border: none; border-radius: 12px; font-weight: 700; font-size: 13px; color: var(--vermelho-escuro); cursor: pointer; transition: all 0.2s; white-space: nowrap; }
+        .btn-cupom:hover { background: linear-gradient(135deg, var(--dourado-principal), var(--dourado-escuro)); color: var(--branco); }
+        .cupom-feedback { margin-top: 10px; font-size: 13px; padding: 10px 14px; border-radius: 10px; display: none; align-items: center; gap: 8px; }
+        .cupom-feedback.ok { background: rgba(39,174,96,0.1); color: #1e7e34; border: 1px solid rgba(39,174,96,0.2); }
+        .cupom-feedback.err { background: rgba(231,76,60,0.08); color: #c0392b; border: 1px solid rgba(231,76,60,0.2); }
+
+        /* ═══ RESUMO LATERAL ═══ */
+        .resumo-sticky { position: sticky; top: 116px; }
+        .resumo-card { background: var(--branco); border-radius: 20px; overflow: hidden; box-shadow: 0 4px 20px var(--sombra-suave); }
+        .resumo-topo { background: linear-gradient(135deg, var(--vermelho-escuro), var(--rosa-medio)); padding: 18px 22px; }
+        .resumo-topo h3 { color: var(--branco); font-size: 15px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+        .resumo-topo .sub { color: rgba(255,255,255,0.7); font-size: 12px; margin-top: 3px; }
+        .resumo-body { padding: 18px 20px; }
+        .r-linha { display: flex; justify-content: space-between; align-items: center; padding: 7px 0; border-bottom: 1px solid var(--cinza-claro); font-size: 14px; }
+        .r-linha:last-of-type { border-bottom: none; }
+        .rl { color: #777; }
+        .rv { font-weight: 700; color: var(--garnet); }
+        .rv.verde { color: #27ae60; }
+        .rv.desc { color: #27ae60; }
+        .rv.risco { text-decoration: line-through; color: #bbb; font-weight: 400; }
+        .r-total { display: flex; justify-content: space-between; align-items: flex-end; margin-top: 14px; padding-top: 14px; border-top: 2px solid var(--cinza-claro); }
+        .r-total .rl { font-weight: 800; color: var(--garnet); font-size: 15px; }
+        .r-total .rv-big { font-size: 26px; font-weight: 900; color: var(--vermelho-escuro); }
+        .economia-box { background: rgba(39,174,96,0.08); border: 1px solid rgba(39,174,96,0.2); border-radius: 10px; padding: 10px 14px; margin-top: 14px; display: flex; align-items: center; gap: 8px; font-size: 13px; color: #1e7e34; font-weight: 600; }
+        .economia-box i { font-size: 14px; }
+
+        /* BTN FINALIZAR */
+        .btn-finalizar { width: 100%; margin-top: 16px; padding: 16px; background: linear-gradient(135deg, var(--dourado-principal), var(--dourado-escuro)); border: none; border-radius: 14px; font-size: 16px; font-weight: 800; color: var(--branco); cursor: pointer; transition: all 0.3s; display: flex; align-items: center; justify-content: center; gap: 10px; box-shadow: 0 6px 20px var(--sombra-dourado); letter-spacing: 0.3px; }
+        .btn-finalizar:hover { transform: translateY(-3px); box-shadow: 0 12px 32px var(--sombra-dourado); }
+        .btn-finalizar:active { transform: translateY(0); }
+
+        /* selos */
+        .selos { display: flex; flex-direction: column; gap: 7px; margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--cinza-claro); }
+        .selo { display: flex; align-items: center; gap: 8px; font-size: 12px; color: #888; }
+        .selo-ico { width: 24px; height: 24px; border-radius: 7px; display: flex; align-items: center; justify-content: center; font-size: 11px; flex-shrink: 0; }
+        .selo-ico.verde { background: rgba(39,174,96,0.1); color: #27ae60; }
+        .selo-ico.azul  { background: rgba(33,150,243,0.1); color: #1976d2; }
+        .selo-ico.ouro  { background: rgba(217,182,7,0.1); color: var(--dourado-escuro); }
+
+        /* continuar comprando */
+        .btn-continuar-comprando { width: 100%; margin-top: 10px; padding: 12px; background: transparent; border: 2px solid var(--cinza-claro); border-radius: 12px; font-size: 13px; font-weight: 700; color: var(--garnet); cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px; }
+        .btn-continuar-comprando:hover { border-color: var(--rosa-medio); color: var(--vermelho-escuro); background: rgba(191,105,128,0.04); }
+
+        /* ═══ ESTADO VAZIO ═══ */
+        .carrinho-vazio { text-align: center; padding: 60px 30px; }
+        .vazio-icon { font-size: 72px; margin-bottom: 20px; opacity: 0.4; }
+        .vazio-titulo { font-size: 20px; font-weight: 700; color: var(--vermelho-escuro); margin-bottom: 8px; }
+        .vazio-sub { font-size: 14px; color: #888; margin-bottom: 28px; line-height: 1.6; }
+        .btn-explorar { padding: 14px 32px; background: linear-gradient(135deg, var(--vermelho-escuro), var(--rosa-medio)); color: var(--branco); border: none; border-radius: 30px; font-weight: 700; font-size: 15px; cursor: pointer; transition: all 0.3s; box-shadow: 0 6px 20px var(--sombra-suave); display: inline-flex; align-items: center; gap: 10px; }
+        .btn-explorar:hover { transform: translateY(-2px); box-shadow: 0 10px 28px var(--sombra-suave); }
+
+        /* ═══ TOAST ═══ */
+        .toast { position: fixed; bottom: 28px; right: 28px; background: var(--garnet); color: var(--branco); padding: 14px 20px; border-radius: 14px; font-size: 13px; font-weight: 600; z-index: 3000; display: flex; align-items: center; gap: 10px; transform: translateY(80px); opacity: 0; transition: all 0.4s cubic-bezier(0.34,1.56,0.64,1); box-shadow: 0 8px 28px rgba(0,0,0,0.2); }
+        .toast.show { transform: translateY(0); opacity: 1; }
+        .toast i { color: var(--dourado-principal); font-size: 16px; }
+
+        @media (max-width: 760px) {
+            .cart-layout { grid-template-columns: 1fr; }
+            .resumo-sticky { position: static; }
+            .etapa-label { display: none; }
+        }
+        @media (max-width: 480px) {
+            .item-preco-col { display: none; }
+            .item-preco-atual { font-size: 14px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- BARRA SUPERIOR -->
+<header class="shopee-top">
+    <div class="container">
+        <nav class="navbar">
+            <div class="flex">
+                <div class="shopee-logo-area">
+                    <span class="shopee-logo-icon">📚</span>
+                    <span class="shopee-store-name" onclick="window.location.href='Entrar.html'">HAMSTORE <small>books</small></span>
+                </div>
+                <a href="#" onclick="window.location.href='dashbord.html'">Central do Vendedor</a>
+                <a href="#" onclick="window.location.href='CadastroVendedor.html'">Vender na HamStore</a>
+            </div>
+            <div class="flex">
+                <div class="shopee-social-icons">
+                    <span style="font-size:13px;color:var(--dusty-white);">Siga-nos</span>
+                    <a href="#" class="social-icon instagram"></a>
+                    <a href="#" class="social-icon whatsapp"></a>
+                    <a href="#" class="social-icon tiktok"></a>
+                </div>
+            </div>
+            <ul class="navbar_links">
+                <li><a href="#" class="navbar__link-text">Ajuda</a></li>
+                <li><a href="#" class="navbar__link-text navbar__link--signup">Cadastrar</a></li>
+                <li><div class="navbar__link-separator"></div></li>
+                <li><a href="#" class="navbar__link-text">Entrar</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<!-- HEADER PRINCIPAL -->
+<header class="header">
+    <h1 onclick="window.location.href='Entrar.html'" class="logo">📚 Livraria</h1>
+    <div class="search-bar"><input type="text" placeholder="Buscar livros..."></div>
+    <div class="icons">
+        <button class="btn-sem-borda" onclick="window.location.href='Carrinho.html'" style="position:relative;">
+            🛒
+            <span class="carrinho-badge" id="badge-qtd">3</span>
+        </button>
+        <button class="btn-sem-borda">⚙️</button>
+        <button class="btn-sem-borda" onclick="window.location.href='MinhasCompras.html'">👤</button>
+    </div>
+</header>
+
+<!-- PROGRESSO: Carrinho ativo -->
+<div class="progresso-wrap">
+    <div class="progresso-inner">
+        <div class="etapa ativa">
+            <div class="etapa-num">1</div>
+            <span class="etapa-label">Carrinho</span>
+        </div>
+        <div class="etapa-linha"></div>
+        <div class="etapa">
+            <div class="etapa-num">2</div>
+            <span class="etapa-label">Pagamento</span>
+        </div>
+        <div class="etapa-linha"></div>
+        <div class="etapa">
+            <div class="etapa-num">3</div>
+            <span class="etapa-label">Confirmação</span>
+        </div>
+    </div>
+</div>
+
+<!-- CONTEÚDO -->
+<div class="cart-layout" id="cart-layout">
+
+    <!-- ─── COLUNA ESQUERDA ─── -->
+    <div>
+
+        <!-- SELETOR GERAL -->
+        <div class="card" style="margin-bottom:16px;">
+            <div class="card-body" style="padding:14px 22px;">
+                <div class="sel-row" style="border:none;padding:0;">
+                    <div class="checkbox-custom checked" id="check-all" onclick="toggleAll(this)">
+                        <i class="fas fa-check" style="font-size:10px;"></i>
+                    </div>
+                    <span class="sel-label">Selecionar todos (<span id="total-selecionados">3</span> itens)</span>
+                    <button onclick="removerSelecionados()" style="margin-left:auto;background:none;border:none;font-size:12px;font-weight:700;color:#e74c3c;cursor:pointer;padding:4px 10px;border-radius:8px;transition:background .2s;" onmouseover="this.style.background='rgba(231,76,60,0.08)'" onmouseout="this.style.background='none'">
+                        <i class="fas fa-trash" style="margin-right:4px;"></i> Remover selecionados
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- LOJA 1 -->
+        <div class="loja-grupo" id="grupo-1">
+            <div class="loja-header">
+                <div class="loja-icon"><i class="fas fa-store"></i></div>
+                <span class="loja-nome">MOBY LUX</span>
+                <span class="loja-frete"><i class="fas fa-truck"></i> Frete grátis</span>
+                <a href="#" style="font-size:12px;font-weight:600;color:var(--rosa-medio);margin-left:12px;text-decoration:none;">Ver loja</a>
+            </div>
+
+            <!-- item 1 -->
+            <div class="cart-item" id="item-1">
+                <div class="item-check">
+                    <div class="checkbox-custom checked" onclick="toggleItem(this,'item-1')">
+                        <i class="fas fa-check" style="font-size:10px;"></i>
+                    </div>
+                </div>
+                <div class="item-img"><i class="fas fa-book"></i></div>
+                <div class="item-body">
+                    <div class="item-titulo">O Pequeno Príncipe — Edição Especial Ilustrada</div>
+                    <div class="item-autor">Antoine de Saint-Exupéry · MOBY LUX</div>
+                    <div class="item-tags">
+                        <span class="tag">Capa dura</span>
+                        <span class="tag">Novo</span>
+                        <span class="tag destaque">⚡ Mais vendido</span>
+                    </div>
+                    <div class="item-acoes">
+                        <div class="qtd-ctrl">
+                            <button class="qtd-btn" onclick="alterarQtd('qtd-1',-1)">−</button>
+                            <span class="qtd-num" id="qtd-1">1</span>
+                            <button class="qtd-btn" onclick="alterarQtd('qtd-1',1)">+</button>
+                        </div>
+                        <div class="item-quick">
+                            <button class="quick-btn fav" title="Favoritar" onclick="favoritar(this)"><i class="far fa-heart"></i></button>
+                            <button class="quick-btn" title="Salvar para depois" onclick="salvarDepois('item-1')"><i class="fas fa-bookmark"></i></button>
+                            <button class="quick-btn del" title="Remover" onclick="removerItem('item-1')"><i class="fas fa-trash"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="item-preco-col">
+                    <div>
+                        <div class="item-preco-de">R$ 49,90</div>
+                        <div class="item-preco-atual">R$ 39,90</div>
+                    </div>
+                    <span class="item-desconto">−20%</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- LOJA 2 -->
+        <div class="loja-grupo" id="grupo-2">
+            <div class="loja-header">
+                <div class="loja-icon"><i class="fas fa-store"></i></div>
+                <span class="loja-nome">Leitura Livraria</span>
+                <span class="loja-frete"><i class="fas fa-truck"></i> Frete grátis</span>
+                <a href="#" style="font-size:12px;font-weight:600;color:var(--rosa-medio);margin-left:12px;text-decoration:none;">Ver loja</a>
+            </div>
+
+            <!-- item 2 -->
+            <div class="cart-item" id="item-2">
+                <div class="item-check">
+                    <div class="checkbox-custom checked" onclick="toggleItem(this,'item-2')">
+                        <i class="fas fa-check" style="font-size:10px;"></i>
+                    </div>
+                </div>
+                <div class="item-img"><i class="fas fa-book"></i></div>
+                <div class="item-body">
+                    <div class="item-titulo">1984</div>
+                    <div class="item-autor">George Orwell · Leitura Livraria</div>
+                    <div class="item-tags">
+                        <span class="tag">Capa comum</span>
+                        <span class="tag">Novo</span>
+                    </div>
+                    <div class="item-acoes">
+                        <div class="qtd-ctrl">
+                            <button class="qtd-btn" onclick="alterarQtd('qtd-2',-1)">−</button>
+                            <span class="qtd-num" id="qtd-2">2</span>
+                            <button class="qtd-btn" onclick="alterarQtd('qtd-2',1)">+</button>
+                        </div>
+                        <div class="item-quick">
+                            <button class="quick-btn fav" title="Favoritar" onclick="favoritar(this)"><i class="far fa-heart"></i></button>
+                            <button class="quick-btn" title="Salvar para depois" onclick="salvarDepois('item-2')"><i class="fas fa-bookmark"></i></button>
+                            <button class="quick-btn del" title="Remover" onclick="removerItem('item-2')"><i class="fas fa-trash"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="item-preco-col">
+                    <div>
+                        <div class="item-preco-atual">R$ 45,00</div>
+                    </div>
+                    <span style="height:20px;"></span>
+                </div>
+            </div>
+
+            <!-- item 3 esgotado -->
+            <div class="cart-item esgotado" id="item-3">
+                <div class="item-check">
+                    <div class="checkbox-custom" onclick="toggleItem(this,'item-3')"></div>
+                </div>
+                <div class="item-img"><i class="fas fa-book"></i></div>
+                <div class="item-body">
+                    <div class="item-titulo">Dom Casmurro — Edição de Luxo</div>
+                    <div class="item-autor">Machado de Assis · Leitura Livraria</div>
+                    <div class="item-tags">
+                        <span class="tag">Capa dura</span>
+                        <span class="badge-esgotado"><i class="fas fa-times-circle" style="margin-right:3px;"></i>Esgotado</span>
+                    </div>
+                    <div class="item-acoes">
+                        <div class="item-quick">
+                            <button class="quick-btn fav" title="Favoritar" onclick="favoritar(this)"><i class="far fa-heart"></i></button>
+                            <button class="quick-btn del" title="Remover" onclick="removerItem('item-3')"><i class="fas fa-trash"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="item-preco-col">
+                    <div class="item-preco-atual" style="color:#aaa;">R$ 59,90</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CUPOM -->
+        <div class="card">
+            <div class="card-header">
+                <div class="icon-badge"><i class="fas fa-ticket-alt"></i></div>
+                <h3>Cupom de desconto</h3>
+            </div>
+            <div class="card-body">
+                <div class="cupom-row">
+                    <input class="inp-cupom" id="inp-cupom" type="text" placeholder="SEUCUPOM" oninput="this.value=this.value.toUpperCase()">
+                    <button class="btn-cupom" onclick="aplicarCupom()"><i class="fas fa-tag" style="margin-right:5px;"></i>Aplicar</button>
+                </div>
+                <div class="cupom-feedback" id="cupom-fb"></div>
+            </div>
+        </div>
+
+        <!-- SALVOS PARA DEPOIS -->
+        <div class="card">
+            <div class="card-body">
+                <div class="salvos-header">
+                    <h4><i class="fas fa-bookmark" style="color:var(--rosa-medio);"></i> Salvos para depois</h4>
+                    <a href="#" class="ver-todos-link">Ver todos</a>
+                </div>
+                <div class="salvos-scroll">
+                    <div class="salvo-card">
+                        <div class="salvo-img"><i class="fas fa-book"></i></div>
+                        <div class="salvo-info">
+                            <div class="salvo-titulo">Harry Potter e a Pedra Filosofal</div>
+                            <div class="salvo-preco">R$ 59,90</div>
+                            <button class="btn-mover" onclick="moverParaCarrinho(this)"><i class="fas fa-cart-plus" style="margin-right:4px;"></i>Adicionar</button>
+                        </div>
+                    </div>
+                    <div class="salvo-card">
+                        <div class="salvo-img"><i class="fas fa-book"></i></div>
+                        <div class="salvo-info">
+                            <div class="salvo-titulo">O Senhor dos Anéis — Vol. 1</div>
+                            <div class="salvo-preco">R$ 79,90</div>
+                            <button class="btn-mover" onclick="moverParaCarrinho(this)"><i class="fas fa-cart-plus" style="margin-right:4px;"></i>Adicionar</button>
+                        </div>
+                    </div>
+                    <div class="salvo-card">
+                        <div class="salvo-img"><i class="fas fa-book"></i></div>
+                        <div class="salvo-info">
+                            <div class="salvo-titulo">Cem Anos de Solidão</div>
+                            <div class="salvo-preco">R$ 54,90</div>
+                            <button class="btn-mover" onclick="moverParaCarrinho(this)"><i class="fas fa-cart-plus" style="margin-right:4px;"></i>Adicionar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ─── RESUMO LATERAL ─── -->
+    <div class="resumo-sticky">
+        <div class="resumo-card">
+            <div class="resumo-topo">
+                <h3><i class="fas fa-receipt"></i> Resumo do pedido</h3>
+                <p class="sub">2 lojas · <span id="res-itens">3</span> itens selecionados</p>
+            </div>
+            <div class="resumo-body">
+                <div class="r-linha">
+                    <span class="rl">Subtotal</span>
+                    <span class="rv risco" id="res-subtotal-de">R$ 149,80</span>
+                </div>
+                <div class="r-linha">
+                    <span class="rl">Desconto</span>
+                    <span class="rv desc" id="res-desconto">−R$ 10,00</span>
+                </div>
+                <div class="r-linha">
+                    <span class="rl">Frete</span>
+                    <span class="rv verde"><i class="fas fa-truck" style="font-size:11px;margin-right:3px;"></i>Grátis</span>
+                </div>
+                <div class="r-linha" id="linha-cupom" style="display:none;">
+                    <span class="rl">Cupom</span>
+                    <span class="rv desc" id="res-cupom">−R$ 0,00</span>
+                </div>
+                <div class="r-total">
+                    <span class="rl">Total</span>
+                    <span class="rv-big" id="res-total">R$ 129,90</span>
+                </div>
+                <div class="economia-box">
+                    <i class="fas fa-piggy-bank"></i>
+                    <span>Você economizou <strong id="res-economia">R$ 10,00</strong> nesta compra!</span>
+                </div>
+                <button class="btn-finalizar" onclick="window.location.href='Pagamento2.html'">
+                    <i class="fas fa-lock" ></i> Finalizar compra
+                </button>
+                <button class="btn-continuar-comprando" onclick="window.location.href='Entrar.html'">
+                    <i class="fas fa-arrow-left"></i> Continuar comprando
+                </button>
+                <div class="selos">
+                    <div class="selo">
+                        <div class="selo-ico verde"><i class="fas fa-shield-alt"></i></div>
+                        <span>Compra 100% protegida</span>
+                    </div>
+                    <div class="selo">
+                        <div class="selo-ico azul"><i class="fas fa-lock"></i></div>
+                        <span>Criptografia SSL 256-bit</span>
+                    </div>
+                    <div class="selo">
+                        <div class="selo-ico ouro"><i class="fas fa-undo"></i></div>
+                        <span>7 dias para troca ou devolução</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast">
+    <i class="fas fa-check-circle"></i>
+    <span id="toast-msg">Ação realizada!</span>
+</div>
+
+<script>
+    // ── estado dos itens
+    const precos = { 'item-1': 39.90, 'item-2': 45.00, 'item-3': 0 };
+    const qtds   = { 'item-1': 1,     'item-2': 2,     'item-3': 0 };
+    const selecionados = new Set(['item-1','item-2']);
+    let descontoCupom = 0;
+    const CUPONS = { 'HAMSTORE10': { txt:'10%', val: () => subtotalSel()*0.10 }, 'LIVRO5': { txt:'R$ 5,00', val: ()=>5 }, 'BEMVINDO': { txt:'15%', val: ()=>subtotalSel()*0.15 } };
+
+    function subtotalSel() {
+        let s = 0;
+        selecionados.forEach(id => { s += (precos[id]||0) * (qtds[id]||1); });
+        return s;
+    }
+    function fmt(n) { return 'R$ ' + n.toFixed(2).replace('.',','); }
+
+    function recalcular() {
+        const sub = subtotalSel();
+        const desc = 10 + descontoCupom;
+        const total = Math.max(0, sub - descontoCupom);
+
+        document.getElementById('res-itens').textContent = selecionados.size;
+        document.getElementById('total-selecionados').textContent = selecionados.size;
+        document.getElementById('res-subtotal-de').textContent = fmt(sub + 10);
+        document.getElementById('res-desconto').textContent = '−' + fmt(10);
+        document.getElementById('res-total').textContent = fmt(total);
+        document.getElementById('res-economia').textContent = fmt(10 + descontoCupom);
+        document.getElementById('badge-qtd').textContent = document.querySelectorAll('.cart-item:not([id="item-3"])').length;
+    }
+
+    function alterarQtd(id, delta) {
+        const el = document.getElementById(id);
+        let v = parseInt(el.textContent) + delta;
+        if (v < 1) v = 1;
+        if (v > 99) v = 99;
+        el.textContent = v;
+        const itemId = id.replace('qtd-','item-');
+        qtds[itemId] = v;
+        recalcular();
+    }
+
+    function toggleItem(cb, id) {
+        cb.classList.toggle('checked');
+        if (cb.classList.contains('checked')) {
+            cb.innerHTML = '<i class="fas fa-check" style="font-size:10px;"></i>';
+            selecionados.add(id);
+        } else {
+            cb.innerHTML = '';
+            selecionados.delete(id);
+        }
+        recalcular();
+    }
+
+    function toggleAll(cb) {
+        const todos = document.querySelectorAll('.cart-item:not(.esgotado) .checkbox-custom');
+        cb.classList.toggle('checked');
+        const on = cb.classList.contains('checked');
+        cb.innerHTML = on ? '<i class="fas fa-check" style="font-size:10px;"></i>' : '';
+        todos.forEach(c => {
+            const itemId = c.closest('.cart-item').id;
+            if (on) {
+                c.classList.add('checked');
+                c.innerHTML = '<i class="fas fa-check" style="font-size:10px;"></i>';
+                selecionados.add(itemId);
+            } else {
+                c.classList.remove('checked');
+                c.innerHTML = '';
+                selecionados.delete(itemId);
+            }
+        });
+        recalcular();
+    }
+
+    function removerItem(id) {
+        const el = document.getElementById(id);
+        el.style.transition = 'all 0.35s';
+        el.style.opacity = '0';
+        el.style.transform = 'translateX(20px)';
+        el.style.maxHeight = el.offsetHeight + 'px';
+        setTimeout(() => {
+            el.style.maxHeight = '0';
+            el.style.padding = '0';
+            el.style.overflow = 'hidden';
+        }, 200);
+        setTimeout(() => el.remove(), 500);
+        selecionados.delete(id);
+        recalcular();
+        mostrarToast('Item removido do carrinho');
+    }
+
+    function removerSelecionados() {
+        [...selecionados].forEach(id => removerItem(id));
+    }
+
+    function favoritar(btn) {
+        const ico = btn.querySelector('i');
+        ico.className = ico.className.includes('far') ? 'fas fa-heart' : 'far fa-heart';
+        btn.style.color = ico.className.includes('fas') ? 'var(--rosa-medio)' : '';
+        mostrarToast(ico.className.includes('fas') ? 'Adicionado aos favoritos ❤️' : 'Removido dos favoritos');
+    }
+
+    function salvarDepois(id) {
+        removerItem(id);
+        mostrarToast('Salvo para depois 🔖');
+    }
+
+    function moverParaCarrinho(btn) {
+        btn.innerHTML = '<i class="fas fa-check" style="margin-right:4px;"></i>Adicionado!';
+        btn.style.background = 'linear-gradient(135deg,#27ae60,#1e7e34)';
+        btn.style.color = '#fff';
+        setTimeout(() => {
+            btn.innerHTML = '<i class="fas fa-cart-plus" style="margin-right:4px;"></i>Adicionar';
+            btn.style.background = '';
+            btn.style.color = '';
+        }, 2500);
+        mostrarToast('Livro movido para o carrinho 🛒');
+    }
+
+    function aplicarCupom() {
+        const cod = document.getElementById('inp-cupom').value.trim();
+        const fb = document.getElementById('cupom-fb');
+        if (CUPONS[cod]) {
+            descontoCupom = CUPONS[cod].val();
+            fb.className = 'cupom-feedback ok';
+            fb.innerHTML = `<i class="fas fa-check-circle"></i> Cupom <strong>${cod}</strong> aplicado — ${CUPONS[cod].txt} de desconto!`;
+            fb.style.display = 'flex';
+            document.getElementById('linha-cupom').style.display = 'flex';
+            document.getElementById('res-cupom').textContent = '−' + fmt(descontoCupom);
+        } else {
+            descontoCupom = 0;
+            fb.className = 'cupom-feedback err';
+            fb.innerHTML = `<i class="fas fa-times-circle"></i> Cupom inválido ou expirado.`;
+            fb.style.display = 'flex';
+            document.getElementById('linha-cupom').style.display = 'none';
+        }
+        recalcular();
+    }
+
+    function irCheckout() {
+        if (selecionados.size === 0) { mostrarToast('Selecione ao menos 1 item!'); return; }
+        const total = Math.max(0, subtotalSel() - descontoCupom).toFixed(2);
+        window.location.href = `Pagamento1.html?total=${total}&desconto=${descontoCupom.toFixed(2)}`;
+    }
+
+    function mostrarToast(msg) {
+        const t = document.getElementById('toast');
+        document.getElementById('toast-msg').textContent = msg;
+        t.classList.add('show');
+        setTimeout(() => t.classList.remove('show'), 3000);
+    }
+
+    recalcular();
+</script>
+</body>
+</html>

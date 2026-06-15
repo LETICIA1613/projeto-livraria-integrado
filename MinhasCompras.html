@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minhas Compras - Livraria</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="MinhasCompras.css">
+</head>
+<body>
+
+<!-- ===== BARRA SUPERIOR ===== -->
+<header class="shopee-top">
+    <div class="container">
+        <nav class="navbar">
+            <div class="flex v-center">
+                <div class="shopee-logo-area">
+                    <span class="shopee-logo-icon">📚</span>
+                    <span class="shopee-store-name" onclick="window.location.href='Entrar.html'">HAMSTORE <small>books</small></span>
+                </div>
+                <a href="#" onclick="window.location.href='dashbord.html'">Central do Vendedor</a>
+                <a href="#" onclick="window.location.href='CadastroVendedor.html'">Vender na HamStore</a>
+            </div>
+            <div class="flex">
+                <div class="shopee-social-icons">
+                    <span>Siga-nos</span>
+                    <a href="#" class="social-icon instagram"></a>
+                    <a href="#" class="social-icon whatsapp"></a>
+                    <a href="#" class="social-icon tiktok"></a>
+                </div>
+            </div>
+            <ul class="navbar_links">
+                <li><a href="#" class="navbar__link-text">Ajuda</a></li>
+                <li><a href="#" onclick="window.location.href='Cadastro1.html'" class="navbar__link-text navbar__link--signup">Cadastrar</a></li>
+                <li><div class="navbar__link-separator"></div></li>
+                <li><a href="#" onclick="window.location.href='login.html'" class="navbar__link-text">Entrar</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<!-- HEADER -->
+<header class="header">
+    <h1 onclick="window.location.href='Entrar.html'" class="logo">📚 Livraria</h1>
+    <div class="search-bar">
+        <input type="text" placeholder="Buscar livros...">
+    </div>
+    <div class="icons">
+        <button class="btn-sem-borda" onclick="window.location.href='Carrinho.html'">🛒</button>
+        <button class="btn-sem-borda">⚙️</button>
+        <button class="btn-sem-borda" onclick="window.location.href='MinhasCompras.html'">👤</button>
+    </div>
+</header>
+
+<div class="layout">
+    <aside class="sidebar">
+        <div class="perfil">
+            <div class="avatar"><i class="fas fa-user"></i></div>
+            <h3>mariabaeatrizoliveira...</h3>
+            <button class="btn-editar-perfil" onclick="window.location.href='EditarPerfil.html'"><i class="fas fa-pen"></i> Editar Perfil</button>
+        </div>
+        <ul class="menu-lateral">
+            <li onclick="window.location.href='MinhasCompras.html'"><i class="fas fa-shopping-bag"></i> <span>Minhas Compras</span></li>
+            <li onclick="window.location.href='Notificaçoes.html'"><i class="fas fa-bell"></i> <span>Notificações</span></li>
+            <li onclick="window.location.href='MeusCupons.html'"><i class="fas fa-ticket-alt"></i> <span>Meus Cupons</span></li>
+            <li onclick="window.location.href='Endereços.html'"><i class="fas fa-map-marker-alt"></i> <span>Endereços</span></li>
+            <li onclick="window.location.href='Pagamentos.html'"><i class="fas fa-credit-card"></i> <span>Pagamentos</span></li>
+            <li onclick="window.location.href='Favoritos.html'"><i class="fas fa-heart"></i> <span>Favoritos</span></li>
+            <li onclick="window.location.href='Configuraçoes.html'"><i class="fas fa-cog"></i> <span>Configurações</span></li>
+            <li onclick="window.location.href='Carrinho.html'"><i class="fas fa-shopping-cart"></i> <span>Meu Carrinho</span></li>
+        </ul>
+    </aside>
+
+    <main class="conteudo">
+        <div class="tabs-status">
+            <button class="tab-status ativo" data-status="todos">Todos</button>
+            <button class="tab-status" data-status="a-pagar">A pagar</button>
+            <button class="tab-status" data-status="a-caminho">A caminho</button>
+            <button class="tab-status" data-status="finalizado">Finalizado</button>
+            <button class="tab-status" data-status="cancelado">Cancelado</button>
+            <button class="tab-status" data-status="avaliar">Aguardando avaliação</button>
+        </div>
+
+        <div id="lista-pedidos">
+
+            <!-- PEDIDO A PAGAR -->
+            <div class="pedido-card" data-status="a-pagar">
+                <div class="loja-header">
+                    <div class="loja-info">
+                        <div class="loja-icon"><i class="fas fa-store"></i></div>
+                        <div class="loja-nome">Estante Virtual</div>
+                    </div>
+                    <div class="loja-acoes">
+                        <button class="btn-chat"><i class="fas fa-comment" onclick="window.location.href='Chat.html'"></i> Chat</button>
+                        <button class="btn-ver-loja" onclick="window.location.href='PerfilLoja.html'">Ver Página Da Loja</button>
+                    </div>
+                </div>
+                <div class="produtos-lista">
+                    <div class="produto-item">
+                        <div class="produto-imagem"><i class="fas fa-book"></i></div>
+                        <div class="produto-info">
+                            <div class="produto-titulo">Dom Casmurro - Machado de Assis</div>
+                            <div class="produto-variacao">Variação: Capa comum</div>
+                            <div class="produto-quantidade">x1</div>
+                            <div class="status-produto status-a-pagar"><i class="fas fa-clock"></i> Aguardando pagamento</div>
+                            <div class="produto-preco">R$ 29,90</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="prazo-pagamento"><i class="fas fa-exclamation-circle"></i> Pague até <strong>10/06/2026 às 23:59</strong> para garantir o pedido</div>
+                <div class="pedido-footer">
+                    <div class="total-pedido">Total do Pedido: <span>R$ 29,90</span></div>
+                    <div class="pedido-acoes">
+                        <button class="btn-acao btn-pagar" onclick="window.location.href='Pagamento3boleto.html'"><i class="fas fa-barcode"></i> Pagar Agora</button>
+                        <button class="btn-acao btn-falar"><i class="fas fa-comment" onclick="window.location.href='Chat.html'"></i> Falar Com Vendedor</button>
+                        <button class="btn-acao btn-cancelar-pedido"><i class="fas fa-times"></i> Cancelar Pedido</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PEDIDO 1 -->
+            <div class="pedido-card" data-status="avaliar">
+                <div class="loja-header">
+                    <div class="loja-info"><div class="loja-icon"><i class="fas fa-store"></i></div><div class="loja-nome">MOBY LUX</div></div>
+                    <div class="loja-acoes"><button class="btn-chat"><i class="fas fa-comment" onclick="window.location.href='Chat.html'"></i> Chat</button>
+                        <button class="btn-ver-loja" onclick="window.location.href='PerfilLoja.html'">Ver Página Da Loja</button></div>
+                </div>
+                <div class="produtos-lista">
+                    <div class="produto-item">
+                        <div class="produto-imagem"><i class="fas fa-book"></i></div>
+                        <div class="produto-info">
+                            <div class="produto-titulo">O Pequeno Príncipe - Edição Especial</div>
+                            <div class="produto-variacao">Variação: Capa dura</div>
+                            <div class="produto-quantidade">x1</div>
+                            <div class="status-produto status-avaliar"><i class="fas fa-star"></i> Classifique os produtos por 13/05/2026</div>
+                            <div class="produto-preco">R$ 39,90</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pedido-footer">
+                    <div class="total-pedido">Total do Pedido: <span>R$ 39,90</span></div>
+                    <div class="pedido-acoes">
+                        <button class="btn-acao btn-avaliar" onclick="window.location.href='Avaliar.html'"><i class="fas fa-star"></i> Avaliar</button>
+                        <button class="btn-acao btn-falar" onclick="window.location.href='Chat.html'"><i class="fas fa-comment"></i> Falar Com Vendedor</button>
+                        <button class="btn-acao btn-comprar-novamente"><i class="fas fa-shopping-cart"></i> Comprar Novamente</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PEDIDO 2 -->
+            <div class="pedido-card" data-status="finalizado">
+                <div class="loja-header">
+                    <div class="loja-info"><div class="loja-icon"><i class="fas fa-store"></i></div><div class="loja-nome">Leitura Livraria</div></div>
+                    <div class="loja-acoes"><button class="btn-chat"><i class="fas fa-comment" onclick="window.location.href='Chat.html'"></i> Chat</button>
+                        <button class="btn-ver-loja" onclick="window.location.href='PerfilLoja.html'">Ver Página Da Loja</button></div>
+                </div>
+                <div class="produtos-lista">
+                    <div class="produto-item">
+                        <div class="produto-imagem"><i class="fas fa-book"></i></div>
+                        <div class="produto-info">
+                            <div class="produto-titulo">1984 - George Orwell</div>
+                            <div class="produto-variacao">Variação: Capa comum</div>
+                            <div class="produto-quantidade">x2</div>
+                            <div class="produto-preco">R$ 45,00</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="entrega-info"><i class="fas fa-check-circle" style="color: green;"></i> Pedido entregue. Recebido por: Luciana</div>
+                <div class="pedido-footer">
+                    <div class="total-pedido">Total do Pedido: <span>R$ 45,00</span></div>
+                    <div class="pedido-acoes">
+                        <button class="btn-acao btn-avaliar" onclick="window.location.href='Avaliar.html'"><i class="fas fa-star"></i> Avaliar</button>
+                        <button class="btn-acao btn-falar"><i class="fas fa-comment" onclick="window.location.href='Chat.html'"></i> Falar Com Vendedor</button>
+                        <button class="btn-acao btn-comprar-novamente"><i class="fas fa-shopping-cart"></i> Comprar Novamente</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+</div>
+
+<script>
+    const tabs = document.querySelectorAll('.tab-status');
+    const pedidos = document.querySelectorAll('.pedido-card');
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            tabs.forEach(t => t.classList.remove('ativo'));
+            tab.classList.add('ativo');
+            const statusFiltro = tab.getAttribute('data-status');
+            pedidos.forEach(pedido => {
+                pedido.style.display = (statusFiltro === 'todos' || pedido.getAttribute('data-status') === statusFiltro) ? 'block' : 'none';
+            });
+        });
+    });
+</script>
+</body>
+</html>

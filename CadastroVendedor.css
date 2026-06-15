@@ -1,0 +1,245 @@
+/* ===== PALETA DE CORES CONSISTENTE ===== */
+:root {
+    --vermelho-escuro: #8C031C;
+    --rosa-medio: #BF6980;
+    --cinza-claro: #F0F0F2;
+    --dourado-principal: #D9B607;
+    --dourado-escuro: #8C5C03;
+    --branco: #ffffff;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, var(--vermelho-escuro), var(--dourado-principal));
+    margin: 0;
+    padding: 30px 20px;
+    color: var(--vermelho-escuro);
+    overflow-x: hidden;
+    min-height: 100vh;
+}
+
+/* TÍTULO */
+.titulo {
+    text-align: center;
+    color: var(--branco);
+    margin-bottom: 30px;
+    font-size: 32px;
+    font-weight: bold;
+    text-shadow: 0 2px 10px rgba(140, 3, 28, 0.4);
+}
+
+/* CARD */
+.card {
+    background: var(--branco);
+    max-width: 1000px;
+    margin: auto;
+    border-radius: 25px;
+    box-shadow: 0 25px 60px rgba(140, 3, 28, 0.25);
+    overflow: hidden;
+    border: 3px solid rgba(217, 182, 7, 0.2);
+    position: relative;
+}
+
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: linear-gradient(90deg, var(--dourado-principal), var(--rosa-medio));
+}
+
+/* TOPO */
+.card-topo {
+    background: linear-gradient(135deg, var(--rosa-medio), var(--vermelho-escuro));
+    color: var(--branco);
+    padding: 25px 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.card-topo h1 {
+    font-size: 28px;
+    font-weight: bold;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+/* FORM */
+.form {
+    display: flex;
+    gap: 30px;
+    padding: 40px;
+}
+
+.lado {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* INPUTS */
+input, 
+select, 
+textarea {
+    margin: 5px 0;
+    padding: 14px 18px;
+    border-radius: 15px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    border: 2px solid var(--rosa-medio);
+    background: var(--branco);
+    color: var(--vermelho-escuro);
+    box-shadow: 0 4px 12px rgba(191, 105, 128, 0.15);
+}
+
+input:focus, 
+select:focus, 
+textarea:focus {
+    outline: none;
+    border-color: var(--dourado-principal);
+    box-shadow: 
+        0 0 0 4px rgba(217, 182, 7, 0.2),
+        0 8px 25px rgba(217, 182, 7, 0.15);
+    transform: translateY(-2px);
+}
+
+input[type="file"] {
+    padding: 12px;
+    background: var(--cinza-claro);
+    border-color: var(--rosa-medio);
+}
+
+/* LABELS */
+label {
+    color: var(--vermelho-escuro);
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 5px;
+    display: block;
+}
+
+/* FIELDSETS */
+fieldset {
+    border: 2px solid var(--rosa-medio);
+    border-radius: 18px;
+    padding: 25px;
+    margin: 20px 0;
+    background: rgba(240, 240, 242, 0.6);
+    transition: all 0.3s ease;
+}
+
+fieldset:hover {
+    border-color: var(--dourado-principal);
+    box-shadow: 0 8px 25px rgba(217, 182, 7, 0.2);
+}
+
+legend {
+    color: var(--dourado-principal);
+    font-weight: bold;
+    font-size: 16px;
+    padding: 0 15px;
+    background: var(--branco);
+    border-radius: 20px;
+}
+
+/* RADIO E CHECKBOX */
+fieldset label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 10px 0;
+    padding: 10px 15px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-weight: 500;
+}
+
+fieldset label:hover {
+    background: rgba(217, 182, 7, 0.1);
+}
+
+fieldset input[type="radio"],
+fieldset input[type="checkbox"] {
+    margin: 0;
+    width: auto;
+    accent-color: var(--dourado-principal);
+    transform: scale(1.2);
+}
+
+/* BOTÃO */
+button {
+    background: linear-gradient(135deg, var(--dourado-principal), var(--dourado-escuro));
+    color: var(--branco);
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 18px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 18px 30px;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 30px rgba(217, 182, 7, 0.4);
+    align-self: flex-start;
+}
+
+button:hover {
+    background: linear-gradient(135deg, var(--dourado-escuro), var(--vermelho-escuro));
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px rgba(217, 182, 7, 0.5);
+}
+
+button:active {
+    transform: translateY(-2px);
+}
+
+/* RESPONSIVO */
+@media (max-width: 768px) {
+    .form {
+        flex-direction: column;
+        gap: 25px;
+        padding: 30px 20px;
+    }
+    
+    .card-topo {
+        padding: 20px;
+    }
+    
+    .card-topo h1 {
+        font-size: 24px;
+    }
+    
+    .titulo {
+        font-size: 26px;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 20px 15px;
+    }
+    
+    .form {
+        padding: 25px 15px;
+    }
+    
+    fieldset {
+        padding: 20px;
+    }
+    
+    button {
+        width: 100%;
+        padding: 16px;
+    }
+}

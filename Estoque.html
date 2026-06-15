@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estoque</title>
+    <link rel="stylesheet" href="Estoque.css">
+</head>
+<body>
+
+    <div class="layout">
+
+        <!-- MENU LATERAL -->
+        <aside class="menu">
+            <h2>Estoque</h2>
+
+            <fieldset>
+                <legend>Histórico de Vendas</legend>
+
+                <label><input type="checkbox"> Reembolso/Devolução</label>
+                <label><input type="checkbox"> Vendido</label>
+                <label><input type="checkbox"> A Enviar</label>
+                <label><input type="checkbox"> Enviado</label>
+
+            </fieldset>
+        </aside>
+
+        <!-- CONTEÚDO PRINCIPAL -->
+        <main class="conteudo">
+
+            <div class="produto">
+                <img src="img/capa.jpg" alt="Livro">
+
+                <div class="info">
+                    <label>Descrição</label>
+                    <textarea rows="3" placeholder="Descrição do produto..."></textarea>
+                   
+                </div>
+
+                <!-- BOTÕES -->
+                <div class="acoes">
+                    <div class="grupo">
+                        <button>Quantidade: 1</button>
+                        <button>Compra: R$00,00</button>
+                        <button>Venda: R$00,00</button>
+                    </div>
+
+                    <div class="grupo">
+                        <button class="ativo">Ativo</button>
+                        <button class="editar">Editar</button>
+                        <button class="apagar">Apagar</button>
+                    </div>
+                </div>
+
+            </div>
+
+        </main>
+
+    </div>
+
+</body>
+</html>
+
